@@ -12,7 +12,7 @@
     "ko",
     "ur"
   ],
-  "updatedAt": "2026-05-04T21:19:19+00:00",
+  "updatedAt": "2026-05-04T21:23:03+00:00",
   "source": {
     "learnersThisWeek": "estimated (25\u00d77 \u00b1 daily variance)",
     "coursesLive": "course-registry.json where status=='live'",
