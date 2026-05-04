@@ -3763,7 +3763,14 @@ loadCourseRegistry().then(() => {
   loadHubProgress();
   const _urlCourse = new URLSearchParams(window.location.search).get('course');
   const _saved = JSON.parse(localStorage.getItem('aesop-hub-last-view') || 'null');
-  if (_urlCourse && COURSES.find(c=>c.id===_urlCourse)) {
+  // Saved state wins when it matches the URL course — preserves the lesson the
+  // user was on before a page refresh. URL param alone only applies on a fresh entry.
+  const _savedMatchesUrl = _saved && (!_urlCourse || _saved.courseId === _urlCourse);
+  if (_savedMatchesUrl && _saved.view === 'module' && _saved.moduleId) {
+    selectModule({stopPropagation:()=>{}}, _saved.courseId, _saved.moduleId);
+  } else if (_savedMatchesUrl && _saved.view === 'course') {
+    selectCourse(_saved.courseId);
+  } else if (_urlCourse && COURSES.find(c=>c.id===_urlCourse)) {
     selectCourse(_urlCourse);
   } else if (_saved && _saved.view === 'module' && _saved.courseId && _saved.moduleId) {
     selectModule({stopPropagation:()=>{}}, _saved.courseId, _saved.moduleId);
