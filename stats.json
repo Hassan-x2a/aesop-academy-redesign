@@ -12,9 +12,9 @@
     "ko",
     "ur"
   ],
-  "updatedAt": "2026-05-04T22:50:20+00:00",
+  "updatedAt": "2026-05-04T23:16:12+00:00",
   "source": {
-    "learnersThisWeek": "GA4 activeUsers, last 7 days",
+    "learnersThisWeek": "estimated (25\u00d77 \u00b1 daily variance)",
     "coursesLive": "course-registry.json where status=='live'",
     "coursesInDev": "courses.html mega-link--soon buttons (unique data-panel)",
     "languages": "canonical list in build_stats.py"
