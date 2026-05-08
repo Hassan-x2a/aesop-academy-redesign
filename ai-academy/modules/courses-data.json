@@ -46,7 +46,7 @@
           "sub": "How to write AI governance policy that creates real obligations — not just intentions"
         }
       ],
-      "live": false,
+      "live": true,
       "ageGroup": "professional",
       "panelId": "cp1"
     },
@@ -95,7 +95,7 @@
           "sub": "How to think about AI's future without falling for hype or dismissal"
         }
       ],
-      "live": false,
+      "live": true,
       "ageGroup": "professional",
       "panelId": "cp2"
     },
@@ -195,7 +195,7 @@
           "sub": "What AI systems that simulate persons, relationships, and emotional connection change about what it means to be human"
         }
       ],
-      "live": false,
+      "live": true,
       "ageGroup": "professional",
       "panelId": "cp4"
     },
@@ -244,7 +244,7 @@
           "sub": "Project planning, design and wireframes, MVP build, and launch strategy"
         }
       ],
-      "live": false,
+      "live": true,
       "ageGroup": "professional",
       "panelId": "cp5"
     },
@@ -5840,7 +5840,7 @@
           "title": "From Pitch to Close"
         }
       ],
-      "live": false,
+      "live": true,
       "ageGroup": "professional",
       "panelId": "bu-4"
     },
@@ -5884,7 +5884,7 @@
           "title": "Capstone Project"
         }
       ],
-      "live": false,
+      "live": true,
       "ageGroup": "professional",
       "panelId": "cp13"
     },
@@ -5928,7 +5928,7 @@
           "title": "Continuous Evaluation in CI/CD"
         }
       ],
-      "live": false,
+      "live": true,
       "ageGroup": "professional",
       "panelId": "dv-14"
     },
@@ -5972,7 +5972,7 @@
           "title": "The Limits of Scale"
         }
       ],
-      "live": false,
+      "live": true,
       "ageGroup": "professional",
       "panelId": "am-5"
     },
