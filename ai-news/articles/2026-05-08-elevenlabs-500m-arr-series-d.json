@@ -1,0 +1,23 @@
+{
+  "id": "2026-05-08-elevenlabs-500m-arr-series-d",
+  "title": "ElevenLabs crosses $500M ARR as BlackRock and Nvidia join Series D",
+  "subtitle": "The voice-AI company added $150M of ARR in four months and pulled in over $550M of new capital at an $11B valuation.",
+  "date": "2026-05-08",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["elevenlabs", "voice-ai", "funding", "blackrock", "nvidia"],
+  "readTime": "3 min read",
+  "heroEmoji": "🎤",
+  "body": [
+    "ElevenLabs disclosed on May 5–6 that it crossed $500 million in annual recurring revenue and finalized the investor lineup for an extended Series D round, now totaling more than $550 million at an $11 billion valuation. ARR has grown from roughly $350 million at year-end 2025 to $500 million by the end of April — a $150 million increase in four months. The new investors include BlackRock, Wellington, D.E. Shaw, Nvidia, Salesforce Ventures, Deutsche Telekom, and a group of celebrity backers led by Jamie Foxx and Eva Longoria.",
+    "The growth curve matters more than the round size. Voice AI was widely treated as a feature rather than a category as recently as 2024, on the assumption that voice would be subsumed into the multimodal stack of the foundation labs. ElevenLabs' numbers show the opposite: a focused voice product with deep tooling for studios, agents, and enterprise dubbing has compounded faster than the foundation labs have integrated voice into their default chat interfaces.",
+    "It also fits the wider 2026 pattern in which infrastructure-adjacent AI companies — Anthropic for safety-tuned reasoning, ElevenLabs for voice, Sierra for support agents — are growing at rates that vastly exceed the underlying foundation-model layer. Distribution, integrations, and a defensible workflow now look like a more durable moat than raw model quality, at least for any application below the frontier.",
+    "For learners: revenue growth is the cleanest signal we have for which AI categories are real. A model demo can be impressive and still find no buyers; a $150 million ARR jump in four months means the price was right for someone with a budget. If you are choosing what to specialize in, follow the recurring revenue, not the benchmarks."
+  ],
+  "sources": [
+    { "title": "ElevenLabs Surpasses $500M ARR as BlackRock, Nvidia and Celebrity Investors Join $500M Series D — The AI Insider", "url": "https://theaiinsider.tech/2026/05/06/elevenlabs-surpasses-500m-arr-as-blackrock-nvidia-and-celebrity-investors-join-500m-series-d/" },
+    { "title": "ElevenLabs adds BlackRock, Nvidia and Jamie Foxx to $550M+ Series D — Tech.eu", "url": "https://tech.eu/2026/05/05/elevenlabs-adds-blackrock-nvidia-and-jamie-foxx-to-550m-series-d/" },
+    { "title": "ElevenLabs hits $500 million ARR, announces Series D at $11B valuation — NewsBytes", "url": "https://www.newsbytesapp.com/news/business/elevenlabs-hits-500-million-arr-announces-series-d-at-11b-valuation/tldr" }
+  ],
+  "status": "published"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "2026-05-08-us-china-ai-talks-trump-xi-beijing",
+  "title": "US and China move toward formal AI dialogue ahead of Trump-Xi summit",
+  "subtitle": "Treasury Secretary Bessent is reportedly leading the American track on a regular AI-risk forum — the first official channel between the two governments since 2023.",
+  "date": "2026-05-08",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["us-china", "ai-policy", "diplomacy", "trump", "xi-jinping"],
+  "readTime": "3 min read",
+  "heroEmoji": "🌏",
+  "body": [
+    "Both governments are moving to set up a formal AI dialogue ahead of the Trump-Xi summit in Beijing on May 14–15, the first US presidential visit to China in nearly a decade. Treasury Secretary Scott Bessent is reportedly leading the American side on the AI track. Beijing has not named a counterpart, though Vice Finance Minister Liao Min has been part of preliminary discussions. The dialogue would be the first official US-China AI channel since the Biden-Xi 2023 California meeting.",
+    "The proposed forum's stated remit is risk reduction — specifically, the dangers of unpredictable model behavior, autonomous weapons systems, and misuse of advanced open-source models by non-state actors. The earlier Biden-era effort produced a non-binding agreement that AI should not be in the chain of command for nuclear launch decisions but otherwise stalled, partly because China assigned the file to its foreign ministry rather than to technical regulators.",
+    "Whether this round goes further depends on a structural problem the 2023 channel ran into: the two countries disagree on what AI risk even means. The US frame centers on catastrophic-misuse and military escalation; China's frame centers on regime stability and information control. A standing forum can clarify those frames — but it cannot resolve them, and analysts going into the summit do not expect major breakthroughs on AI, trade, Taiwan, or rare earths.",
+    "For learners: when you read about international AI governance, watch what gets agreed on operationally rather than what gets said in communiqués. A shared incident reporting protocol, a hotline for model-failure events, or a joint test of a specific class of system are concrete — the kind of things that survive a change of government. Anything broader than that has historically been a press release."
+  ],
+  "sources": [
+    { "title": "Trump Administration Eyes First Official AI Dialogue With China At Beijing Summit With Xi Jinping — Benzinga", "url": "https://www.benzinga.com/markets/tech/26/05/52361259/trump-administration-eyes-first-official-ai-dialogue-with-china-at-beijing-summit-with-xi-jinping-report" },
+    { "title": "Trump-Xi summit: trade, Taiwan, AI talks in focus; major breakthroughs unlikely — Invezz", "url": "https://invezz.com/news/2026/05/07/trump-xi-summit-trade-taiwan-ai-talks-in-focus-major-breakthroughs-unlikely/" },
+    { "title": "What will happen when Trump meets Xi? — Brookings", "url": "https://www.brookings.edu/articles/what-will-happen-when-trump-meets-xi/" }
+  ],
+  "status": "published"
+}

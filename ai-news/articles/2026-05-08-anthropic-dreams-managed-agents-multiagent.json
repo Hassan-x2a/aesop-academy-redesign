@@ -1,0 +1,24 @@
+{
+  "id": "2026-05-08-anthropic-dreams-managed-agents-multiagent",
+  "title": "Anthropic adds 'dreaming' and multi-agent orchestration to Claude",
+  "subtitle": "Managed Agents in the Claude Console can now consolidate memories overnight and split work across sub-agents — features Anthropic says lift task success by up to 10 points.",
+  "date": "2026-05-08",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": ["anthropic", "claude", "agents", "orchestration", "memory"],
+  "readTime": "3 min read",
+  "heroEmoji": "🌙",
+  "body": [
+    "At the Code with Claude developer conference on May 7, Anthropic shipped three updates to Claude Managed Agents: Dreams — a research preview that lets agents review past sessions and curate long-term memories on a schedule — plus public-beta releases of Outcomes for declarative goal-setting and multi-agent orchestration with webhooks. The features land directly in the Claude Console for developers building on the Claude API.",
+    "Dreams is the structurally novel piece. Most agent memory today is reactive — the agent retrieves a relevant fact when it needs one. With Dreams, an idle agent re-reads its own logs, extracts patterns, and writes consolidated memories that can update automatically or wait for human approval. Multi-agent orchestration, by contrast, is a familiar pattern: a lead agent decomposes a task and delegates to sub-agents, with the Console exposing each sub-agent's chain of work for inspection. Anthropic reports internal tests where Outcomes alone improved task completion by up to 10 points over standard prompting, with no exemplars.",
+    "The release fits a broader trend across the major labs in 2026: persistent memory, declarative outcomes, and structured multi-agent patterns are migrating from research demos into the default surface area of agent platforms. OpenAI shipped workspace agents earlier this month; Microsoft's Agent 365 went generally available May 3; Mistral added Workflows in late April. The competitive question is no longer whether to build agents — it is whose orchestration primitives become the standard.",
+    "For learners: 'memory' in an LLM context is a design choice, not a default. When you read about a system that 'learns,' look for whether it stores summaries of past sessions, whether a human reviews what gets stored, and whether old memories ever get pruned. Those three answers usually tell you more about how the system will behave over months than any benchmark score does."
+  ],
+  "sources": [
+    { "title": "Anthropic is letting Claude agents 'dream' so they don't sleep on the job — SiliconANGLE", "url": "https://siliconangle.com/2026/05/06/anthropic-letting-claude-agents-dream-dont-sleep-job/" },
+    { "title": "Anthropic updates Claude Managed Agents with three new features — 9to5Mac", "url": "https://9to5mac.com/2026/05/07/anthropic-updates-claude-managed-agents-with-three-new-features/" },
+    { "title": "New in Claude Managed Agents: dreaming, outcomes, and multiagent orchestration — SD Times", "url": "https://sdtimes.com/ai/new-in-claude-managed-agents-dreaming-outcomes-and-multiagent-orchestration/" },
+    { "title": "Dreams — Claude API Docs", "url": "https://platform.claude.com/docs/en/managed-agents/dreams" }
+  ],
+  "status": "published"
+}

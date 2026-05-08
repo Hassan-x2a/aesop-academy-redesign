@@ -1,0 +1,22 @@
+{
+  "id": "2026-05-08-paul-tudor-jones-ai-regulation-warning",
+  "title": "Paul Tudor Jones calls AI 'greatest challenge' and demands regulation",
+  "subtitle": "The hedge fund founder told CNBC the US is 'late already' on AI rules — while saying he is buying more AI stocks.",
+  "date": "2026-05-08",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["paul-tudor-jones", "regulation", "deepfakes", "ai-policy", "markets"],
+  "readTime": "3 min read",
+  "heroEmoji": "📢",
+  "body": [
+    "Hedge fund founder Paul Tudor Jones told CNBC's Squawk Box on May 7 that artificial intelligence is the 'greatest challenge that has ever faced humanity' and that the US is overdue on regulation. 'We need to do it tomorrow. We're late already,' he said, calling specifically for mandatory watermarking of AI-generated content to distinguish it from authentic media. He also said the AI bull market has 'another year or two to run' — and that he has been buying more AI exposure.",
+    "The contradiction is the point. Jones is one of a growing list of investors with concentrated AI positions who are publicly pushing for the rules that would constrain the sector they are betting on. He told CNBC that at a recent gathering of model makers and AI experts, 80% of attendees supported AI regulation, up from roughly 20% a year earlier. The shift suggests the industry's stated preferences are converging with what regulators have been writing for two years.",
+    "Watermarking specifically is a contested technical proposal — cryptographic content provenance standards like C2PA work for the producer side, but watermarks embedded in model output have been repeatedly broken in the academic literature. The political question is whether the US passes anything at all: the White House's December executive order centralized AI policy at the federal level and constrained state laws, but Congress has not moved on a comprehensive AI bill, and the Trump-era posture has been deregulatory by default.",
+    "For learners: when a high-profile investor calls for regulation of an industry they are long, the reflex is cynicism, but the better question is what specific rule they are calling for. 'Regulate AI' is a slogan; 'mandate watermarking on synthetic media platforms above X users' is a policy. The difference between those two sentences is roughly the difference between a tweet and a bill that survives a court challenge."
+  ],
+  "sources": [
+    { "title": "Paul Tudor Jones says U.S. is late to regulating AI: 'We should have already done it' — CNBC", "url": "https://www.cnbc.com/2026/05/07/paul-tudor-jones-ai-regulation-warning.html" },
+    { "title": "Paul Tudor Jones says AI bull market has 'another year or two to run' — CNBC", "url": "https://www.cnbc.com/2026/05/07/paul-tudor-jones-says-ai-bull-market-has-another-year-or-two-to-run.html" }
+  ],
+  "status": "published"
+}
