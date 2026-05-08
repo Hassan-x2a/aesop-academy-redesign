@@ -21,6 +21,9 @@ All lab building must follow `lab-rules.md`. Non-negotiable:
 3. Lab AI stays on topic — use `ACADEMY_GUARDRAIL` constant (defined once, applied in `chatSend()`); never duplicate inside lab prompts
 4. Every lab completable without live API — offline fallback fires after one retry; lab completion still triggers
 
+## Version bumping
+When delivering any code change, bump the project version at the time of delivery — in the same edit, not retroactively. This project has no `package.json`; if a version constant or file exists, update it then. If none exists, note the version in the commit message.
+
 ## Development
 - No npm, no Node — pure PHP/HTML/JS with Python for tooling
 - Secrets in `secrets.php` / `secrets.local.php` (gitignored); never hardcode
