@@ -12,7 +12,7 @@
     "ko",
     "ur"
   ],
-  "updatedAt": "2026-05-09T18:49:26+00:00",
+  "updatedAt": "2026-05-09T19:52:32+00:00",
   "source": {
     "learnersThisWeek": "GA4 activeUsers, last 7 days",
     "coursesLive": "course-registry.json where status=='live'",
