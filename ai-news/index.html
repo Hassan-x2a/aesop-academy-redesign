@@ -696,6 +696,236 @@
   .news-card-emoji { width: 44px; height: 44px; font-size: 1.8rem; }
   .news-filters { padding: 1rem 1.25rem 0; }
 }
+
+/* ── Signal Desk ──────────────────────────────────────────────────────────── */
+.signal-desk {
+  padding: 1.5rem 12.5%;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.sd-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.sd-title {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.sd-updated {
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+  margin-left: auto;
+}
+.sd-stats-bar {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  align-items: center;
+}
+.sd-stat {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.6rem 1rem;
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.sd-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+}
+.sd-stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+.sd-stat--skeleton .sd-stat-value {
+  background: var(--border);
+  color: transparent;
+  border-radius: 4px;
+  animation: sd-shimmer 1.4s ease-in-out infinite;
+  width: 2.5rem;
+  height: 1.4rem;
+}
+@keyframes sd-shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.sd-panels {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr;
+  gap: 1.25rem;
+}
+.sd-panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.1rem 1.25rem;
+  overflow: hidden;
+}
+.sd-panel-header {
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.6rem;
+}
+.sd-panel-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.sd-panel-subtitle {
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+}
+/* Trend Report */
+.sd-stories-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.sd-story {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+.sd-story-rank {
+  flex-shrink: 0;
+  background: var(--navy);
+  color: #f5e6c0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 0.15rem 0.4rem;
+  margin-top: 0.15rem;
+  min-width: 1.4rem;
+  text-align: center;
+}
+.sd-story-body {}
+.sd-story-title {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 0.15rem;
+}
+.sd-story-summary {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  line-height: 1.4;
+  margin-bottom: 0.2rem;
+}
+.sd-story-meta {
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+}
+.sd-stories-toggle {
+  margin-top: 0.75rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  padding: 0.3rem 0.9rem;
+  cursor: pointer;
+  width: 100%;
+}
+.sd-stories-toggle:hover { border-color: var(--navy); color: var(--navy); }
+/* Ranked Clusters */
+.sd-clusters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 0.6rem;
+}
+.sd-cluster {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.sd-cluster-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+.sd-cluster-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  flex: 1;
+}
+.sd-cluster-composite {
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.sd-cluster-composite--high  { color: #2a9d8f; }
+.sd-cluster-composite--mid   { color: #e9a500; }
+.sd-cluster-composite--low   { color: var(--ink-muted); }
+.sd-scores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.sd-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.1rem 0.38rem;
+  border-radius: 100px;
+}
+.sd-badge--trend    { background: rgba(42,157,143,0.12); color: #2a7f74; }
+.sd-badge--velocity { background: rgba(233,165,0,0.14);  color: #a87700; }
+.sd-badge--novelty  { background: rgba(86,162,120,0.14); color: #2e7d50; }
+.sd-badge--competition { background: rgba(210,80,80,0.12); color: #b03030; }
+.sd-cluster-count {
+  font-size: 0.62rem;
+  color: var(--ink-muted);
+}
+/* Dark mode */
+[data-theme="dark"] .signal-desk { background: var(--bg); }
+[data-theme="dark"] .sd-panel,
+[data-theme="dark"] .sd-stat,
+[data-theme="dark"] .sd-cluster {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.1);
+}
+[data-theme="dark"] .sd-stat-value { color: #e8d9b4; }
+[data-theme="dark"] .sd-stat--skeleton .sd-stat-value { background: rgba(255,255,255,0.12); }
+[data-theme="dark"] .sd-cluster-label,
+[data-theme="dark"] .sd-story-title { color: #ddd; }
+/* Responsive */
+@media (max-width: 900px) {
+  .signal-desk { padding: 1.25rem; }
+  .sd-panels { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .sd-stats-bar { display: grid; grid-template-columns: 1fr 1fr; }
+  .sd-updated { grid-column: span 2; }
+}
 </style>
 </head>
 <body>
@@ -738,6 +968,44 @@
   <button class="news-filter-btn active" data-filter="all">All</button>
   <!-- Filters are populated dynamically from article categories -->
 </div>
+
+<!-- ─── SIGNAL DESK ────────────────────────────────────────── -->
+<section class="signal-desk" id="signalDesk" aria-label="AI Signal Desk" style="display:none">
+  <div class="sd-header">
+    <span class="sd-title">Signal Desk</span>
+    <span class="sd-updated" id="sdUpdated"></span>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="sd-stats-bar" id="sdStatsBar">
+    <div class="sd-stat sd-stat--skeleton"><span class="sd-stat-value">—</span><span class="sd-stat-label">24h items</span></div>
+    <div class="sd-stat sd-stat--skeleton"><span class="sd-stat-value">—</span><span class="sd-stat-label">clusters</span></div>
+    <div class="sd-stat sd-stat--skeleton"><span class="sd-stat-value">—</span><span class="sd-stat-label">ideas</span></div>
+    <div class="sd-stat sd-stat--skeleton"><span class="sd-stat-value">—</span><span class="sd-stat-label">sources active</span></div>
+  </div>
+
+  <!-- Two-column panels -->
+  <div class="sd-panels">
+    <!-- Trend Report -->
+    <div class="sd-panel">
+      <div class="sd-panel-header">
+        <span class="sd-panel-title">Trend Report</span>
+        <span class="sd-panel-subtitle">Top stories by signal score</span>
+      </div>
+      <ol class="sd-stories-list" id="sdStoriesList"></ol>
+      <button class="sd-stories-toggle" id="sdStoriesToggle" style="display:none">Show more</button>
+    </div>
+
+    <!-- Ranked Clusters -->
+    <div class="sd-panel">
+      <div class="sd-panel-header">
+        <span class="sd-panel-title">Ranked Clusters</span>
+        <span class="sd-panel-subtitle">Topic areas by composite score</span>
+      </div>
+      <div class="sd-clusters-grid" id="sdClustersGrid"></div>
+    </div>
+  </div>
+</section>
 
 <!-- ─── FEED ──────────────────────────────────────────────── -->
 <div class="news-feed" id="newsFeed">
@@ -957,6 +1225,141 @@
   }
 
   loadArticles();
+})();
+
+/* ── Signal Desk loader ───────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  var TREND_URL = '/ai-news/trend-data.json';
+  var STALE_HOURS = 48;
+  var STORIES_PREVIEW = 5;
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function timeAgo(iso) {
+    if (!iso) return '';
+    var diff = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+    if (diff < 2)  return 'just now';
+    if (diff < 60) return diff + 'm ago';
+    var h = Math.floor(diff / 60);
+    if (h < 24)   return h + 'h ago';
+    return Math.floor(h / 24) + 'd ago';
+  }
+
+  function compositeClass(n) {
+    if (n >= 75) return 'high';
+    if (n >= 50) return 'mid';
+    return 'low';
+  }
+
+  function renderStats(stats, generatedAt) {
+    var bar = document.getElementById('sdStatsBar');
+    var fields = [
+      { value: stats.items_collected, label: '24h items' },
+      { value: stats.clusters_found,  label: 'clusters' },
+      { value: stats.ideas_generated, label: 'ideas' },
+      { value: stats.sources_active,  label: 'sources active' },
+    ];
+    bar.innerHTML = fields.map(function (f) {
+      return '<div class="sd-stat"><span class="sd-stat-value">' + esc(f.value) +
+             '</span><span class="sd-stat-label">' + esc(f.label) + '</span></div>';
+    }).join('');
+
+    var updated = document.getElementById('sdUpdated');
+    var ago = timeAgo(generatedAt);
+    var isStale = generatedAt &&
+      (Date.now() - new Date(generatedAt).getTime()) > STALE_HOURS * 3600000;
+    updated.textContent = ago ? 'Updated ' + ago + (isStale ? ' — may be stale' : '') : '';
+  }
+
+  function renderStories(stories) {
+    var list = document.getElementById('sdStoriesList');
+    var toggle = document.getElementById('sdStoriesToggle');
+    var expanded = false;
+
+    function buildItem(story, hidden) {
+      return '<li class="sd-story"' + (hidden ? ' style="display:none"' : '') + '>' +
+        '<span class="sd-story-rank">' + esc(story.rank) + '</span>' +
+        '<div class="sd-story-body">' +
+          '<span class="sd-story-title">' + esc(story.title) + '</span>' +
+          '<span class="sd-story-summary">' + esc(story.summary) + '</span>' +
+          '<span class="sd-story-meta">Score ' + esc(story.score) +
+            ' &middot; ' + esc(story.source_count) + ' signals</span>' +
+        '</div>' +
+      '</li>';
+    }
+
+    list.innerHTML = stories.map(function (s, i) {
+      return buildItem(s, i >= STORIES_PREVIEW);
+    }).join('');
+
+    if (stories.length > STORIES_PREVIEW) {
+      toggle.style.display = '';
+      toggle.textContent = 'Show ' + (stories.length - STORIES_PREVIEW) + ' more';
+      toggle.onclick = function () {
+        expanded = !expanded;
+        list.querySelectorAll('li').forEach(function (li, i) {
+          if (i >= STORIES_PREVIEW) li.style.display = expanded ? '' : 'none';
+        });
+        toggle.textContent = expanded
+          ? 'Show less'
+          : 'Show ' + (stories.length - STORIES_PREVIEW) + ' more';
+      };
+    }
+  }
+
+  function renderClusters(clusters) {
+    var grid = document.getElementById('sdClustersGrid');
+    grid.innerHTML = clusters.map(function (c) {
+      var s = c.scores;
+      var cls = compositeClass(c.composite);
+      return '<div class="sd-cluster">' +
+        '<div class="sd-cluster-header">' +
+          '<span class="sd-cluster-label">' + esc(c.label) + '</span>' +
+          '<span class="sd-cluster-composite sd-cluster-composite--' + cls + '">' +
+            esc(c.composite) +
+          '</span>' +
+        '</div>' +
+        '<div class="sd-scores">' +
+          '<span class="sd-badge sd-badge--trend">T ' + esc(s.trend) + '</span>' +
+          '<span class="sd-badge sd-badge--velocity">V ' + esc(s.velocity) + '</span>' +
+          '<span class="sd-badge sd-badge--novelty">N ' + esc(s.novelty) + '</span>' +
+          '<span class="sd-badge sd-badge--competition">C ' + esc(s.competition) + '</span>' +
+        '</div>' +
+        '<span class="sd-cluster-count">' + esc(c.signal_count) + ' signals</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  function init() {
+    fetch(TREND_URL + '?_=' + Date.now())
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        var desk = document.getElementById('signalDesk');
+        if (!data || !data.stats || !data.clusters || !data.top_stories) return;
+        renderStats(data.stats, data.generated_at);
+        renderStories(data.top_stories);
+        renderClusters(data.clusters);
+        desk.style.display = '';
+      })
+      .catch(function (e) {
+        console.warn('[SignalDesk] Could not load trend data:', e);
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 

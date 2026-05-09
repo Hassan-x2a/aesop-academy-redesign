@@ -1,0 +1,281 @@
+{
+  "generated_at": "2026-05-09T08:00:00Z",
+  "window_hours": 24,
+  "stats": {
+    "items_collected": 80,
+    "clusters_found": 12,
+    "ideas_generated": 8,
+    "sources_active": 6
+  },
+  "top_stories": [
+    {
+      "rank": 1,
+      "title": "AI Agents Are Getting Control Flow — Not Just More Prompts",
+      "summary": "Developers are moving past prompt chaining to give agents real branching logic, loops, and error recovery — fundamentally changing how AI workflows are built.",
+      "score": 940,
+      "source_count": 14,
+      "cluster_id": "ai-agents"
+    },
+    {
+      "rank": 2,
+      "title": "Anthropic Releases Claude's Extended Thinking API",
+      "summary": "Anthropic opened programmatic access to Claude's internal reasoning traces, letting developers inspect and build on the model's step-by-step thinking.",
+      "score": 870,
+      "source_count": 11,
+      "cluster_id": "anthropic-claude"
+    },
+    {
+      "rank": 3,
+      "title": "Schools Are Banning AI — Students Are Using It Anyway",
+      "summary": "A widening gap between school AI policies and student behavior is forcing educators to rethink blanket bans in favor of structured AI literacy programs.",
+      "score": 810,
+      "source_count": 9,
+      "cluster_id": "ai-education"
+    },
+    {
+      "rank": 4,
+      "title": "Open-Source LLMs Cross the GPT-4 Threshold on Coding Benchmarks",
+      "summary": "Several community fine-tunes of Llama and Mistral now outscore GPT-4 on HumanEval and SWE-bench, accelerating the shift toward self-hosted inference.",
+      "score": 760,
+      "source_count": 8,
+      "cluster_id": "llm-models"
+    },
+    {
+      "rank": 5,
+      "title": "RAG vs. Long Context: Developers Are Picking Sides",
+      "summary": "As context windows hit 1M tokens, teams are debating whether retrieval-augmented generation is still worth the complexity overhead.",
+      "score": 700,
+      "source_count": 7,
+      "cluster_id": "rag-retrieval"
+    },
+    {
+      "rank": 6,
+      "title": "EU AI Act Compliance Deadlines Begin Hitting Mid-Size Companies",
+      "summary": "The first wave of EU AI Act obligations is landing on companies outside big tech, triggering a scramble for documentation, audits, and risk assessments.",
+      "score": 650,
+      "source_count": 6,
+      "cluster_id": "ai-policy"
+    },
+    {
+      "rank": 7,
+      "title": "Google Drops Gemini 2.5 Flash — Sub-Second Responses at Scale",
+      "summary": "Google's latest Gemini model targets production latency requirements with a sub-second time-to-first-token across reasoning and coding tasks.",
+      "score": 610,
+      "source_count": 5,
+      "cluster_id": "google-ai"
+    },
+    {
+      "rank": 8,
+      "title": "Cursor Hits 1M Developers — AI Coding Tools Go Mainstream",
+      "summary": "Cursor's milestone signals that AI-assisted coding has moved past early adopters and is becoming the default for professional software development.",
+      "score": 570,
+      "source_count": 5,
+      "cluster_id": "ai-coding"
+    }
+  ],
+  "clusters": [
+    {
+      "id": "ai-agents",
+      "label": "AI Agents & Control Flow",
+      "signal_count": 14,
+      "scores": { "trend": 95, "velocity": 88, "novelty": 72, "competition": 45 },
+      "composite": 84,
+      "top_signals": [
+        "Agents need control flow, not more prompts",
+        "CrewAI 0.9 ships with persistent memory and retry logic",
+        "OpenAI's Responses API adds branching for agent pipelines"
+      ]
+    },
+    {
+      "id": "anthropic-claude",
+      "label": "Anthropic & Claude",
+      "signal_count": 11,
+      "scores": { "trend": 91, "velocity": 80, "novelty": 68, "competition": 38 },
+      "composite": 80,
+      "top_signals": [
+        "Claude Extended Thinking API now in general availability",
+        "Claude 3.7 Sonnet leads MMLU and GPQA benchmarks",
+        "Anthropic releases model specification document publicly"
+      ]
+    },
+    {
+      "id": "ai-education",
+      "label": "AI in Education",
+      "signal_count": 9,
+      "scores": { "trend": 88, "velocity": 74, "novelty": 91, "competition": 30 },
+      "composite": 83,
+      "top_signals": [
+        "Schools banning AI while students use it anyway",
+        "UNESCO calls for mandatory AI literacy by 2027",
+        "Khan Academy's Khanmigo reaches 2M student users"
+      ]
+    },
+    {
+      "id": "llm-models",
+      "label": "Open-Source LLM Models",
+      "signal_count": 8,
+      "scores": { "trend": 86, "velocity": 79, "novelty": 65, "competition": 55 },
+      "composite": 76,
+      "top_signals": [
+        "Llama 3.2 fine-tunes top GPT-4 on HumanEval",
+        "Mistral Large 2 releases under Apache 2.0",
+        "Community builds 70B coding specialist from base weights"
+      ]
+    },
+    {
+      "id": "rag-retrieval",
+      "label": "RAG & Retrieval",
+      "signal_count": 7,
+      "scores": { "trend": 80, "velocity": 65, "novelty": 70, "competition": 42 },
+      "composite": 73,
+      "top_signals": [
+        "RAG vs. long context debate heats up on HN",
+        "Pinecone releases serverless vector search",
+        "Hybrid search outperforms pure vector search on BEIR benchmark"
+      ]
+    },
+    {
+      "id": "ai-policy",
+      "label": "AI Policy & Regulation",
+      "signal_count": 6,
+      "scores": { "trend": 78, "velocity": 60, "novelty": 82, "competition": 25 },
+      "composite": 73,
+      "top_signals": [
+        "EU AI Act first compliance deadlines arrive for SMEs",
+        "US Senate AI working group releases draft framework",
+        "Canada's AIDA bill passes second reading"
+      ]
+    },
+    {
+      "id": "google-ai",
+      "label": "Google & Gemini",
+      "signal_count": 5,
+      "scores": { "trend": 82, "velocity": 71, "novelty": 55, "competition": 60 },
+      "composite": 70,
+      "top_signals": [
+        "Gemini 2.5 Flash hits sub-second latency at scale",
+        "Google NotebookLM adds audio overview sharing",
+        "Vertex AI adds grounding with Google Search"
+      ]
+    },
+    {
+      "id": "ai-coding",
+      "label": "AI Coding Tools",
+      "signal_count": 5,
+      "scores": { "trend": 79, "velocity": 68, "novelty": 58, "competition": 65 },
+      "composite": 67,
+      "top_signals": [
+        "Cursor hits 1M active developers",
+        "GitHub Copilot adds workspace-aware context",
+        "Aider 0.40 introduces architect mode for full-file rewrites"
+      ]
+    },
+    {
+      "id": "ai-safety",
+      "label": "AI Safety & Alignment",
+      "signal_count": 4,
+      "scores": { "trend": 74, "velocity": 55, "novelty": 77, "competition": 28 },
+      "composite": 67,
+      "top_signals": [
+        "Anthropic publishes model spec open-sourced",
+        "Interpretability team finds linear representations in Claude",
+        "DeepMind releases safety evaluation framework"
+      ]
+    },
+    {
+      "id": "ai-image-video",
+      "label": "AI Image & Video",
+      "signal_count": 4,
+      "scores": { "trend": 72, "velocity": 66, "novelty": 50, "competition": 70 },
+      "composite": 61,
+      "top_signals": [
+        "Sora public waitlist opens to US creators",
+        "Runway Gen-3 Alpha adds motion control",
+        "Stable Diffusion 3.5 releases under community license"
+      ]
+    },
+    {
+      "id": "frameworks",
+      "label": "LLM Frameworks",
+      "signal_count": 4,
+      "scores": { "trend": 68, "velocity": 58, "novelty": 60, "competition": 55 },
+      "composite": 60,
+      "top_signals": [
+        "LangGraph 0.2 adds checkpointing for long-running agents",
+        "LlamaIndex hits 30K GitHub stars",
+        "DSPy paper shows 40% prompt reduction with auto-optimization"
+      ]
+    },
+    {
+      "id": "ai-voice",
+      "label": "AI Voice & Audio",
+      "signal_count": 3,
+      "scores": { "trend": 65, "velocity": 60, "novelty": 64, "competition": 48 },
+      "composite": 60,
+      "top_signals": [
+        "ElevenLabs releases real-time voice cloning API",
+        "OpenAI Advanced Voice Mode expands to free tier",
+        "Whisper v3 Turbo cuts transcription latency 4x"
+      ]
+    }
+  ],
+  "ideas": [
+    {
+      "rank": 1,
+      "title": "What Is AI Agent Control Flow — And Why Does It Matter?",
+      "rationale": "Agents are the next major AI skill gap; this topic is trending hard with low existing Aesop coverage.",
+      "target_cluster": "ai-agents",
+      "estimated_readtime": "5 min read"
+    },
+    {
+      "rank": 2,
+      "title": "AI in Your Child's Classroom: What Parents Need to Know in 2026",
+      "rationale": "High novelty score — AI education policy is accelerating faster than parental awareness.",
+      "target_cluster": "ai-education",
+      "estimated_readtime": "4 min read"
+    },
+    {
+      "rank": 3,
+      "title": "The EU AI Act Is Here — What Ordinary People Should Understand",
+      "rationale": "Policy deadlines are real and imminent; most plain-language explainers are still written for lawyers.",
+      "target_cluster": "ai-policy",
+      "estimated_readtime": "4 min read"
+    },
+    {
+      "rank": 4,
+      "title": "RAG Explained: How AI Looks Up Information Before Answering",
+      "rationale": "RAG is a foundational concept most readers encounter but few truly understand.",
+      "target_cluster": "rag-retrieval",
+      "estimated_readtime": "4 min read"
+    },
+    {
+      "rank": 5,
+      "title": "How AI Safety Researchers Are Trying to Understand What's Inside These Models",
+      "rationale": "Interpretability work is gaining public visibility and aligns with Aesop's honest-education mission.",
+      "target_cluster": "ai-safety",
+      "estimated_readtime": "5 min read"
+    },
+    {
+      "rank": 6,
+      "title": "Open-Source AI Is Catching Up Fast — Here's What That Means for You",
+      "rationale": "The open/closed model divide is a key literacy concept with no accessible Aesop treatment yet.",
+      "target_cluster": "llm-models",
+      "estimated_readtime": "4 min read"
+    },
+    {
+      "rank": 7,
+      "title": "AI Coding Tools: A Plain-English Guide for Non-Programmers",
+      "rationale": "Cursor and Copilot are now household names in tech; non-programmers deserve a clear explainer.",
+      "target_cluster": "ai-coding",
+      "estimated_readtime": "3 min read"
+    },
+    {
+      "rank": 8,
+      "title": "How to Clone a Voice with AI — And Why That's Both Useful and Risky",
+      "rationale": "Voice AI is accelerating and the dual-use risk angle is undercovered in accessible writing.",
+      "target_cluster": "ai-voice",
+      "estimated_readtime": "4 min read"
+    }
+  ],
+  "previous_generated_at": null
+}
