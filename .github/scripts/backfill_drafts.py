@@ -274,7 +274,7 @@ def main() -> int:
         print("ERROR: ANTHROPIC_API_KEY not set", file=sys.stderr)
         return 2
     import anthropic
-    client = anthropic.Anthropic(api_key=api_key)
+    client = anthropic.Anthropic(api_key=api_key, timeout=300)
 
     # Run candidates in parallel via a thread pool. The Anthropic SDK's
     # sync client is thread-safe; threads are blocked on I/O during the

@@ -407,7 +407,7 @@ def synthesize_topics(signals):
         print("  No signals collected — aborting.")
         return []
 
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY, timeout=300)
 
     signal_text = "".join(
         f"- [{s['source']}] {s['topic']} (score: {s['score']})\n"
@@ -658,7 +658,7 @@ def generate_drafts(gaps):
         return []
 
     existing_ids  = load_existing_draft_ids()
-    client        = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client        = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY, timeout=300)
     existing_note = ", ".join(list(existing_ids)[:20]) if existing_ids else "none yet"
     all_drafts    = []
 

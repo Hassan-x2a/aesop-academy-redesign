@@ -76,7 +76,7 @@ def synthesize_topics(signals):
         print("  No signals — falling back to static topics.")
         return _fallback_topics()
 
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY, timeout=300)
 
     signal_text = ""
     for s in signals[:80]:
@@ -508,7 +508,7 @@ def generate_drafts(gaps):
         return []
 
     existing_ids = load_existing_draft_ids()
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY, timeout=300)
     existing_note = ", ".join(list(existing_ids)[:20]) if existing_ids else "none yet"
     all_drafts = []
 

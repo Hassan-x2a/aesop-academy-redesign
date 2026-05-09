@@ -8,6 +8,7 @@ on:
 jobs:
   ya-research:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repo
@@ -43,3 +44,11 @@ jobs:
           git diff --staged --quiet || git commit -m "YA AIP: $(date '+%Y-%m-%d') young adult course draft proposals"
           git pull --rebase origin main
           git push || (sleep 10 && git pull --rebase origin main && git push)
+
+      - name: Notify on failure
+        if: failure() || cancelled()
+        env:
+          BREVO_SMTP_KEY: ${{ secrets.BREVO_SMTP_KEY }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python .github/scripts/notify_failure.py

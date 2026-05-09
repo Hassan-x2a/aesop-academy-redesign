@@ -175,7 +175,7 @@ def cluster_and_score(signals: list[dict], recent_titles: list[str]) -> dict | N
         print("[Trend] ERROR: anthropic package not installed")
         return None
 
-    client = anthropic.Anthropic(api_key=api_key)
+    client = anthropic.Anthropic(api_key=api_key, timeout=300)
 
     signal_lines = [
         f"{i}. [{s['source']}] {s['topic']} (score={s['score']})"

@@ -23,6 +23,7 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: write
 
@@ -61,3 +62,11 @@ jobs:
           git commit -m "Trends: daily signal scan $(date '+%Y-%m-%d')"
           git pull --rebase origin main
           git push origin HEAD:main
+
+      - name: Notify on failure
+        if: failure() || cancelled()
+        env:
+          BREVO_SMTP_KEY: ${{ secrets.BREVO_SMTP_KEY }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python .github/scripts/notify_failure.py
