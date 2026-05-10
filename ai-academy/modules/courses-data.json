@@ -708,7 +708,9 @@
         }
       ],
       "ageGroup": "professional",
-      "panelId": "am-2"
+      "panelId": "am-2",
+      "live": false,
+      "generation_complete": false
     },
     {
       "id": "reinforcement-learning-and-decision-models",
