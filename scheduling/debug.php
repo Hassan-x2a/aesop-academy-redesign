@@ -1,98 +1,89 @@
 <?php
+/**
+ * Scheduler Diagnostics — Run this to troubleshoot scheduler issues
+ * URL: https://aesopacademy.org/scheduling/debug.php
+ *
+ * WARNING: Delete this file after troubleshooting. It reveals configuration.
+ */
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-ini_set('pcre.backtrack_limit', 10000000);
-ini_set('memory_limit', '256M');
 
 require_once __DIR__ . '/config.php';
 
-header('Content-Type: text/plain');
+header('Content-Type: text/plain; charset=utf-8');
 
-$ctx = stream_context_create(['http' => ['timeout' => 15, 'header' => 'User-Agent: SchedulerBot/1.0']]);
-$raw = @file_get_contents(SECOND_CALENDAR_ICS, false, $ctx);
-if (!$raw) die("FAILED TO FETCH ICS URL");
+echo "=== AESOP SCHEDULER DIAGNOSTICS ===\n\n";
 
-echo "File size: " . strlen($raw) . " bytes\n\n";
+// Check which secrets are available
+echo "1. ENVIRONMENT VARIABLES\n";
+echo "   ─────────────────────────────────\n";
 
-// Parse line by line
-$raw   = str_replace("\r\n", "\n", $raw);
-$raw   = preg_replace("/\n[ \t]/", '', $raw); // unfold
-$lines = explode("\n", $raw);
+$critical_secrets = [
+    'AESOP_DB_HOST' => 'Database host',
+    'AESOP_DB_NAME' => 'Database name',
+    'AESOP_DB_USER' => 'Database user',
+    'AESOP_DB_PASS' => 'Database password',
+    'AESOP_AZURE_CLIENT_SECRET' => 'Azure OAuth secret',
+    'AESOP_SECOND_CALENDAR_ICS' => 'Secondary calendar ICS URL',
+];
 
-$inEvent  = false;
-$event    = [];
-$events   = [];
-
-foreach ($lines as $line) {
-    if ($line === 'BEGIN:VEVENT') {
-        $inEvent = true;
-        $event   = [];
-    } elseif ($line === 'END:VEVENT') {
-        $inEvent = false;
-        $events[] = $event;
-    } elseif ($inEvent) {
-        $pos = strpos($line, ':');
-        if ($pos !== false) {
-            $key = strtoupper(substr($line, 0, $pos));
-            $val = substr($line, $pos + 1);
-            $event[$key] = $val;
-            // Also store with params stripped for easier lookup
-            $bareKey = explode(';', $key)[0];
-            if ($bareKey !== $key) $event[$bareKey . '__LINE'] = $line;
-        }
+foreach ($critical_secrets as $key => $label) {
+    $value = getenv($key);
+    if ($value !== false && $value !== '') {
+        echo "   ✓ $key (set)\n";
+    } else {
+        echo "   ✗ $key (MISSING)\n";
     }
 }
 
-echo "Total events parsed: " . count($events) . "\n\n";
+echo "\n2. DATABASE CONNECTION TEST\n";
+echo "   ─────────────────────────────────\n";
 
-// Show DTSTART sample formats
-echo "=== SAMPLE DTSTART FORMATS (first 10) ===\n";
-$shown = 0;
-foreach ($events as $e) {
-    foreach ($e as $k => $v) {
-        if (strpos($k, 'DTSTART') === 0) {
-            echo "$k:$v\n";
-            $shown++;
-            break;
-        }
+try {
+    require_once __DIR__ . '/db.php';
+    $db = getDB();
+    $result = $db->query("SELECT VERSION()");
+    $row = $result->fetch();
+    echo "   ✓ Connected to MySQL\n";
+    echo "   Version: " . $row[0] . "\n";
+
+    // Check tables
+    $stmt = $db->query("SHOW TABLES LIKE 'oauth_tokens'");
+    if ($stmt && $stmt->rowCount() > 0) {
+        echo "   ✓ oauth_tokens table exists\n";
+
+        $count = $db->query("SELECT COUNT(*) as cnt FROM oauth_tokens")->fetch();
+        echo "   Stored tokens: " . $count['cnt'] . "\n";
+    } else {
+        echo "   ✗ oauth_tokens table NOT FOUND\n";
+        echo "     → Run setup.php to initialize database\n";
     }
-    if ($shown >= 10) break;
+} catch (Throwable $e) {
+    echo "   ✗ DATABASE CONNECTION FAILED\n";
+    echo "   Error: " . $e->getMessage() . "\n";
 }
 
-echo "\n=== 2026 EVENTS ===\n";
-$count2026 = 0;
-$countPast = 0;
-$countFail = 0;
+echo "\n3. OAUTH TOKEN STATUS\n";
+echo "   ─────────────────────────────────\n";
 
-foreach ($events as $e) {
-    $dtRaw = null;
-    foreach ($e as $k => $v) {
-        if (strpos($k, 'DTSTART') === 0) { $dtRaw = $v; break; }
+try {
+    require_once __DIR__ . '/graph.php';
+    $token = getValidAccessToken();
+    if ($token) {
+        echo "   ✓ Valid OAuth token available\n";
+    } else {
+        echo "   ✗ No valid OAuth token in database\n";
+        echo "     → Visit setup.php to authorize\n";
     }
-
-    if (!$dtRaw) { $countFail++; continue; }
-
-    // Quick year check without full parsing
-    $year = (int)substr(preg_replace('/.*:/', '', $dtRaw), 0, 4);
-
-    $summary = $e['SUMMARY'] ?? '(no title)';
-    $rrule   = $e['RRULE']   ?? '';
-    $status  = $e['STATUS']  ?? '';
-
-    if ($status === 'CANCELLED') continue;
-
-    if ($year === 2026) {
-        $count2026++;
-        $dtStr = preg_replace('/.*:/', '', $dtRaw);
-        echo "$dtStr | $summary";
-        if ($rrule) echo " [RECUR]";
-        echo "\n";
-    } elseif ($year < 2026) {
-        $countPast++;
-    }
+} catch (Throwable $e) {
+    echo "   ✗ Error checking token: " . $e->getMessage() . "\n";
 }
 
-echo "\n=== SUMMARY ===\n";
-echo "Past events:   $countPast\n";
-echo "2026 events:   $count2026\n";
-echo "No DTSTART:    $countFail\n";
+echo "\n4. NEXT STEPS\n";
+echo "   ─────────────────────────────────\n";
+echo "   If you see missing environment variables above:\n";
+echo "   1. Go to cPanel > Environment Variables (if available)\n";
+echo "   2. OR add them to a .env file in the project root\n";
+echo "   3. OR contact your hosting provider to set them\n";
+echo "\n";
