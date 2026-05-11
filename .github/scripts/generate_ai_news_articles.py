@@ -185,7 +185,7 @@ def call_claude(date_str: str, candidates: list[dict], count: int, recent_titles
     prompt = build_prompt(date_str, candidates, count, recent_titles)
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY, timeout=180)
     response = client.messages.create(
-        model="claude-3-5-haiku-latest",
+        model="claude-sonnet-4-6",
         max_tokens=7000,
         messages=[{"role": "user", "content": prompt}],
     )
