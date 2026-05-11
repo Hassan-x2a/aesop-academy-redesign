@@ -44,16 +44,16 @@ function loadSchedulerConfig() {
 $schedulerConfig = loadSchedulerConfig();
 
 // Azure App Registration
-define('AZURE_CLIENT_ID',     $schedulerConfig['AZURE_CLIENT_ID']);
-define('AZURE_CLIENT_SECRET', aesop_secret('AESOP_AZURE_CLIENT_SECRET') ?: (function() {
-    throw new RuntimeException('Missing required secret: AESOP_AZURE_CLIENT_SECRET - stored in Firebase');
+define('AZURE_CLIENT_ID',     $schedulerConfig['AESOP_AZURE_CLIENT_ID']);
+define('AZURE_CLIENT_SECRET', $schedulerConfig['AESOP_AZURE_CLIENT_SECRET'] ?? (function() {
+    throw new RuntimeException('Missing required secret: AESOP_AZURE_CLIENT_SECRET - check Firebase config/scheduler');
 })());
-define('AZURE_TENANT_ID',     $schedulerConfig['AZURE_TENANT_ID']);
-define('AZURE_REDIRECT_URI',  $schedulerConfig['AZURE_REDIRECT_URI']);
+define('AZURE_TENANT_ID',     $schedulerConfig['AESOP_AZURE_TENANT_ID']);
+define('AZURE_REDIRECT_URI',  $schedulerConfig['AESOP_AZURE_REDIRECT_URI'] ?? 'https://aesopacademy.org/scheduling/auth.php');
 
 // Owner details
-define('OWNER_NAME',  $schedulerConfig['OWNER_NAME']);
-define('OWNER_EMAIL', $schedulerConfig['OWNER_EMAIL']);
+define('OWNER_NAME',  $schedulerConfig['AESOP_OWNER_NAME']);
+define('OWNER_EMAIL', $schedulerConfig['AESOP_OWNER_EMAIL']);
 
 // Shown on the booking page
 define('BOOKING_PAGE_TITLE',  $schedulerConfig['BOOKING_PAGE_TITLE']);

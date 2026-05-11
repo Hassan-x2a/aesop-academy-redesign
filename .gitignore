@@ -1,6 +1,10 @@
 ai-academy/KickStarter_1-highlight.mp4
 secrets.local.php
 scheduling/config.local.php
+scheduling/.config-cache
+scheduling/.tokens-account*
+scheduling/.bookings
+scheduling/.claude/
 
 # Claude Code session scratch — never track worktree temp dirs or nested junk
 .claude/worktrees/
