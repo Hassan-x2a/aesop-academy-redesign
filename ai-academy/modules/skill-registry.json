@@ -1,0 +1,1123 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "AESOP Academy skill taxonomy and definitions with O*NET and WEF alignment",
+    "lastUpdated": "2026-05-11",
+    "totalDomains": 10,
+    "totalSkills": 28
+  },
+  "domains": {
+    "ai-fundamentals": {
+      "id": "ai-fundamentals",
+      "title": "AI Fundamentals & Machine Learning",
+      "description": "Core concepts of AI, machine learning paradigms, model training, and inference",
+      "icon": "🤖",
+      "skills": [
+        "understand-ai-basics",
+        "grasp-llm-behavior",
+        "recognize-ai-limitations"
+      ]
+    },
+    "prompt-engineering": {
+      "id": "prompt-engineering",
+      "title": "Prompt Engineering & Interaction Design",
+      "description": "Techniques for crafting effective prompts and designing multi-turn interactions with AI systems",
+      "icon": "💬",
+      "skills": [
+        "write-clear-prompts",
+        "design-multi-turn-conversations",
+        "leverage-system-prompts",
+        "optimize-output-formats"
+      ]
+    },
+    "generative-ai": {
+      "id": "generative-ai",
+      "title": "Large Language Models & Generative AI",
+      "description": "Understanding LLM architecture, capabilities, fine-tuning, and generative AI applications",
+      "icon": "✨",
+      "skills": [
+        "understand-llm-architecture",
+        "work-with-embeddings",
+        "fine-tune-language-models",
+        "use-generative-ai-tools"
+      ]
+    },
+    "ai-applications": {
+      "id": "ai-applications",
+      "title": "AI Applications & Problem-Solving",
+      "description": "Applying AI to solve real-world problems across domains; selecting appropriate tools and models",
+      "icon": "🎯",
+      "skills": [
+        "identify-ai-use-cases",
+        "solve-problems-with-ai",
+        "evaluate-ai-solutions"
+      ]
+    },
+    "ai-ethics-governance": {
+      "id": "ai-ethics-governance",
+      "title": "AI Governance & Ethics",
+      "description": "Understanding responsible AI, governance frameworks, bias mitigation, and ethical decision-making",
+      "icon": "⚖️",
+      "skills": [
+        "understand-ai-ethics",
+        "identify-ai-bias",
+        "apply-governance-frameworks",
+        "ensure-responsible-ai"
+      ]
+    },
+    "ai-society": {
+      "id": "ai-society",
+      "title": "AI in Society & Impact",
+      "description": "Understanding AI's societal implications, economic impact, job displacement, and human-AI collaboration",
+      "icon": "🌍",
+      "skills": [
+        "understand-ai-societal-impact",
+        "navigate-ai-driven-change",
+        "communicate-ai-concepts"
+      ]
+    },
+    "ai-systems-agents": {
+      "id": "ai-systems-agents",
+      "title": "Building AI Systems & Agents",
+      "description": "Designing and implementing AI systems, agents, orchestration, and multi-step AI workflows",
+      "icon": "🔧",
+      "skills": [
+        "design-ai-agents",
+        "integrate-multiple-ai-models",
+        "implement-ai-workflows",
+        "manage-agent-memory-context"
+      ]
+    },
+    "rag-knowledge-systems": {
+      "id": "rag-knowledge-systems",
+      "title": "RAG & Knowledge Systems",
+      "description": "Building retrieval-augmented generation systems, vector databases, and knowledge management",
+      "icon": "🗂️",
+      "skills": [
+        "build-rag-systems",
+        "work-with-vector-databases",
+        "design-knowledge-graphs"
+      ]
+    },
+    "ai-security": {
+      "id": "ai-security",
+      "title": "AI Security & Safety",
+      "description": "Securing AI systems, detecting adversarial attacks, ensuring model safety and reliability",
+      "icon": "🔒",
+      "skills": [
+        "secure-ai-systems",
+        "detect-ai-vulnerabilities",
+        "implement-safety-measures"
+      ]
+    },
+    "data-analytics": {
+      "id": "data-analytics",
+      "title": "Data Science & Analytics",
+      "description": "Data collection, preparation, analysis, and deriving insights using statistical and ML methods",
+      "icon": "📊",
+      "skills": [
+        "collect-and-prepare-data",
+        "perform-data-analysis",
+        "build-predictive-models"
+      ]
+    }
+  },
+  "skills": {
+    "understand-ai-basics": {
+      "id": "understand-ai-basics",
+      "title": "Understand AI Basics",
+      "description": "Comprehend foundational AI concepts: ML paradigms, model training, inference, neural networks, and basic AI terminology",
+      "domain": "ai-fundamentals",
+      "prerequisites": [],
+      "courseMapping": ["ai-governance-m1", "ai-governance-m2", "building-with-ai-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "relatedCodes": ["15-1231.00", "15-1254.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Develop machine learning models using statistical techniques",
+            "Determine AI training requirements and data needs"
+          ],
+          "confidence": "high",
+          "notes": "Foundational AI knowledge required for data science and ML engineering roles"
+        },
+        "wef": {
+          "primaryCategories": ["Analytical Thinking", "Critical Thinking"],
+          "secondaryCategories": ["Technological Literacy", "Lifelong Learning"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "WEF ranks analytical thinking and technological literacy as top 5 skills for 2024-2028"
+        }
+      }
+    },
+    "grasp-llm-behavior": {
+      "id": "grasp-llm-behavior",
+      "title": "Grasp LLM Behavior & Capabilities",
+      "description": "Understand how large language models work, what they can and cannot do, token limits, context windows, and model variations",
+      "domain": "ai-fundamentals",
+      "prerequisites": ["understand-ai-basics"],
+      "courseMapping": ["ai-governance-m3", "building-with-ai-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "relatedCodes": ["15-1231.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Evaluate model performance and behavior characteristics",
+            "Understand algorithm capabilities and limitations"
+          ],
+          "confidence": "high",
+          "notes": "Essential for roles working with LLMs and generative AI systems"
+        },
+        "wef": {
+          "primaryCategories": ["Critical Thinking", "Technological Literacy"],
+          "secondaryCategories": ["Analytical Thinking", "Curiosity & Lifelong Learning"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Critical thinking about technology capabilities is increasingly important for knowledge work"
+        }
+      }
+    },
+    "recognize-ai-limitations": {
+      "id": "recognize-ai-limitations",
+      "title": "Recognize AI Limitations & Failure Modes",
+      "description": "Identify AI failure modes, hallucinations, biases, edge cases, and understand when not to use AI",
+      "domain": "ai-fundamentals",
+      "prerequisites": ["understand-ai-basics", "grasp-llm-behavior"],
+      "courseMapping": ["ai-ethics-m1", "ai-governance-m4"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Test model reliability and edge cases",
+            "Identify risks and failure scenarios"
+          ],
+          "confidence": "high",
+          "notes": "Critical for responsible AI deployment and risk assessment"
+        },
+        "wef": {
+          "primaryCategories": ["Critical Thinking", "Risk Management"],
+          "secondaryCategories": ["Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Risk awareness and critical evaluation of AI systems increasingly valued"
+        }
+      }
+    },
+    "write-clear-prompts": {
+      "id": "write-clear-prompts",
+      "title": "Write Clear, Effective Prompts",
+      "description": "Craft single-turn and basic multi-turn prompts with clarity, context, and expected output formats",
+      "domain": "prompt-engineering",
+      "prerequisites": ["grasp-llm-behavior"],
+      "courseMapping": ["prompt-engineering-m1", "building-with-ai-m3"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1254.00",
+          "occupationTitle": "Web Developers",
+          "relatedCodes": ["15-1231.00"],
+          "jobZone": 3,
+          "relevantActivities": [
+            "Communicate technical requirements clearly",
+            "Design user interaction flows"
+          ],
+          "confidence": "high",
+          "notes": "Prompt writing is a new core skill for AI-augmented development roles"
+        },
+        "wef": {
+          "primaryCategories": ["Communication & Collaboration", "Creativity"],
+          "secondaryCategories": ["Technological Literacy"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Prompt engineering emerging as fundamental skill for AI-era knowledge workers"
+        }
+      }
+    },
+    "design-multi-turn-conversations": {
+      "id": "design-multi-turn-conversations",
+      "title": "Design Multi-Turn AI Conversations",
+      "description": "Structure extended dialogues with AI systems, maintain context, refine outputs iteratively, and manage conversation memory",
+      "domain": "prompt-engineering",
+      "prerequisites": ["write-clear-prompts"],
+      "courseMapping": ["prompt-engineering-m2", "building-ai-agents-i-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1254.00",
+          "occupationTitle": "Web Developers",
+          "jobZone": 3,
+          "relevantActivities": [
+            "Design conversational user interfaces",
+            "Implement chat and dialogue systems"
+          ],
+          "confidence": "high",
+          "notes": "Multi-turn conversation design essential for conversational AI applications"
+        },
+        "wef": {
+          "primaryCategories": ["Communication & Collaboration", "Creativity"],
+          "secondaryCategories": ["Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Conversational design increasingly central to user-facing AI applications"
+        }
+      }
+    },
+    "leverage-system-prompts": {
+      "id": "leverage-system-prompts",
+      "title": "Leverage System Prompts & Instructions",
+      "description": "Use system-level prompts, role definitions, and instruction-tuning to shape AI behavior and constrain outputs",
+      "domain": "prompt-engineering",
+      "prerequisites": ["write-clear-prompts"],
+      "courseMapping": ["prompt-engineering-m3", "building-ai-agents-i-m3"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Configure and tune AI system behavior",
+            "Define AI system constraints and safety rails"
+          ],
+          "confidence": "high",
+          "notes": "Advanced prompt engineering for production AI system control"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "secondaryCategories": ["Creativity"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Fine-grained control of AI behavior increasingly important for governance"
+        }
+      }
+    },
+    "optimize-output-formats": {
+      "id": "optimize-output-formats",
+      "title": "Optimize AI Output Formats",
+      "description": "Request and format AI outputs for specific use cases: JSON, markdown, code, structured data, etc.",
+      "domain": "prompt-engineering",
+      "prerequisites": ["write-clear-prompts"],
+      "courseMapping": ["prompt-engineering-m4", "building-with-ai-m4"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1254.00",
+          "occupationTitle": "Web Developers",
+          "jobZone": 3,
+          "relevantActivities": [
+            "Integrate AI outputs into software systems",
+            "Parse and process structured AI responses"
+          ],
+          "confidence": "high",
+          "notes": "Critical for integrating AI into production systems"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "medium",
+          "notes": "Technical skill for AI system integration"
+        }
+      }
+    },
+    "understand-llm-architecture": {
+      "id": "understand-llm-architecture",
+      "title": "Understand LLM Architecture & Training",
+      "description": "Comprehend transformer architecture, attention mechanisms, training processes, and model scaling principles",
+      "domain": "generative-ai",
+      "prerequisites": ["understand-ai-basics"],
+      "courseMapping": ["ai-governance-m5", "building-ai-agents-ii-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "relatedCodes": ["15-1231.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Study and understand deep learning architectures",
+            "Analyze neural network mechanisms"
+          ],
+          "confidence": "high",
+          "notes": "Deep technical knowledge required for advanced ML/AI roles"
+        },
+        "wef": {
+          "primaryCategories": ["Analytical Thinking", "Critical Thinking"],
+          "secondaryCategories": ["Technological Literacy"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Deep technical understanding of LLMs increasingly valued in tech roles"
+        }
+      }
+    },
+    "work-with-embeddings": {
+      "id": "work-with-embeddings",
+      "title": "Work with Embeddings & Vector Representations",
+      "description": "Understand embeddings, vector spaces, similarity search, and use embeddings in applications",
+      "domain": "generative-ai",
+      "prerequisites": ["understand-llm-architecture"],
+      "courseMapping": ["rag-systems-m1", "building-ai-agents-ii-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Work with vector representations and semantic search",
+            "Implement embedding-based systems"
+          ],
+          "confidence": "high",
+          "notes": "Essential for modern vector database and RAG applications"
+        },
+        "wef": {
+          "primaryCategories": ["Analytical Thinking", "Technological Literacy"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Vector techniques foundational to modern AI systems"
+        }
+      }
+    },
+    "fine-tune-language-models": {
+      "id": "fine-tune-language-models",
+      "title": "Fine-Tune Language Models",
+      "description": "Adapt pre-trained LLMs to specific domains through fine-tuning, LoRA, and instruction-tuning",
+      "domain": "generative-ai",
+      "prerequisites": ["understand-llm-architecture"],
+      "courseMapping": ["building-ai-agents-ii-m3", "ai-careers-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "relatedCodes": ["15-1231.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Adapt and customize machine learning models",
+            "Optimize models for specific applications"
+          ],
+          "confidence": "high",
+          "notes": "Advanced skill for customized AI systems and model optimization"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Model customization increasingly important for competitive advantage"
+        }
+      }
+    },
+    "use-generative-ai-tools": {
+      "id": "use-generative-ai-tools",
+      "title": "Use Generative AI Tools & APIs",
+      "description": "Leverage generative AI platforms (OpenAI, Anthropic, Google) and integrate them into applications",
+      "domain": "generative-ai",
+      "prerequisites": ["grasp-llm-behavior"],
+      "courseMapping": ["building-with-ai-m5", "ai-careers-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1254.00",
+          "occupationTitle": "Web Developers",
+          "relatedCodes": ["15-1231.00"],
+          "jobZone": 3,
+          "relevantActivities": [
+            "Integrate generative AI APIs into applications",
+            "Implement AI-powered features"
+          ],
+          "confidence": "high",
+          "notes": "Practical skill for most modern software development roles"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Creativity"],
+          "secondaryCategories": ["Problem-Solving"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Practical AI tool use becoming baseline expectation across roles"
+        }
+      }
+    },
+    "identify-ai-use-cases": {
+      "id": "identify-ai-use-cases",
+      "title": "Identify AI Use Cases & Opportunities",
+      "description": "Recognize where AI can add value, evaluate AI solution fit for business problems, and scope AI projects",
+      "domain": "ai-applications",
+      "prerequisites": ["understand-ai-basics", "grasp-llm-behavior"],
+      "courseMapping": ["building-with-ai-m1", "ai-careers-m3"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "11-3021.00",
+          "occupationTitle": "Computer and Information Systems Managers",
+          "relatedCodes": ["13-1111.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Identify opportunities for AI automation and improvement",
+            "Evaluate AI solutions for business needs"
+          ],
+          "confidence": "high",
+          "notes": "Critical skill for AI leadership and project scoping roles"
+        },
+        "wef": {
+          "primaryCategories": ["Analytical Thinking", "Creativity"],
+          "secondaryCategories": ["Critical Thinking", "Leadership"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "AI opportunity identification emerging as essential leadership competency"
+        }
+      }
+    },
+    "solve-problems-with-ai": {
+      "id": "solve-problems-with-ai",
+      "title": "Solve Real-World Problems with AI",
+      "description": "Apply AI techniques to analyze problems, develop solutions, and create AI-powered products or services",
+      "domain": "ai-applications",
+      "prerequisites": ["identify-ai-use-cases", "use-generative-ai-tools"],
+      "courseMapping": ["building-with-ai-m2", "building-ai-agents-i-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "relatedCodes": ["15-2051.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Develop software solutions incorporating AI",
+            "Apply AI to solve application-specific challenges"
+          ],
+          "confidence": "high",
+          "notes": "Practical problem-solving with AI is core competency for tech roles"
+        },
+        "wef": {
+          "primaryCategories": ["Creativity", "Problem-Solving", "Critical Thinking"],
+          "secondaryCategories": ["Collaboration"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Complex problem-solving with technology tools top WEF skill for 2024+"
+        }
+      }
+    },
+    "evaluate-ai-solutions": {
+      "id": "evaluate-ai-solutions",
+      "title": "Evaluate & Compare AI Solutions",
+      "description": "Assess AI solutions based on accuracy, cost, latency, bias, and alignment with requirements",
+      "domain": "ai-applications",
+      "prerequisites": ["identify-ai-use-cases", "recognize-ai-limitations"],
+      "courseMapping": ["ai-governance-m6", "ai-ethics-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "11-3021.00",
+          "occupationTitle": "Computer and Information Systems Managers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Evaluate technology solutions and trade-offs",
+            "Make architecture and tool selection decisions"
+          ],
+          "confidence": "high",
+          "notes": "Critical for technical leadership and procurement decisions"
+        },
+        "wef": {
+          "primaryCategories": ["Critical Thinking", "Analytical Thinking"],
+          "secondaryCategories": ["Leadership"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Analytical evaluation of AI solutions key for responsible deployment"
+        }
+      }
+    },
+    "understand-ai-ethics": {
+      "id": "understand-ai-ethics",
+      "title": "Understand AI Ethics & Responsible AI",
+      "description": "Grasp ethical principles, responsible AI frameworks, fairness, transparency, and accountability in AI systems",
+      "domain": "ai-ethics-governance",
+      "prerequisites": ["recognize-ai-limitations"],
+      "courseMapping": ["ai-ethics-m1", "ai-governance-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Consider ethical implications of AI systems",
+            "Implement fairness and accountability measures"
+          ],
+          "confidence": "high",
+          "notes": "Ethics increasingly required competency for AI roles"
+        },
+        "wef": {
+          "primaryCategories": ["Critical Thinking", "Ethical Awareness"],
+          "secondaryCategories": ["Social Responsibility"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "WEF identifies ethical AI and responsible business as top future skill areas"
+        }
+      }
+    },
+    "identify-ai-bias": {
+      "id": "identify-ai-bias",
+      "title": "Identify & Mitigate AI Bias",
+      "description": "Recognize sources of bias in data and models, conduct fairness analysis, and implement bias mitigation strategies",
+      "domain": "ai-ethics-governance",
+      "prerequisites": ["understand-ai-ethics", "collect-and-prepare-data"],
+      "courseMapping": ["ai-ethics-m2", "ai-governance-m3"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Analyze data for bias and fairness issues",
+            "Implement bias detection and mitigation techniques"
+          ],
+          "confidence": "high",
+          "notes": "Bias detection becoming critical requirement for AI system development"
+        },
+        "wef": {
+          "primaryCategories": ["Critical Thinking", "Analytical Thinking"],
+          "secondaryCategories": ["Ethical Awareness"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Fairness and bias mitigation increasingly mandated by regulations and policy"
+        }
+      }
+    },
+    "apply-governance-frameworks": {
+      "id": "apply-governance-frameworks",
+      "title": "Apply AI Governance Frameworks",
+      "description": "Implement governance structures, policies, and controls for responsible AI development and deployment",
+      "domain": "ai-ethics-governance",
+      "prerequisites": ["understand-ai-ethics"],
+      "courseMapping": ["ai-governance-m2", "ai-governance-m4"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "11-3021.00",
+          "occupationTitle": "Computer and Information Systems Managers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Establish policies and governance for technology systems",
+            "Ensure compliance with regulations and standards"
+          ],
+          "confidence": "high",
+          "notes": "Governance and compliance increasingly central to AI leadership roles"
+        },
+        "wef": {
+          "primaryCategories": ["Leadership", "Critical Thinking"],
+          "secondaryCategories": ["Ethical Awareness", "Systems Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "AI governance frameworks essential for organizational readiness"
+        }
+      }
+    },
+    "ensure-responsible-ai": {
+      "id": "ensure-responsible-ai",
+      "title": "Ensure Responsible AI Deployment",
+      "description": "Design and implement responsible AI practices: testing, monitoring, safety rails, and continuous improvement",
+      "domain": "ai-ethics-governance",
+      "prerequisites": ["apply-governance-frameworks", "secure-ai-systems"],
+      "courseMapping": ["ai-ethics-m3", "ai-governance-m5"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Implement safety and reliability measures in AI systems",
+            "Test and validate AI system behavior in production"
+          ],
+          "confidence": "high",
+          "notes": "Responsible deployment practices critical for production AI systems"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Risk Management"],
+          "secondaryCategories": ["Critical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Safety and responsibility increasingly non-negotiable for AI systems"
+        }
+      }
+    },
+    "understand-ai-societal-impact": {
+      "id": "understand-ai-societal-impact",
+      "title": "Understand AI's Societal Impact",
+      "description": "Grasp AI's effects on employment, inequality, education, and society; understand economic and policy implications",
+      "domain": "ai-society",
+      "prerequisites": ["understand-ai-basics"],
+      "courseMapping": ["ai-in-society-m1", "ai-in-society-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "25-1194.00",
+          "occupationTitle": "Postsecondary Teachers, All Other",
+          "relatedCodes": ["11-3021.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Educate others about AI implications",
+            "Discuss AI impact on society and work"
+          ],
+          "confidence": "medium",
+          "notes": "Societal literacy about AI increasingly expected across roles"
+        },
+        "wef": {
+          "primaryCategories": ["Analytical Thinking", "Critical Thinking"],
+          "secondaryCategories": ["Curiosity & Lifelong Learning", "Social Responsibility"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Societal understanding of technology increasingly important for leadership"
+        }
+      }
+    },
+    "navigate-ai-driven-change": {
+      "id": "navigate-ai-driven-change",
+      "title": "Navigate AI-Driven Workplace Change",
+      "description": "Adapt to AI-augmented workflows, learn new AI tools, understand job transformation, and build AI-era skills",
+      "domain": "ai-society",
+      "prerequisites": ["understand-ai-societal-impact"],
+      "courseMapping": ["ai-careers-m1", "ai-careers-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "11-3021.00",
+          "occupationTitle": "Computer and Information Systems Managers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Lead organizational adaptation to new technologies",
+            "Support workforce transition and reskilling"
+          ],
+          "confidence": "high",
+          "notes": "Change management and adaptation essential for AI-era leadership"
+        },
+        "wef": {
+          "primaryCategories": ["Resilience & Flexibility", "Lifelong Learning"],
+          "secondaryCategories": ["Leadership", "Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "WEF identifies resilience, flexibility, and lifelong learning as top 2024+ skills"
+        }
+      }
+    },
+    "communicate-ai-concepts": {
+      "id": "communicate-ai-concepts",
+      "title": "Communicate AI Concepts to Diverse Audiences",
+      "description": "Explain AI concepts clearly to technical and non-technical audiences; demystify AI and build shared understanding",
+      "domain": "ai-society",
+      "prerequisites": ["understand-ai-basics"],
+      "courseMapping": ["ai-careers-m3", "ai-careers-m4"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "11-3021.00",
+          "occupationTitle": "Computer and Information Systems Managers",
+          "relatedCodes": ["13-1161.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Communicate technical concepts to non-technical stakeholders",
+            "Build organizational AI literacy"
+          ],
+          "confidence": "high",
+          "notes": "Communication increasingly critical for technical leadership"
+        },
+        "wef": {
+          "primaryCategories": ["Communication & Collaboration", "Leadership"],
+          "secondaryCategories": ["Critical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Communication and collaboration top 10 WEF skills for 2024-2028"
+        }
+      }
+    },
+    "design-ai-agents": {
+      "id": "design-ai-agents",
+      "title": "Design AI Agents & Orchestration",
+      "description": "Architect multi-agent systems, design agent interactions, manage orchestration and tool use",
+      "domain": "ai-systems-agents",
+      "prerequisites": ["use-generative-ai-tools", "leverage-system-prompts"],
+      "courseMapping": ["building-ai-agents-i-m1", "building-ai-agents-ii-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Design complex AI system architectures",
+            "Implement multi-component AI solutions"
+          ],
+          "confidence": "high",
+          "notes": "AI agent design emerging as critical software architecture skill"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "secondaryCategories": ["Creativity"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Advanced AI system design increasingly valuable for competitive advantage"
+        }
+      }
+    },
+    "integrate-multiple-ai-models": {
+      "id": "integrate-multiple-ai-models",
+      "title": "Integrate Multiple AI Models",
+      "description": "Combine different AI models and systems, implement model routing and selection logic, manage model composition",
+      "domain": "ai-systems-agents",
+      "prerequisites": ["design-ai-agents", "use-generative-ai-tools"],
+      "courseMapping": ["building-ai-agents-ii-m2", "building-ai-agents-iii-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Integrate multiple AI/ML components",
+            "Manage complex AI system interactions"
+          ],
+          "confidence": "high",
+          "notes": "Model integration and composition key skill for advanced AI systems"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Systems integration and composition increasingly important"
+        }
+      }
+    },
+    "implement-ai-workflows": {
+      "id": "implement-ai-workflows",
+      "title": "Implement AI Workflows & Automation",
+      "description": "Create multi-step AI workflows, implement automation pipelines, and orchestrate AI-augmented business processes",
+      "domain": "ai-systems-agents",
+      "prerequisites": ["design-ai-agents"],
+      "courseMapping": ["building-ai-agents-iii-m1", "building-ai-agents-iv-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Implement workflow automation with AI",
+            "Design AI-powered business process automation"
+          ],
+          "confidence": "high",
+          "notes": "Workflow automation with AI becoming standard development practice"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "secondaryCategories": ["Problem-Solving"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "AI-augmented automation core to future work productivity"
+        }
+      }
+    },
+    "manage-agent-memory-context": {
+      "id": "manage-agent-memory-context",
+      "title": "Manage Agent Memory & Context",
+      "description": "Design agent memory systems, manage context windows, implement long-term memory, and maintain conversation state",
+      "domain": "ai-systems-agents",
+      "prerequisites": ["design-ai-agents", "grasp-llm-behavior"],
+      "courseMapping": ["building-ai-agents-ii-m3", "building-ai-agents-iii-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Manage persistent state in AI systems",
+            "Implement memory and knowledge management for agents"
+          ],
+          "confidence": "high",
+          "notes": "Memory management critical for stateful, multi-turn agent systems"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Memory and context management advanced technical skill"
+        }
+      }
+    },
+    "build-rag-systems": {
+      "id": "build-rag-systems",
+      "title": "Build Retrieval-Augmented Generation (RAG) Systems",
+      "description": "Design and implement RAG systems, connect knowledge sources to generative models, and optimize retrieval",
+      "domain": "rag-knowledge-systems",
+      "prerequisites": ["work-with-embeddings", "use-generative-ai-tools"],
+      "courseMapping": ["rag-systems-m1", "rag-systems-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "relatedCodes": ["15-2051.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Implement knowledge retrieval systems",
+            "Build systems that augment AI with external knowledge"
+          ],
+          "confidence": "high",
+          "notes": "RAG becoming standard pattern for AI-augmented systems"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "secondaryCategories": ["Critical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "RAG systems increasingly central to enterprise AI deployment"
+        }
+      }
+    },
+    "work-with-vector-databases": {
+      "id": "work-with-vector-databases",
+      "title": "Work with Vector Databases",
+      "description": "Use vector databases (Pinecone, Weaviate, Qdrant) for semantic search, similarity search, and knowledge management",
+      "domain": "rag-knowledge-systems",
+      "prerequisites": ["work-with-embeddings"],
+      "courseMapping": ["rag-systems-m2", "rag-systems-m3"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "relatedCodes": ["15-1241.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Implement vector search and retrieval systems",
+            "Work with specialized databases for AI applications"
+          ],
+          "confidence": "high",
+          "notes": "Vector database expertise increasingly critical for modern data applications"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Vector database expertise valuable for data engineering and ML"
+        }
+      }
+    },
+    "design-knowledge-graphs": {
+      "id": "design-knowledge-graphs",
+      "title": "Design & Implement Knowledge Graphs",
+      "description": "Model domain knowledge as graphs, implement graph databases, and use for reasoning and knowledge representation",
+      "domain": "rag-knowledge-systems",
+      "prerequisites": ["work-with-embeddings"],
+      "courseMapping": ["rag-systems-m4", "building-ai-agents-iv-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "relatedCodes": ["15-1231.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Design structured knowledge representations",
+            "Implement semantic and knowledge management systems"
+          ],
+          "confidence": "high",
+          "notes": "Knowledge graphs increasingly important for semantic AI systems"
+        },
+        "wef": {
+          "primaryCategories": ["Analytical Thinking", "Critical Thinking"],
+          "secondaryCategories": ["Technological Literacy"],
+          "futureOfJobsRanking": 2025,
+          "importance": "high",
+          "notes": "Knowledge representation and reasoning valued in AI systems"
+        }
+      }
+    },
+    "secure-ai-systems": {
+      "id": "secure-ai-systems",
+      "title": "Secure AI Systems & Implementations",
+      "description": "Implement security controls for AI systems, protect against misuse, implement access controls, and secure APIs",
+      "domain": "ai-security",
+      "prerequisites": ["recognize-ai-limitations"],
+      "courseMapping": ["security-auditing-m1", "building-with-ai-m6"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1212.00",
+          "occupationTitle": "Information Security Analysts",
+          "relatedCodes": ["15-1231.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Implement security measures for AI systems",
+            "Protect AI systems from unauthorized access and misuse"
+          ],
+          "confidence": "high",
+          "notes": "AI security expertise increasingly critical as systems proliferate"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Risk Management"],
+          "secondaryCategories": ["Analytical Thinking", "Critical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "WEF identifies cybersecurity and networks as top tech skills for 2024+"
+        }
+      }
+    },
+    "detect-ai-vulnerabilities": {
+      "id": "detect-ai-vulnerabilities",
+      "title": "Detect AI Vulnerabilities & Attacks",
+      "description": "Identify prompt injection attacks, adversarial examples, model extraction, and other AI-specific vulnerabilities",
+      "domain": "ai-security",
+      "prerequisites": ["secure-ai-systems"],
+      "courseMapping": ["security-auditing-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1212.00",
+          "occupationTitle": "Information Security Analysts",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Identify vulnerabilities in AI systems",
+            "Test and audit AI systems for security flaws"
+          ],
+          "confidence": "high",
+          "notes": "AI-specific threat detection becoming critical security skill"
+        },
+        "wef": {
+          "primaryCategories": ["Critical Thinking", "Technological Literacy"],
+          "secondaryCategories": ["Analytical Thinking"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Security of AI systems increasingly regulatory and business-critical"
+        }
+      }
+    },
+    "implement-safety-measures": {
+      "id": "implement-safety-measures",
+      "title": "Implement AI Safety Measures",
+      "description": "Design safety constraints, implement guard rails, test for harmful outputs, and ensure AI alignment",
+      "domain": "ai-security",
+      "prerequisites": ["detect-ai-vulnerabilities", "ensure-responsible-ai"],
+      "courseMapping": ["security-auditing-m3", "ai-ethics-m3"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-1231.00",
+          "occupationTitle": "Software Developers",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Implement safety systems and constraints",
+            "Design and test alignment measures"
+          ],
+          "confidence": "high",
+          "notes": "AI safety increasingly important for responsible system deployment"
+        },
+        "wef": {
+          "primaryCategories": ["Risk Management", "Critical Thinking"],
+          "secondaryCategories": ["Technological Literacy"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Safety and responsible operation critical for AI-era development"
+        }
+      }
+    },
+    "collect-and-prepare-data": {
+      "id": "collect-and-prepare-data",
+      "title": "Collect & Prepare Data for AI",
+      "description": "Gather data from sources, clean and validate data, handle missing values, and prepare datasets for analysis",
+      "domain": "data-analytics",
+      "prerequisites": [],
+      "courseMapping": ["data-science-m1"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "relatedCodes": ["15-1211.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Collect and manage data from multiple sources",
+            "Clean, validate, and prepare data for analysis"
+          ],
+          "confidence": "high",
+          "notes": "Data preparation is foundational skill for all data science and AI roles"
+        },
+        "wef": {
+          "primaryCategories": ["Analytical Thinking", "Technological Literacy"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Data fluency increasingly important across all roles"
+        }
+      }
+    },
+    "perform-data-analysis": {
+      "id": "perform-data-analysis",
+      "title": "Perform Data Analysis & Visualization",
+      "description": "Analyze datasets using statistical methods, create visualizations, identify patterns, and derive insights",
+      "domain": "data-analytics",
+      "prerequisites": ["collect-and-prepare-data"],
+      "courseMapping": ["data-science-m2"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "jobZone": 4,
+          "relevantActivities": [
+            "Analyze data to identify patterns and insights",
+            "Communicate data findings through visualization"
+          ],
+          "confidence": "high",
+          "notes": "Data analysis and interpretation critical for data-driven decision making"
+        },
+        "wef": {
+          "primaryCategories": ["Analytical Thinking", "Critical Thinking"],
+          "secondaryCategories": ["Communication"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "Analytical skills and data interpretation top WEF skills for 2024+"
+        }
+      }
+    },
+    "build-predictive-models": {
+      "id": "build-predictive-models",
+      "title": "Build & Deploy Predictive Models",
+      "description": "Train machine learning models, evaluate model performance, optimize parameters, and deploy for prediction",
+      "domain": "data-analytics",
+      "prerequisites": ["perform-data-analysis"],
+      "courseMapping": ["data-science-m3"],
+      "proficiencyLevels": 4,
+      "externalMappings": {
+        "onet": {
+          "primaryCode": "15-2051.00",
+          "occupationTitle": "Data Scientists",
+          "relatedCodes": ["15-1231.00"],
+          "jobZone": 4,
+          "relevantActivities": [
+            "Develop machine learning models for prediction",
+            "Evaluate and optimize model performance",
+            "Deploy models to production"
+          ],
+          "confidence": "high",
+          "notes": "Predictive modeling core competency for data science and ML roles"
+        },
+        "wef": {
+          "primaryCategories": ["Technological Literacy", "Analytical Thinking"],
+          "secondaryCategories": ["Problem-Solving"],
+          "futureOfJobsRanking": 2025,
+          "importance": "critical",
+          "notes": "ML and predictive analytics increasingly central to data roles"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "AESOP Academy proficiency level framework with Bloom's taxonomy alignment",
+    "lastUpdated": "2026-05-11",
+    "totalLevels": 4,
+    "scalingMethod": "0-100 point scale"
+  },
+  "proficiencyFramework": {
+    "level-1": {
+      "level": 1,
+      "name": "Novice",
+      "bloomsTaxonomy": "Remember / Understand",
+      "description": "Recognizes basic concepts and vocabulary; can identify examples; limited ability to apply knowledge in new contexts",
+      "scoreRange": {
+        "min": 0,
+        "max": 39,
+        "label": "0-39%"
+      },
+      "characteristics": [
+        "Knows basic definitions and concepts",
+        "Can identify examples when shown",
+        "Understands fundamental terminology",
+        "Limited ability to explain why or how",
+        "Cannot apply knowledge without guidance"
+      ],
+      "exemplars": {
+        "understand-ai-basics": "Student can define 'machine learning' and identify it as a type of AI, but cannot explain how models are trained or why they might fail",
+        "write-clear-prompts": "Student writes simple, single-turn prompts without structure; output quality is unpredictable and depends on trial-and-error",
+        "secure-ai-systems": "Student knows that AI systems need security but cannot identify specific threats or implement protections"
+      }
+    },
+    "level-2": {
+      "level": 2,
+      "name": "Developing",
+      "bloomsTaxonomy": "Understand / Apply",
+      "description": "Understands core concepts and can apply them in familiar situations; needs some guidance for novel problems; emerging competence",
+      "scoreRange": {
+        "min": 40,
+        "max": 69,
+        "label": "40-69%"
+      },
+      "characteristics": [
+        "Explains concepts clearly to others",
+        "Applies knowledge in familiar, well-defined scenarios",
+        "Recognizes when to use different approaches",
+        "Seeks guidance when encountering new situations",
+        "Makes some errors in complex or ambiguous contexts",
+        "Shows improvement through practice and feedback"
+      ],
+      "exemplars": {
+        "understand-ai-basics": "Student can explain ML paradigms, understands basic neural network concepts, and explains why models might overfit, but struggles with complex architecture choices",
+        "write-clear-prompts": "Student writes multi-turn prompts with some structure; includes context and formatting; occasionally refines based on output quality, but improvements are inconsistent",
+        "secure-ai-systems": "Student implements basic access controls and knows common vulnerabilities; can apply standard security patterns but struggles with novel threat scenarios"
+      }
+    },
+    "level-3": {
+      "level": 3,
+      "name": "Proficient",
+      "bloomsTaxonomy": "Apply / Analyze",
+      "description": "Applies knowledge fluently in familiar and moderately novel contexts; can analyze problems and select appropriate solutions; demonstrates mastery",
+      "scoreRange": {
+        "min": 70,
+        "max": 84,
+        "label": "70-84%"
+      },
+      "characteristics": [
+        "Applies knowledge confidently and correctly",
+        "Analyzes problems, identifies alternatives, and selects solutions",
+        "Adapts approaches for different contexts",
+        "Explains reasoning and trade-offs",
+        "Recognizes edge cases and handles them appropriately",
+        "Mentors others and provides feedback",
+        "Seeks to deepen understanding"
+      ],
+      "exemplars": {
+        "understand-ai-basics": "Student comprehends transformer architecture, explains why models scale with data and compute, makes informed decisions about model selection for specific tasks",
+        "write-clear-prompts": "Student crafts well-structured prompts with clear role, context, constraints; iteratively refines based on model behavior; explains design choices and anticipated outputs",
+        "secure-ai-systems": "Student designs security architecture for AI systems, anticipates attack vectors, implements protections, and explains trade-offs between security and functionality"
+      }
+    },
+    "level-4": {
+      "level": 4,
+      "name": "Advanced",
+      "bloomsTaxonomy": "Analyze / Evaluate / Create",
+      "description": "Solves complex, novel problems; evaluates solutions critically; creates new approaches and knowledge; demonstrates expertise",
+      "scoreRange": {
+        "min": 85,
+        "max": 100,
+        "label": "85-100%"
+      },
+      "characteristics": [
+        "Tackles novel, complex, ambiguous problems",
+        "Creates new solutions and approaches",
+        "Evaluates solutions comprehensively against multiple criteria",
+        "Anticipates unintended consequences",
+        "Designs systems and teaches others",
+        "Contributes to field knowledge and innovation",
+        "Makes nuanced judgments in uncertain contexts"
+      ],
+      "exemplars": {
+        "understand-ai-basics": "Student understands frontier research in ML, makes predictions about model scaling laws, designs novel architectures or training approaches, contributes to research or innovation",
+        "write-clear-prompts": "Student designs sophisticated multi-step prompting strategies, combines few-shot examples with tool calls, optimizes for latency vs. quality trade-offs, teaches prompt engineering to others",
+        "secure-ai-systems": "Student designs defense-in-depth security for AI systems, anticipates and mitigates emerging threats, contributes to industry security standards or research"
+      }
+    }
+  },
+  "bloomsTaxonomy": {
+    "description": "Alignment with Bloom's revised taxonomy for cognitive complexity",
+    "levels": {
+      "remember": {
+        "level": 1,
+        "description": "Recall facts and basic concepts (remember)",
+        "verbs": ["define", "identify", "recall", "recognize", "list"]
+      },
+      "understand": {
+        "level": 2,
+        "description": "Explain ideas or concepts (understand)",
+        "verbs": ["classify", "describe", "explain", "interpret", "summarize"]
+      },
+      "apply": {
+        "level": 3,
+        "description": "Use information in a new way (apply)",
+        "verbs": ["build", "choose", "demonstrate", "develop", "solve"]
+      },
+      "analyze": {
+        "level": 4,
+        "description": "Draw connections among ideas (analyze)",
+        "verbs": ["compare", "contrast", "distinguish", "integrate"]
+      },
+      "evaluate": {
+        "level": 5,
+        "description": "Justify a position or decision (evaluate)",
+        "verbs": ["appraise", "argue", "defend", "judge", "verify"]
+      },
+      "create": {
+        "level": 6,
+        "description": "Create new product or point of view (create)",
+        "verbs": ["assemble", "construct", "create", "design", "develop"]
+      }
+    }
+  },
+  "assessmentTypes": [
+    {
+      "type": "quiz",
+      "description": "Multiple choice, short answer",
+      "bloomsTargets": ["Remember", "Understand", "Apply"],
+      "proficiencyRanges": "Novice to Developing"
+    },
+    {
+      "type": "module-test",
+      "description": "Mixed format: MC, short answer, scenario analysis",
+      "bloomsTargets": ["Understand", "Apply", "Analyze"],
+      "proficiencyRanges": "Developing to Proficient"
+    },
+    {
+      "type": "lab",
+      "description": "Hands-on implementation, conversational problem-solving",
+      "bloomsTargets": ["Apply", "Analyze", "Evaluate"],
+      "proficiencyRanges": "Developing to Advanced"
+    },
+    {
+      "type": "project",
+      "description": "Multi-step design and implementation challenge",
+      "bloomsTargets": ["Analyze", "Evaluate", "Create"],
+      "proficiencyRanges": "Proficient to Advanced"
+    }
+  ],
+  "scoreInterpretation": {
+    "passingScore": 70,
+    "passingLevel": "Proficient",
+    "description": "A score of 70+ (Proficient level) indicates the learner can apply concepts fluently in familiar and moderately novel contexts, analyze problems, and select appropriate solutions",
+    "reportingBands": {
+      "below-developing": {
+        "min": 0,
+        "max": 39,
+        "label": "Below Developing",
+        "interpretation": "Still building foundational understanding; recommend review of core concepts"
+      },
+      "developing": {
+        "min": 40,
+        "max": 69,
+        "label": "Developing",
+        "interpretation": "Understanding emerging; can apply in familiar contexts; recommend additional practice and guidance"
+      },
+      "proficient": {
+        "min": 70,
+        "max": 84,
+        "label": "Proficient",
+        "interpretation": "Demonstrates mastery; can apply fluently in familiar and moderately novel contexts; ready for advanced topics"
+      },
+      "advanced": {
+        "min": 85,
+        "max": 100,
+        "label": "Advanced",
+        "interpretation": "Demonstrates deep mastery and expertise; can solve novel problems and create new approaches; ready for leadership/specialized roles"
+      }
+    }
+  },
+  "progressionLogic": {
+    "description": "How learners progress through proficiency levels",
+    "assessment": [
+      {
+        "phase": "Initial Learning",
+        "expectedRange": "0-40",
+        "activities": ["Lessons", "Guided examples", "Practice quizzes"],
+        "feedback": "Corrective; emphasize concepts"
+      },
+      {
+        "phase": "Consolidation",
+        "expectedRange": "40-70",
+        "activities": ["Applied labs", "Module tests", "Guided projects"],
+        "feedback": "Constructive; focus on gaps and improvement"
+      },
+      {
+        "phase": "Mastery",
+        "expectedRange": "70-85",
+        "activities": ["Complex labs", "Integration projects", "Mentoring"],
+        "feedback": "Developmental; explore extensions and deeper understanding"
+      },
+      {
+        "phase": "Expertise",
+        "expectedRange": "85-100",
+        "activities": ["Advanced projects", "Research", "Teaching", "Innovation"],
+        "feedback": "Strategic; focus on impact and contribution"
+      }
+    ]
+  },
+  "mobilePathway": {
+    "description": "Recommended sequence for learner advancement",
+    "noviceToDevloping": "Complete foundational lessons and practice quizzes; demonstrate understanding of core concepts",
+    "developingToProficient": "Complete applied labs and module tests; demonstrate ability to apply concepts in familiar scenarios",
+    "proficientToAdvanced": "Complete integration projects and advanced labs; demonstrate ability to solve novel, complex problems"
+  }
+}

@@ -1,0 +1,1000 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "Bidirectional mapping between AESOP Academy skills and courses",
+    "lastUpdated": "2026-05-11",
+    "totalSkills": 28,
+    "totalCourses": 18
+  },
+  "courseToSkills": {
+    "description": "Each course and the skills it teaches",
+    "ai-governance": {
+      "courseId": "ai-governance",
+      "courseTitle": "AI Governance",
+      "courseIcon": "🏛️",
+      "moduleCount": 8,
+      "modules": [
+        "gov-m1",
+        "gov-m2",
+        "gov-m3",
+        "gov-m4",
+        "gov-m5",
+        "gov-m6",
+        "gov-m7",
+        "gov-m8"
+      ],
+      "skills": [
+        "understand-ai-basics",
+        "grasp-llm-behavior",
+        "recognize-ai-limitations",
+        "understand-ai-ethics",
+        "apply-governance-frameworks",
+        "ensure-responsible-ai",
+        "evaluate-ai-solutions"
+      ],
+      "skillCount": 7,
+      "proficiencyTargets": "Novice through Proficient"
+    },
+    "ai-in-society": {
+      "courseId": "ai-in-society",
+      "courseTitle": "AI in Society",
+      "courseIcon": "🌍",
+      "moduleCount": 8,
+      "modules": [
+        "soc-m1",
+        "soc-m2",
+        "soc-m3",
+        "soc-m4",
+        "soc-m5",
+        "soc-m6",
+        "soc-m7",
+        "soc-m8"
+      ],
+      "skills": [
+        "understand-ai-basics",
+        "understand-ai-societal-impact",
+        "navigate-ai-driven-change",
+        "communicate-ai-concepts"
+      ],
+      "skillCount": 4,
+      "proficiencyTargets": "Novice through Developing"
+    },
+    "ai-and-creativity": {
+      "courseId": "ai-and-creativity",
+      "courseTitle": "AI & Creativity",
+      "courseIcon": "🎨",
+      "moduleCount": 8,
+      "modules": [
+        "cre-m1",
+        "cre-m2",
+        "cre-m3",
+        "cre-m4",
+        "cre-m5",
+        "cre-m6",
+        "cre-m7",
+        "cre-m8"
+      ],
+      "skills": [
+        "use-generative-ai-tools",
+        "write-clear-prompts",
+        "design-multi-turn-conversations",
+        "identify-ai-use-cases",
+        "solve-problems-with-ai"
+      ],
+      "skillCount": 5,
+      "proficiencyTargets": "Developing through Proficient"
+    },
+    "ai-ethics": {
+      "courseId": "ai-ethics",
+      "courseTitle": "AI Ethics",
+      "courseIcon": "⚖️",
+      "moduleCount": 6,
+      "modules": [
+        "eth-m1",
+        "eth-m2",
+        "eth-m3",
+        "eth-m4",
+        "eth-m5",
+        "eth-m6"
+      ],
+      "skills": [
+        "understand-ai-ethics",
+        "identify-ai-bias",
+        "recognize-ai-limitations",
+        "ensure-responsible-ai",
+        "implement-safety-measures"
+      ],
+      "skillCount": 5,
+      "proficiencyTargets": "Developing through Proficient"
+    },
+    "building-with-ai": {
+      "courseId": "building-with-ai",
+      "courseTitle": "Building with AI",
+      "courseIcon": "🔧",
+      "moduleCount": 8,
+      "modules": [
+        "bld-m1",
+        "bld-m2",
+        "bld-m3",
+        "bld-m4",
+        "bld-m5",
+        "bld-m6",
+        "bld-m7",
+        "bld-m8"
+      ],
+      "skills": [
+        "understand-ai-basics",
+        "grasp-llm-behavior",
+        "write-clear-prompts",
+        "use-generative-ai-tools",
+        "design-ai-agents",
+        "integrate-multiple-ai-models",
+        "implement-ai-workflows",
+        "secure-ai-systems",
+        "collect-and-prepare-data"
+      ],
+      "skillCount": 9,
+      "proficiencyTargets": "Developing through Advanced"
+    },
+    "ai-careers": {
+      "courseId": "ai-careers",
+      "courseTitle": "AI Careers",
+      "courseIcon": "💼",
+      "moduleCount": 6,
+      "modules": [
+        "car-m1",
+        "car-m2",
+        "car-m3",
+        "car-m4",
+        "car-m5",
+        "car-m6"
+      ],
+      "skills": [
+        "identify-ai-use-cases",
+        "use-generative-ai-tools",
+        "fine-tune-language-models",
+        "navigate-ai-driven-change",
+        "communicate-ai-concepts"
+      ],
+      "skillCount": 5,
+      "proficiencyTargets": "Developing through Proficient"
+    },
+    "building-ai-agents-i": {
+      "courseId": "building-ai-agents-i",
+      "courseTitle": "Building AI Agents I — Foundations",
+      "courseIcon": "🤖",
+      "moduleCount": 4,
+      "modules": [
+        "aia-m1",
+        "aia-m2",
+        "aia-m3",
+        "aia-m4"
+      ],
+      "skills": [
+        "use-generative-ai-tools",
+        "design-ai-agents",
+        "leverage-system-prompts",
+        "manage-agent-memory-context",
+        "solve-problems-with-ai"
+      ],
+      "skillCount": 5,
+      "proficiencyTargets": "Developing through Proficient"
+    },
+    "building-ai-agents-ii": {
+      "courseId": "building-ai-agents-ii",
+      "courseTitle": "Building AI Agents II — Skills & Tools",
+      "courseIcon": "🤖",
+      "moduleCount": 4,
+      "modules": [
+        "aib-m1",
+        "aib-m2",
+        "aib-m3",
+        "aib-m4"
+      ],
+      "skills": [
+        "understand-llm-architecture",
+        "work-with-embeddings",
+        "design-ai-agents",
+        "integrate-multiple-ai-models",
+        "manage-agent-memory-context",
+        "identify-ai-use-cases"
+      ],
+      "skillCount": 6,
+      "proficiencyTargets": "Developing through Advanced"
+    },
+    "building-ai-agents-iii": {
+      "courseId": "building-ai-agents-iii",
+      "courseTitle": "Building AI Agents III — Advanced Patterns",
+      "courseIcon": "🤖",
+      "moduleCount": 4,
+      "modules": [
+        "aic-m1",
+        "aic-m2",
+        "aic-m3",
+        "aic-m4"
+      ],
+      "skills": [
+        "implement-ai-workflows",
+        "manage-agent-memory-context",
+        "design-knowledge-graphs",
+        "integrate-multiple-ai-models"
+      ],
+      "skillCount": 4,
+      "proficiencyTargets": "Proficient through Advanced"
+    },
+    "building-ai-agents-iv": {
+      "courseId": "building-ai-agents-iv",
+      "courseTitle": "Building AI Agents IV — Optimization",
+      "courseIcon": "🤖",
+      "moduleCount": 3,
+      "modules": [
+        "aid-m1",
+        "aid-m2",
+        "aid-m3"
+      ],
+      "skills": [
+        "implement-ai-workflows",
+        "design-knowledge-graphs",
+        "fine-tune-language-models"
+      ],
+      "skillCount": 3,
+      "proficiencyTargets": "Proficient through Advanced"
+    },
+    "building-ai-agents-v": {
+      "courseId": "building-ai-agents-v",
+      "courseTitle": "Building AI Agents V — Deployment",
+      "courseIcon": "🤖",
+      "moduleCount": 2,
+      "modules": [
+        "aie-m1",
+        "aie-m2"
+      ],
+      "skills": [
+        "secure-ai-systems",
+        "ensure-responsible-ai",
+        "detect-ai-vulnerabilities",
+        "implement-safety-measures"
+      ],
+      "skillCount": 4,
+      "proficiencyTargets": "Proficient through Advanced"
+    },
+    "rag-systems-from-scratch": {
+      "courseId": "rag-systems",
+      "courseTitle": "RAG Systems from Scratch",
+      "courseIcon": "🗂️",
+      "moduleCount": 8,
+      "modules": [
+        "rag-m1",
+        "rag-m2",
+        "rag-m3",
+        "rag-m4",
+        "rag-m5",
+        "rag-m6",
+        "rag-m7",
+        "rag-m8"
+      ],
+      "skills": [
+        "work-with-embeddings",
+        "build-rag-systems",
+        "work-with-vector-databases",
+        "design-knowledge-graphs",
+        "perform-data-analysis"
+      ],
+      "skillCount": 5,
+      "proficiencyTargets": "Developing through Advanced"
+    },
+    "prompt-engineering-for-developers": {
+      "courseId": "prompt-engineering",
+      "courseTitle": "Prompt Engineering for Developers",
+      "courseIcon": "💬",
+      "moduleCount": 8,
+      "modules": [
+        "peg-m1",
+        "peg-m2",
+        "peg-m3",
+        "peg-m4",
+        "peg-m5",
+        "peg-m6",
+        "peg-m7",
+        "peg-m8"
+      ],
+      "skills": [
+        "write-clear-prompts",
+        "design-multi-turn-conversations",
+        "leverage-system-prompts",
+        "optimize-output-formats",
+        "use-generative-ai-tools"
+      ],
+      "skillCount": 5,
+      "proficiencyTargets": "Developing through Proficient"
+    },
+    "security-auditing": {
+      "courseId": "security-auditing",
+      "courseTitle": "Security Auditing",
+      "courseIcon": "🔒",
+      "moduleCount": 4,
+      "modules": [
+        "sec-m1",
+        "sec-m2",
+        "sec-m3",
+        "sec-m4"
+      ],
+      "skills": [
+        "secure-ai-systems",
+        "detect-ai-vulnerabilities",
+        "implement-safety-measures",
+        "recognize-ai-limitations"
+      ],
+      "skillCount": 4,
+      "proficiencyTargets": "Developing through Proficient"
+    },
+    "conversational-ai": {
+      "courseId": "conversational-ai",
+      "courseTitle": "Conversational AI",
+      "courseIcon": "💬",
+      "moduleCount": 4,
+      "modules": [
+        "conv-m1",
+        "conv-m2",
+        "conv-m3",
+        "conv-m4"
+      ],
+      "skills": [
+        "design-multi-turn-conversations",
+        "manage-agent-memory-context",
+        "design-ai-agents",
+        "optimize-output-formats"
+      ],
+      "skillCount": 4,
+      "proficiencyTargets": "Developing through Proficient"
+    },
+    "deep-learning": {
+      "courseId": "deep-learning",
+      "courseTitle": "Deep Learning",
+      "courseIcon": "🧠",
+      "moduleCount": 4,
+      "modules": [
+        "dl-m1",
+        "dl-m2",
+        "dl-m3",
+        "dl-m4"
+      ],
+      "skills": [
+        "understand-llm-architecture",
+        "work-with-embeddings",
+        "fine-tune-language-models",
+        "build-predictive-models"
+      ],
+      "skillCount": 4,
+      "proficiencyTargets": "Developing through Advanced"
+    },
+    "data-science": {
+      "courseId": "data-science",
+      "courseTitle": "Data Science",
+      "courseIcon": "📊",
+      "moduleCount": 4,
+      "modules": [
+        "data-m1",
+        "data-m2",
+        "data-m3",
+        "data-m4"
+      ],
+      "skills": [
+        "collect-and-prepare-data",
+        "perform-data-analysis",
+        "build-predictive-models",
+        "identify-ai-use-cases"
+      ],
+      "skillCount": 4,
+      "proficiencyTargets": "Developing through Proficient"
+    }
+  },
+  "skillToCourses": {
+    "description": "Each skill and where it is taught",
+    "understand-ai-basics": {
+      "skillId": "understand-ai-basics",
+      "skillTitle": "Understand AI Basics",
+      "skillDomain": "ai-fundamentals",
+      "primaryCourse": "ai-governance",
+      "courses": [
+        "ai-governance",
+        "building-with-ai",
+        "ai-in-society"
+      ],
+      "moduleIds": [
+        "gov-m1",
+        "gov-m2",
+        "bld-m1",
+        "soc-m1"
+      ],
+      "proficiencyTargets": "Novice through Developing",
+      "prevalence": "Foundational; taught in 3 core courses"
+    },
+    "grasp-llm-behavior": {
+      "skillId": "grasp-llm-behavior",
+      "skillTitle": "Grasp LLM Behavior & Capabilities",
+      "skillDomain": "ai-fundamentals",
+      "primaryCourse": "ai-governance",
+      "courses": [
+        "ai-governance",
+        "building-with-ai"
+      ],
+      "moduleIds": [
+        "gov-m3",
+        "bld-m2"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Core; taught in 2 major courses"
+    },
+    "recognize-ai-limitations": {
+      "skillId": "recognize-ai-limitations",
+      "skillTitle": "Recognize AI Limitations & Failure Modes",
+      "skillDomain": "ai-fundamentals",
+      "primaryCourse": "ai-ethics",
+      "courses": [
+        "ai-ethics",
+        "ai-governance",
+        "security-auditing"
+      ],
+      "moduleIds": [
+        "eth-m1",
+        "gov-m4",
+        "sec-m1"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Important; taught across safety-focused courses"
+    },
+    "write-clear-prompts": {
+      "skillId": "write-clear-prompts",
+      "skillTitle": "Write Clear, Effective Prompts",
+      "skillDomain": "prompt-engineering",
+      "primaryCourse": "prompt-engineering-for-developers",
+      "courses": [
+        "prompt-engineering",
+        "building-with-ai",
+        "ai-and-creativity",
+        "building-ai-agents-i"
+      ],
+      "moduleIds": [
+        "peg-m1",
+        "bld-m3",
+        "cre-m1",
+        "aia-m1"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Critical; taught in 4 courses with emphasis on application"
+    },
+    "design-multi-turn-conversations": {
+      "skillId": "design-multi-turn-conversations",
+      "skillTitle": "Design Multi-Turn AI Conversations",
+      "skillDomain": "prompt-engineering",
+      "primaryCourse": "prompt-engineering-for-developers",
+      "courses": [
+        "prompt-engineering",
+        "building-ai-agents-i",
+        "conversational-ai"
+      ],
+      "moduleIds": [
+        "peg-m2",
+        "aia-m2",
+        "conv-m1"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Important; taught in specialized courses"
+    },
+    "leverage-system-prompts": {
+      "skillId": "leverage-system-prompts",
+      "skillTitle": "Leverage System Prompts & Instructions",
+      "skillDomain": "prompt-engineering",
+      "primaryCourse": "prompt-engineering-for-developers",
+      "courses": [
+        "prompt-engineering",
+        "building-ai-agents-i"
+      ],
+      "moduleIds": [
+        "peg-m3",
+        "aia-m3"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Advanced prompt skill; taught in developer-focused courses"
+    },
+    "optimize-output-formats": {
+      "skillId": "optimize-output-formats",
+      "skillTitle": "Optimize AI Output Formats",
+      "skillDomain": "prompt-engineering",
+      "primaryCourse": "prompt-engineering-for-developers",
+      "courses": [
+        "prompt-engineering",
+        "building-with-ai",
+        "conversational-ai"
+      ],
+      "moduleIds": [
+        "peg-m4",
+        "bld-m4",
+        "conv-m2"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Important integration skill; taught in development courses"
+    },
+    "understand-llm-architecture": {
+      "skillId": "understand-llm-architecture",
+      "skillTitle": "Understand LLM Architecture & Training",
+      "skillDomain": "generative-ai",
+      "primaryCourse": "building-ai-agents-ii",
+      "courses": [
+        "building-ai-agents-ii",
+        "ai-governance",
+        "deep-learning"
+      ],
+      "moduleIds": [
+        "aib-m1",
+        "gov-m5",
+        "dl-m1"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Advanced; taught in technical courses"
+    },
+    "work-with-embeddings": {
+      "skillId": "work-with-embeddings",
+      "skillTitle": "Work with Embeddings & Vector Representations",
+      "skillDomain": "generative-ai",
+      "primaryCourse": "rag-systems-from-scratch",
+      "courses": [
+        "rag-systems",
+        "building-ai-agents-ii",
+        "deep-learning"
+      ],
+      "moduleIds": [
+        "rag-m1",
+        "aib-m2",
+        "dl-m2"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Important for RAG and ML; taught in advanced courses"
+    },
+    "fine-tune-language-models": {
+      "skillId": "fine-tune-language-models",
+      "skillTitle": "Fine-Tune Language Models",
+      "skillDomain": "generative-ai",
+      "primaryCourse": "building-ai-agents-ii",
+      "courses": [
+        "building-ai-agents-ii",
+        "ai-careers",
+        "deep-learning",
+        "building-ai-agents-iv"
+      ],
+      "moduleIds": [
+        "aib-m3",
+        "car-m2",
+        "dl-m3",
+        "aid-m3"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Advanced; taught in specialized technical courses"
+    },
+    "use-generative-ai-tools": {
+      "skillId": "use-generative-ai-tools",
+      "skillTitle": "Use Generative AI Tools & APIs",
+      "skillDomain": "generative-ai",
+      "primaryCourse": "building-with-ai",
+      "courses": [
+        "building-with-ai",
+        "ai-and-creativity",
+        "prompt-engineering",
+        "building-ai-agents-i",
+        "ai-careers"
+      ],
+      "moduleIds": [
+        "bld-m5",
+        "cre-m2",
+        "peg-m5",
+        "aia-m1",
+        "car-m1"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Critical; taught in 5 courses, emphasis on practical application"
+    },
+    "identify-ai-use-cases": {
+      "skillId": "identify-ai-use-cases",
+      "skillTitle": "Identify AI Use Cases & Opportunities",
+      "skillDomain": "ai-applications",
+      "primaryCourse": "building-with-ai",
+      "courses": [
+        "building-with-ai",
+        "ai-and-creativity",
+        "ai-careers",
+        "building-ai-agents-ii",
+        "data-science"
+      ],
+      "moduleIds": [
+        "bld-m1",
+        "cre-m4",
+        "car-m3",
+        "aib-m4",
+        "data-m4"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Critical; taught across applied courses"
+    },
+    "solve-problems-with-ai": {
+      "skillId": "solve-problems-with-ai",
+      "skillTitle": "Solve Real-World Problems with AI",
+      "skillDomain": "ai-applications",
+      "primaryCourse": "building-with-ai",
+      "courses": [
+        "building-with-ai",
+        "ai-and-creativity",
+        "building-ai-agents-i"
+      ],
+      "moduleIds": [
+        "bld-m2",
+        "cre-m3",
+        "aia-m4"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Critical application skill; emphasized in project-based courses"
+    },
+    "evaluate-ai-solutions": {
+      "skillId": "evaluate-ai-solutions",
+      "skillTitle": "Evaluate & Compare AI Solutions",
+      "skillDomain": "ai-applications",
+      "primaryCourse": "ai-governance",
+      "courses": [
+        "ai-governance",
+        "ai-ethics"
+      ],
+      "moduleIds": [
+        "gov-m6",
+        "eth-m2"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Important decision-making skill; taught in governance courses"
+    },
+    "understand-ai-ethics": {
+      "skillId": "understand-ai-ethics",
+      "skillTitle": "Understand AI Ethics & Responsible AI",
+      "skillDomain": "ai-ethics-governance",
+      "primaryCourse": "ai-ethics",
+      "courses": [
+        "ai-ethics",
+        "ai-governance"
+      ],
+      "moduleIds": [
+        "eth-m1",
+        "gov-m1"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Foundational ethics skill; taught in dedicated and governance courses"
+    },
+    "identify-ai-bias": {
+      "skillId": "identify-ai-bias",
+      "skillTitle": "Identify & Mitigate AI Bias",
+      "skillDomain": "ai-ethics-governance",
+      "primaryCourse": "ai-ethics",
+      "courses": [
+        "ai-ethics",
+        "ai-governance",
+        "data-science"
+      ],
+      "moduleIds": [
+        "eth-m2",
+        "gov-m3",
+        "data-m1"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Important fairness skill; taught in ethics and data science courses"
+    },
+    "apply-governance-frameworks": {
+      "skillId": "apply-governance-frameworks",
+      "skillTitle": "Apply AI Governance Frameworks",
+      "skillDomain": "ai-ethics-governance",
+      "primaryCourse": "ai-governance",
+      "courses": [
+        "ai-governance",
+        "ai-ethics"
+      ],
+      "moduleIds": [
+        "gov-m2",
+        "gov-m4",
+        "eth-m3"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Leadership skill; taught in governance courses"
+    },
+    "ensure-responsible-ai": {
+      "skillId": "ensure-responsible-ai",
+      "skillTitle": "Ensure Responsible AI Deployment",
+      "skillDomain": "ai-ethics-governance",
+      "primaryCourse": "ai-ethics",
+      "courses": [
+        "ai-ethics",
+        "building-ai-agents-v"
+      ],
+      "moduleIds": [
+        "eth-m3",
+        "aie-m1"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Critical deployment skill; emphasized in advanced courses"
+    },
+    "understand-ai-societal-impact": {
+      "skillId": "understand-ai-societal-impact",
+      "skillTitle": "Understand AI's Societal Impact",
+      "skillDomain": "ai-society",
+      "primaryCourse": "ai-in-society",
+      "courses": [
+        "ai-in-society"
+      ],
+      "moduleIds": [
+        "soc-m1",
+        "soc-m2"
+      ],
+      "proficiencyTargets": "Novice through Developing",
+      "prevalence": "Foundational awareness; taught in dedicated society course"
+    },
+    "navigate-ai-driven-change": {
+      "skillId": "navigate-ai-driven-change",
+      "skillTitle": "Navigate AI-Driven Workplace Change",
+      "skillDomain": "ai-society",
+      "primaryCourse": "ai-careers",
+      "courses": [
+        "ai-in-society",
+        "ai-careers"
+      ],
+      "moduleIds": [
+        "soc-m3",
+        "car-m1"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Important career readiness skill"
+    },
+    "communicate-ai-concepts": {
+      "skillId": "communicate-ai-concepts",
+      "skillTitle": "Communicate AI Concepts to Diverse Audiences",
+      "skillDomain": "ai-society",
+      "primaryCourse": "ai-careers",
+      "courses": [
+        "ai-careers",
+        "ai-in-society"
+      ],
+      "moduleIds": [
+        "car-m4",
+        "soc-m4"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Communication skill; taught in careers and society courses"
+    },
+    "design-ai-agents": {
+      "skillId": "design-ai-agents",
+      "skillTitle": "Design AI Agents & Orchestration",
+      "skillDomain": "ai-systems-agents",
+      "primaryCourse": "building-ai-agents-i",
+      "courses": [
+        "building-ai-agents-i",
+        "building-with-ai",
+        "building-ai-agents-ii",
+        "conversational-ai"
+      ],
+      "moduleIds": [
+        "aia-m1",
+        "bld-m6",
+        "aib-m1",
+        "conv-m3"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Critical systems skill; taught across agent-building courses"
+    },
+    "integrate-multiple-ai-models": {
+      "skillId": "integrate-multiple-ai-models",
+      "skillTitle": "Integrate Multiple AI Models",
+      "skillDomain": "ai-systems-agents",
+      "primaryCourse": "building-ai-agents-ii",
+      "courses": [
+        "building-ai-agents-ii",
+        "building-with-ai",
+        "building-ai-agents-iii"
+      ],
+      "moduleIds": [
+        "aib-m2",
+        "bld-m7",
+        "aic-m2"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Advanced integration skill"
+    },
+    "implement-ai-workflows": {
+      "skillId": "implement-ai-workflows",
+      "skillTitle": "Implement AI Workflows & Automation",
+      "skillDomain": "ai-systems-agents",
+      "primaryCourse": "building-ai-agents-iii",
+      "courses": [
+        "building-ai-agents-iii",
+        "building-with-ai",
+        "building-ai-agents-iv"
+      ],
+      "moduleIds": [
+        "aic-m1",
+        "bld-m8",
+        "aid-m1"
+      ],
+      "proficiencyTargets": "Proficient through Advanced",
+      "prevalence": "Advanced automation skill; taught in advanced courses"
+    },
+    "manage-agent-memory-context": {
+      "skillId": "manage-agent-memory-context",
+      "skillTitle": "Manage Agent Memory & Context",
+      "skillDomain": "ai-systems-agents",
+      "primaryCourse": "building-ai-agents-ii",
+      "courses": [
+        "building-ai-agents-ii",
+        "building-ai-agents-iii",
+        "conversational-ai"
+      ],
+      "moduleIds": [
+        "aib-m3",
+        "aic-m2",
+        "conv-m4"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Important stateful systems skill"
+    },
+    "build-rag-systems": {
+      "skillId": "build-rag-systems",
+      "skillTitle": "Build Retrieval-Augmented Generation (RAG) Systems",
+      "skillDomain": "rag-knowledge-systems",
+      "primaryCourse": "rag-systems-from-scratch",
+      "courses": [
+        "rag-systems"
+      ],
+      "moduleIds": [
+        "rag-m1",
+        "rag-m2"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Critical RAG skill; emphasized in dedicated RAG course"
+    },
+    "work-with-vector-databases": {
+      "skillId": "work-with-vector-databases",
+      "skillTitle": "Work with Vector Databases",
+      "skillDomain": "rag-knowledge-systems",
+      "primaryCourse": "rag-systems-from-scratch",
+      "courses": [
+        "rag-systems"
+      ],
+      "moduleIds": [
+        "rag-m2",
+        "rag-m3"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Important RAG database skill"
+    },
+    "design-knowledge-graphs": {
+      "skillId": "design-knowledge-graphs",
+      "skillTitle": "Design & Implement Knowledge Graphs",
+      "skillDomain": "rag-knowledge-systems",
+      "primaryCourse": "rag-systems-from-scratch",
+      "courses": [
+        "rag-systems",
+        "building-ai-agents-iii",
+        "building-ai-agents-iv"
+      ],
+      "moduleIds": [
+        "rag-m4",
+        "aic-m3",
+        "aid-m2"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Advanced knowledge representation skill"
+    },
+    "secure-ai-systems": {
+      "skillId": "secure-ai-systems",
+      "skillTitle": "Secure AI Systems & Implementations",
+      "skillDomain": "ai-security",
+      "primaryCourse": "security-auditing",
+      "courses": [
+        "security-auditing",
+        "building-with-ai",
+        "building-ai-agents-v"
+      ],
+      "moduleIds": [
+        "sec-m1",
+        "bld-m6",
+        "aie-m2"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Critical security skill; emphasized in security courses"
+    },
+    "detect-ai-vulnerabilities": {
+      "skillId": "detect-ai-vulnerabilities",
+      "skillTitle": "Detect AI Vulnerabilities & Attacks",
+      "skillDomain": "ai-security",
+      "primaryCourse": "security-auditing",
+      "courses": [
+        "security-auditing",
+        "building-ai-agents-v"
+      ],
+      "moduleIds": [
+        "sec-m2",
+        "aie-m3"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Security testing skill"
+    },
+    "implement-safety-measures": {
+      "skillId": "implement-safety-measures",
+      "skillTitle": "Implement AI Safety Measures",
+      "skillDomain": "ai-security",
+      "primaryCourse": "security-auditing",
+      "courses": [
+        "security-auditing",
+        "ai-ethics",
+        "building-ai-agents-v"
+      ],
+      "moduleIds": [
+        "sec-m3",
+        "eth-m4",
+        "aie-m4"
+      ],
+      "proficiencyTargets": "Developing through Advanced",
+      "prevalence": "Critical safety skill"
+    },
+    "collect-and-prepare-data": {
+      "skillId": "collect-and-prepare-data",
+      "skillTitle": "Collect & Prepare Data for AI",
+      "skillDomain": "data-analytics",
+      "primaryCourse": "data-science",
+      "courses": [
+        "data-science",
+        "building-with-ai"
+      ],
+      "moduleIds": [
+        "data-m1",
+        "bld-m5"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Foundational data skill"
+    },
+    "perform-data-analysis": {
+      "skillId": "perform-data-analysis",
+      "skillTitle": "Perform Data Analysis & Visualization",
+      "skillDomain": "data-analytics",
+      "primaryCourse": "data-science",
+      "courses": [
+        "data-science",
+        "rag-systems"
+      ],
+      "moduleIds": [
+        "data-m2",
+        "rag-m5"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Core analytics skill"
+    },
+    "build-predictive-models": {
+      "skillId": "build-predictive-models",
+      "skillTitle": "Build & Deploy Predictive Models",
+      "skillDomain": "data-analytics",
+      "primaryCourse": "data-science",
+      "courses": [
+        "data-science",
+        "deep-learning"
+      ],
+      "moduleIds": [
+        "data-m3",
+        "dl-m4"
+      ],
+      "proficiencyTargets": "Developing through Proficient",
+      "prevalence": "Advanced analytics skill"
+    }
+  },
+  "summary": {
+    "totalSkillsWithMapping": 28,
+    "totalCoursesWithMapping": 18,
+    "averageSkillsPerCourse": 4.9,
+    "averageCoursesPerSkill": 2.4,
+    "skillsWithSingleCourse": 2,
+    "skillsWithMultipleCourses": 26,
+    "coursesWithMostSkills": "building-with-ai (9 skills)",
+    "skillsTaughtMostBroadly": "write-clear-prompts (4 courses), use-generative-ai-tools (5 courses)"
+  }
+}

@@ -1,0 +1,971 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "AESOP Academy assessment blueprint: skills mapped to assessment methods and item requirements",
+    "lastUpdated": "2026-05-11",
+    "totalSkills": 28,
+    "totalItemsRequired": 56
+  },
+  "assessmentMethods": {
+    "quiz": {
+      "methodId": "quiz",
+      "name": "Lesson Quizzes",
+      "description": "Short multiple-choice and true/false questions embedded in lessons",
+      "evidenceType": ["multiple-choice", "true-false"],
+      "scoringMethod": "binary (0-1 per item, aggregated for lesson)",
+      "bloomsTargets": ["Remember", "Understand", "Apply"],
+      "expectedProficiencyRange": ["Novice", "Developing"],
+      "placementFrequency": "end of each lesson (typically 3-4 items per lesson)",
+      "itemsAcrossAllSkills": 16,
+      "timing": "5-10 minutes per quiz"
+    },
+    "module-test": {
+      "methodId": "module-test",
+      "name": "Module Tests",
+      "description": "Comprehensive assessment at module end with mixed formats",
+      "evidenceType": ["multiple-choice", "short-answer", "scenario-analysis"],
+      "scoringMethod": "0-100 scaled score",
+      "bloomsTargets": ["Understand", "Apply", "Analyze"],
+      "expectedProficiencyRange": ["Developing", "Proficient"],
+      "placementFrequency": "end of module (1 test per module)",
+      "itemsAcrossAllSkills": 24,
+      "timing": "30-45 minutes per test"
+    },
+    "lab": {
+      "methodId": "lab",
+      "name": "Conversational & Hands-On Labs",
+      "description": "Hands-on implementation labs with AI tutor feedback and open-ended problem-solving",
+      "evidenceType": ["implementation", "conversation", "applied-task"],
+      "scoringMethod": "rubric-based (0-4 scale, converted to 0-100)",
+      "bloomsTargets": ["Apply", "Analyze", "Evaluate"],
+      "expectedProficiencyRange": ["Developing", "Proficient", "Advanced"],
+      "placementFrequency": "within lessons and modules (1-2 per skill)",
+      "itemsAcrossAllSkills": 12,
+      "timing": "15-30 minutes per lab"
+    },
+    "project": {
+      "methodId": "project",
+      "name": "Integration Projects",
+      "description": "Multi-step design and implementation projects (future; Phase 2 scope)",
+      "evidenceType": ["design", "implementation", "reflection"],
+      "scoringMethod": "rubric-based (0-4 scale per criterion, aggregated)",
+      "bloomsTargets": ["Analyze", "Evaluate", "Create"],
+      "expectedProficiencyRange": ["Proficient", "Advanced"],
+      "placementFrequency": "capstone (1 per course or skill cluster)",
+      "itemsAcrossAllSkills": 4,
+      "timing": "2-4 hours per project"
+    }
+  },
+  "skillAssessmentMapping": {
+    "understand-ai-basics": {
+      "skillId": "understand-ai-basics",
+      "skillTitle": "Understand AI Basics",
+      "domain": "ai-fundamentals",
+      "bloomsProgression": ["Remember", "Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 2,
+          "bloomsTarget": "Remember, Understand",
+          "content": "Define ML paradigms, identify types of AI, explain basic training concepts",
+          "proficiencyTarget": "Novice-Developing"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Understand, Apply",
+          "content": "Explain how neural networks learn, apply concepts to scenario analysis",
+          "proficiencyTarget": "Developing-Proficient"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Build and train a simple model, analyze performance and failure modes",
+          "proficiencyTarget": "Developing-Proficient"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70,
+      "assessmentWeight": "foundational; prerequisite for advanced skills"
+    },
+    "grasp-llm-behavior": {
+      "skillId": "grasp-llm-behavior",
+      "skillTitle": "Grasp LLM Behavior & Capabilities",
+      "domain": "ai-fundamentals",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 2,
+          "bloomsTarget": "Understand",
+          "content": "Identify LLM capabilities, explain token limits, recognize context window effects"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Predict LLM behavior in scenarios, analyze failure modes, explain trade-offs"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Analyze, Evaluate",
+          "content": "Experiment with LLM and document behavior patterns, edge cases"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "recognize-ai-limitations": {
+      "skillId": "recognize-ai-limitations",
+      "skillTitle": "Recognize AI Limitations & Failure Modes",
+      "domain": "ai-fundamentals",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 2,
+          "bloomsTarget": "Understand",
+          "content": "Identify hallucinations, biases, failure modes; recognize when not to use AI"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Analyze cases for potential AI failures, recommend mitigation strategies"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Analyze, Evaluate",
+          "content": "Test AI system for edge cases and failure modes, document findings"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "write-clear-prompts": {
+      "skillId": "write-clear-prompts",
+      "skillTitle": "Write Clear, Effective Prompts",
+      "domain": "prompt-engineering",
+      "bloomsProgression": ["Apply", "Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Select best prompt from options, identify prompt structure issues"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Write prompts for scenarios, analyze prompt quality and output"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Evaluate",
+          "content": "Iteratively improve prompt, explain design decisions, optimize outputs"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "design-multi-turn-conversations": {
+      "skillId": "design-multi-turn-conversations",
+      "skillTitle": "Design Multi-Turn AI Conversations",
+      "domain": "prompt-engineering",
+      "bloomsProgression": ["Apply", "Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Identify effective conversation structures, recognize context management issues"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design multi-turn conversation, analyze context flow and refinement"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Evaluate",
+          "content": "Implement multi-turn conversation with AI, test and document results"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "leverage-system-prompts": {
+      "skillId": "leverage-system-prompts",
+      "skillTitle": "Leverage System Prompts & Instructions",
+      "domain": "prompt-engineering",
+      "bloomsProgression": ["Apply", "Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Apply system prompts to control behavior, identify instruction issues"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design system prompt for role, analyze output control and constraints"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Evaluate",
+          "content": "Implement system-prompted agent, test behavior alignment"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "optimize-output-formats": {
+      "skillId": "optimize-output-formats",
+      "skillTitle": "Optimize AI Output Formats",
+      "domain": "prompt-engineering",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Select appropriate output formats, identify formatting issues"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Request and format outputs for integration, analyze format effectiveness"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Generate and parse structured outputs, integrate into application"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "understand-llm-architecture": {
+      "skillId": "understand-llm-architecture",
+      "skillTitle": "Understand LLM Architecture & Training",
+      "domain": "generative-ai",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 2,
+          "bloomsTarget": "Understand",
+          "content": "Explain transformers, attention mechanisms, training processes"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Analyze architecture implications, explain scaling laws"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Analyze",
+          "content": "Explore model architecture, analyze design trade-offs"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "work-with-embeddings": {
+      "skillId": "work-with-embeddings",
+      "skillTitle": "Work with Embeddings & Vector Representations",
+      "domain": "generative-ai",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Explain embeddings and vector spaces, recognize similarity concepts"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Use embeddings for similarity, analyze embedding quality"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Build embedding-based search, analyze retrieval effectiveness"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "fine-tune-language-models": {
+      "skillId": "fine-tune-language-models",
+      "skillTitle": "Fine-Tune Language Models",
+      "domain": "generative-ai",
+      "bloomsProgression": ["Apply", "Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand, Apply",
+          "content": "Recognize fine-tuning techniques, identify appropriate use cases"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design fine-tuning strategy, analyze training and performance"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Fine-tune model on domain data, evaluate improvements"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "use-generative-ai-tools": {
+      "skillId": "use-generative-ai-tools",
+      "skillTitle": "Use Generative AI Tools & APIs",
+      "domain": "generative-ai",
+      "bloomsProgression": ["Understand", "Apply"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Identify AI tools and APIs, recognize integration approaches"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply",
+          "content": "Integrate AI API into application, analyze implementation"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply",
+          "content": "Build application with generative AI, test functionality"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "identify-ai-use-cases": {
+      "skillId": "identify-ai-use-cases",
+      "skillTitle": "Identify AI Use Cases & Opportunities",
+      "domain": "ai-applications",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Identify AI applications in scenarios, recognize solution fit"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Analyze problems for AI opportunities, scope projects"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Analyze",
+          "content": "Evaluate AI solution for real problem, document justification"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "solve-problems-with-ai": {
+      "skillId": "solve-problems-with-ai",
+      "skillTitle": "Solve Real-World Problems with AI",
+      "domain": "ai-applications",
+      "bloomsProgression": ["Apply", "Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Develop AI solution for problem, analyze approach and trade-offs"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Evaluate",
+          "content": "Implement AI solution, test effectiveness and iterate"
+        },
+        {
+          "methodId": "project",
+          "itemCount": 1,
+          "bloomsTarget": "Analyze, Evaluate, Create",
+          "content": "Design and build AI-powered product/service"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "evaluate-ai-solutions": {
+      "skillId": "evaluate-ai-solutions",
+      "skillTitle": "Evaluate & Compare AI Solutions",
+      "domain": "ai-applications",
+      "bloomsProgression": ["Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Analyze, Evaluate",
+          "content": "Compare AI solutions on multiple criteria, make recommendations"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Evaluate",
+          "content": "Evaluate solution against requirements, document justification"
+        }
+      ],
+      "totalItems": 3,
+      "targetCutScore": 70
+    },
+    "understand-ai-ethics": {
+      "skillId": "understand-ai-ethics",
+      "skillTitle": "Understand AI Ethics & Responsible AI",
+      "domain": "ai-ethics-governance",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 2,
+          "bloomsTarget": "Understand",
+          "content": "Explain ethical principles, define fairness and transparency"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Apply ethics frameworks to cases, analyze implications"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Analyze",
+          "content": "Assess AI system for ethical issues, document findings"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "identify-ai-bias": {
+      "skillId": "identify-ai-bias",
+      "skillTitle": "Identify & Mitigate AI Bias",
+      "domain": "ai-ethics-governance",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Identify bias sources, recognize fairness issues"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Analyze data for bias, recommend mitigation strategies"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Conduct bias analysis on model, implement mitigation"
+        }
+      ],
+      "totalItems": 5,
+      "targetCutScore": 70
+    },
+    "apply-governance-frameworks": {
+      "skillId": "apply-governance-frameworks",
+      "skillTitle": "Apply AI Governance Frameworks",
+      "domain": "ai-ethics-governance",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Identify governance frameworks, recognize governance requirements"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design governance structure, analyze policy implications"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Implement governance controls, document compliance"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "ensure-responsible-ai": {
+      "skillId": "ensure-responsible-ai",
+      "skillTitle": "Ensure Responsible AI Deployment",
+      "domain": "ai-ethics-governance",
+      "bloomsProgression": ["Apply", "Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design safety and monitoring strategy, analyze deployment readiness"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Evaluate",
+          "content": "Implement safety measures, test and validate system"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "understand-ai-societal-impact": {
+      "skillId": "understand-ai-societal-impact",
+      "skillTitle": "Understand AI's Societal Impact",
+      "domain": "ai-society",
+      "bloomsProgression": ["Understand", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 2,
+          "bloomsTarget": "Understand",
+          "content": "Explain AI's economic and social effects, recognize implications"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Analyze",
+          "content": "Analyze societal impacts of AI, discuss policy implications"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "navigate-ai-driven-change": {
+      "skillId": "navigate-ai-driven-change",
+      "skillTitle": "Navigate AI-Driven Workplace Change",
+      "domain": "ai-society",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Recognize workplace transformation patterns, identify reskilling needs"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Develop adaptation strategy, analyze change management approaches"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Design learning plan for AI-era skills"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "communicate-ai-concepts": {
+      "skillId": "communicate-ai-concepts",
+      "skillTitle": "Communicate AI Concepts to Diverse Audiences",
+      "domain": "ai-society",
+      "bloomsProgression": ["Understand", "Apply"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Identify effective explanations, recognize audience adaptation"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply",
+          "content": "Explain AI concepts to different audiences, receive feedback"
+        }
+      ],
+      "totalItems": 3,
+      "targetCutScore": 70
+    },
+    "design-ai-agents": {
+      "skillId": "design-ai-agents",
+      "skillTitle": "Design AI Agents & Orchestration",
+      "domain": "ai-systems-agents",
+      "bloomsProgression": ["Apply", "Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design agent architecture, analyze interactions and orchestration"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Build agent system, test and evaluate performance"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "integrate-multiple-ai-models": {
+      "skillId": "integrate-multiple-ai-models",
+      "skillTitle": "Integrate Multiple AI Models",
+      "domain": "ai-systems-agents",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Design model integration strategy"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Implement multi-model system, analyze results"
+        }
+      ],
+      "totalItems": 3,
+      "targetCutScore": 70
+    },
+    "implement-ai-workflows": {
+      "skillId": "implement-ai-workflows",
+      "skillTitle": "Implement AI Workflows & Automation",
+      "domain": "ai-systems-agents",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design workflow, analyze automation strategy"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Implement workflow, test and optimize"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "manage-agent-memory-context": {
+      "skillId": "manage-agent-memory-context",
+      "skillTitle": "Manage Agent Memory & Context",
+      "domain": "ai-systems-agents",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Design memory and context strategy"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Implement memory system, evaluate effectiveness"
+        }
+      ],
+      "totalItems": 3,
+      "targetCutScore": 70
+    },
+    "build-rag-systems": {
+      "skillId": "build-rag-systems",
+      "skillTitle": "Build Retrieval-Augmented Generation (RAG) Systems",
+      "domain": "rag-knowledge-systems",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design RAG system, analyze retrieval strategy"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Build RAG system, test and evaluate quality"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "work-with-vector-databases": {
+      "skillId": "work-with-vector-databases",
+      "skillTitle": "Work with Vector Databases",
+      "domain": "rag-knowledge-systems",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Identify vector database use cases, recognize semantic search"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Design vector search strategy"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Implement vector search, evaluate results"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "design-knowledge-graphs": {
+      "skillId": "design-knowledge-graphs",
+      "skillTitle": "Design & Implement Knowledge Graphs",
+      "domain": "rag-knowledge-systems",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design knowledge graph, analyze representation"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Implement knowledge graph, test queries"
+        }
+      ],
+      "totalItems": 3,
+      "targetCutScore": 70
+    },
+    "secure-ai-systems": {
+      "skillId": "secure-ai-systems",
+      "skillTitle": "Secure AI Systems & Implementations",
+      "domain": "ai-security",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Identify security requirements, recognize threats"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design security controls, analyze threat mitigation"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Implement security measures, test protections"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "detect-ai-vulnerabilities": {
+      "skillId": "detect-ai-vulnerabilities",
+      "skillTitle": "Detect AI Vulnerabilities & Attacks",
+      "domain": "ai-security",
+      "bloomsProgression": ["Understand", "Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Recognize AI vulnerability types, identify attack vectors"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Analyze AI system for vulnerabilities, recommend fixes"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Test AI system for vulnerabilities"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "implement-safety-measures": {
+      "skillId": "implement-safety-measures",
+      "skillTitle": "Implement AI Safety Measures",
+      "domain": "ai-security",
+      "bloomsProgression": ["Apply", "Analyze", "Evaluate"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Design safety framework, analyze alignment and constraints"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Implement safety measures, validate effectiveness"
+        }
+      ],
+      "totalItems": 3,
+      "targetCutScore": 70
+    },
+    "collect-and-prepare-data": {
+      "skillId": "collect-and-prepare-data",
+      "skillTitle": "Collect & Prepare Data for AI",
+      "domain": "data-analytics",
+      "bloomsProgression": ["Understand", "Apply"],
+      "assessments": [
+        {
+          "methodId": "quiz",
+          "itemCount": 1,
+          "bloomsTarget": "Understand",
+          "content": "Identify data quality issues, recognize preparation techniques"
+        },
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply",
+          "content": "Prepare dataset, document quality and issues"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 1,
+          "bloomsTarget": "Apply",
+          "content": "Clean and prepare real dataset"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "perform-data-analysis": {
+      "skillId": "perform-data-analysis",
+      "skillTitle": "Perform Data Analysis & Visualization",
+      "domain": "data-analytics",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Analyze dataset, create visualizations, derive insights"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Perform data exploration, document findings"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    },
+    "build-predictive-models": {
+      "skillId": "build-predictive-models",
+      "skillTitle": "Build & Deploy Predictive Models",
+      "domain": "data-analytics",
+      "bloomsProgression": ["Apply", "Analyze"],
+      "assessments": [
+        {
+          "methodId": "module-test",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Build model, evaluate performance, analyze results"
+        },
+        {
+          "methodId": "lab",
+          "itemCount": 2,
+          "bloomsTarget": "Apply, Analyze",
+          "content": "Train and deploy model, test predictions"
+        }
+      ],
+      "totalItems": 4,
+      "targetCutScore": 70
+    }
+  },
+  "itemDistribution": {
+    "totalItems": 56,
+    "byMethod": {
+      "quiz": {
+        "count": 16,
+        "percentage": 29,
+        "proficiencyFocus": "Novice to Developing"
+      },
+      "module-test": {
+        "count": 24,
+        "percentage": 43,
+        "proficiencyFocus": "Developing to Proficient"
+      },
+      "lab": {
+        "count": 12,
+        "percentage": 21,
+        "proficiencyFocus": "Developing to Advanced"
+      },
+      "project": {
+        "count": 4,
+        "percentage": 7,
+        "proficiencyFocus": "Proficient to Advanced"
+      }
+    }
+  },
+  "validationNotes": {
+    "totalSkillsIncluded": 28,
+    "allSkillsCovered": true,
+    "bloomsDistribution": "Emphasis on Apply and Analyze levels across all assessments",
+    "proficiencyAlignment": "Assessment methods targeted to proficiency progression",
+    "timingEstimate": "56 items × average 5-10 minutes per item = 280-560 minutes of assessment content (~4.6-9.3 hours per learner)"
+  }
+}
