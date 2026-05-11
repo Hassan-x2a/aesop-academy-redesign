@@ -2,7 +2,7 @@
   "learnersThisWeek": 120,
   "coursesLive": 126,
   "coursesInDev": 54,
-  "languages": 7,
+  "languages": 8,
   "supportedLanguages": [
     "en",
     "es",
@@ -10,9 +10,10 @@
     "ar",
     "zh-TW",
     "ko",
-    "ur"
+    "ur",
+    "tr"
   ],
-  "updatedAt": "2026-05-11T12:28:20+00:00",
+  "updatedAt": "2026-05-11T13:00:24+00:00",
   "source": {
     "learnersThisWeek": "estimated (25\u00d77 \u00b1 daily variance)",
     "coursesLive": "course-registry.json where status=='live'",

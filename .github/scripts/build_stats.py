@@ -36,9 +36,9 @@ REGISTRY_PATH = REPO_ROOT / "ai-academy" / "modules" / "course-registry.json"
 COURSES_HTML_PATH = REPO_ROOT / "ai-academy" / "courses.html"
 STATS_PATH = REPO_ROOT / "stats.json"
 
-# Canonical list of UI languages actually supported by the router in index.html.
+# Canonical list of UI languages actually supported by the shared top banner.
 # Keep this in sync with the <button data-lang="..."> pills in the top banner.
-LANGUAGES = ["en", "es", "hi", "ar", "zh-TW", "ko", "ur"]
+LANGUAGES = ["en", "es", "hi", "ar", "zh-TW", "ko", "ur", "tr"]
 
 
 def count_live_courses() -> int:
