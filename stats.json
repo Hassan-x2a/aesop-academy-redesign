@@ -13,7 +13,7 @@
     "ur",
     "tr"
   ],
-  "updatedAt": "2026-05-11T16:26:36+00:00",
+  "updatedAt": "2026-05-11T18:52:23+00:00",
   "source": {
     "learnersThisWeek": "GA4 activeUsers, last 7 days",
     "coursesLive": "course-registry.json where status=='live'",
