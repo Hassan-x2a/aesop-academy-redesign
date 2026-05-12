@@ -318,6 +318,30 @@
       "addedAt": "2026-05-02T18:30:37.128Z",
       "id": "susan-levaque-1777746637239",
       "hasPhoto": true
+    },
+    {
+      "name": "Khet Kumar",
+      "credentials": null,
+      "title": "AI & Robotics Author | AI & STEAM Curriculum Desinger | Founder Red Pi",
+      "organization": "Red Pi",
+      "city": "Lahore",
+      "country": "Pakistan",
+      "linkedin": "https://www.linkedin.com/in/khet-kumar/",
+      "bio": "Khet Kumar is an educationist, author, and EdTech entrepreneur with over a decade of experience in early childhood and K–12 education. He is the founder of Red Pi, an EdTech company leading the integration of STEAM, AI, and Robotics in schools across the globe. Khet has introduced an AI and STEAM curriculum for the early years, focusing on the safe use of technology, aiming to build future-ready skills from the start. He also empowers educators through his Teacher AI Literacy Program and consults with schools to implement innovative, scalable education solutions.",
+      "degree": "Masters",
+      "tags": [
+        "AI Ethics",
+        "AI Accessibility",
+        "AI Safety",
+        "Curriculum Design",
+        "Education Technology",
+        "Entrepreneurship",
+        "Digital Literacy"
+      ],
+      "emoji": "🎓",
+      "addedAt": "2026-05-12T19:45:01.148Z",
+      "id": "khet-kumar-1778615101471",
+      "hasPhoto": true
     }
   ]
 }
