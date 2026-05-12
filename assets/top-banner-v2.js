@@ -1,6 +1,6 @@
-﻿/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
- * AESOP AI Academy â€” Shared Top Banner
- * â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+﻿/* ─────────────────────────────────────────────────────────────
+ * AESOP AI Academy — Shared Top Banner
+ * ─────────────────────────────────────────────────────────────
  * Single source of truth for the site-wide top banner (pill
  * nav + live stats + language / dark-mode / report utilities).
  *
@@ -13,14 +13,14 @@
  *      #topBanner element to <body>, and wires up stats + lang + dismiss.
  *
  * Edit this file to change the banner on every page at once.
- * â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+ * ───────────────────────────────────────────────────────────── */
 (function () {
   'use strict';
 
   // Avoid double-mount if the script gets included twice.
   if (document.getElementById('topBanner')) return;
 
-  /* â”€â”€â”€ CSS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* ─── CSS ─────────────────────────────────────────────── */
   var CSS = '' +
     /* Reserve space for the fixed banner on every page, and add scroll
        padding so #anchor links don't land hidden underneath it. */
@@ -170,7 +170,7 @@
     '  border-color: #ffd700;' +
     '}';
 
-  /* â”€â”€â”€ HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* ─── HTML ────────────────────────────────────────────── */
   var HTML = '' +
     '<div id="topBanner" class="top-banner" role="complementary" aria-label="Quick navigation and site stats">' +
     '  <nav class="tb-pills" aria-label="Primary navigation">' +
@@ -221,7 +221,7 @@
     '  </div>' +
     '</div>';
 
-  /* â”€â”€â”€ INJECT flag-icons CSS (for .fi fi-xx language flags) â”€â”€â”€ */
+  /* ─── INJECT flag-icons CSS (for .fi fi-xx language flags) ─── */
   if (!document.querySelector('link[href*="flag-icons"]')) {
     var flagLink = document.createElement('link');
     flagLink.rel  = 'stylesheet';
@@ -229,13 +229,13 @@
     (document.head || document.documentElement).appendChild(flagLink);
   }
 
-  /* â”€â”€â”€ INJECT CSS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* ─── INJECT CSS ─────────────────────────────────────── */
   var styleEl = document.createElement('style');
   styleEl.id = 'topBannerStyles';
   styleEl.textContent = CSS;
   (document.head || document.documentElement).appendChild(styleEl);
 
-  /* â”€â”€â”€ INJECT HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* ─── INJECT HTML ────────────────────────────────────── */
   // Prefer an explicit mount point; otherwise prepend to body.
   function mount() {
     var target = document.getElementById('topBanner-mount');
@@ -244,14 +244,14 @@
     } else if (document.body) {
       document.body.insertAdjacentHTML('afterbegin', HTML);
     } else {
-      // <body> not parsed yet â€” wait for it.
+      // <body> not parsed yet — wait for it.
       document.addEventListener('DOMContentLoaded', mount, { once: true });
       return;
     }
     wireBehaviors();
   }
 
-  /* â”€â”€â”€ BEHAVIORS (stats fetch + lang selector) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* ─── BEHAVIORS (stats fetch + lang selector) ─────────── */
   function wireBehaviors() {
     // Live stats: fetch /stats.json and update ticker numbers.
     try {
