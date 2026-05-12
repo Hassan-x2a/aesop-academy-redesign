@@ -1,0 +1,55 @@
+{
+  "id": "ai-homework-smart-or-cheat",
+  "title": "Did You Earn That Grade?",
+  "mega_group": "AI in School",
+  "modules": [
+    {
+      "title": "The Assignment Lands",
+      "sub": "A big project arrives and AI offers an easy way out.",
+      "description": "The learner steps into the role of a student who has just received a challenging essay assignment and discovers that an AI tool can write it almost instantly. They must decide how much to rely on it, setting off a chain of consequences that plays out across the course. This opening module establishes the core tension between speed and learning."
+    },
+    {
+      "title": "What Did You Actually Learn?",
+      "sub": "Exploring what gets lost when AI does the thinking.",
+      "description": "Through a branching story, learners follow two versions of the same student — one who submitted AI-written work and one who used AI as a thinking partner. They compare outcomes in a later class discussion where both students are asked to explain their ideas aloud. Learners reflect on what genuine understanding feels like and why it matters beyond the grade."
+    },
+    {
+      "title": "Rules, Trust, and Consequences",
+      "sub": "What happens when schools, teachers, and students disagree.",
+      "description": "Learners encounter a scenario where AI use is discovered and must navigate a conversation between student, teacher, and parent characters — each with a different view of what is fair. They make dialogue choices that shape the outcome and explore why academic integrity policies exist. The module surfaces the difference between using AI as a tool versus using it as a replacement for your own thinking."
+    },
+    {
+      "title": "Your AI Use Policy",
+      "sub": "Write the rules you'd actually want to follow.",
+      "description": "As the exit artifact, learners draft a personal AI use agreement for their own schoolwork — specifying when AI help is appropriate, when it crosses a line, and why. They are prompted with real scenarios to test their rules before finalising them. The finished document is something they can genuinely keep, share with a teacher, or revisit as AI tools evolve."
+    }
+  ],
+  "synopsis": "This course drops you inside the real dilemma: when AI can write your essay in seconds, what does doing your own work even mean? You'll make choices, face consequences, and leave with your own honest framework for using AI at school.",
+  "tier": "Intermediate",
+  "age_band": "11-13",
+  "rationale": "Without a structured space to reason through the ethics of AI-assisted schoolwork, students default to extremes — total avoidance or uncritical submission — and miss the nuanced skills of legitimate AI collaboration.",
+  "learning_outcome": "Students can distinguish between AI use that supports their learning and AI use that replaces it, and can articulate their own principled rules for schoolwork with AI.",
+  "source_signals": [
+    "The AI-Education Death Spiral a.k.a. Let the Kids Cheat",
+    "26% of students ages 13-17 are using ChatGPT to help with homework, study finds",
+    "Notes❌ Chatgpt✅ #chatgpt #exams #studentlife #relatable #ai #notes #students",
+    "Student's Genius Exam Hack with AI Stuns Everyone! 🤯📚",
+    "Ditching School (Ai Edition) 😱 #ai #chatgpt #aiart"
+  ],
+  "source_names": [
+    "hacker_news_k12",
+    "hacker_news_k12",
+    "youtube_k12",
+    "youtube_k12",
+    "youtube_k12"
+  ],
+  "demand_score": 10,
+  "corpus_score": 0.635,
+  "nearest_existing": "हर रोज़ का AI",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

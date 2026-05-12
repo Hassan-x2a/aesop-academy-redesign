@@ -1,0 +1,53 @@
+{
+  "id": "dont-believe-the-chatbot",
+  "title": "When the Chatbot Is Wrong",
+  "mega_group": "Truth & Safety",
+  "modules": [
+    {
+      "title": "The Confident Liar",
+      "sub": "Chatbots can sound certain while being completely wrong.",
+      "description": "Learners receive a realistic research task and watch a chatbot produce a fluent, authoritative-sounding answer that contains fabricated facts — a phenomenon called hallucination. They are challenged to spot what is wrong before the answer is revealed, building early instincts for scepticism. The module establishes why confident tone is not the same as reliable truth."
+    },
+    {
+      "title": "Where Did That Come From?",
+      "sub": "Understanding what chatbots are actually doing with words.",
+      "description": "Through an interactive analogy, learners explore how large language models predict text rather than look up facts, helping them understand structurally why errors happen. They experiment with prompts that reliably produce different kinds of mistakes — outdated information, biased framings, invented sources — and categorise what they find. This module builds a mental model that replaces naive trust with calibrated scepticism."
+    },
+    {
+      "title": "Verify, Challenge, Cross-Check",
+      "sub": "A practical toolkit for testing AI claims yourself.",
+      "description": "Learners work through a set of realistic scenarios — a health question, a historical claim, a news summary — and apply a three-step verification process: identify the claim, find an independent source, and check whether the AI acknowledged uncertainty. They make judgment calls about which claims need more scrutiny and which are low-stakes, building proportionate rather than blanket distrust."
+    },
+    {
+      "title": "The Reliability Report Card",
+      "sub": "Rate a chatbot honestly so others know what to expect.",
+      "description": "As the exit artifact, learners produce a one-page Reliability Report Card for a chatbot they have used during the course, rating its performance across several categories — factual accuracy, source transparency, handling of uncertainty — with evidence from their own tests. The artifact is designed to be readable by a peer who has never thought critically about AI output before."
+    }
+  ],
+  "synopsis": "Chatbots sound smart, but they can invent facts with total confidence — and most people never notice. This course teaches you how to catch AI errors, understand why they happen, and develop the verification habits that separate savvy users from everyone else.",
+  "tier": "Advanced",
+  "age_band": "14-16",
+  "rationale": "Teenagers are using AI chatbots as primary research tools without the critical framework to detect hallucinations, biased framing, or outdated information, creating significant epistemic risk in their academic and personal decisions.",
+  "learning_outcome": "Students can identify the structural reasons why AI chatbots produce errors, apply a verification process to AI-generated claims, and explain chatbot reliability limitations to a peer audience.",
+  "source_signals": [
+    "Modern-Day Oracles or Bullshit Machines? How to thrive in a ChatGPT world",
+    "Tali Horowitz: The Key Issue with AI Chatbots and Teens",
+    "To prepare students for an AI world, colleges should give them a break from AI - The Boston Globe",
+    "The Risks of AI in Schools Outweigh the Benefits, Report Says"
+  ],
+  "source_names": [
+    "hacker_news_k12",
+    "youtube_k12",
+    "changelog_k12",
+    "hacker_news_k12"
+  ],
+  "demand_score": 10,
+  "corpus_score": 0.637,
+  "nearest_existing": "The Most Powerful Tool of Your Generation Just Showed Up at School",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

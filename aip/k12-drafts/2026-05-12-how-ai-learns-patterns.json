@@ -1,0 +1,53 @@
+{
+  "id": "how-ai-learns-patterns",
+  "title": "How AI Learns From Patterns",
+  "mega_group": "How AI Works",
+  "modules": [
+    {
+      "title": "The Pattern Detective",
+      "sub": "Discover how AI finds patterns in piles of data.",
+      "description": "Learners step into a story as junior detectives training a rookie AI named Atlas. They feed Atlas labelled examples — pictures of cats and dogs, spam and real emails — and watch it slowly learn. They make decisions about which examples to include, seeing how data quality shapes what Atlas learns."
+    },
+    {
+      "title": "When the Data Lies",
+      "sub": "See what happens when training data is incomplete.",
+      "description": "Atlas is trained on a biased dataset and starts making unfair predictions. Learners must identify what went wrong by examining the data, then choose how to fix it. This module introduces the idea that AI is only as good as the information it learns from."
+    },
+    {
+      "title": "Atlas Makes a Prediction",
+      "sub": "Understand how AI turns patterns into predictions.",
+      "description": "Learners guide Atlas through a real prediction challenge — predicting whether a student will enjoy a book based on past reading history. They adjust the inputs and observe how predictions change, building an intuitive understanding of inference without formal mathematics."
+    },
+    {
+      "title": "Build Your Own Classifier",
+      "sub": "Create a simple sorting AI using your own rules.",
+      "description": "Learners design a mini classification system — choosing a topic, defining categories, and selecting training examples — using a drag-and-drop story tool. Their finished classifier is their exit artifact, and they reflect on one thing they would change to make it fairer."
+    }
+  ],
+  "synopsis": "Train a rookie AI named Atlas from scratch and discover how machines learn from examples, spot patterns, and make predictions — and what goes wrong when the data is bad. You'll finish by building your own simple classifier.",
+  "tier": "Intermediate",
+  "age_band": "11-13",
+  "rationale": "Middle schoolers encounter algorithmic recommendations and AI outputs daily but rarely understand the data-driven mechanism behind them, leaving them unable to critically evaluate or responsibly use these systems.",
+  "learning_outcome": "Students can explain the basic loop of training data, pattern recognition, and prediction, and identify at least one way biased data produces unfair AI outputs.",
+  "source_signals": [
+    "Created Reptile | HTML | CSS | Javascript #youtubeshorts #trending #coding #animation #ai #learning",
+    "AI Complete OneShot Course for Beginners | Learn AI & ML Fundamentals from Scratch",
+    "Machine Learning FULL Course with Practical (10 HOURS) | Learn Free ML in 2025 | Part-1",
+    "Launch HN: Turing College (YC W21) – Online data science school"
+  ],
+  "source_names": [
+    "youtube_k12",
+    "youtube_k12",
+    "youtube_k12",
+    "hacker_news_k12"
+  ],
+  "demand_score": 8,
+  "corpus_score": 0.565,
+  "nearest_existing": "The Most Powerful Tool of Your Generation Just Showed Up at School",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

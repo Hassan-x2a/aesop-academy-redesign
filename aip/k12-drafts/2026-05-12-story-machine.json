@@ -1,0 +1,51 @@
+{
+  "id": "story-machine",
+  "title": "Story Machine: You're in Charge",
+  "mega_group": "How AI Works",
+  "modules": [
+    {
+      "title": "Meet the Story Machine",
+      "sub": "See how AI reads words and guesses what comes next.",
+      "description": "Learners meet LEO, a friendly story-telling robot who explains that he doesn't understand stories — he just knows which word usually follows which other word. Through a playful fill-in-the-blank game, learners predict the next word in sentences themselves, realising they're doing what AI does. The module ends with learners feeling surprised by how much (and how little) that explains."
+    },
+    {
+      "title": "Help! LEO Is Stuck",
+      "sub": "Guide an AI through a story gone wonderfully wrong.",
+      "description": "LEO starts telling a story but keeps making funny mistakes — mixing up characters, forgetting what happened earlier, and inventing impossible facts. Learners choose which corrections to give LEO, and watch how each choice changes the story's direction. This builds understanding of AI context windows, hallucination, and why AI needs clear instructions."
+    },
+    {
+      "title": "You Write, LEO Finishes",
+      "sub": "Collaborate with an AI to finish your own story.",
+      "description": "Learners write the opening paragraph of any story they want — adventure, mystery, silly nonsense — and then pass it to an AI engine to continue. They read the AI's version, decide what they love and what they'd change, then rewrite the ending themselves. The comparison between AI output and their own version is the learning moment."
+    },
+    {
+      "title": "True Story or LEO's Invention?",
+      "sub": "Spot the difference between real facts and AI confabulation.",
+      "description": "LEO tells three short stories — one using real facts, one with subtle errors, one completely made up but very convincing. Learners act as fact-checkers, flagging claims they'd want to verify before trusting. The module closes with learners writing one rule they'll follow whenever they ask an AI to tell them something true."
+    }
+  ],
+  "synopsis": "Learners dive inside an AI storyteller to understand how it works, what it gets wrong, and how to be a smart creative partner with it. A wonder-driven adventure for young readers and writers who love a good tale.",
+  "tier": "Beginner",
+  "age_band": "8-10",
+  "rationale": "Story is the most natural context for young learners to encounter AI, and using narrative interaction to teach next-token prediction and hallucination builds durable intuition that scales into critical AI literacy later.",
+  "learning_outcome": "Students can explain in their own words how AI generates text, identify at least two ways AI stories can go wrong, and apply a basic fact-checking habit when using AI-generated content.",
+  "source_signals": [
+    "Project Overview ‹ Interactive Stories for Learning AI and Programming in Preschool - MIT Media Lab",
+    "Project Overview ‹ Sparki: An Interactive Learning Companion for AI Education - MIT Media Lab",
+    "Project Overview ‹ PopBots: An early childhood AI curriculum - MIT Media Lab"
+  ],
+  "source_names": [
+    "changelog_k12",
+    "changelog_k12",
+    "changelog_k12"
+  ],
+  "demand_score": 7,
+  "corpus_score": 0.579,
+  "nearest_existing": "AI کہانیاں سناتا ہے",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

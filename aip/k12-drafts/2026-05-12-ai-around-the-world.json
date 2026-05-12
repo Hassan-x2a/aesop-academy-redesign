@@ -1,0 +1,51 @@
+{
+  "id": "ai-around-the-world",
+  "title": "AI Around the World: Whose Future?",
+  "mega_group": "Truth & Safety",
+  "modules": [
+    {
+      "title": "Same AI, Different Lives",
+      "sub": "Meet four kids whose AI experiences look nothing alike.",
+      "description": "Learners follow four student characters — in Lagos, Mumbai, Helsinki, and rural Brazil — each interacting with the same AI translation app. The app works brilliantly for some and badly for others. Learners choose whose experience to explore first, then investigate why the same tool produces such different results depending on language data availability and infrastructure access."
+    },
+    {
+      "title": "Who Decides What AI Gets Built?",
+      "sub": "Follow the money and the choices behind AI development.",
+      "description": "Inside a fictional tech investment story, learners advise a small AI fund on which of three projects to fund: a speech AI for a minority language, a crop-disease detector for smallholder farmers, or an ad-optimisation engine for a large company. Each choice has a branching consequence showing who benefits, who is left out, and why funding decisions shape which AI exists in the world."
+    },
+    {
+      "title": "AI Rules: Who Makes the Law?",
+      "sub": "Compare how different countries govern AI right now.",
+      "description": "Learners sit on a fictional 'Global Youth AI Council' that must advise three countries — each with a different regulatory approach — on one pressing AI decision: whether to allow AI-generated news in schools. They read short briefings representing each country's values and debate the tradeoffs. The module builds awareness that AI is governed very differently depending on where you live."
+    },
+    {
+      "title": "Design an AI That Works for Everyone",
+      "sub": "Build a proposal for an AI that serves a real community need.",
+      "description": "Learners choose a real-world community — one they belong to or one they researched in the course — and design a one-page proposal for an AI tool that would genuinely help that community. The proposal must name who will benefit, what data the AI needs, and one risk it might carry. This community AI brief is the course exit artifact."
+    }
+  ],
+  "synopsis": "A globe-spanning adventure that asks big questions: who builds AI, who benefits, and who gets left out? Learners explore real differences in how AI works — and doesn't work — across languages, countries, and communities.",
+  "tier": "Intermediate",
+  "age_band": "11-13",
+  "rationale": "Most AI literacy curricula are built from a Western, English-language perspective, leaving students with no framework for understanding global AI inequity, differential access, or the political and cultural dimensions of AI governance.",
+  "learning_outcome": "Students can identify at least two structural reasons why AI performs unequally across different populations, compare differing national approaches to AI regulation, and produce a community-centred AI proposal that accounts for both benefit and risk.",
+  "source_signals": [
+    "FINALLY! India Begins 'COMPULSORY' AI Education in Schools! #shorts",
+    "Anthropic partners with Rwandan Government and ALX to bring AI education to hundreds of thousands of learners across Africa - Anthropic",
+    "OpenAI, Google, and Microsoft Back Bill to Fund 'AI Literacy' in Schools"
+  ],
+  "source_names": [
+    "youtube_k12",
+    "changelog_k12",
+    "hacker_news_k12"
+  ],
+  "demand_score": 6,
+  "corpus_score": 0.588,
+  "nearest_existing": "روزمرہ زندگی میں AI",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

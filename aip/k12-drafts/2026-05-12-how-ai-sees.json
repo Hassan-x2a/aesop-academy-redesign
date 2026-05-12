@@ -1,0 +1,51 @@
+{
+  "id": "how-ai-sees",
+  "title": "How AI Sees: Pictures Come Alive",
+  "mega_group": "How AI Works",
+  "modules": [
+    {
+      "title": "What Does AI Actually See?",
+      "sub": "Discover that AI sees numbers, not pictures — yet.",
+      "description": "Learners enter a laboratory story where a young scientist named Zara shows them that to a computer, a photo of a cat is really just a giant grid of numbers. Through a playful pixel-colouring activity, learners 'become' the computer and try to recognise shapes from grids alone. This builds the foundational insight that AI pattern recognition is mathematical, not magical."
+    },
+    {
+      "title": "Teaching AI to Spot Things",
+      "sub": "See how thousands of labelled examples train an AI's eye.",
+      "description": "Zara's AI assistant can't tell a dog from a muffin — a real and famously funny AI problem. Learners play the role of human labellers, tagging images to teach the AI, then discover how getting labels wrong creates a confused AI. This module makes the concept of supervised learning tangible and funny before it becomes technical."
+    },
+    {
+      "title": "When AI Eyes Get It Wrong",
+      "sub": "Explore surprising mistakes AI image systems make.",
+      "description": "Learners are presented with real categories of AI vision errors — objects misidentified because of lighting, angle, or things the AI never saw in training. They choose which errors matter most and why, building early intuition about consequences: a self-driving car misreading a stop sign is very different from a photo app mistagging a holiday album. The module closes with a learner-ranked list of 'AI vision mistakes I'd least want to happen.'"
+    },
+    {
+      "title": "Build Your Own Image Sorter",
+      "sub": "Create a simple AI that sorts pictures into your categories.",
+      "description": "Using a no-code visual training tool, learners collect ten images each of two categories they choose — real-world objects they can photograph or find — and train a mini classifier. They test it, celebrate what it gets right, and investigate what confuses it. The trained model card, explaining what it can and cannot do, is the exit artifact."
+    }
+  ],
+  "synopsis": "A playful investigation into how AI turns pixels into meaning — and why it sometimes gets things hilariously wrong. Young learners explore computer vision by doing it themselves, hands-on and step by step.",
+  "tier": "Beginner",
+  "age_band": "8-10",
+  "rationale": "Image recognition is one of the most visible AI systems children encounter daily — in games, apps, and cameras — yet almost no child-facing education explains how it actually works at a conceptual level.",
+  "learning_outcome": "Students can explain that AI recognises images through patterns in numerical data, describe how labelled training examples teach an AI, and build and test a simple image classifier of their own design.",
+  "source_signals": [
+    "Project Overview ‹ PopBots: An early childhood AI curriculum - MIT Media Lab",
+    "HUMANS VS AI 🤖 | What Is AI ? | Artificial Intelligence Explained | Kids Learning Videos | EMoMee",
+    "Ditching School (Ai Edition) 😱 #ai #chatgpt #aiart"
+  ],
+  "source_names": [
+    "changelog_k12",
+    "youtube_k12",
+    "youtube_k12"
+  ],
+  "demand_score": 7,
+  "corpus_score": 0.648,
+  "nearest_existing": "How AI Makes Images",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

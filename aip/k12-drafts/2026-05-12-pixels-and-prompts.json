@@ -1,0 +1,53 @@
+{
+  "id": "pixels-and-prompts",
+  "title": "Pixels & Prompts: AI Art Unlocked",
+  "mega_group": "Make & Create",
+  "modules": [
+    {
+      "title": "Where Do AI Images Come From?",
+      "sub": "Discover how AI learns to draw from millions of images.",
+      "description": "Learners step into the story of an AI called MUSE that was trained on the internet's images. They make choices about what MUSE should learn from — and see how those choices change what MUSE can create. This builds an intuition for training data before a single prompt is typed."
+    },
+    {
+      "title": "Write a Prompt, Make a World",
+      "sub": "Craft prompts that turn your imagination into real images.",
+      "description": "Inside a creative studio narrative, learners play a junior concept artist who must pitch ideas using AI image tools. They experiment with prompt words — style, mood, detail — and compare results to understand why some prompts produce magic and others produce chaos. The module exits with a learner-crafted prompt portfolio of three original images."
+    },
+    {
+      "title": "Who Made This, Really?",
+      "sub": "Question who gets credit when AI creates art.",
+      "description": "A fictional gallery is accused of selling AI art as human art. Learners act as junior investigators, deciding whether the gallery owner, the prompt writer, or the AI company deserves credit — and whether buyers were misled. This choice-driven scene introduces authorship, originality, and the real debate happening in the art world right now."
+    },
+    {
+      "title": "Create Your Own AI Art Show",
+      "sub": "Design an exhibition and defend every creative decision.",
+      "description": "Learners curate a five-piece AI art exhibition on a theme of their choice, writing an artist's statement that explains what they prompted, what they changed, and what the work means. They must also write one honest disclaimer about what AI contributed versus what they contributed. The exhibition card set is the course exit artifact."
+    }
+  ],
+  "synopsis": "A hands-on creative journey where learners use AI image tools to make original artwork — then wrestle with the big questions those tools raise. Perfect for curious makers who want to create and think at the same time.",
+  "tier": "Intermediate",
+  "age_band": "11-13",
+  "rationale": "As AI image generators become daily tools for young people, learners need both the creative confidence to use them and the critical literacy to question authorship, bias in training data, and what 'original' even means.",
+  "learning_outcome": "Students can write effective image prompts, explain how diffusion models learn from data, and articulate a reasoned position on AI art authorship.",
+  "source_signals": [
+    "Ditching School (Ai Edition) 😱 #ai #chatgpt #aiart",
+    "5 AI Tools Every Student MUST-TRY",
+    "3 AI Tools Every Student Must Start Using in 2025 📚🤖",
+    "Google's Education AI Tools Reach 10 Million Students in 2025 - The Tech Buzz"
+  ],
+  "source_names": [
+    "youtube_k12",
+    "youtube_k12",
+    "youtube_k12",
+    "changelog_k12"
+  ],
+  "demand_score": 8,
+  "corpus_score": 0.644,
+  "nearest_existing": "How AI Makes Images",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

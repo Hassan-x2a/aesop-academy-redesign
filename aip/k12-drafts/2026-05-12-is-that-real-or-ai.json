@@ -1,0 +1,53 @@
+{
+  "id": "is-that-real-or-ai",
+  "title": "Nothing Online Is Obvious Anymore",
+  "mega_group": "Truth & Safety",
+  "modules": [
+    {
+      "title": "The Fake That Fooled Everyone",
+      "sub": "How AI-generated content spreads before anyone checks.",
+      "description": "Learners are shown a realistic scenario in which a fabricated AI-generated image goes viral and they must trace its journey from creation to millions of shares, making decisions at each step about whether they would have caught it. The narrative makes the speed and scale of synthetic content spread visceral and personal rather than abstract. This module establishes why the default assumption of image and text authenticity is now genuinely dangerous."
+    },
+    {
+      "title": "Reading the Tells",
+      "sub": "Spotting the visual, textual, and audio clues AI leaves behind.",
+      "description": "Learners are presented with a gallery of images, short text passages, and audio clips — some real, some AI-generated — and must identify each, recording their reasoning before seeing the answer. Each reveal is accompanied by a focused explanation of one detection signal: skin texture anomalies, unnatural lighting, over-smooth prose, tonal inconsistencies in audio. The module builds a practical detection vocabulary through repeated, low-stakes practice."
+    },
+    {
+      "title": "Context Is the Real Detector",
+      "sub": "When visual clues are gone, the story around content reveals the truth.",
+      "description": "Learners encounter a set of AI-generated pieces that pass basic visual or textual inspection and must use contextual signals instead — checking the source, the timing, who is sharing it and why, whether the claim is emotionally manipulative. They work through a decision tree that models the thinking process of a professional fact-checker, discovering that tool-based detection is one layer of a larger critical practice."
+    },
+    {
+      "title": "Your Fake-Spotting Field Guide",
+      "sub": "Create a guide that helps someone else spot AI fakes.",
+      "description": "As the exit artifact, learners produce a Fake-Spotting Field Guide aimed at a peer their own age — selecting the five most useful detection signals they learned, illustrating each with a real example from the course, and adding a section on what to do when you suspect something is fake but cannot prove it. Designing for a peer audience tests depth of understanding and produces a genuinely shareable resource."
+    }
+  ],
+  "synopsis": "AI-generated images, text, and video are everywhere and they are getting harder to spot every month — but there are real signals if you know where to look. This course trains your eye, your ear, and your judgment so you can tell what is real before you share or believe it.",
+  "tier": "Intermediate",
+  "age_band": "11-13",
+  "rationale": "The ability to detect AI-generated content is becoming a foundational media literacy skill, yet most students receive no structured training in the specific visual, textual, and contextual signals that distinguish synthetic from authentic content.",
+  "learning_outcome": "Students can apply a multi-signal detection process to identify likely AI-generated images, text, and audio, and can produce a peer-facing guide that communicates at least five concrete detection strategies.",
+  "source_signals": [
+    "Modern-Day Oracles or Bullshit Machines? How to thrive in a ChatGPT world",
+    "Tali Horowitz: The Key Issue with AI Chatbots and Teens",
+    "Digital Citizenship: Teaching Teens to Navigate the online World Responsibly | BWWT Ep. 240",
+    "Tali Horowitz: How Teens Are Really Using AI"
+  ],
+  "source_names": [
+    "hacker_news_k12",
+    "youtube_k12",
+    "youtube_k12",
+    "youtube_k12"
+  ],
+  "demand_score": 9,
+  "corpus_score": 0.649,
+  "nearest_existing": "Every image you trust might be a lie someone made in thirty seconds.",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

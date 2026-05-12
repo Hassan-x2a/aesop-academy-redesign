@@ -1,0 +1,51 @@
+{
+  "id": "machine-learning-lab",
+  "title": "Machine Learning: Build the Brain",
+  "mega_group": "How AI Works",
+  "modules": [
+    {
+      "title": "Models, Data, and Loss",
+      "sub": "Understand the core loop that makes ML work.",
+      "description": "Learners take on the role of an ML engineer at a fictional startup and must choose a dataset, define a goal, and watch a model train in a simulated environment. They experiment with what happens when the loss stays high, building intuitive understanding of the training loop before touching formal notation."
+    },
+    {
+      "title": "Overfitting: The Memorisation Trap",
+      "sub": "Discover why a model can be too good at training data.",
+      "description": "The startup's model aces every training example but fails spectacularly on new data. Learners diagnose the problem by adjusting data splits and model complexity through narrative choices, arriving at the concept of generalisation as the real goal of learning."
+    },
+    {
+      "title": "Features: What the Model Sees",
+      "sub": "Choose which inputs actually help a model learn.",
+      "description": "Learners select features for a music recommendation model and observe how irrelevant inputs hurt performance. Through a series of decisions — keep, drop, or engineer each feature — they develop a feel for feature selection and the idea that what you feed a model shapes what it can know."
+    },
+    {
+      "title": "Ship It — And Own It",
+      "sub": "Deploy your model and face its real-world consequences.",
+      "description": "The model goes live and edge cases emerge: it performs poorly for users whose data was underrepresented in training. Learners decide how to respond — patch, retrain, or pull the model — and write a short model card documenting limitations. This judgment artifact is their exit deliverable."
+    }
+  ],
+  "synopsis": "Run a machine learning project from raw data to live deployment inside a fast-moving startup story, making real engineering and ethical decisions at every step. You'll leave with a model card that proves you understand not just how ML works — but what it gets wrong.",
+  "tier": "Advanced",
+  "age_band": "14-16",
+  "rationale": "Teen coders are increasingly capable of building ML models through accessible tools but lack a conceptual framework for the full training-evaluation-deployment loop, leaving them unable to reason about failure modes or communicate model limitations responsibly.",
+  "learning_outcome": "Students can describe the machine learning training loop, identify overfitting versus underfitting in a given scenario, and produce a model card that honestly documents what their model does and does not do well.",
+  "source_signals": [
+    "HUMANS VS AI 🤖 | What Is AI ? | Artificial Intelligence Explained | Kids Learning Videos | EMoMee",
+    "Project Overview ‹ PopBots: An early childhood AI curriculum - MIT Media Lab",
+    "Project Overview ‹ Interactive Stories for Learning AI and Programming in Preschool - MIT Media Lab"
+  ],
+  "source_names": [
+    "youtube_k12",
+    "changelog_k12",
+    "changelog_k12"
+  ],
+  "demand_score": 8,
+  "corpus_score": 0.614,
+  "nearest_existing": "The Most Consequential Tool Built Without a Blueprint",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

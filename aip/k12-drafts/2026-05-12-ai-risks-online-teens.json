@@ -1,0 +1,53 @@
+{
+  "id": "ai-risks-online-teens",
+  "title": "The AI Trap Is Already Set",
+  "mega_group": "Truth & Safety",
+  "modules": [
+    {
+      "title": "Who Is Actually Talking to You?",
+      "sub": "AI personas, scam bots, and fake online identities explained.",
+      "description": "Learners enter a simulated social media environment and interact with several accounts, some human and some AI-generated, and must decide which is which before the answers are revealed. The narrative surfaces how AI-powered personas can build false trust over time through personalised messages. This module introduces the core risk that online identity is no longer a reliable signal of human presence."
+    },
+    {
+      "title": "Your Data, Their Prompt",
+      "sub": "What AI tools collect and why it matters to you.",
+      "description": "Learners follow a character who shares personal details across several AI tools and watch how that data is used, stored, and potentially exposed across scenarios — including a company data breach and a targeted ad campaign that knows too much. They make choices about what to share and discover which choices had consequences they did not expect. The module builds practical instincts around data minimisation without requiring technical knowledge."
+    },
+    {
+      "title": "Deepfakes, Voice Clones, and You",
+      "sub": "When AI uses your face or voice without asking.",
+      "description": "Through a story about a student whose photo is used to generate a fake social media profile, learners explore how accessible AI image and voice synthesis tools have become and what the real-world consequences look like — socially, emotionally, and legally. They make decisions about how the affected character should respond, exploring what options actually exist. The module directly addresses a risk that is statistically increasing for teens."
+    },
+    {
+      "title": "Your Online Safety Playbook",
+      "sub": "Turn what you know into rules you will actually use.",
+      "description": "Learners build a personal AI Safety Playbook — a short, practical document that lists the three highest-risk situations they now recognise, one action they will change in their own online behaviour, and a one-paragraph explainer written for a younger sibling. The creation process consolidates their learning and the sibling explainer tests whether they can communicate risk clearly rather than just recognise it."
+    }
+  ],
+  "synopsis": "AI-powered scams, fake identities, deepfakes, and invisible data harvesting are already targeting teenagers — and most people don't see them coming. This course puts you inside realistic scenarios so you can recognise the traps before you fall into them.",
+  "tier": "Intermediate",
+  "age_band": "11-13",
+  "rationale": "AI is dramatically lowering the cost and skill required to run online deception campaigns targeting young people, but safety curricula have not yet caught up to AI-specific threats like voice cloning, synthetic personas, and AI-powered phishing.",
+  "learning_outcome": "Students can identify AI-powered online risks including synthetic personas, data harvesting, and deepfakes, and can articulate at least three concrete protective behaviours for their own online activity.",
+  "source_signals": [
+    "The Risks of AI in Schools Outweigh the Benefits, Report Says",
+    "Tali Horowitz: The Key Issue with AI Chatbots and Teens",
+    "Digital Citizenship: Teaching Teens to Navigate the online World Responsibly | BWWT Ep. 240",
+    "AI Teacher Assistants Are Useful but Can Pose Risks in Classroom, Report Finds - The 74"
+  ],
+  "source_names": [
+    "hacker_news_k12",
+    "youtube_k12",
+    "youtube_k12",
+    "changelog_k12"
+  ],
+  "demand_score": 9,
+  "corpus_score": 0.595,
+  "nearest_existing": "The Most Powerful Tool of Your Generation Just Showed Up at School",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

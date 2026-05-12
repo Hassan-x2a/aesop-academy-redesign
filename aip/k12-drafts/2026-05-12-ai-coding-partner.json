@@ -1,0 +1,53 @@
+{
+  "id": "ai-coding-partner",
+  "title": "Code Smarter With an AI Partner",
+  "mega_group": "Code with AI",
+  "modules": [
+    {
+      "title": "Your AI Co-Pilot Arrives",
+      "sub": "Learn what an AI coding assistant actually does.",
+      "description": "Learners enter a story where they are building a small app and an AI coding assistant joins the project. They experiment with prompting it for autocomplete, explanations, and debugging, making choices about when to accept suggestions and when to question them — discovering that the assistant is a collaborator, not an oracle."
+    },
+    {
+      "title": "When the Code Looks Right But Isn't",
+      "sub": "Spot confident AI suggestions that contain subtle bugs.",
+      "description": "The AI assistant produces code that runs but produces wrong outputs in edge cases. Learners must read, test, and evaluate three AI-generated solutions, choosing which to trust and why. This module builds the critical habit of verifying AI output rather than accepting it at face value."
+    },
+    {
+      "title": "Prompting for Better Code",
+      "sub": "Write prompts that get clearer, more useful results.",
+      "description": "Learners iterate on a series of coding prompts, comparing vague versus specific instructions and observing how output quality changes. They make deliberate choices about context, constraints, and examples in their prompts, building a practical prompting toolkit they can apply immediately."
+    },
+    {
+      "title": "Build, Review, Reflect",
+      "sub": "Complete a small project using AI assistance responsibly.",
+      "description": "Learners complete a short coding project — a simple quiz app or data sorter — using an AI assistant throughout. They then write a brief 'contribution log' that honestly documents which parts they wrote, which the AI wrote, and what they changed and why, producing an artifact that models responsible AI-assisted authorship."
+    }
+  ],
+  "synopsis": "Work alongside an AI coding assistant to build real projects — and learn exactly when to trust it, when to push back, and how to write prompts that actually get what you need. You'll finish with a project and a contribution log that shows the thinking behind every line.",
+  "tier": "Advanced",
+  "age_band": "14-16",
+  "rationale": "Teen developers are adopting AI coding tools rapidly but without frameworks for evaluating AI-generated code critically or understanding their own skill development in relation to AI assistance, creating both technical and ethical blind spots.",
+  "learning_outcome": "Students can use an AI coding assistant to accelerate a real project, identify at least two types of error that AI-generated code commonly contains, and produce a contribution log that accurately attributes human versus AI work.",
+  "source_signals": [
+    "AI Complete OneShot Course for Beginners | Learn AI & ML Fundamentals from Scratch",
+    "Machine Learning FULL Course with Practical (10 HOURS) | Learn Free ML in 2025 | Part-1",
+    "Learning about artificial intelligence: A hub of MIT resources for K-12 students - MIT Media Lab",
+    "FINALLY! India Begins 'COMPULSORY' AI Education in Schools! #shorts"
+  ],
+  "source_names": [
+    "youtube_k12",
+    "youtube_k12",
+    "changelog_k12",
+    "youtube_k12"
+  ],
+  "demand_score": 8,
+  "corpus_score": 0.642,
+  "nearest_existing": "You Are Living Inside the Most Important Experiment in History",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

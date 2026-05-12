@@ -1,0 +1,53 @@
+{
+  "id": "meet-your-ai-helper",
+  "title": "Meet Your AI Helper",
+  "mega_group": "How AI Works",
+  "modules": [
+    {
+      "title": "What Can Zip Do?",
+      "sub": "Discover what an AI helper can and cannot do.",
+      "description": "Learners meet Zip, a fictional AI helper, and give it a series of tasks — from finding a fact to comforting a sad friend. They choose which tasks to assign and watch what happens when Zip succeeds or fails, building an intuitive map of AI capabilities."
+    },
+    {
+      "title": "Zip Gets It Wrong",
+      "sub": "Explore what happens when AI makes mistakes.",
+      "description": "Zip gives a wrong answer and the learner must decide whether to trust it, check it, or ask a person instead. Through three branching scenarios — a homework question, a safety decision, and a creative request — learners discover that AI helpers need human oversight."
+    },
+    {
+      "title": "Zip Needs Your Help",
+      "sub": "Learn how humans and AI work best together.",
+      "description": "Learners play the role of Zip's partner, correcting its mistakes and guiding it toward better answers. They make choices about when to rely on Zip and when to use their own judgment, discovering the idea of human-AI teamwork."
+    },
+    {
+      "title": "Design Your Own Helper",
+      "sub": "Create a rules card for a responsible AI helper.",
+      "description": "Learners design a simple 'helper rulebook' for Zip, deciding what it should always do, never do, and ask a human about. This creation artifact summarises their understanding of AI limits and responsible use in a format they can share."
+    }
+  ],
+  "synopsis": "Follow Zip the AI helper through a series of real-life challenges and discover what AI can do brilliantly, what it gets wrong, and why humans still matter. By the end, you'll build your own rulebook for using AI helpers wisely.",
+  "tier": "Beginner",
+  "age_band": "8-10",
+  "rationale": "Young children are already encountering AI assistants in homes and classrooms but have almost no framework for understanding their limits, making calibrated trust a foundational literacy need.",
+  "learning_outcome": "Students can give concrete examples of what AI helpers can and cannot do, and explain one situation where a human should make the final decision instead of the AI.",
+  "source_signals": [
+    "Machine Learning FULL Course with Practical (10 HOURS) | Learn Free ML in 2025 | Part-1",
+    "AI Complete OneShot Course for Beginners | Learn AI & ML Fundamentals from Scratch",
+    "Launch HN: Turing College (YC W21) – Online data science school",
+    "Photon Education brings innovative tech to 200,000 students with Microsoft Azure AI - Microsoft"
+  ],
+  "source_names": [
+    "youtube_k12",
+    "youtube_k12",
+    "hacker_news_k12",
+    "changelog_k12"
+  ],
+  "demand_score": 8,
+  "corpus_score": 0.553,
+  "nearest_existing": "You Are Living Inside the Most Important Experiment in History",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

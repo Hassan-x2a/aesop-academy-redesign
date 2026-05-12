@@ -1,0 +1,51 @@
+{
+  "id": "what-is-ai-anyway",
+  "title": "What Is AI, Really?",
+  "mega_group": "How AI Works",
+  "modules": [
+    {
+      "title": "The Thinking Machine Question",
+      "sub": "Ask whether AI actually thinks like you do.",
+      "description": "Learners enter a story where they must convince a sceptical friend that the school's new AI tutor is — or isn't — actually thinking. They compare how they solve a puzzle versus how the AI does it, making choices that reveal the difference between human cognition and pattern matching."
+    },
+    {
+      "title": "Inside the Black Box",
+      "sub": "Peek at how AI turns words into actions.",
+      "description": "Learners follow a single question as it travels through a simplified model of an AI system — from input to processing to output. At each stage they make a choice about what the AI 'sees,' building a concrete mental model of AI as a system rather than magic."
+    },
+    {
+      "title": "AI All Around You",
+      "sub": "Spot AI hiding in everyday tools and apps.",
+      "description": "Set in a single school day, learners identify moments where AI is quietly at work — in a music recommendation, a spell-checker, a photo filter. They decide which ones they are comfortable with and which feel surprising, developing awareness of AI's pervasive presence."
+    },
+    {
+      "title": "Your AI Field Guide",
+      "sub": "Create a personalised guide to AI in your world.",
+      "description": "Learners produce a short illustrated 'field guide' entry for one AI they encounter regularly, describing what it does, how it probably learned, and one question they still have. This creation artifact anchors abstract concepts to lived experience."
+    }
+  ],
+  "synopsis": "Journey inside the machines that recommend your music, correct your spelling, and power voice assistants — and find out whether any of them are actually thinking. You'll finish with your own field guide to the AI already living in your world.",
+  "tier": "Beginner",
+  "age_band": "8-10",
+  "rationale": "Children aged 8–10 are immersed in AI-powered products yet often hold either magical or fearful misconceptions about what AI is, and a concrete foundational model is essential before any other AI literacy can be built.",
+  "learning_outcome": "Students can describe in their own words what AI is, give two real-world examples of AI they encounter daily, and explain one key difference between how a human and an AI solve a problem.",
+  "source_signals": [
+    "Project Overview ‹ Sparki: An Interactive Learning Companion for AI Education - MIT Media Lab",
+    "HUMANS VS AI 🤖 | What Is AI ? | Artificial Intelligence Explained | Kids Learning Videos | EMoMee",
+    "AI study buddy: how college students are using AI to learn smarter and faster - Microsoft"
+  ],
+  "source_names": [
+    "changelog_k12",
+    "youtube_k12",
+    "changelog_k12"
+  ],
+  "demand_score": 8,
+  "corpus_score": 0.569,
+  "nearest_existing": "مثالوں سے تدریس",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}

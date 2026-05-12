@@ -1,0 +1,30 @@
+{
+  "id": "2026-05-12-ex-github-ceo-entire-developer-agent-platform",
+  "title": "Ex-GitHub CEO Launches Entire, a New Developer Platform Built Around AI Agents",
+  "subtitle": "The former chief executive of GitHub has emerged from stealth with a developer platform designed from the ground up for an agentic programming workflow.",
+  "date": "2026-05-12",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": [
+    "developer tools",
+    "ai agents",
+    "startups",
+    "coding",
+    "platform"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "🚀",
+  "body": [
+    "The former CEO of GitHub has publicly launched Entire, a new developer platform designed specifically for AI agent-driven workflows, according to a launch post that has drawn substantial attention from the Hacker News developer community. The platform, available at entire.io, represents a bet that the dominant paradigm for software development is shifting from individual programmer-tool interaction toward orchestrated networks of AI agents.",
+    "The founding pedigree is notable. GitHub's former chief executive oversaw the platform during a period of massive growth and the early rollout of GitHub Copilot, giving this founder direct insight into how developers interact with AI assistance at scale. Entire appears to be building on that experience to design infrastructure that assumes agents, not individual human keystrokes, will be the primary producers of code in the near future.",
+    "The platform joins a rapidly crowding field of agent-oriented developer infrastructure, including tools focused on agent orchestration, memory, and multi-agent coordination. What distinguishes founding-team-driven platforms in this space is typically depth of insight into developer workflow friction — the kind of knowledge that comes from operating at GitHub's scale. Whether Entire can translate that insight into a defensible product position remains to be seen.",
+    "The launch is a useful industry signal: when executives with direct experience running the world's largest code collaboration platform leave to build agent-native infrastructure, it reflects a genuine conviction that the current generation of bolt-on AI tools is a transitional phase. The deeper question Entire's launch poses is what developer platforms look like when the primary user is not a human engineer but an autonomous agent acting on one's behalf."
+  ],
+  "sources": [
+    {
+      "title": "Ex-GitHub CEO launches a new developer platform for AI agents",
+      "url": "https://entire.io/blog/hello-entire-world/"
+    }
+  ],
+  "status": "published"
+}

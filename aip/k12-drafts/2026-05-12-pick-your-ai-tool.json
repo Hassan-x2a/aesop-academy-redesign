@@ -1,0 +1,55 @@
+{
+  "id": "pick-your-ai-tool",
+  "title": "Right Tool, Right Job",
+  "mega_group": "AI Toolbox",
+  "modules": [
+    {
+      "title": "They Are Not All the Same",
+      "sub": "Why different AI tools exist and what they are built for.",
+      "description": "Learners are presented with four real tasks — drafting an argument, generating an image, summarising a research paper, and writing code — and must match each to the right category of AI tool before seeing how their choices performed. The narrative establishes a foundational mental model: AI tools are specialised, not universal, and choosing wrongly wastes time or produces inferior results. This reframes tool selection as a skill rather than a preference."
+    },
+    {
+      "title": "Head-to-Head: Same Prompt, Different Results",
+      "sub": "Testing what changes when you switch tools for one task.",
+      "description": "Learners send the same prompt to representations of three major text-based AI tools and compare the outputs across dimensions: accuracy, tone, length, and whether the tool flagged any limitations. They make a judgment call about which output they would actually use and explain their reasoning in a structured response box. The module builds the habit of treating tool selection as an evidence-based decision."
+    },
+    {
+      "title": "When the Tool Fails the Task",
+      "sub": "Recognising when a tool is genuinely the wrong choice.",
+      "description": "Through a series of failure scenarios — an AI image tool used for medical information, a writing assistant trusted for legal advice, a chatbot used for real-time news — learners diagnose why each pairing went wrong and what a better choice would have been. They are asked to articulate not just the right tool but the right reason, building a transferable evaluation framework rather than a static list of tool facts."
+    },
+    {
+      "title": "Your Tool Decision Framework",
+      "sub": "Build a reusable guide for choosing AI tools wisely.",
+      "description": "As the exit artifact, learners design a personal Tool Decision Framework — a structured one-page guide that walks through the questions to ask before choosing an AI tool for any task: What is the task type? What are the stakes? What are this tool's known weaknesses? The framework is tested against two novel scenarios before it is finalised, ensuring it is genuinely useful rather than just theoretical."
+    }
+  ],
+  "synopsis": "There are hundreds of AI tools and picking the wrong one can waste your time, give you bad results, or cause real problems — so how do you choose? This course teaches you to think like a smart AI user who matches tools to tasks on purpose, not by habit.",
+  "tier": "Advanced",
+  "age_band": "14-16",
+  "rationale": "As the AI tool landscape fragments into hundreds of specialised products, students who lack a framework for tool evaluation will default to single-tool dependency or random selection, missing the compounding productivity and quality advantages of deliberate choice.",
+  "learning_outcome": "Students can evaluate AI tools against specific task requirements, articulate the tradeoffs between competing tools, and apply a structured decision framework to novel tool-selection scenarios.",
+  "source_signals": [
+    "5 AI Tools Every Student MUST-TRY",
+    "3 AI Tools Every Student Must Start Using in 2025 📚🤖",
+    "Top 5 Copilot AI features for students - Microsoft",
+    "How AI study tools support students - Microsoft",
+    "Comparing Online and AI-Assisted Learning: A Student's View - Education Next"
+  ],
+  "source_names": [
+    "youtube_k12",
+    "youtube_k12",
+    "changelog_k12",
+    "changelog_k12",
+    "changelog_k12"
+  ],
+  "demand_score": 9,
+  "corpus_score": 0.617,
+  "nearest_existing": "The Leveling Event Has Already Happened",
+  "generated": "2026-05-12",
+  "status": "pending",
+  "pipeline_version": "1.0-k12",
+  "audience": "youth",
+  "age_range": "8-16",
+  "category": "Youth"
+}
