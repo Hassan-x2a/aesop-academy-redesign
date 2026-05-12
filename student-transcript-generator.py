@@ -3,16 +3,101 @@
 AESOP AI Academy Student Transcript Generator
 Generates comprehensive student transcript HTML pages based on student profile data.
 
+v1.3.0 — Adds --audience flag with three modes:
+  - learner (default): full transcript, neutral student-facing tone
+  - parent: plain-language explanation, drops jargon, adds context on
+    what each skill means for what the student can now do
+  - employer: workforce-language competency summary, emphasizes pathway
+    affinity, drops education-standards alignment from the foreground
+
 v1.2.0 — Adds Career Pathway Affinity section mapping a learner's skills
 to the four role lanes (Builders, Integrators, Governors, Translators)
 defined in `ai-academy/modules/pathway-mappings.json`.
 """
 
+import argparse
 import json
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
+
+
+AUDIENCES = ('learner', 'parent', 'employer')
+
+
+AUDIENCE_COPY = {
+    'learner': {
+        'hero_eyebrow_label': 'Official Academic Record',
+        'hero_title': 'AI Literacy Transcript',
+        'hero_intro': '',
+        'standards_intro_label': 'Standards Framework',
+        'pathway_intro': (
+            'Career pathways are not predictions &mdash; they describe where current skills point. '
+            'AESOP groups AI-era work into four lanes. Strong affinity in a lane suggests the learner '
+            'is already building toward roles in that family; low affinity is information, not a verdict. '
+            'Pathways shift as new skills are earned. Learn more at '
+            '<a href="/pathways.html">aesopacademy.org/pathways</a>.'
+        ),
+        'footer_template': (
+            'This is a student transcript for {name} showing their AI Literacy learning journey. '
+            'The transcript includes all courses completed, certifications earned, and alignment with '
+            'education and employment standards. Generated on {date}.'
+        ),
+    },
+    'parent': {
+        'hero_eyebrow_label': 'Family Summary',
+        'hero_title': 'What Your Student Has Learned',
+        'hero_intro': (
+            'This is a plain-language summary of {name}\'s AI literacy progress. '
+            'It explains what they\'ve studied, what they can now do with it, and where it points next &mdash; '
+            'without the technical vocabulary the standard transcript uses.'
+        ),
+        'standards_intro_label': 'What this means for school',
+        'pathway_intro': (
+            'These four lanes describe different kinds of AI work in the real world. '
+            'A high score in a lane means your student\'s current skills already point that way &mdash; '
+            'it does not mean they have to choose it. Low scores are normal early on. '
+            'What matters most is whether your student is curious about the work, '
+            'not whether they\'re ready for it today. The full description of each lane lives at '
+            '<a href="/pathways.html">aesopacademy.org/pathways</a>.'
+        ),
+        'footer_template': (
+            'This is a family-friendly summary of {name}\'s AI literacy learning. '
+            'The full academic transcript &mdash; with standards alignment and technical proficiency detail &mdash; '
+            'is available on request from the learner. Summary generated on {date}.'
+        ),
+    },
+    'employer': {
+        'hero_eyebrow_label': 'Competency Summary',
+        'hero_title': 'AI Capability Profile',
+        'hero_intro': (
+            'A competency summary describing what {name} can do with AI, '
+            'where their current skill profile points in the AI-era workforce, '
+            'and which categories of work they are already building toward.'
+        ),
+        'standards_intro_label': 'Education context',
+        'pathway_intro': (
+            'AESOP groups AI-era work into four role lanes &mdash; <strong>Builders</strong> (engineers who make AI systems), '
+            '<strong>Integrators</strong> (bring AI into existing workflows), '
+            '<strong>Governors</strong> (audit, secure, and constrain AI; undersupplied globally), '
+            'and <strong>Translators</strong> (make AI legible to non-technical audiences). '
+            'Affinity scores below describe where this candidate\'s current skill profile points, '
+            'not where they will end up. Full lane definitions: '
+            '<a href="/pathways.html">aesopacademy.org/pathways</a>.'
+        ),
+        'footer_template': (
+            'This is an AI capability summary for {name} based on completed AESOP coursework and assessed competencies. '
+            'Generated on {date}. AESOP transcripts are advisory and self-issued; they are not a credential, '
+            'a degree, or a certification. They describe what was learned and what current skills suggest.'
+        ),
+    },
+}
+
+
+def get_audience_copy(audience):
+    """Return the copy dict for the given audience; falls back to learner."""
+    return AUDIENCE_COPY.get(audience, AUDIENCE_COPY['learner'])
 
 
 PATHWAY_MAPPINGS_PATH = Path(__file__).parent / 'ai-academy' / 'modules' / 'pathway-mappings.json'
@@ -96,11 +181,12 @@ def compute_lane_affinity(profile, mappings):
     return affinity
 
 
-def generate_pathway_section(profile):
+def generate_pathway_section(profile, audience='learner'):
     """Generate the Career Pathway Affinity section HTML."""
     mappings = load_pathway_mappings()
     if not mappings:
         return ''
+    copy = get_audience_copy(audience)
 
     affinity = compute_lane_affinity(profile, mappings)
     if not affinity:
@@ -152,7 +238,7 @@ def generate_pathway_section(profile):
     return f'''  <div class="st-section-label">Career Pathway Affinity</div>
 
   <div class="st-pathway-intro">
-    Career pathways are not predictions &mdash; they describe where current skills point. AESOP groups AI-era work into four lanes. Strong affinity in a lane suggests the learner is already building toward roles in that family; low affinity is information, not a verdict. Pathways shift as new skills are earned. Learn more at <a href="/pathways.html">aesopacademy.org/pathways</a>.
+    {copy['pathway_intro']}
   </div>
 
   <div class="st-lanes">
