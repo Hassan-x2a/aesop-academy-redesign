@@ -1,5 +1,5 @@
 {
-  "learnersThisWeek": 120,
+  "learnersThisWeek": 236,
   "coursesLive": 126,
   "coursesInDev": 54,
   "languages": 8,
@@ -13,7 +13,7 @@
     "ur",
     "tr"
   ],
-  "updatedAt": "2026-05-11T23:58:34+00:00",
+  "updatedAt": "2026-05-12T03:26:29+00:00",
   "source": {
     "learnersThisWeek": "GA4 activeUsers, last 7 days",
     "coursesLive": "course-registry.json where status=='live'",
