@@ -1,0 +1,35 @@
+{
+  "id": "2026-05-13-artificial-intelligence-hype-cycle-reassessment",
+  "title": "Is AI Losing Its Hype? A Signal Analysis",
+  "subtitle": "Renewed community interest in a prominent 'AI is losing hype' thesis invites a careful look at what a post-hype AI landscape would actually mean for the industry.",
+  "date": "2026-05-13",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": [
+    "ai hype",
+    "market sentiment",
+    "generative ai",
+    "investment",
+    "industry trends",
+    "valuation"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "📉",
+  "body": [
+    "An Economist article arguing that artificial intelligence is 'losing hype' has resurfaced in developer and analyst communities with a Hacker News score approaching 2,900, alongside a related piece from commentator Gary Marcus titled 'Things are about to get a lot worse for generative AI.' Together, these signals suggest a meaningful segment of informed observers is stress-testing the dominant bull narrative around AI — even as capital expenditure commitments from major cloud providers in 2026 have reached historic levels.",
+    "The tension is real and worth naming precisely. On one hand, AESOP has tracked over $725 billion in announced AI capex from big tech in Q1 2026 alone, record fundraising rounds for AI labs, and accelerating enterprise adoption of agentic systems. On the other hand, community skepticism — often led by practitioners rather than investors — tends to focus on a different set of metrics: hallucination rates, reliability failures, ROI clarity, and the gap between demo performance and production outcomes.",
+    "Historically, hype cycles in technology do not mean the underlying technology is unimportant. They mean that near-term expectations have outrun near-term delivery, and that a correction in narrative can coexist with genuine long-run transformation. The AI incidents AESOP has covered in 2026 — from production database deletions to agent behavioral failures — provide concrete grounding for skepticism even among those who believe in the technology's long-term trajectory.",
+    "What the community discussion signals most clearly is that the AI industry is entering a phase where proof of value at scale, rather than demonstration of capability in isolation, will determine which products and companies survive the next market cycle. For enterprise buyers, this is a clarifying moment: the question is no longer whether AI can do impressive things, but whether it can do reliable, auditable, economically justified things in their specific context."
+  ],
+  "sources": [
+    {
+      "title": "Artificial intelligence is losing hype",
+      "url": "https://www.economist.com/finance-and-economics/2024/08/19/artificial-intelligence-is-losing-hype"
+    },
+    {
+      "title": "Things are about to get a lot worse for generative AI",
+      "url": "https://garymarcus.substack.com/p/things-are-about-to-get-a-lot-worse"
+    }
+  ],
+  "status": "published"
+}

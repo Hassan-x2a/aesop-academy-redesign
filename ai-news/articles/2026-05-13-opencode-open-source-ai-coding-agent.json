@@ -1,0 +1,30 @@
+{
+  "id": "2026-05-13-opencode-open-source-ai-coding-agent",
+  "title": "OpenCode Emerges as Open-Source Challenger in AI Coding Agent Space",
+  "subtitle": "A new open-source AI coding agent is drawing significant community attention as developer demand for transparent, self-hostable alternatives to proprietary tools grows.",
+  "date": "2026-05-13",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": [
+    "open-source",
+    "coding agents",
+    "developer tools",
+    "llm",
+    "ai agents"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "🛠️",
+  "body": [
+    "OpenCode, an open-source AI coding agent available at opencode.ai, has attracted substantial traction in developer communities, registering a Hacker News score above 3,100. The project positions itself as a transparent, community-driven alternative to closed coding assistants that have dominated the market through 2025 and into 2026.",
+    "The signal matters in a broader context: the AI coding agent landscape has grown crowded with proprietary offerings from large incumbents. Open-source entrants like OpenCode give developers the ability to audit model interactions, self-host for data privacy, and contribute modifications — concerns that have become increasingly prominent as enterprises weigh agentic AI adoption.",
+    "Community discussion around the project reflects a recurring tension in the developer ecosystem: high-capability proprietary agents versus inspectable, forkable tools that teams can trust with sensitive codebases. OpenCode's emergence suggests demand on the open-source side remains strong even as commercial agents grow more capable.",
+    "As of this writing, specific capability benchmarks, supported model backends, and licensing terms for OpenCode have not been independently verified by AESOP. Developers evaluating the tool should consult the project's documentation directly to assess fit for production use cases."
+  ],
+  "sources": [
+    {
+      "title": "OpenCode – Open source AI coding agent (Hacker News discussion)",
+      "url": "https://opencode.ai/"
+    }
+  ],
+  "status": "published"
+}

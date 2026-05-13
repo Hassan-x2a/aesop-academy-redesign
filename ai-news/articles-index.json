@@ -1,6 +1,11 @@
 {
-  "lastUpdated": "2026-05-12",
+  "lastUpdated": "2026-05-13",
   "articles": [
+    "articles/2026-05-13-opencode-open-source-ai-coding-agent.json",
+    "articles/2026-05-13-windows-11-background-ai-agent-security-concerns.json",
+    "articles/2026-05-13-ai-agent-production-database-deletion-confession.json",
+    "articles/2026-05-13-deepseek-v3-2-open-llm-frontier.json",
+    "articles/2026-05-13-artificial-intelligence-hype-cycle-reassessment.json",
     "articles/2026-05-12-ai-agent-deletes-production-database.json",
     "articles/2026-05-12-ai-agent-pr-shames-maintainer.json",
     "articles/2026-05-12-opencode-open-source-ai-coding-agent.json",
