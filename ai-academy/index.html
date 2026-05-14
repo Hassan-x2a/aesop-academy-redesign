@@ -389,6 +389,33 @@ header .tagline {
   font-size: 0.65rem; color: var(--ink-muted); line-height: 1.4;
 }
 
+/* ── WELCOME HERO ─── */
+.welcome-hero {
+  max-width: 600px; margin: 0 auto 2rem; text-align: center;
+  padding: 0 0.5rem;
+}
+.wh-lead {
+  font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 700; color: var(--ink); line-height: 1.4;
+  margin-bottom: 1rem;
+}
+.wh-lead em { color: var(--gold); font-style: normal; }
+.wh-body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem); line-height: 1.75;
+  color: var(--ink-muted); margin-bottom: 0.75rem;
+}
+.wh-trust {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: center; gap: 0.35rem 0.5rem;
+  margin-top: 1.25rem; padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-display); font-size: 0.6rem;
+  font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.wh-dot { color: var(--border); }
+
 /* Group overview (after selecting tier) */
 .group-overview { animation: fadeIn 0.35s ease; }
 .group-header {
@@ -920,7 +947,7 @@ header .tagline {
     <div class="logo-badge">AESOP</div>
     <h1>AI Foundation Course</h1>
   </div>
-  <div class="tagline">AI Literacy for All Ages · Story-Driven · AesopAcademy.org</div>
+  <div class="tagline">Free AI education for the people who weren't handed the keys.</div>
 </header>
 <div class="lang-es-notice" id="langNotice">🇪🇸 Español — Solo el nivel <strong>Advanced</strong> está disponible en español por ahora.</div>
 <div class="qa-mode-bar" id="qa-mode-bar">⚙️ QA MODE ACTIVE — Exam unlocked without module completion. Firebase logs qaMode: true.</div>
@@ -1186,7 +1213,7 @@ let state = {
 const UI_STRINGS = {
   en: {
     h1: 'AI Foundation Course',
-    tagline: 'AI Literacy for All Ages · Story-Driven · AesopAcademy.org',
+    tagline: 'Free AI education for the people who weren\'t handed the keys.',
     forums: '◈ Forums - Discord',
     notice: null,
     modules: 'Modules', lessons: 'Lessons',
@@ -1319,6 +1346,19 @@ function renderWelcome() {
   const ca = document.getElementById('contentArea');
   ca.innerHTML = `
     <div class="welcome">
+
+      <div class="welcome-hero">
+        <p class="wh-lead">Most AI training teaches you to use the tools.<br><em>Aesop teaches you to govern them.</em></p>
+        <p class="wh-body">The people being left behind by AI aren't the ones who can't prompt — they're the ones who approved a deployment without the framework to evaluate it. Aesop fills that gap.</p>
+        <p class="wh-body">Every course is built around real scenarios. You debate decisions, develop skills, and build things you can show. You leave with a portfolio — not a completion badge.</p>
+        <div class="wh-trust">
+          <span>Free</span><span class="wh-dot">·</span>
+          <span>No account required</span><span class="wh-dot">·</span>
+          <span>No AI company affiliation</span><span class="wh-dot">·</span>
+          <span>126 courses</span>
+        </div>
+      </div>
+
       <div style="font-family: var(--font-display);font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-muted);text-align:center;margin-bottom:0.85rem;">Select a Course to Begin</div>
 
       <div class="welcome-grid">

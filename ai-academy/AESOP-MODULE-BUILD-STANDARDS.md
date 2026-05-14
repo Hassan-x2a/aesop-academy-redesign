@@ -1277,4 +1277,224 @@ No PlayAGame.ai references visible anywhere on aesopacademy.org.
 
 ---
 
-*AESOP-MODULE-BUILD-STANDARDS.md v2.0.0 — Merged from AESOP-ELECTIVES-MODULE-STANDARDS.md and AESOP-Academy-Module-Standards.md. April 2026.*
+---
+
+## PART 4 — V2.0 MODULES
+### (ai-ethics-decision-making, building-with-ai, building-ai-agents-use-cases, and all future v2 courses)
+
+> V2.0 is a structural overhaul. These modules are standalone full HTML pages — not hub fragments. They live in `ai-academy/modules/v2/{course-slug}/`. The v1 systems (Parts 1–2) remain unchanged for existing courses.
+
+---
+
+### 4.1 V2 Philosophy
+
+V2 exists because v1 built how education used to be delivered. V2 builds how it needs to be delivered now.
+
+| Dimension | V1 | V2 |
+|-----------|----|----|
+| Structure | 4 lessons + quizzes + labs per module | Intro → Scenario → Lesson → Context → Lab |
+| Assessment | Module test (quiz) | Lab IS the assessment — no quiz |
+| Lab role | Practice exercise at the end | Destination the whole module builds toward |
+| Text volume | Long-form narrative | 60% reduction — reading earns its place |
+| Learner outcome | Completion record | Portfolio artifact — something produced and owned |
+| Lab duration | Short (3–5 exchanges) | 15–30 minutes, substantive |
+
+**The core promise:** Learners don't leave with a certificate. They leave with a portfolio of decisions made and defended, skills built and used, and content and tools they developed.
+
+---
+
+### 4.2 Course Structure
+
+Every v2 course has **8 modules**:
+
+| Lab Type | Count | Purpose |
+|----------|-------|---------|
+| Debate | 2 | Argue and defend a position under challenge |
+| Skill | 3 | Learn and apply one discrete, repeatable capability |
+| Build | 3 | Use the skills to produce a real artifact with ethics/governance pressure |
+
+**Total course time:** ~3.5–5 hours (5–8 min reading + 15–30 min lab × 8 modules)
+
+---
+
+### 4.3 Module Structure
+
+Every module follows this exact tab order:
+
+```
+Intro → Scenario → Lesson → Context → Lab
+```
+
+| Section | Purpose | Target Length |
+|---------|---------|---------------|
+| **Intro** | Narrative opening + learning outcomes + portfolio artifact named | ~200 words |
+| **Scenario** | Real-world situation that creates the problem the lesson solves | ~350 words |
+| **Lesson** | The one thing the learner is learning — stated plainly | ~300 words |
+| **Context** | Just enough background to not be lost in the lab | ~250 words |
+| **Lab** | 15–30 min hands-on work producing a named artifact | — |
+| **Total reading** | | ~1,100 words / 5–6 min |
+
+**No quiz. No module test.** The lab is the assessment.
+
+---
+
+### 4.4 Intro Page Requirements
+
+The Intro must contain three elements in order:
+
+1. **Narrative opening** — 2–3 paragraphs in AESOP voice. Sets up why this module matters. Does NOT explain what the lesson is — that's the Scenario's job.
+
+2. **Learning outcomes** — `<ul class="outcomes-list">` with 4–6 bullets. Each bullet is a capability the learner will have by the end, written as "You will [verb] [specific thing]." Not vague. Testable.
+
+3. **Portfolio artifact statement** — One sentence naming what the learner will add to their portfolio. Format:
+   ```html
+   <div class="portfolio-artifact">
+     <span class="pa-label">Portfolio artifact</span>
+     <span class="pa-type">[Debate / Skill / Build]</span>
+     <span class="pa-desc">[Specific thing the learner will produce]</span>
+   </div>
+   ```
+
+**Example portfolio artifact statements by type:**
+- **Debate:** "A written defense of your deployment position across three AI scenarios, showing how your reasoning held or evolved under pressure."
+- **Skill:** "A completed bias audit checklist applied to a real AI decision output, with a one-paragraph recommendation."
+- **Build:** "A one-page AI Ethics Policy with each clause specific enough to enforce."
+
+---
+
+### 4.5 Scenario Page Requirements
+
+- Opens with a real or plausible situation — not a definition, not an abstract concept
+- The situation must create the problem that the Lesson resolves
+- Written in narrative present tense, AESOP voice
+- No fictional named protagonists (use "a hospital," "a manager," "an engineer")
+- Ends with the Continue button: "Continue to Lesson →"
+
+---
+
+### 4.6 Lesson Page Requirements
+
+- Leads with the ONE thing the learner is learning — stated in the first paragraph
+- No more than two or three key sub-points
+- Uses real documented examples, not hypotheticals
+- Dividers (`<div class="read-divider">`) between sub-sections
+- Ends with: "Continue to Context →"
+
+---
+
+### 4.7 Context Page Requirements
+
+- Three questions, three frameworks, or three distinctions — never more
+- Each point is immediately applicable to the lab
+- Closes with a sentence that explicitly hands off to the lab: "You'll apply all three in the lab."
+- Ends with: "Enter the Lab →"
+
+---
+
+### 4.8 Lab Page Requirements
+
+**Layout:** Two-pane. Left brief (38%), right chat workspace (62%).
+
+**Lab Brief (left pane) must contain:**
+- Lab type badge: `DEBATE`, `SKILL`, or `BUILD` with distinct color per type
+- Duration estimate
+- Role cards: learner's role + AI's role, both specific
+- Scenario/round tracker (pips or numbered list)
+- Framework reminder from Context — the 2–3 key questions they'll apply
+- "How to complete" — what counts as done
+
+**Chat workspace (right pane) must contain:**
+- Message area (fills viewport height — `flex:1`, `overflow-y:auto`)
+- Compose textarea: `min-height: 72px` — a real compose box, not a search field
+- Send button at right of compose row
+- "Shift + Enter for new line" hint
+
+**Lab opening:** The AI sends the first message automatically when the lab tab is clicked (`labStarted` flag pattern). Never wait for the learner to type first.
+
+**Lab completion:**
+- `LAB_COMPLETE_THRESHOLD` = 6 for debate labs, 5 for skill labs, 4 for build labs
+- `labComplete` postMessage must include `artifactType` and `artifactDesc`:
+  ```javascript
+  window.parent.postMessage({
+    type: 'labComplete',
+    courseId: COURSE_ID,
+    moduleId: MODULE_ID,
+    labId: 'lab',
+    exchangeCount: chatExchanges,
+    artifactType: 'debate',   // 'debate' | 'skill' | 'build'
+    artifactDesc: 'Written defense of deployment position across 3 AI scenarios'
+  }, '*');
+  ```
+
+**Lab type colors:**
+| Type | Color | RGB |
+|------|-------|-----|
+| Debate | `#f43f5e` | 244,63,94 |
+| Skill | `#2ba898` | 43,168,152 |
+| Build | `#9a5fb0` | 154,95,176 |
+
+---
+
+### 4.9 File Structure
+
+```
+ai-academy/modules/v2/
+  {course-slug}/
+    m1.html
+    m2.html
+    ...
+    m8.html
+```
+
+**Course slugs:**
+| Course | Slug | COURSE_ID |
+|--------|------|-----------|
+| AI Ethics & Decision Making | `ai-ethics-decision-making` | `ai-ethics-decision-making-v2` |
+| Building with AI | `building-with-ai` | `building-with-ai-v2` |
+| Building AI Agents: Use Cases | `building-ai-agents-use-cases` | `building-ai-agents-use-cases-v2` |
+
+**File naming:** `m{N}.html` on server. No versioned filenames for v2 — version tracked in HTML comment only.
+
+---
+
+### 4.10 Required Script Variables
+
+```javascript
+var COURSE_ID = '{course-id}-v2';
+var MODULE_ID = 'm{N}';
+var MODULE_NUM = {N};          // integer
+var LAB_TYPE = 'debate';       // 'debate' | 'skill' | 'build'
+var ARTIFACT_DESC = '...';     // one sentence describing what the learner produced
+var PROXY_URL = '/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD = 6; // 6=debate, 5=skill, 4=build
+```
+
+**Model for v2 labs:** `claude-haiku-4-5-20251001` (cost-efficient for frequent interactive exchanges)
+
+---
+
+### 4.11 V2 QA Checklist
+
+- [ ] Tab order: Intro → Scenario → Lesson → Context → Lab
+- [ ] Intro contains: narrative, outcomes list, portfolio artifact statement
+- [ ] Portfolio artifact statement includes type and specific description
+- [ ] Scenario opens with a situation, not a definition
+- [ ] Lesson leads with the one key insight in the first paragraph
+- [ ] Context closes with explicit handoff to lab
+- [ ] Lab brief: type badge, duration, role cards, tracker, framework reminder
+- [ ] Chat compose textarea `min-height: 72px`
+- [ ] Lab opening message fires automatically on tab click (`labStarted` flag)
+- [ ] `labComplete` postMessage includes `artifactType` and `artifactDesc`
+- [ ] `LAB_COMPLETE_THRESHOLD` matches lab type (6/5/4)
+- [ ] Model: `claude-haiku-4-5-20251001`
+- [ ] Total reading ~1,100 words (Intro+Scenario+Lesson+Context combined)
+- [ ] No quiz, no module test
+- [ ] Light mode CSS overrides present (`[data-theme="light"]`)
+- [ ] Mobile responsive: lab panes stack vertically at ≤820px
+- [ ] Version comment updated: `<!-- v2.X.X | YYYY-MM-DD -->`
+- [ ] `COURSE_ID` ends in `-v2`
+- [ ] Back link points to `/ai-academy/courses-v2.html`
+
+---
+
+*AESOP-MODULE-BUILD-STANDARDS.md v3.0.0 — Added Part 4: V2.0 Module Standards. May 2026.*
