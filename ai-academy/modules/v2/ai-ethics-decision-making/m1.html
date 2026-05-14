@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v2.0.0 | 2026-05-14 -->
+<!-- v2.1.0 | 2026-05-14 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -143,6 +143,16 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
   font-size:0.95rem;line-height:1.8;color:var(--text-muted);
 }
 
+.outcomes-list{
+  list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;
+}
+.outcomes-list li{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:1rem;line-height:1.7;color:var(--text-muted);
+  padding:0.5rem 0.75rem 0.5rem 1rem;
+  border-left:2px solid rgba(var(--accent-rgb),0.25);
+  background:rgba(255,255,255,0.015);
+}
 .continue-bar{
   padding:3rem 0 1rem;text-align:center;
 }
@@ -301,7 +311,8 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
 
 <!-- TAB STRIP -->
 <div class="tabstrip">
-  <div class="tab active" id="tab-story" onclick="gotoPage('story')">Story</div>
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
   <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
   <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
   <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
@@ -314,11 +325,43 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
 <!-- PAGES -->
 <div class="pages">
 
-  <!-- ══════════════════ STORY ══════════════════ -->
-  <div class="page active" id="page-story">
+  <!-- ══════════════════ INTRO ══════════════════ -->
+  <div class="page active" id="page-intro">
     <div class="read-scroll">
       <div class="read-col">
-        <div class="section-badge">Story</div>
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">The Engineer's Config File</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Every technology that makes decisions on behalf of people eventually runs into the same problem: the people who built it made choices they didn't realize were ethical.</p>
+          <p>The camera that identifies faces less accurately for darker skin tones wasn't designed to discriminate — it was trained on datasets that didn't represent the full range of human faces. The algorithm that scored Black patients as lower-risk than equally ill white patients wasn't designed to be racist — it was optimized for a cost metric that happened to proxy race without naming it.</p>
+          <p>These failures share a pattern. Technical decisions made without ethical awareness accumulate silently until they surface in a court case, a news investigation, or a patient outcome. By the time anyone calls it an ethics problem, the harm is already done.</p>
+          <p>This module gives you a framework for seeing those decisions before they become problems — and the vocabulary to demand accountability when they don't.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Understand how values enter AI systems through data, optimization targets, and deployment decisions</li>
+            <li>Be able to trace where an ethical failure originated in a deployed AI system</li>
+            <li>Know how to identify who held the power to choose differently at each decision point</li>
+            <li>Be able to articulate what accountability requires — not just fault, but what structural oversight would have prevented the harm</li>
+            <li>Have practiced defending an ethical position under pressure and revising it with reasoned justification</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ SCENARIO ══════════════════ -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
         <h1 class="read-title">The Engineer's Config File</h1>
         <div class="read-time">3 min read</div>
         <div class="read-body">
@@ -340,6 +383,7 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
   </div>
 
   <!-- ══════════════════ LESSON ══════════════════ -->
+
   <div class="page" id="page-lesson">
     <div class="read-scroll">
       <div class="read-col">
