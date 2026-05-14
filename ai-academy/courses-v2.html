@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<!-- v1.0.0 | 2026-05-14 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.0 Courses — AESOP AI Academy</title>
+<meta name="description" content="Aesop AI Academy 2.0 courses. Scenario-driven, lab-first AI education that leaves you with a portfolio — not a completion badge.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+:root{
+  --bg:#080e16;
+  --surface:#0d1520;
+  --surface2:#111c28;
+  --border:#1a2738;
+  --text:#e8e3db;
+  --text-mid:#a89f93;
+  --text-muted:#6e6861;
+  --gold:#c9a05a;
+  --gold-dim:rgba(201,160,90,0.35);
+  --teal:#2ba898;
+  --purple:#9a5fb0;
+  --rose:#f43f5e;
+  --topbar-h:48px;
+}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;left:0;right:0;height:var(--topbar-h);
+  background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;
+  z-index:200;backdrop-filter:blur(10px);
+}
+.topbar-back{
+  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold-dim);text-decoration:none;transition:color 0.15s;
+  display:flex;align-items:center;gap:0.3rem;flex-shrink:0;
+}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-title{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.topbar-badge{
+  margin-left:auto;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;padding:3px 10px;border-radius:20px;
+  background:rgba(201,160,90,0.12);border:1px solid var(--gold-dim);
+  color:var(--gold);white-space:nowrap;flex-shrink:0;
+}
+
+/* ── HERO ── */
+.page-hero{
+  padding:4rem 2rem 3rem;text-align:center;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(175deg,#0d1520 0%,#080e16 100%);
+}
+.page-eyebrow{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
+}
+.page-title{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:clamp(2rem,5vw,3.2rem);font-weight:600;
+  color:#e8e3db;line-height:1.15;margin-bottom:1rem;
+}
+.page-title em{font-style:italic;color:var(--gold);}
+.page-desc{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:1.1rem;line-height:1.75;color:var(--text-mid);
+  max-width:600px;margin:0 auto 2rem;
+}
+.page-meta{
+  display:flex;justify-content:center;align-items:center;gap:0.5rem 1rem;
+  flex-wrap:wrap;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--text-muted);
+}
+.page-meta-dot{color:var(--border);}
+.v1-link{
+  display:inline-block;margin-top:1.5rem;
+  font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--gold-dim);text-decoration:none;transition:color 0.15s;
+  border:1px solid var(--border);border-radius:6px;padding:6px 14px;
+}
+.v1-link:hover{color:var(--gold);border-color:var(--gold-dim);}
+
+/* ── LAB TYPE LEGEND ── */
+.legend{
+  display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;
+  padding:1.25rem 2rem;border-bottom:1px solid var(--border);
+  background:var(--surface);
+}
+.legend-item{
+  display:flex;align-items:center;gap:0.4rem;
+  font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ── COURSES GRID ── */
+.courses-wrap{
+  max-width:1100px;margin:0 auto;padding:3rem 1.5rem 5rem;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem;
+}
+.course-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.course-card:hover{
+  border-color:var(--gold-dim);
+  box-shadow:0 0 32px rgba(201,160,90,0.06);
+}
+.course-card-header{
+  padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);
+}
+.course-number{
+  font-size:0.58rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:0.5rem;
+}
+.course-title{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:1.3rem;font-weight:600;line-height:1.3;
+  color:var(--text);margin-bottom:0.6rem;
+}
+.course-desc{
+  font-size:0.82rem;line-height:1.65;color:var(--text-mid);
+}
+.course-stats{
+  display:flex;gap:1rem;margin-top:0.85rem;
+}
+.course-stat{
+  font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text-muted);display:flex;align-items:center;gap:0.3rem;
+}
+.course-stat-n{color:var(--gold);font-size:0.75rem;}
+
+/* ── MODULE LIST ── */
+.module-list{flex:1;padding:0.75rem 0;}
+.module-row{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.5rem 1.25rem;border-bottom:1px solid rgba(26,39,56,0.6);
+  text-decoration:none;transition:background 0.15s;cursor:pointer;
+}
+.module-row:last-child{border-bottom:none;}
+.module-row:hover{background:rgba(255,255,255,0.03);}
+.module-row-n{
+  font-size:0.58rem;font-weight:700;letter-spacing:0.1em;
+  color:var(--text-muted);width:1.8rem;flex-shrink:0;
+}
+.module-row-title{
+  font-size:0.82rem;font-weight:600;color:var(--text);
+  flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.module-row-badge{
+  font-size:0.52rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:10px;flex-shrink:0;
+}
+.badge-debate{background:rgba(244,63,94,0.15);color:#f43f5e;}
+.badge-skill{background:rgba(43,168,152,0.15);color:#2ba898;}
+.badge-build{background:rgba(154,95,176,0.15);color:#9a5fb0;}
+
+/* ── CARD FOOTER ── */
+.course-card-footer{
+  padding:1rem 1.25rem;border-top:1px solid var(--border);
+  background:rgba(0,0,0,0.2);
+}
+.btn-start{
+  display:flex;align-items:center;justify-content:center;gap:0.4rem;
+  width:100%;padding:0.65rem 1rem;border-radius:8px;
+  background:rgba(201,160,90,0.1);border:1px solid var(--gold-dim);
+  color:var(--gold);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;text-decoration:none;
+  transition:background 0.2s,border-color 0.2s;
+}
+.btn-start:hover{background:rgba(201,160,90,0.18);border-color:var(--gold);}
+.btn-start-arrow{opacity:0.6;}
+
+/* ── PORTFOLIO BANNER ── */
+.portfolio-banner{
+  max-width:1100px;margin:0 auto 0;padding:0 1.5rem;
+}
+.portfolio-inner{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem 2rem;margin-bottom:2rem;
+  display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
+}
+.portfolio-icon{font-size:1.6rem;flex-shrink:0;}
+.portfolio-text h3{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.1rem;font-weight:600;
+  color:var(--text);margin-bottom:0.25rem;
+}
+.portfolio-text p{font-size:0.82rem;line-height:1.6;color:var(--text-mid);}
+.portfolio-types{
+  display:flex;gap:0.5rem;flex-wrap:wrap;margin-left:auto;
+}
+.portfolio-type{
+  font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;
+}
+.pt-debate{background:rgba(244,63,94,0.12);color:#f43f5e;border:1px solid rgba(244,63,94,0.2);}
+.pt-skill{background:rgba(43,168,152,0.12);color:#2ba898;border:1px solid rgba(43,168,152,0.2);}
+.pt-build{background:rgba(154,95,176,0.12);color:#9a5fb0;border:1px solid rgba(154,95,176,0.2);}
+
+@media(max-width:640px){
+  .courses-wrap{grid-template-columns:1fr;}
+  .portfolio-inner{flex-direction:column;align-items:flex-start;}
+  .portfolio-types{margin-left:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a class="topbar-back" href="/ai-academy/courses.html">← 1.0 Courses</a>
+  <div class="topbar-sep"></div>
+  <span class="topbar-title">AESOP AI Academy</span>
+  <span class="topbar-badge">2.0 Preview</span>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-eyebrow">AESOP AI Academy · 2.0 Courses</div>
+  <h1 class="page-title">Learn by doing.<br><em>Leave with proof.</em></h1>
+  <p class="page-desc">Each course is 8 modules — scenario, lesson, context, and a 15–30 min lab. You debate decisions, build skills, and ship things. At the end, you have a portfolio.</p>
+  <div class="page-meta">
+    <span>3 courses</span><span class="page-meta-dot">·</span>
+    <span>24 modules</span><span class="page-meta-dot">·</span>
+    <span>Free</span><span class="page-meta-dot">·</span>
+    <span>No account required</span>
+  </div>
+  <a class="v1-link" href="/ai-academy/courses.html">← Back to 1.0 Foundation Courses</a>
+</div>
+
+<!-- LAB TYPE LEGEND -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#f43f5e;"></div>
+    <span style="color:#f43f5e;">Debate Lab</span>
+    <span style="color:var(--text-muted);margin-left:0.3rem;">— argue a position, defend a framework</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#2ba898;"></div>
+    <span style="color:#2ba898;">Skill Lab</span>
+    <span style="color:var(--text-muted);margin-left:0.3rem;">— practice a discrete, repeatable skill</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#9a5fb0;"></div>
+    <span style="color:#9a5fb0;">Build Lab</span>
+    <span style="color:var(--text-muted);margin-left:0.3rem;">— produce a deliverable you can keep</span>
+  </div>
+</div>
+
+<!-- PORTFOLIO BANNER -->
+<div class="portfolio-banner">
+  <div class="portfolio-inner">
+    <div class="portfolio-icon">🗂️</div>
+    <div class="portfolio-text">
+      <h3>You leave with a portfolio — not a completion badge</h3>
+      <p>Every lab produces an artifact: a position defended, a skill demonstrated, or a document built. By the end of any course, you have 8 artifacts you can show.</p>
+    </div>
+    <div class="portfolio-types">
+      <span class="portfolio-type pt-debate">Decisions Defended</span>
+      <span class="portfolio-type pt-skill">Skills Demonstrated</span>
+      <span class="portfolio-type pt-build">Things Built</span>
+    </div>
+  </div>
+</div>
+
+<!-- COURSES GRID -->
+<div class="courses-wrap">
+
+  <!-- COURSE 1: AI Ethics & Decision Making -->
+  <div class="course-card">
+    <div class="course-card-header">
+      <div class="course-number">Course 1 of 3</div>
+      <div class="course-title">AI Ethics &amp; Decision Making</div>
+      <div class="course-desc">The decisions being made about AI aren't technical — they're political, ethical, and institutional. This course teaches you to evaluate, challenge, and govern them.</div>
+      <div class="course-stats">
+        <div class="course-stat"><span class="course-stat-n">8</span> Modules</div>
+        <div class="course-stat"><span class="course-stat-n">2</span> Debate Labs</div>
+        <div class="course-stat"><span class="course-stat-n">3</span> Skill Labs</div>
+        <div class="course-stat"><span class="course-stat-n">3</span> Build Labs</div>
+      </div>
+    </div>
+    <div class="module-list">
+      <a class="module-row" href="/ai-academy/modules/v2/ai-ethics-decision-making/m1.html">
+        <span class="module-row-n">01</span>
+        <span class="module-row-title">The Deployment Review</span>
+        <span class="module-row-badge badge-debate">Debate</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/ai-ethics-decision-making/m2.html">
+        <span class="module-row-n">02</span>
+        <span class="module-row-title">Reading the Room</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/ai-ethics-decision-making/m3.html">
+        <span class="module-row-n">03</span>
+        <span class="module-row-title">The Paper Trail</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/ai-ethics-decision-making/m4.html">
+        <span class="module-row-n">04</span>
+        <span class="module-row-title">Who Has the Power?</span>
+        <span class="module-row-badge badge-debate">Debate</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/ai-ethics-decision-making/m5.html">
+        <span class="module-row-n">05</span>
+        <span class="module-row-title">Making the Black Box Speak</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/ai-ethics-decision-making/m6.html">
+        <span class="module-row-n">06</span>
+        <span class="module-row-title">The AI Policy</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/ai-ethics-decision-making/m7.html">
+        <span class="module-row-n">07</span>
+        <span class="module-row-title">The Incident Report</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/ai-ethics-decision-making/m8.html">
+        <span class="module-row-n">08</span>
+        <span class="module-row-title">The Governance Proposal</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+    </div>
+    <div class="course-card-footer">
+      <a class="btn-start" href="/ai-academy/modules/v2/ai-ethics-decision-making/m1.html">
+        Start Course <span class="btn-start-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- COURSE 2: Building with AI -->
+  <div class="course-card">
+    <div class="course-card-header">
+      <div class="course-number">Course 2 of 3</div>
+      <div class="course-title">Building with AI</div>
+      <div class="course-desc">From your first prompt to a complete AI product spec. This course builds the practical skills that make AI useful at work — and gives you a portfolio to prove it.</div>
+      <div class="course-stats">
+        <div class="course-stat"><span class="course-stat-n">8</span> Modules</div>
+        <div class="course-stat"><span class="course-stat-n">2</span> Debate Labs</div>
+        <div class="course-stat"><span class="course-stat-n">3</span> Skill Labs</div>
+        <div class="course-stat"><span class="course-stat-n">3</span> Build Labs</div>
+      </div>
+    </div>
+    <div class="module-list">
+      <a class="module-row" href="/ai-academy/modules/v2/building-with-ai/m1.html">
+        <span class="module-row-n">01</span>
+        <span class="module-row-title">The Prompt is the Program</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-with-ai/m2.html">
+        <span class="module-row-n">02</span>
+        <span class="module-row-title">Context and Memory</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-with-ai/m3.html">
+        <span class="module-row-n">03</span>
+        <span class="module-row-title">Should AI Do This?</span>
+        <span class="module-row-badge badge-debate">Debate</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-with-ai/m4.html">
+        <span class="module-row-n">04</span>
+        <span class="module-row-title">Patterns That Work</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-with-ai/m5.html">
+        <span class="module-row-n">05</span>
+        <span class="module-row-title">Build a Research Assistant</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-with-ai/m6.html">
+        <span class="module-row-n">06</span>
+        <span class="module-row-title">Build a Writing Workflow</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-with-ai/m7.html">
+        <span class="module-row-n">07</span>
+        <span class="module-row-title">The Human Handoff</span>
+        <span class="module-row-badge badge-debate">Debate</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-with-ai/m8.html">
+        <span class="module-row-n">08</span>
+        <span class="module-row-title">Ship Something Real</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+    </div>
+    <div class="course-card-footer">
+      <a class="btn-start" href="/ai-academy/modules/v2/building-with-ai/m1.html">
+        Start Course <span class="btn-start-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- COURSE 3: Building AI Agents -->
+  <div class="course-card">
+    <div class="course-card-header">
+      <div class="course-number">Course 3 of 3</div>
+      <div class="course-title">Building AI Agents: Use Cases</div>
+      <div class="course-desc">Agents are AI that thinks, acts, and loops. This course teaches you how they work, how they fail, and how to design ones worth deploying — with three agent specs in your portfolio.</div>
+      <div class="course-stats">
+        <div class="course-stat"><span class="course-stat-n">8</span> Modules</div>
+        <div class="course-stat"><span class="course-stat-n">2</span> Debate Labs</div>
+        <div class="course-stat"><span class="course-stat-n">3</span> Skill Labs</div>
+        <div class="course-stat"><span class="course-stat-n">3</span> Build Labs</div>
+      </div>
+    </div>
+    <div class="module-list">
+      <a class="module-row" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m1.html">
+        <span class="module-row-n">01</span>
+        <span class="module-row-title">What Is an Agent?</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m2.html">
+        <span class="module-row-n">02</span>
+        <span class="module-row-title">Writing Agent Instructions</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m3.html">
+        <span class="module-row-n">03</span>
+        <span class="module-row-title">When Agents Go Wrong</span>
+        <span class="module-row-badge badge-debate">Debate</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m4.html">
+        <span class="module-row-n">04</span>
+        <span class="module-row-title">Tools and Actions</span>
+        <span class="module-row-badge badge-skill">Skill</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m5.html">
+        <span class="module-row-n">05</span>
+        <span class="module-row-title">Build a Research Agent</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m6.html">
+        <span class="module-row-n">06</span>
+        <span class="module-row-title">Build a Content Agent</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m7.html">
+        <span class="module-row-n">07</span>
+        <span class="module-row-title">The Oversight Question</span>
+        <span class="module-row-badge badge-debate">Debate</span>
+      </a>
+      <a class="module-row" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m8.html">
+        <span class="module-row-n">08</span>
+        <span class="module-row-title">Your Agent Portfolio</span>
+        <span class="module-row-badge badge-build">Build</span>
+      </a>
+    </div>
+    <div class="course-card-footer">
+      <a class="btn-start" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m1.html">
+        Start Course <span class="btn-start-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+</div><!-- /.courses-wrap -->
+
+</body>
+</html>
