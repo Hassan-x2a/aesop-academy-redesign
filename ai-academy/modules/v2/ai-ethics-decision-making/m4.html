@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<!-- v2.1.0 | 2026-05-14 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Ethics &amp; Decision Making — Module 4 · AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+
+:root{
+  --accent:#f43f5e;
+  --accent-rgb:244,63,94;
+  --bg:#080e16;
+  --surface:#0d1520;
+  --surface2:#111c28;
+  --border:#1a2738;
+  --text:#e8e3db;
+  --text-mid:#a89f93;
+  --text-muted:#6e6861;
+  --text-dim:#3a4a5a;
+  --gold:#c9a05a;
+  --gold-dim:rgba(201,160,90,0.35);
+  --topbar-h:48px;
+  --tabstrip-h:44px;
+  --chrome-h:92px;
+}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:var(--topbar-h);
+  background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;
+  z-index:200;backdrop-filter:blur(10px);
+}
+.topbar-back{
+  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold-dim);text-decoration:none;transition:color 0.15s;
+  display:flex;align-items:center;gap:0.3rem;flex-shrink:0;
+}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);
+  flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.topbar-badge{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--accent);background:rgba(var(--accent-rgb),0.08);
+  border:1px solid rgba(var(--accent-rgb),0.2);
+  padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;
+}
+.topbar-theme-btn{
+  background:transparent;border:1px solid var(--border);color:var(--text-dim);
+  border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;
+  cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;
+}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+
+/* ── TAB STRIP ── */
+.tabstrip{
+  position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);
+  background:#060c14;border-bottom:1px solid var(--border);
+  display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;
+  z-index:190;
+}
+.tab{
+  display:flex;align-items:center;gap:0.45rem;
+  padding:0 1rem;
+  font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text-dim);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;
+}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{
+  font-size:0.56rem;font-weight:700;letter-spacing:0.08em;
+  padding:0.1rem 0.4rem;border-radius:3px;
+  background:rgba(var(--accent-rgb),0.1);
+  border:1px solid rgba(var(--accent-rgb),0.22);
+  color:var(--accent);
+}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+
+/* ── PAGE CONTAINER ── */
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+
+/* ── READING PAGES ── */
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+
+.section-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.1rem;
+}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+
+.read-title{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;
+  color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;
+}
+.read-time{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text-dim);margin-bottom:2.75rem;
+}
+
+.read-body{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:1.08rem;line-height:1.92;color:var(--text-mid);
+}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{
+  font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--gold-dim);margin-bottom:0.9rem;
+}
+
+.framework-item{
+  padding:0.65rem 0.9rem 0.65rem 1rem;
+  border-left:2px solid rgba(var(--accent-rgb),0.25);
+  background:rgba(255,255,255,0.015);
+  margin-bottom:0.65rem;
+}
+.framework-item strong{
+  display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;
+}
+.framework-item p{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:0.95rem;line-height:1.8;color:var(--text-muted);
+}
+
+.portfolio-artifact{
+  padding:0.75rem 1rem;
+  background:rgba(var(--accent-rgb),0.06);
+  border:1px solid rgba(var(--accent-rgb),0.15);
+  border-radius:4px;
+  margin-bottom:1.5rem;
+}
+.artifact-badge{
+  font-size:0.56rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:0.35rem;
+}
+.artifact-desc{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:0.95rem;line-height:1.6;color:var(--text-muted);
+}
+
+.outcomes-list{
+  list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;
+}
+.outcomes-list li{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:1rem;line-height:1.7;color:var(--text-muted);
+  padding:0.5rem 0.75rem 0.5rem 1rem;
+  border-left:2px solid rgba(var(--accent-rgb),0.25);
+  background:rgba(255,255,255,0.015);
+}
+.continue-bar{
+  padding:3rem 0 1rem;text-align:center;
+}
+.continue-btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(var(--accent-rgb),0.07);
+  border:1px solid rgba(var(--accent-rgb),0.22);
+  color:var(--accent);
+  padding:0.7rem 1.75rem;border-radius:4px;
+  font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;font-family:'Nunito Sans',sans-serif;
+  transition:all 0.15s;
+}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.continue-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0;}
+
+/* ── LAB PAGE ── */
+.lab-split{flex:1;display:flex;overflow:hidden;}
+
+.lab-brief{
+  width:38%;min-width:268px;max-width:400px;
+  background:var(--surface);border-right:1px solid var(--border);
+  overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+.lab-type-badge{
+  display:inline-flex;align-items:center;gap:0.35rem;
+  font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+  background:rgba(var(--accent-rgb),0.08);
+  border:1px solid rgba(var(--accent-rgb),0.2);
+  color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;
+  margin-bottom:0.85rem;
+}
+.lab-brief-title{
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;
+}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{
+  font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--gold-dim);margin-bottom:0.45rem;
+}
+.role-card{
+  display:flex;gap:0.65rem;align-items:flex-start;
+  padding:0.6rem 0.8rem;
+  background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;
+  font-size:0.8rem;line-height:1.6;color:var(--text-muted);
+  margin-bottom:0.4rem;
+}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+
+.scenario-dots{display:flex;gap:0.4rem;align-items:center;margin-bottom:0.55rem;}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.2s;}
+.sdot.done{background:var(--gold);}
+.sdot.active{background:var(--accent);box-shadow:0 0 0 2px rgba(var(--accent-rgb),0.2);}
+
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{
+  font-size:0.76rem;line-height:1.6;color:var(--text-muted);
+  padding:0.45rem 0.65rem;
+  background:rgba(255,255,255,0.015);
+  border-left:2px solid rgba(var(--accent-rgb),0.25);
+}
+
+/* ── LAB CHAT ── */
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+.lab-msgs{
+  flex:1;overflow-y:auto;
+  padding:1.5rem 1.75rem;
+  display:flex;flex-direction:column;gap:0.85rem;
+  scroll-behavior:smooth;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+
+.lab-compose{
+  border-top:1px solid var(--border);
+  background:var(--surface2);
+  padding:1rem 1.25rem 1.1rem;
+  display:flex;flex-direction:column;gap:0.55rem;
+}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{
+  flex:1;
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--border);border-radius:6px;
+  color:var(--text);font-family:'Nunito Sans',sans-serif;
+  font-size:0.9rem;line-height:1.6;
+  padding:0.75rem 1rem;
+  resize:none;min-height:72px;max-height:160px;
+  transition:border-color 0.15s;
+}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{
+  background:rgba(var(--accent-rgb),0.09);
+  border:1px solid rgba(var(--accent-rgb),0.28);
+  color:var(--accent);border-radius:6px;
+  padding:0 1.2rem;height:50px;min-width:72px;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;
+  transition:all 0.15s;
+}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+
+/* ── LIGHT MODE ── */
+[data-theme="light"]{
+  --bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;
+  --border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;
+  --text-muted:#5a5a70;--text-dim:#9a9aae;
+}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:820px){
+  .lab-split{flex-direction:column;}
+  .lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}
+  .topbar-course{display:none;}
+}
+@media(max-width:520px){
+  .read-scroll{padding:2.5rem 1.25rem 5rem;}
+  .tab{padding:0 0.7rem;}
+  .tab-dur{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">AI Ethics &amp; Decision Making</div>
+  <div class="topbar-badge">Module 4 of 8</div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<!-- TAB STRIP -->
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Debate</span>
+    <span class="tab-dur">~20 min</span>
+  </div>
+</div>
+
+<!-- PAGES -->
+<div class="pages">
+
+  <!-- ══════════════════ INTRO ══════════════════ -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">Who Has the Power?</h1>
+        <div class="read-time">2 min read</div>
+        <div class="portfolio-artifact">
+          <div class="artifact-badge">Portfolio Artifact</div>
+          <div class="artifact-desc">DEBATE — A position paper on appropriate AI decision-making authority</div>
+        </div>
+        <div class="read-body">
+          <p>AI systems make decisions that affect lives. Who gets to decide whether an AI system gets deployed is itself a consequential decision — and it's often made by the people least affected by it.</p>
+          <p>A city council votes to deploy facial recognition at transit hubs. The police wanted it. The vendor sells it. The transit authority operates it. But the people most affected — commuters in low-income neighborhoods where police deployment is already heavy — weren't asked. When a wrongful arrest follows, the question of who held authority to make that decision suddenly becomes urgent.</p>
+          <p>This module teaches you to map power in AI deployments — and to argue, rigorously, about who should have had decision-making authority when they didn't.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Map authority layers in an AI deployment decision</li>
+            <li>Identify who was and wasn't consulted</li>
+            <li>Argue a defensible position on appropriate decision-making authority</li>
+            <li>Critique real governance structures and their fairness</li>
+            <li>Propose alternative authority structures that better distribute power</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ SCENARIO ══════════════════ -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">The Transit Hub Vote</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>The city council of Midvale, population 340,000, called a vote on Tuesday, March 15, 2024, at 7 PM. The resolution was to authorize facial recognition surveillance cameras at six major transit hubs across the city. The vote passed 5-4.</p>
+          <p>The decision had been initiated by the police department, which had requested the system a year earlier. Their stated goal: identify wanted suspects, catch human trafficking victims, and locate missing people. The transit authority was tasked with operating it. The vendor was a private surveillance company. The cost was $2.8 million in grant funding from a federal smart-cities program.</p>
+          <p>What the council didn't do: they didn't hold community meetings in the neighborhoods where cameras would be concentrated (predominantly low-income, predominantly Black and Latino). They didn't commission an independent audit of the technology's accuracy. They didn't establish an oversight board with residents or civil liberties representation. They didn't clearly define what "identify suspects" meant, or what the grounds were for flagging someone as a person of interest. They didn't answer the question: if facial recognition identifies someone incorrectly, what protections exist before an arrest is made?</p>
+          <p>Three months later, a 28-year-old man was arrested at a transit hub. He matched a facial recognition alert. The charges were dropped after two days — he had been misidentified. He sued the city. The case raised a question the council had never formally debated: who actually made the decision to deploy facial recognition? The council voted yes. But did that vote mean the council understood what they were voting on? Did the affected communities have a right to be consulted? And who should have authority over a system that could lead to wrongful arrest?</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ LESSON ══════════════════ -->
+
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">The Four Layers of Authority</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>Every AI deployment involves four layers of decision-making authority. Understanding who holds power at each layer is the foundation of thinking clearly about governance.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Layer 1 — The Developer</div>
+          <div class="framework-item">
+            <strong>Power to Build</strong>
+            <p>The developer decides what the technology can do. A vendor who sells facial recognition that is 99% accurate for white men but 70% accurate for Black women has already made an ethical choice — before any city council voted. The developer cannot escape responsibility by claiming "the client decides how to use it." The developer chose what capabilities to build and what accuracy tradeoffs to accept.</p>
+          </div>
+          <div class="read-section-label">Layer 2 — The Deployer</div>
+          <div class="framework-item">
+            <strong>Power to Authorize</strong>
+            <p>The deployer (in Midvale's case, the city council) decides whether this specific tool gets used in this specific context. But do they decide with full information? Have they consulted the people most affected? Have they established oversight? A council vote with no community input and no clear accountability structure is a decision made in an information vacuum.</p>
+          </div>
+          <div class="read-section-label">Layer 3 — The Regulator</div>
+          <div class="framework-item">
+            <strong>Power to Constrain</strong>
+            <p>Regulators (government agencies, courts, oversight boards) set the legal boundaries within which AI systems can operate. In the US, there is almost no federal regulation of police use of facial recognition. That absence is itself a power choice — it cedes authority to local police chiefs and vendors to decide how surveillance systems operate.</p>
+          </div>
+          <div class="read-section-label">Layer 4 — The Affected Community</div>
+          <div class="framework-item">
+            <strong>Power to Challenge</strong>
+            <p>The people most affected by an AI system — the ones who can be arrested because of its decision, who lose employment because of its judgment, who are denied services because of its output — have the least formal authority. But they have the most at stake. Fair governance requires bringing their voice into the decision before deployment, not just in lawsuits after harm.</p>
+          </div>
+          <div class="read-divider"></div>
+          <p>The question is never "who gets to make the final call?" It's "who was missing from the room when the decision was made, and should they have been there?"</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ CONTEXT ══════════════════ -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Power Mapping Questions</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>When analyzing who had authority (or should have had authority) in an AI deployment, three questions cut through the noise.</p>
+          <div class="read-divider"></div>
+          <div class="fw-reminder" style="margin-bottom:0;">
+            <div class="framework-item">
+              <strong>Who had the authority to say yes — and who had the authority to say no?</strong>
+              <p>In Midvale, the city council could say yes. But who could say no? The affected communities had no formal power to block deployment. The civil liberties groups had no seat at the table. The police could push for implementation without community consent. Unequal authority is the core problem.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Were the people most affected by this decision at the table when it was made?</strong>
+              <p>The commuters who would be surveilled weren't consulted. The people in neighborhoods where police deployment is heaviest weren't asked if they wanted facial recognition at their transit hubs. Fair process requires that affected people have a voice in the decision, not just legal recourse after harm.</p>
+            </div>
+            <div class="framework-item">
+              <strong>What oversight mechanism exists after deployment?</strong>
+              <p>Once facial recognition is live, who monitors it? Who has authority to shut it down if it's causing harm? Who investigates misidentifications? If the answer is "nobody outside the police department," then accountability is a fiction.</p>
+            </div>
+          </div>
+          <div class="read-divider"></div>
+          <p>These questions aren't about perfect democracy — they're about ensuring that power is exercised with the input of the people whose lives are on the line.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ LAB ══════════════════ -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+
+      <!-- LEFT: BRIEF -->
+      <div class="lab-brief">
+        <div class="lab-type-badge">⚔ Debate Lab</div>
+        <div class="lab-brief-title">The Authority Challenge</div>
+        <div class="lab-brief-dur">~20 minutes · 3 scenarios</div>
+
+        <div class="brief-section">
+          <div class="brief-label">Your Role</div>
+          <div class="role-card">
+            <div class="role-card-icon">🧑‍💼</div>
+            <div><strong>You — Decision-Maker</strong>You decide whether an AI deployment should proceed and defend your position on who should have had authority over that decision.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-icon">⚖️</div>
+            <div><strong>AI — Authority Challenger</strong>I test your power mapping. Did you consider who was missing from the room? Would your governance structure actually work?</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Scenarios</div>
+          <div class="scenario-dots">
+            <div class="sdot active" id="sdot-1"></div>
+            <div class="sdot" id="sdot-2"></div>
+            <div class="sdot" id="sdot-3"></div>
+          </div>
+          <div class="brief-text">Police surveillance · School risk assessment · Hiring system</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Power Mapping Framework</div>
+          <div class="fw-reminder">
+            <div class="fw-item">Who could say yes and who could say no?</div>
+            <div class="fw-item">Who was affected but not consulted?</div>
+            <div class="fw-item">What oversight exists after deployment?</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">How to complete</div>
+          <div class="brief-text">State your position on whether to deploy and defend your reasoning about authority. Address who should have had decision-making power and why.</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: CHAT -->
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea
+              class="compose-ta"
+              id="lab-inp"
+              placeholder="State your position on authority and deployment…"
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+            ></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /pages -->
+
+<script>
+var COURSE_ID='ai-ethics-decision-making-v2';
+var MODULE_ID='m4';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD=6;
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are an authority and governance examiner for AESOP AI Academy — AI Ethics & Decision Making (v2.0), Module 4: Who Has the Power? Stay strictly on topic: power mapping in AI deployments, stakeholder consultation, governance fairness, oversight mechanisms, and the four layers of authority. If the learner goes off-topic, redirect them back to authority analysis. Be rigorous about governance structures — vague appeals to "stakeholder engagement" do not pass scrutiny.\n\n';
+
+var LAB_SYSTEM='You are a governance debate facilitator. The learner plays the role of an AI deployment decision-maker. For each scenario, you present an AI deployment case with a contested authority structure, and the learner must: (1) take a position on whether the system should deploy; (2) defend their answer using power mapping: who had authority, who was missing, what oversight exists; (3) revise or defend their position when challenged.\n\nPresent three scenarios in sequence:\n1. A police department wants to deploy facial recognition at transit hubs without notifying or consulting the communities most affected by police surveillance. Who should have had decision-making authority? Should the system deploy?\n2. A school district wants to implement an AI risk-scoring system (predicting which students are likely to drop out) without informing parents. The system will guide counselor interventions. Who should have approved this? Who was excluded?\n3. A tech company wants to use an AI system to pre-screen job applications, eliminating human bias in early-stage filtering. Sounds good, right? But who approved this, and who was consulted?\n\nFor each case, push the learner on governance: Who could say no? Who was affected and wasn\'t at the table? What oversight exists after deployment? Do not accept vague answers about "stakeholder engagement" — push for specifics about authority, consent, and accountability. Complete all three scenarios.';
+
+var FALLBACKS=[
+  'Let\'s be precise about power here. The police department requested facial recognition. The city council voted to approve it. But here\'s the question: who in the room could say no to facial recognition? The communities most affected by police surveillance weren\'t consulted. They had no formal power to block deployment. Is that fair? Should they have had that power? Take a position and defend it with power-mapping logic.',
+  'You\'ve identified one authority problem. Now let\'s go deeper: what oversight exists after the system deploys? Who monitors for misidentifications? Who can shut it down? If the answer is "the police watch themselves," then the governance structure is broken. What would fair oversight look like?',
+  'Scenario 2: A school district implements an AI risk-scoring system for students without informing parents. The system predicts who might drop out and flags them for intervention. Parents are affected — their kids could be labeled as "at risk" — but they weren\'t consulted. Should parents have had a say in this decision? Why or why not? Take a position.'
+];
+
+var LAB_OPENING='Welcome.\n\nYou\'re facing three AI deployment decisions. For each, you\'ll map the power structure: who had authority, who was missing from the room, and whether the governance was fair.\n\nBe specific. Appeals to "stakeholder engagement" are fine until someone points out which stakeholders were actually missing and why that matters.\n\n**Scenario 1 — Police Facial Recognition**\n\nA city police department requests facial recognition cameras at six transit hubs. The stated goal: identify wanted suspects and locate missing people. The city council votes to approve it with no community input.\n\nThe affected communities (commuters, especially in low-income neighborhoods) were not consulted. Civil liberties groups were not invited to the table. No independent accuracy audit was commissioned.\n\nShould this system deploy? And who should have had decision-making authority that didn\'t? Give me your reasoning, focusing on power: who could say yes, who could say no, who was affected but excluded, and what oversight exists.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+    },600);
+    return;
+  }
+
+  var thinking=addMsg('thinking','Thinking…');
+
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:480,
+          system:ACADEMY_GUARDRAIL+LAB_SYSTEM,
+          messages:chatHistory
+        })
+      });
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+      return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;
+      fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];
+      fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+    }
+  }
+  btn.disabled=false;
+  inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,160)+'px';
+});
+
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>
