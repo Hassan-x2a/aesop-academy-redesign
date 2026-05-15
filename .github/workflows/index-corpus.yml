@@ -1,25 +1,6 @@
 name: Index Academy Corpus
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'ai-academy/modules/**'
-  workflow_dispatch:
-    inputs:
-      full_reindex:
-        description: 'Force full re-index of all modules'
-        required: false
-        default: 'true'
-        type: choice
-        options:
-          - 'true'
-          - 'false'
-
-concurrency:
-  group: index-corpus
-  cancel-in-progress: true
+on: {}
 
 jobs:
   index:

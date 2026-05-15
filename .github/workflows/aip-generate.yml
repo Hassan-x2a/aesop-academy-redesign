@@ -1,9 +1,6 @@
 name: AIP Research Agent
 
-on:
-  schedule:
-    - cron: '0 9 * * 1'   # Every Monday at 9am UTC
-  workflow_dispatch:        # Manual trigger anytime
+on: {}
 
 jobs:
   generate-drafts:

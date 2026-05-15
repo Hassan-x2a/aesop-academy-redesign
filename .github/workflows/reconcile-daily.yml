@@ -10,19 +10,7 @@ name: Daily Reconcile (safety net)
 # pipeline runs even on quiet days. Manual workflow_dispatch is also
 # allowed for one-off triggers.
 
-on:
-  schedule:
-    # Daily at 09:30 UTC. Pick a slot when no other heavy workflow is
-    # likely running so we don't compete for runner capacity.
-    - cron: "30 9 * * *"
-  workflow_dispatch:
-
-concurrency:
-  # Don't run two reconciles at once on the same ref. cancel-in-progress
-  # is `false` because we want runs already in flight to finish — same
-  # lesson as the deploy workflow.
-  group: reconcile-all
-  cancel-in-progress: false
+on: {}
 
 jobs:
   reconcile:

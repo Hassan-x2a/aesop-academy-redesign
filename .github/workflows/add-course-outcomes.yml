@@ -14,29 +14,7 @@ name: Add Course Outcomes Block (one-time)
 #     slug=<slug>  (optional — process only one course)
 #     limit=<N>    (optional — cap total courses processed)
 
-on:
-  workflow_dispatch:
-    inputs:
-      apply:
-        description: "Actually write changes ('true') or just dry-run ('false')."
-        required: true
-        default: "true"
-        type: choice
-        options:
-          - "true"
-          - "false"
-      slug:
-        description: "Restrict to one course slug (e.g. ai-governance). Empty = all."
-        required: false
-        default: ""
-      limit:
-        description: "Cap courses processed (0 = no cap)."
-        required: false
-        default: "0"
-
-concurrency:
-  group: add-course-outcomes
-  cancel-in-progress: false
+on: {}
 
 jobs:
   add-outcomes:

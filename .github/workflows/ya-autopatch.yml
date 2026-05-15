@@ -1,14 +1,6 @@
 name: Young Adult Auto-Patch courses.html
 
-on:
-  push:
-    paths:
-      - 'aip/ya-drafts/*.json'
-  workflow_dispatch:
-
-concurrency:
-  group: courses-html-write
-  cancel-in-progress: false
+on: {}
 
 jobs:
   autopatch:

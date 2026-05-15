@@ -1,9 +1,6 @@
 name: Truncation Repair (daily)
 
-on:
-  schedule:
-    - cron: '0 3 * * *'   # 3am UTC daily
-  workflow_dispatch:
+on: {}
 
 jobs:
   repair:

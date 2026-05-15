@@ -14,29 +14,7 @@ name: Backfill Drafts (one-time)
 # Or in the GitHub UI:
 #   Actions → "Backfill Drafts (one-time)" → Run workflow → set apply=true
 
-on:
-  workflow_dispatch:
-    inputs:
-      apply:
-        description: "Actually write changes ('true') or just dry-run ('false'). Default is 'true' — set to 'false' if you only want the cost estimate."
-        required: true
-        default: "true"
-        type: choice
-        options:
-          - "true"
-          - "false"
-      folder:
-        description: "Restrict to one folder (e.g. aip/k12-drafts). Empty = all four."
-        required: false
-        default: ""
-      limit:
-        description: "Cap drafts processed (0 = no cap)."
-        required: false
-        default: "0"
-
-concurrency:
-  group: backfill-drafts
-  cancel-in-progress: false
+on: {}
 
 jobs:
   backfill:

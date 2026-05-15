@@ -8,12 +8,7 @@ name: Sync Live Status
 # This is the safety net for cases where activation happens outside the
 # mod-gen UI (direct registry edits, batch scripts, etc.).
 
-on:
-  push:
-    branches: [main]
-    paths:
-      - 'ai-academy/modules/course-registry.json'
-      - 'ai-academy/modules/courses-data.json'
+on: {}
 
 jobs:
   sync:

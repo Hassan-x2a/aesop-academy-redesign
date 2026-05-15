@@ -1,18 +1,6 @@
 name: Update Homepage Stats
 
-on:
-  push:
-    branches: [main]
-    paths:
-      - 'ai-academy/modules/course-registry.json'
-  schedule:
-    # Top of every hour from 08:00 through 23:00 Mountain Daylight Time
-    # (UTC-6). 08:00 MDT = 14:00 UTC, 23:00 MDT = 05:00 UTC next day.
-    # NOTE: GitHub Actions cron runs in UTC year-round; when MST is in
-    # effect (Nov-Mar, UTC-7), these runs will appear one hour later in
-    # local time. Adjust to '0 1-6,15-23 * * *' for MST if needed.
-    - cron: '0 0-5,14-23 * * *'
-  workflow_dispatch:  # Manual trigger anytime
+on: {}
 
 jobs:
   refresh:

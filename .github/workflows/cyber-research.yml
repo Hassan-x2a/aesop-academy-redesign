@@ -1,9 +1,6 @@
 name: Cybersecurity Research Agent
 
-on:
-  schedule:
-    - cron: '0 10 * * 4'   # Every Thursday at 10am UTC
-  workflow_dispatch:         # Manual trigger anytime
+on: {}
 
 jobs:
   cyber-research:

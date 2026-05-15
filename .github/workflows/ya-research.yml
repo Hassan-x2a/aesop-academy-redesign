@@ -1,9 +1,6 @@
 name: Young Adult AIP Research Agent
 
-on:
-  schedule:
-    - cron: '0 11 * * 3'   # Every Wednesday at 11am UTC
-  workflow_dispatch:         # Manual trigger anytime
+on: {}
 
 jobs:
   ya-research:

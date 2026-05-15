@@ -11,14 +11,7 @@ name: Build Trend Data
 # so the push re-triggers the Pages/cPanel deploy. Falls back to the
 # default GITHUB_TOKEN if the secret is absent (deploy won't cascade).
 
-on:
-  schedule:
-    - cron: '0 8 * * *'
-  workflow_dispatch:        # "Run workflow" button for manual scans
-
-concurrency:
-  group: build-trend-data
-  cancel-in-progress: false  # never cancel a running scan mid-write
+on: {}
 
 jobs:
   scan:

@@ -15,23 +15,7 @@ name: Guard courses.html
 # deploys-to-prod by itself — each downstream workflow decides whether
 # to depend on this guard via `needs:`.
 
-on:
-  push:
-    branches: ["**"]
-    paths:
-      - "ai-academy/courses.html"
-      - ".github/scripts/check_courses_html_sanity.py"
-      - ".github/workflows/guard-courses-html.yml"
-  pull_request:
-    paths:
-      - "ai-academy/courses.html"
-
-concurrency:
-  # Each ref's guard run cancels the previous one on the same ref.
-  # OK because the guard is idempotent and only the latest commit
-  # matters.
-  group: guard-courses-html-${{ github.ref }}
-  cancel-in-progress: true
+on: {}
 
 jobs:
   guard:

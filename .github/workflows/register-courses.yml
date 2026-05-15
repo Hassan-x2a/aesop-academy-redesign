@@ -1,15 +1,6 @@
 name: Register Unregistered Courses
 
-on:
-  push:
-    branches: [main]
-    paths:
-      - 'ai-academy/modules/**/*.html'   # Fires when any module file lands on main
-  workflow_dispatch:                     # Also runnable manually
-
-concurrency:
-  group: courses-html-write
-  cancel-in-progress: true
+on: {}
 
 jobs:
   register:

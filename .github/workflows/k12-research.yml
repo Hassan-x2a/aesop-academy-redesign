@@ -1,9 +1,6 @@
 name: K-12 AI Education Research Agent
 
-on:
-  schedule:
-    - cron: '0 10 * * 2'   # Every Tuesday at 10am UTC (day after general AIP run)
-  workflow_dispatch:         # Manual trigger anytime
+on: {}
 
 jobs:
   k12-research:

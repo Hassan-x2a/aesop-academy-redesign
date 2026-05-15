@@ -1,9 +1,6 @@
 name: Firebase Backup
 
-on:
-  schedule:
-    - cron: '0 3 * * *'   # 3 AM UTC daily (9 PM MDT)
-  workflow_dispatch:        # Manual trigger anytime
+on: {}
 
 jobs:
   backup:

@@ -1,23 +1,6 @@
 name: Generate AI News Articles
 
-on:
-  schedule:
-    - cron: '30 11 * * *'  # Daily after trend-data scan
-  workflow_dispatch:
-    inputs:
-      date:
-        description: 'Article date, YYYY-MM-DD. Defaults to today UTC.'
-        required: false
-        type: string
-      force:
-        description: 'Generate even if articles already exist for the date.'
-        required: false
-        default: false
-        type: boolean
-
-concurrency:
-  group: generate-ai-news
-  cancel-in-progress: false
+on: {}
 
 jobs:
   generate:

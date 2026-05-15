@@ -4,18 +4,7 @@ name: Generate OG Images
 # Generates 1200x630 PNG cards for every live course.
 # Output committed to assets/og/courses/ and deployed with the next FTP push.
 
-on:
-  push:
-    branches: [main]
-    paths:
-      - 'ai-academy/modules/course-registry.json'
-      - 'ai-academy/modules/courses-data.json'
-      - '.github/scripts/generate_og_images.py'
-  workflow_dispatch:   # manual trigger for full regeneration
-
-concurrency:
-  group: og-image-gen
-  cancel-in-progress: true
+on: {}
 
 jobs:
   generate:

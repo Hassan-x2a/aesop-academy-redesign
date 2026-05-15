@@ -1,14 +1,6 @@
 name: K-12 Auto-Patch courses.html
 
-on:
-  push:
-    paths:
-      - 'aip/k12-drafts/*.json'
-  workflow_dispatch:
-
-concurrency:
-  group: courses-html-write
-  cancel-in-progress: false
+on: {}
 
 jobs:
   autopatch:
