@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.8.0 | 2026-05-14 -->
+<!-- v1.9.0 | 2026-05-14 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -287,8 +287,8 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
 .std-course-meta{font-size:0.65rem;color:var(--text-muted);margin-top:0.1rem;}
 .std-course-arrow{font-size:0.75rem;color:var(--gold);transition:transform 0.2s;flex-shrink:0;}
 .std-course-btn.open .std-course-arrow{transform:rotate(90deg);}
-.audit-btn{flex-shrink:0;background:transparent;border:1px solid var(--border);color:var(--text-muted);border-radius:6px;padding:0 0.85rem;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;white-space:nowrap;}
-.audit-btn:hover{border-color:var(--gold-dim);color:var(--gold);}
+.audit-btn{flex-shrink:0;background:rgba(var(--accent-rgb),0.05);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);border-radius:6px;padding:0 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;white-space:nowrap;}
+.audit-btn:hover{background:rgba(var(--accent-rgb),0.12);border-color:rgba(var(--accent-rgb),0.4);}
 
 /* audit modal */
 .audit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;align-items:flex-start;justify-content:center;padding:3rem 1.25rem 2rem;overflow-y:auto;}
@@ -309,6 +309,11 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
 .audit-comp-info{flex:1;}
 .audit-comp-code{font-size:0.74rem;color:var(--text);line-height:1.4;}
 .audit-comp-desc{font-size:0.66rem;color:var(--text-muted);margin-top:0.1rem;line-height:1.45;}
+.audit-refs{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.55rem;}
+.audit-ref{background:rgba(255,255,255,0.03);border-left:2px solid rgba(var(--accent-rgb),0.2);padding:0.4rem 0.6rem;display:flex;flex-direction:column;gap:0.15rem;}
+.audit-ref-loc{font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);font-family:'Nunito Sans',sans-serif;}
+.audit-ref-note{font-size:0.72rem;line-height:1.55;color:var(--text-muted);font-family:'Crimson Pro',Georgia,serif;}
+.audit-ref-empty{font-size:0.66rem;color:var(--text-muted);font-style:italic;}
 
 /* L1 panel */
 .std-course-panel{display:none;padding:0.35rem 0 0.2rem;}
@@ -844,6 +849,137 @@ const COVERAGE = {
   },
 };
 
+// Evidence refs: [courseId][standardId][componentIndex] = [{module, section, note}]
+const EVIDENCE = {
+  'ethics': {
+    'ai4k12':[
+      [{module:'All modules',section:'Course theme',note:'The entire course centers on AI4K12 Big Idea 5 — Society & Ethics. Students evaluate AI impacts on communities throughout all 8 modules.'}],
+      [{module:'M4',section:'Lab',note:'Explores how humans interact with AI systems through natural language and decision interfaces.'}],
+      [],[],[],
+    ],
+    'eu-ai-act':[
+      [{module:'All modules',section:'Course design',note:'Every module builds AI literacy for non-technical decision-makers — the core Art.4 objective.'}],
+      [{module:'M3',section:'Lesson',note:'Risk assessment frameworks applied to real deployment scenarios.'},{module:'M8',section:'Capstone build',note:'Students design a governance framework mapping risks across a full AI deployment lifecycle.'}],
+      [{module:'M2',section:'Lesson & Lab',note:'Transparency and explainability requirements for AI outputs. Lab: students evaluate AI explanations for adequacy.'},{module:'M5',section:'Context',note:'Transparency obligations in contested decision contexts.'}],
+      [{module:'M3',section:'Lab',note:'Human oversight as a required design feature. Students debate oversight adequacy across real scenarios.'},{module:'M7',section:'Lesson',note:'Human oversight mechanisms — when they work and when they fail under pressure.'}],
+      [{module:'M6',section:'Build lab',note:'Quality management documentation as part of governance artifacts.'},{module:'M8',section:'Capstone',note:'Quality management systems for AI deployment included in final governance proposal.'}],
+      [{module:'M4',section:'Lesson',note:'Automated decision-making ethics — when AI makes significant decisions affecting individuals.'},{module:'M8',section:'Capstone',note:'Governance framework specifies automated vs. human decision boundaries.'}],
+      [{module:'M3',section:'Context',note:'Deployer obligations: who is accountable when AI systems cause harm.'},{module:'M6',section:'Lesson',note:'Deployer responsibilities in the AI accountability chain.'}],
+    ],
+    'nist':[
+      [{module:'M1',section:'Intro',note:'Governance culture as the foundation of responsible AI deployment.'},{module:'M8',section:'Capstone',note:'Students design organizational governance structures for AI accountability.'}],
+      [{module:'M3',section:'Lesson & Lab',note:'Risk mapping across stakeholders, failure modes, and affected populations.'},{module:'M5',section:'Skill lab',note:'Contextualizing AI risk in specific deployment environments.'}],
+      [{module:'M2',section:'Lab',note:'Quantifying and assessing bias as a risk metric.'},{module:'M6',section:'Build lab',note:'Risk analysis metrics and evaluation frameworks applied to real outputs.'}],
+      [{module:'M7',section:'Lesson & Lab',note:'Risk prioritization and treatment — including when to pause or decommission AI systems.'},{module:'M8',section:'Capstone',note:'Risk management plan as part of final governance proposal artifact.'}],
+    ],
+    'onet':[
+      [{module:'All modules',section:'Course structure',note:'Ethics and governance are the primary competency developed across all 8 modules.'},{module:'M8',section:'Capstone',note:'Governance proposal artifact demonstrates O*NET 4.A.4 professional ethics competency.'}],
+      [],[],[],
+    ],
+    'unesco':[
+      [{module:'M3',section:'Lesson',note:'Human rights as a framework for evaluating AI deployment decisions.'},{module:'M7',section:'Lab',note:'Students apply human rights principles to contested governance scenarios.'}],
+      [{module:'M2',section:'Full module',note:'Bias and non-discrimination as the primary module focus. Lab: students audit AI systems for fairness.'},{module:'M5',section:'Lesson',note:'Systemic fairness in AI decision-making.'}],
+      [{module:'M4',section:'Lesson & Lab',note:'Transparency and explainability requirements — what AI systems must communicate to affected people.'},{module:'M6',section:'Context',note:'Explainability standards in governance documentation.'}],
+      [{module:'M1',section:'Lesson',note:'Safety as a foundational design principle for AI systems.'},{module:'M7',section:'Lesson',note:'Safety trade-offs in autonomous AI systems.'},{module:'M8',section:'Capstone',note:'Safety requirements included in final governance proposal.'}],
+      [{module:'M3',section:'Lab',note:'Human oversight mechanisms and their adequacy.'},{module:'M7',section:'Full module',note:'Human oversight as the central debate topic — when and how humans must retain control.'}],
+      [],
+    ],
+    'csta':[
+      [{module:'All modules',section:'Course wide',note:'Computing impacts on individuals, communities, and society are the primary lens of every module.'}],
+      [{module:'M5',section:'Build lab',note:'Students test and refine accessible AI solutions, evaluating for inclusivity.'},{module:'M8',section:'Capstone',note:'Final governance proposal must address accessibility and inclusion.'}],
+      [{module:'M4',section:'Lesson',note:'Automation and its economic and social impacts examined in depth.'},{module:'M7',section:'Lesson',note:'Automation replacing human roles — societal implications analyzed.'}],
+      [],
+    ],
+  },
+  'building-with-ai': {
+    'ai4k12':[
+      [{module:'M3 Lesson',section:'"The Four-Question Framework"',note:'Students evaluate societal and ethical implications of AI deployments — the core AI4K12 Big Idea 5 activity.'},{module:'M7 Lesson',section:'"The Handoff Spectrum"',note:'Society-level implications of AI authority accumulation and human control erosion analyzed in depth.'}],
+      [{module:'M1–M2',section:'Foundational modules',note:'Natural language interfaces and AI interaction design covered in early modules.'},{module:'M4',section:'Prompt engineering lab',note:'Students design and test natural language interactions with AI systems.'}],
+      [{module:'M5',section:'Systems analysis',note:'How AI systems represent knowledge and make inferences.'},{module:'M6',section:'Build lab',note:'Knowledge representation in AI pipelines applied in build context.'}],
+      [],[],
+    ],
+    'eu-ai-act':[
+      [{module:'All modules',section:'Course design',note:'Building AI literacy for practitioners — the core Art.4 objective embedded across all 8 modules.'}],
+      [{module:'M3 Lesson',section:'"Governance Standards — The Regulatory Layer"',note:'Art.9 defined: "High-risk AI systems must have a documented risk management process covering: identification of reasonably foreseeable risks, estimation, mitigation, and residual risk evaluation."'},{module:'M3 Lab',section:'LAB_SYSTEM prompt',note:'Lab pushes students: "Does a documented risk management process exist? Who owns it?" — applied to each deployment proposal.'},{module:'M3 Context',section:'"Apply regulatory standards to each zone"',note:'"Any system that falls in the Red or Gray zone likely qualifies as high-risk under EU AI Act Annex III — mandatory risk management documentation required before deployment."'}],
+      [{module:'M3 Lesson',section:'"Question 4: Do people know AI is involved?"',note:'"Do the affected parties understand that an AI made or influenced the decision? Can they ask for human review? Can they opt out?"'},{module:'M7 Lab',section:'LAB_SYSTEM prompt',note:'Transparency referenced as part of handoff design governance — explainability required for effective human oversight.'}],
+      [{module:'M7 Lesson',section:'"EU AI Act — Article 14: Human Oversight"',note:'"High-risk AI systems must be designed to allow effective human oversight. Humans must have the capability to understand outputs, detect failures, and exercise meaningful control."'},{module:'M7 Lab',section:'FALLBACKS[0]',note:'"EU AI Act Article 14 requires human oversight to be effective, not theoretical. How many nurses are actively monitoring AI decisions in real time?"'}],
+      [{module:'M7 Lesson',section:'"EU AI Act — Article 17/29: Accountability & Post-Market Monitoring"',note:'"Deployers must implement quality management systems (Art.17) and post-market monitoring plans (Art.29). Who reviews performance data monthly? What triggers a pause or rollback?"'},{module:'M7 Lab',section:'LAB_SYSTEM prompt',note:'Lab examiner applies Art.17/29: "post-market monitoring including disparate impact analysis" applied to bank loan scenario.'}],
+      [],
+      [{module:'M7 Lesson',section:'"EU AI Act — Article 17/29"',note:'"Art.29: post-market monitoring plans are requirements for legally operating a high-risk AI system — not optional add-ons."'},{module:'M7 Context',section:'Question 4',note:'"EU AI Act Art.9/14/22 for high-risk AI — these are compliance requirements for certain deployments, not aspirational."'}],
+    ],
+    'nist':[
+      [{module:'M7 Lesson',section:'"NIST AI RMF — GOVERN & MANAGE Functions"',note:'"GOVERN establishes organizational policies and accountability structures before deployment. Before choosing a handoff model, ask: Does the organization have a governance policy for this AI?"'},{module:'M7 Lab',section:'FALLBACKS[1]',note:'"NIST GOVERN: Before this agent was deployed, did the hospital have an organizational policy specifying who owns AI risk? Who has authority to pause the system?"'}],
+      [{module:'M3 Lesson',section:'"NIST AI RMF — MAP Function"',note:'"The MAP function requires identifying AI risks in context: who is affected, what harms could occur, and how likely and severe those harms are. If you can\'t map it, you can\'t manage it."'},{module:'M3 Context',section:'"NIST MAP before you approve"',note:'"For Gray and Red zone proposals, run a NIST MAP analysis: Name the affected population. Name the failure modes. Estimate probability and severity."'}],
+      [{module:'M3 Lesson',section:'"Question 1: What are the stakes?"',note:'Students assess harm probability and severity for each deployment proposal — the core NIST MEASURE activity.'},{module:'M7 Lab',section:'LAB_SYSTEM prompt',note:'NIST MEASURE referenced as a post-deployment monitoring obligation in handoff design scenarios.'}],
+      [{module:'M7 Lesson',section:'"NIST AI RMF — GOVERN & MANAGE Functions"',note:'"MANAGE addresses ongoing risk — monitoring, incident response, adjusting or decommissioning systems as risks materialize."'},{module:'M7 Lab',section:'FALLBACKS[1]',note:'"NIST MANAGE: who is responsible for monitoring this system\'s performance after deployment? When the AI starts under-triaging a specific demographic, how does the organization detect that?"'}],
+    ],
+    'onet':[
+      [{module:'M3 Lesson',section:'"Governance Standards — The Regulatory Layer"',note:'Students apply governance frameworks (EU AI Act, NIST, UNESCO) to real deployment decisions — core O*NET 4.A.4 ethics and governance competency.'},{module:'M7 Lesson',section:'"O*NET 4.A.4 — Ethics, Social Responsibility & Risk"',note:'"Professionals designing handoff systems are expected to evaluate the ethical implications of autonomy choices. That responsibility doesn\'t disappear just because the AI vendor recommended Option B."'}],
+      [{module:'M4',section:'Prompt engineering lab',note:'Designing AI-driven solutions to specific user requirements — core technology design competency.'},{module:'M6',section:'Build lab',note:'Building functional AI-powered tools from design requirements.'}],
+      [{module:'M5',section:'Systems analysis lab',note:'Analyzing how AI systems behave under changing conditions.'},{module:'M7 Lesson',section:'"The Handoff Spectrum"',note:'"The right model depends on three variables: the severity of failure, the clarity of AI reasoning, and the capacity of humans to actually intervene."'}],
+      [{module:'M4–M6',section:'Build and skill labs',note:'Hands-on programming and technology use across practical build modules.'}],
+    ],
+    'unesco':[
+      [{module:'M3 Lesson',section:'"UNESCO AI Recommendation — Human Rights & Fairness"',note:'"UNESCO\'s 2021 AI ethics recommendation requires that AI systems respect human rights and do not discriminate. Is there evidence that the training data reflects biased decisions from the past?"'},{module:'M3 Lab',section:'FALLBACKS[0]',note:'"Under UNESCO fairness principles, can the people ranked to the bottom of the queue challenge that ranking? Does that change your approval?"'}],
+      [{module:'M3 Lesson',section:'"UNESCO AI Recommendation — Human Rights & Fairness"',note:'"Does the AI encode historical inequities? Are the affected populations — often those with least power — able to challenge decisions about them?"'},{module:'M3 Context',section:'"UNESCO fairness check for all three zones"',note:'"Even Green-light deployments can encode unfairness. Ask: Is the training data representative of all affected groups? Can individuals contest AI-influenced decisions?"'}],
+      [{module:'M3 Lesson',section:'"Question 4: Do people know AI is involved?"',note:'"Can they ask for a human review? Can they opt out? Transparency isn\'t everything, but it\'s something."'}],
+      [{module:'M3 Lesson',section:'"Question 1: What are the stakes?"',note:'Safety of affected people is the first question asked for every deployment: "What happens if the AI is wrong? Someone gets hurt."'}],
+      [{module:'M7 Lesson',section:'"EU AI Act — Article 14: Human Oversight"',note:'UNESCO human oversight principle applied: humans must have the practical capacity to exercise meaningful control, not just nominal authority.'},{module:'M7 Lab',section:'LAB_SYSTEM prompt',note:'"Can humans actually exercise effective oversight in this environment, or is it theoretical?" — applied to all three scenarios.'}],
+      [],
+    ],
+    'csta':[
+      [{module:'M3 Lesson & Lab',section:'Full module',note:'Students evaluate how AI deployments impact individuals and communities using the four-question framework.'},{module:'M7 Lesson & Lab',section:'Full module',note:'Computing impacts analyzed through handoff design — who gains and loses control as AI authority increases.'}],
+      [{module:'M5',section:'Systems analysis',note:'Students test and refine AI solutions, evaluating for inclusivity and edge cases.'}],
+      [{module:'M7 Lesson',section:'"The Handoff Spectrum"',note:'Students predict how increased AI autonomy impacts economic structures — nurses replaced or augmented, accountants automated.'},{module:'M3 Scenario',section:'"The VC Room"',note:'Five AI pitches evaluated for societal impact across education, justice, HR, and legal sectors.'}],
+      [{module:'M4–M6',section:'Build and skill labs',note:'Students create computational artifacts: prompts, pipelines, and AI-powered tools.'}],
+    ],
+  },
+  'agents': {
+    'ai4k12':[
+      [{module:'M3 Lesson',section:'"Three Agent Failure Modes"',note:'Ethical and societal implications of agent failures — goal misspecification, tool misuse, cascading errors — analyzed as AI4K12 Big Idea 5 cases.'},{module:'M7 Lesson',section:'"Alignment, Control, and the Governance Gap"',note:'Society-level question: who decides what AI agents do, and what happens when no one does?'}],
+      [],
+      [{module:'M1–M2',section:'Agent architecture',note:'How AI agents represent goals, reason about actions, and process environmental inputs.'},{module:'M5',section:'Tool use lab',note:'Agents as reasoning systems that select and apply tools based on internal representations.'}],
+      [{module:'M1',section:'Intro',note:'Agent perception: how agents read environmental signals and translate them into decisions.'}],
+      [],
+    ],
+    'eu-ai-act':[
+      [{module:'All modules',section:'Course design',note:'AI literacy for agent builders and deployers — Art.4 objective embedded across all 8 modules.'}],
+      [{module:'M7 Lesson',section:'"EU AI Act — Article 9/14/22"',note:'"Risk management is mandatory before deployment of high-risk AI (Art.9). Conformity assessment requires documented evidence that the system meets these requirements before it operates."'},{module:'M7 Lab',section:'LAB_OPENING',note:'Scenario 1 explicitly: "Healthcare AI is high-risk under EU AI Act Annex III — Articles 9, 14, and 22 apply."'},{module:'M7 Lab',section:'LAB_SYSTEM prompt',note:'"Healthcare AI qualifies as high-risk under EU AI Act Annex III, making Art.9/14/22 mandatory — not optional."'}],
+      [{module:'M3 Lesson',section:'"EU AI Act — Article 13: Transparency"',note:'"High-risk AI systems must be transparent enough for deployers to understand their outputs and identify failures. If operators can\'t understand what the agent is doing or why, transparency compliance is missing."'},{module:'M3 Lab',section:'FALLBACKS[4]',note:'"Apply Article 13: was the agent transparent? Could human traders understand why it was escalating? Apply NIST MEASURE: was anyone monitoring for execution rate anomalies?"'}],
+      [{module:'M7 Lesson',section:'"EU AI Act — Article 9/14/22"',note:'"Human oversight must be effective and meaningful — not just theoretically possible (Art.14)."'},{module:'M7 Lab',section:'FALLBACKS[0]',note:'"EU AI Act Article 14 requires human oversight to be effective, not theoretical. Given that nurses are at 140% capacity, can they actually exercise meaningful oversight?"'},{module:'M3 Context',section:'"Regulatory Accountability"',note:'"EU AI Act Article 13 assigns transparency obligations to the deployer. If the agent had no explainability, no audit log — that is a regulatory violation."'}],
+      [{module:'M7 Context',section:'Question 4',note:'"EU AI Act Art.9/14/22 for high-risk AI — these are compliance requirements for certain deployments, not aspirational standards."'}],
+      [{module:'M7 Lab',section:'LAB_SYSTEM scenario 2',note:'"Under EU AI Act Articles 17 and 29, lending AI in the EU requires post-market monitoring — including disparate impact analysis by applicant type."'}],
+      [{module:'M7 Lab',section:'LAB_SYSTEM scenario 3',note:'"Under EU AI Act Art.14, is there effective human oversight? Under UNESCO oversight principles, does human control exist in any meaningful sense?"'}],
+    ],
+    'nist':[
+      [{module:'M7 Lesson',section:'"NIST AI RMF — GOVERN and MANAGE"',note:'"GOVERN establishes organizational roles, policies, and accountability before deployment. Who owns AI risk? What are the decision rights? What escalation paths exist?"'},{module:'M7 Lab',section:'FALLBACKS[1]',note:'"NIST GOVERN: Before this agent was deployed, did the hospital have an organizational policy specifying who owns AI risk? If not, the deployment itself is a governance failure."'}],
+      [{module:'M3 Lesson',section:'"Three Agent Failure Modes"',note:'Goal Misspecification, Tool Misuse, and Cascading Errors are a NIST MAP risk taxonomy — students categorize and contextualize agent risks.'},{module:'M3 Context',section:'"The Accountability Map"',note:'Risk identification mapped across developer, deployer, and user stakeholders — the three parties with ability to prevent harm.'}],
+      [{module:'M3 Lesson',section:'"NIST AI RMF — MEASURE Function"',note:'"MEASURE is about quantifying AI risk: tracking performance metrics, detecting anomalies, and evaluating whether the system is behaving as intended. A trading agent with no anomaly detection has no MEASURE function."'},{module:'M3 Lab',section:'FALLBACKS[4]',note:'"Apply NIST MEASURE: was anyone monitoring for execution rate anomalies? Who is primarily accountable for those governance gaps?"'}],
+      [{module:'M7 Lesson',section:'"NIST AI RMF — GOVERN and MANAGE"',note:'"MANAGE handles ongoing risk — monitoring, incident response, adjusting or decommissioning when risk materializes. Without MANAGE, failures are caught after harm, not before."'},{module:'M7 Lab',section:'FALLBACKS[1]',note:'"NIST MANAGE: who is responsible for monitoring this system\'s performance after deployment? Is there a monthly audit process? Who reviews the data?"'}],
+    ],
+    'onet':[
+      [{module:'M7 Lesson',section:'"O*NET 4.A.4 — Ethics, Social Responsibility and Risk"',note:'"This includes the obligation to evaluate whether governance structures are adequate — not just whether they exist on paper. Good governance is a professional obligation, not just an organizational one."'},{module:'M7 Lab',section:'ACADEMY_GUARDRAIL',note:'"O*NET 4.A.4 professional ethics standards — who bears professional ethics responsibility for the adequacy of governance?" — applied to all three scenarios.'}],
+      [{module:'M4–M6',section:'Build and skill labs',note:'Students design and build functional agent systems to specific technical requirements.'}],
+      [{module:'M1–M2',section:'Agent architecture modules',note:'Systems analysis: how agents function, fail, and interact with broader technical ecosystems.'},{module:'M5',section:'Tool use lab',note:'Systems analysis: determining how agents should behave under varying tool availability and environmental conditions.'}],
+      [{module:'M4–M6',section:'Build and skill labs',note:'Students write prompts, configure tools, and implement agent pipelines using real systems.'}],
+    ],
+    'unesco':[
+      [{module:'M3 Lab',section:'FALLBACKS[2]',note:'"For the people harmed by the agent\'s decisions, could they understand those decisions and contest them? UNESCO human rights principle applied to 12,000 banned accounts."'}],
+      [{module:'M3 Lab',section:'LAB_SYSTEM prompt',note:'"UNESCO Transparency — for the people harmed by the agent\'s decisions, could they understand those decisions and contest them?" — applied to hiring bias scenario.'}],
+      [{module:'M3 Lesson',section:'"UNESCO AI Recommendation — Transparency & Explainability"',note:'"UNESCO\'s transparency principle asks: could the people affected by this agent\'s decisions understand how those decisions were made? And if not, who chose to deploy a system that made consequential decisions in the dark?"'},{module:'M3 Context',section:'"Regulatory Accountability — for compliance gaps"',note:'"UNESCO transparency principle places responsibility on whoever deployed a system making consequential decisions without explainability."'}],
+      [{module:'M7 Lab',section:'LAB_SYSTEM prompt',note:'"UNESCO safety and oversight standards — these are not aspirational, they are compliance requirements for certain deployments."'}],
+      [{module:'M7 Lesson',section:'"UNESCO AI Recommendation — Human Oversight and Safety"',note:'"Humans must have the practical capacity to understand, monitor, and override the agent — not just the nominal authority. If nurses lack the time, information, or training to exercise real oversight, UNESCO\'s standard is not met."'},{module:'M7 Lab',section:'LAB_SYSTEM',note:'UNESCO oversight and safety applied across all three governance scenarios as a compliance lens.'}],
+      [],
+    ],
+    'csta':[
+      [],
+      [{module:'M3 Lab',section:'Lab structure',note:'Students test and refine accountability frameworks across three failure scenarios — evaluating for coverage gaps and edge cases.'}],
+      [{module:'M3 Lesson',section:'"Three Agent Failure Modes"',note:'Automated agent systems and their economic/social impacts analyzed through real failure case studies.'},{module:'M7 Lesson',section:'"Autonomy vs. Oversight"',note:'Students predict how fully autonomous agents impact organizational structures — where does human work go when agents decide?'}],
+      [{module:'M4–M6',section:'Build and skill labs',note:'Students create functional agent artifacts: pipelines, tool configurations, and multi-step workflows.'}],
+    ],
+  },
+};
+
 const COURSES = [
   { id:'ethics',           name:'AI Ethics & Decision Making',  modules:'8 modules — 2 debate · 3 skill · 3 build' },
   { id:'building-with-ai', name:'Building with AI',             modules:'8 modules — 2 debate · 3 skill · 3 build' },
@@ -897,16 +1033,25 @@ function renderStandards(courseId) {
 }
 
 function renderAudit(courseId) {
+  const ev = EVIDENCE[courseId] || {};
   return STANDARDS.map(std => {
     const cov = COVERAGE[courseId][std.id];
     const overall = overallLevel(cov);
+    const evStd = ev[std.id] || [];
     const comps = std.components.map((c,i) => {
       const level = cov[i]||'none';
+      const refs = evStd[i] || [];
+      const refsHtml = refs.length
+        ? '<div class="audit-refs">' + refs.map(r =>
+            `<div class="audit-ref"><span class="audit-ref-loc">${r.module} · ${r.section}</span><span class="audit-ref-note">${r.note}</span></div>`
+          ).join('') + '</div>'
+        : (level !== 'none' ? '<div class="audit-refs"><div class="audit-ref audit-ref-empty">Evidence on file — detailed citations in module source.</div></div>' : '');
       return `<div class="audit-comp-row">
         <div style="flex-shrink:0;padding-top:0.1rem;">${BADGE[level]||BADGE.none}</div>
         <div class="audit-comp-info">
           <div class="audit-comp-code">${c.code}</div>
           <div class="audit-comp-desc">${c.desc}</div>
+          ${refsHtml}
         </div>
       </div>`;
     }).join('');
