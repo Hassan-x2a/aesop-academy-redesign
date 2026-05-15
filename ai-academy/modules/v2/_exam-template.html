@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<!-- EXAM ENGINE TEMPLATE v1.0.0 — copy and populate EXAM_DATA below -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Exam — AESOP AI Academy</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+:root{
+  --bg:#080e16;
+  --surface:#0d1520;
+  --surface2:#111c28;
+  --border:#1a2738;
+  --text:#e8e3db;
+  --text-mid:#a89f93;
+  --text-muted:#6e6861;
+  --gold:#c9a05a;
+  --gold-dim:rgba(201,160,90,0.3);
+  --teal:#2ba898;
+  --rose:#f43f5e;
+  --topbar-h:56px;
+}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:200;
+  height:var(--topbar-h);
+  background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 1.5rem;gap:1rem;
+  backdrop-filter:blur(10px);
+}
+.topbar-back{
+  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold-dim);text-decoration:none;transition:color 0.15s;flex-shrink:0;
+}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{
+  font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;
+  color:rgba(255,255,255,0.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;
+}
+.topbar-timer{
+  font-family:'Nunito Sans',sans-serif;font-size:0.85rem;font-weight:700;
+  letter-spacing:0.06em;color:var(--gold);flex-shrink:0;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.topbar-timer.warning{color:var(--rose);animation:pulse 1s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.6;}}
+.topbar-progress{
+  font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text-muted);flex-shrink:0;white-space:nowrap;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-track{height:2px;background:var(--border);}
+.progress-fill{height:100%;background:var(--gold);transition:width 0.3s ease;}
+
+/* ── SCREENS ── */
+.screen{display:none;max-width:780px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+.screen.active{display:block;}
+
+/* ── START SCREEN ── */
+.start-hero{text-align:center;padding:3rem 1rem;}
+.start-eyebrow{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
+}
+.start-title{
+  font-family:'Crimson Pro',Georgia,serif;font-size:2.2rem;font-weight:600;
+  color:var(--text);line-height:1.2;margin-bottom:1rem;
+}
+.start-desc{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.05rem;line-height:1.75;
+  color:var(--text-mid);max-width:520px;margin:0 auto 2rem;
+}
+.rules-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1rem;margin:0 auto 2.5rem;max-width:600px;
+}
+.rule-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:1rem;text-align:center;
+}
+.rule-card-val{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.6rem;font-weight:700;
+  color:var(--gold);display:block;margin-bottom:0.25rem;
+}
+.rule-card-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
+
+.retake-notice{
+  background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.2);
+  border-radius:10px;padding:1rem 1.25rem;margin:0 auto 2rem;max-width:500px;
+  font-size:0.82rem;line-height:1.6;color:#f43f5e;text-align:center;
+}
+
+.btn-start{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.8rem 2rem;border-radius:8px;
+  background:var(--gold);color:#080e16;
+  font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  border:none;cursor:pointer;transition:opacity 0.2s;
+}
+.btn-start:hover{opacity:0.88;}
+.btn-start:disabled{opacity:0.35;cursor:not-allowed;}
+
+/* ── EXAM SCREEN ── */
+.question-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:2rem;margin-bottom:1rem;
+}
+.q-meta{
+  display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;flex-wrap:wrap;
+}
+.q-num{
+  font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+.q-standard{
+  font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  padding:2px 8px;border-radius:10px;
+  background:rgba(201,160,90,0.1);border:1px solid var(--gold-dim);color:var(--gold);
+}
+.q-text{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.1rem;line-height:1.65;
+  color:var(--text);margin-bottom:1.5rem;
+}
+.choices{display:flex;flex-direction:column;gap:0.6rem;}
+.choice{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  padding:0.75rem 1rem;border-radius:8px;
+  border:1px solid var(--border);background:transparent;
+  cursor:pointer;text-align:left;width:100%;transition:border-color 0.15s,background 0.15s;
+  color:var(--text);font-family:'Nunito Sans',sans-serif;
+}
+.choice:hover:not(:disabled){border-color:rgba(201,160,90,0.4);background:rgba(201,160,90,0.04);}
+.choice.selected{border-color:var(--gold);background:rgba(201,160,90,0.08);}
+.choice:disabled{cursor:default;}
+.choice-letter{
+  font-size:0.65rem;font-weight:700;letter-spacing:0.08em;
+  color:var(--text-muted);flex-shrink:0;margin-top:0.1rem;width:1rem;
+}
+.choice-text{font-size:0.88rem;line-height:1.55;color:var(--text-mid);}
+.choice.selected .choice-text{color:var(--text);}
+
+/* Answered states */
+.choice.correct{border-color:var(--teal)!important;background:rgba(43,168,152,0.1)!important;}
+.choice.correct .choice-text{color:#2ba898;}
+.choice.wrong{border-color:var(--rose)!important;background:rgba(244,63,94,0.08)!important;}
+.choice.wrong .choice-text{color:#f43f5e;}
+
+.q-explanation{
+  margin-top:1.25rem;padding:1rem 1.25rem;border-radius:8px;
+  background:var(--surface2);border-left:3px solid var(--teal);
+  font-size:0.82rem;line-height:1.65;color:var(--text-mid);
+  display:none;
+}
+.q-explanation.visible{display:block;}
+.q-explanation strong{color:var(--text);font-weight:600;}
+
+/* ── NAV ── */
+.exam-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.5rem 0 0;
+}
+.btn-nav{
+  padding:0.6rem 1.4rem;border-radius:8px;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;border:1px solid var(--border);
+  background:transparent;color:var(--text-muted);cursor:pointer;transition:all 0.15s;
+}
+.btn-nav:hover:not(:disabled){border-color:var(--gold-dim);color:var(--gold);}
+.btn-nav:disabled{opacity:0.3;cursor:default;}
+.btn-nav.primary{
+  background:var(--gold);color:#080e16;border-color:var(--gold);
+}
+.btn-nav.primary:hover{opacity:0.88;}
+
+/* ── RESULTS SCREEN ── */
+.results-hero{text-align:center;padding:3rem 1rem 2rem;}
+.score-ring{
+  width:140px;height:140px;border-radius:50%;margin:0 auto 1.5rem;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  border:4px solid var(--gold);background:var(--surface);
+}
+.score-ring.pass{border-color:var(--teal);}
+.score-ring.fail{border-color:var(--rose);}
+.score-pct{
+  font-family:'Crimson Pro',Georgia,serif;font-size:2.2rem;font-weight:700;
+  color:var(--gold);line-height:1;
+}
+.score-ring.pass .score-pct{color:var(--teal);}
+.score-ring.fail .score-pct{color:var(--rose);}
+.score-label{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
+.results-verdict{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.6rem;font-weight:600;
+  color:var(--text);margin-bottom:0.5rem;
+}
+.results-sub{font-size:0.88rem;line-height:1.6;color:var(--text-mid);margin-bottom:2rem;}
+.results-stats{
+  display:flex;justify-content:center;gap:2rem;margin-bottom:2rem;flex-wrap:wrap;
+}
+.stat{text-align:center;}
+.stat-n{font-family:'Crimson Pro',Georgia,serif;font-size:1.5rem;font-weight:700;color:var(--gold);display:block;}
+.stat-l{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
+.retake-info{
+  font-size:0.78rem;color:var(--text-muted);margin-bottom:1.5rem;
+}
+.btn-retake{
+  padding:0.7rem 1.8rem;border-radius:8px;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  border:1px solid var(--border);background:transparent;
+  color:var(--text-muted);cursor:pointer;transition:all 0.15s;
+}
+.btn-retake:hover:not(:disabled){border-color:var(--gold-dim);color:var(--gold);}
+.btn-retake:disabled{opacity:0.35;cursor:not-allowed;}
+
+.review-section{margin-top:3rem;}
+.review-title{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:1.25rem;padding-bottom:0.75rem;
+  border-bottom:1px solid var(--border);
+}
+.review-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:1.25rem;margin-bottom:0.75rem;
+}
+.review-item.correct-item{border-left:3px solid var(--teal);}
+.review-item.wrong-item{border-left:3px solid var(--rose);}
+.review-q{
+  font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.55;
+  color:var(--text);margin-bottom:0.6rem;
+}
+.review-answers{font-size:0.78rem;line-height:1.5;color:var(--text-muted);margin-bottom:0.6rem;}
+.review-answers .your{color:var(--rose);}
+.review-answers .correct{color:var(--teal);}
+.review-explanation{
+  font-size:0.78rem;line-height:1.6;color:var(--text-muted);
+  padding-top:0.6rem;border-top:1px solid var(--border);
+}
+.review-standard{
+  display:inline-block;margin-top:0.5rem;
+  font-size:0.55rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  padding:2px 7px;border-radius:8px;
+  background:rgba(201,160,90,0.08);border:1px solid var(--gold-dim);color:var(--gold);
+}
+
+@media(max-width:600px){
+  .rules-grid{grid-template-columns:repeat(2,1fr);}
+  .results-stats{gap:1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a class="topbar-back" id="topbarBack" href="#">← Course</a>
+  <div class="topbar-sep"></div>
+  <span class="topbar-course" id="topbarCourse">Course Exam</span>
+  <span class="topbar-timer" id="timer">1:00:00</span>
+  <span class="topbar-progress" id="topbarProgress"></span>
+</nav>
+<div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<!-- START SCREEN -->
+<div class="screen active" id="screenStart">
+  <div class="start-hero">
+    <div class="start-eyebrow" id="startEyebrow">Final Exam</div>
+    <h1 class="start-title" id="startTitle">Course Exam</h1>
+    <p class="start-desc" id="startDesc">This exam covers all 8 modules. Every question is mapped to an education or employment standard.</p>
+    <div class="rules-grid">
+      <div class="rule-card"><span class="rule-card-val">30</span><span class="rule-card-label">Questions</span></div>
+      <div class="rule-card"><span class="rule-card-val">70%</span><span class="rule-card-label">Pass Threshold</span></div>
+      <div class="rule-card"><span class="rule-card-val">1 hr</span><span class="rule-card-label">Time Limit</span></div>
+      <div class="rule-card"><span class="rule-card-val">3 days</span><span class="rule-card-label">Retake Wait</span></div>
+    </div>
+    <div class="retake-notice" id="retakeNotice" style="display:none;"></div>
+    <button class="btn-start" id="btnStart" onclick="startExam()">Begin Exam →</button>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div class="screen" id="screenExam">
+  <div id="questionWrap"></div>
+  <div class="exam-nav">
+    <button class="btn-nav" id="btnPrev" onclick="prevQ()" disabled>← Previous</button>
+    <span id="qCounter" style="font-size:0.72rem;color:var(--text-muted);font-weight:700;letter-spacing:0.08em;"></span>
+    <button class="btn-nav primary" id="btnNext" onclick="nextQ()">Next →</button>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div class="screen" id="screenResults">
+  <div class="results-hero">
+    <div class="score-ring" id="scoreRing">
+      <span class="score-pct" id="scorePct">—</span>
+      <span class="score-label">Score</span>
+    </div>
+    <div class="results-verdict" id="resultsVerdict"></div>
+    <div class="results-sub" id="resultsSub"></div>
+    <div class="results-stats">
+      <div class="stat"><span class="stat-n" id="statCorrect">—</span><span class="stat-l">Correct</span></div>
+      <div class="stat"><span class="stat-n" id="statWrong">—</span><span class="stat-l">Wrong</span></div>
+      <div class="stat"><span class="stat-n" id="statPct">—</span><span class="stat-l">Score</span></div>
+    </div>
+    <div class="retake-info" id="retakeInfo"></div>
+    <button class="btn-retake" id="btnRetake" onclick="resetExam()">Retake Exam</button>
+  </div>
+  <div class="review-section">
+    <div class="review-title">Question Review — Wrong Answers Only</div>
+    <div id="reviewWrap"></div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// EXAM CONFIGURATION — populate this object per course
+// ─────────────────────────────────────────────────────────────
+const EXAM_CONFIG = {
+  courseId: 'REPLACE_COURSE_ID',         // e.g. 'ai-ethics-decision-making-v2'
+  courseTitle: 'REPLACE_COURSE_TITLE',   // e.g. 'AI Ethics & Decision Making'
+  backUrl: '../m1.html',
+  passPct: 70,
+  timeLimitSeconds: 3600,
+  retakeDays: 3,
+};
+
+// ─────────────────────────────────────────────────────────────
+// EXAM DATA — 30 questions, each with:
+//   q: question text
+//   choices: [A, B, C, D]
+//   correct: 0-3 (index)
+//   standard: citation string
+//   explanation: why the correct answer is right (and why the wrong ones aren't)
+// ─────────────────────────────────────────────────────────────
+const EXAM_DATA = [
+  // REPLACE WITH GENERATED QUESTIONS
+];
+
+// ─────────────────────────────────────────────────────────────
+// ENGINE — do not modify below
+// ─────────────────────────────────────────────────────────────
+const STORAGE_KEY = `aesop_exam_${EXAM_CONFIG.courseId}`;
+let currentQ = 0;
+let answers = new Array(EXAM_DATA.length).fill(-1);
+let timerInterval = null;
+let secondsLeft = EXAM_CONFIG.timeLimitSeconds;
+let examStarted = false;
+let examSubmitted = false;
+
+function init() {
+  document.getElementById('topbarBack').href = EXAM_CONFIG.backUrl;
+  document.getElementById('topbarCourse').textContent = EXAM_CONFIG.courseTitle;
+  document.getElementById('topbarProgress').textContent = '';
+  document.getElementById('startTitle').textContent = EXAM_CONFIG.courseTitle + ' — Final Exam';
+  document.getElementById('startEyebrow').textContent = 'Module 8 Complete · Final Exam';
+
+  const saved = getSaved();
+  if (saved && saved.lockedUntil && Date.now() < saved.lockedUntil) {
+    const days = Math.ceil((saved.lockedUntil - Date.now()) / 86400000);
+    const hrs  = Math.ceil((saved.lockedUntil - Date.now()) / 3600000);
+    document.getElementById('retakeNotice').style.display = 'block';
+    document.getElementById('retakeNotice').textContent =
+      `You did not pass. Retakes are available in ${hrs < 24 ? hrs + ' hour(s)' : days + ' day(s)'}.`;
+    document.getElementById('btnStart').disabled = true;
+  }
+}
+
+function getSaved() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch { return null; }
+}
+function setSaved(obj) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+}
+
+function startExam() {
+  examStarted = true;
+  answers = new Array(EXAM_DATA.length).fill(-1);
+  currentQ = 0;
+  secondsLeft = EXAM_CONFIG.timeLimitSeconds;
+  show('screenExam');
+  renderQ();
+  startTimer();
+}
+
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const h = Math.floor(secondsLeft / 3600);
+  const m = Math.floor((secondsLeft % 3600) / 60);
+  const s = secondsLeft % 60;
+  const str = `${h}:${pad(m)}:${pad(s)}`;
+  const el = document.getElementById('timer');
+  el.textContent = str;
+  el.className = 'topbar-timer' + (secondsLeft < 300 ? ' warning' : '');
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function renderQ() {
+  const q = EXAM_DATA[currentQ];
+  const answered = answers[currentQ] !== -1;
+  const pct = Math.round(((currentQ + 1) / EXAM_DATA.length) * 100);
+
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('topbarProgress').textContent = `${currentQ + 1} / ${EXAM_DATA.length}`;
+  document.getElementById('qCounter').textContent = `Question ${currentQ + 1} of ${EXAM_DATA.length}`;
+  document.getElementById('btnPrev').disabled = currentQ === 0;
+
+  const isLast = currentQ === EXAM_DATA.length - 1;
+  const allAnswered = answers.every(a => a !== -1);
+  const btn = document.getElementById('btnNext');
+  if (isLast) {
+    btn.textContent = allAnswered ? 'Submit Exam →' : 'Next →';
+    btn.onclick = allAnswered ? submitExam : nextQ;
+  } else {
+    btn.textContent = 'Next →';
+    btn.onclick = nextQ;
+  }
+
+  const letters = ['A', 'B', 'C', 'D'];
+  document.getElementById('questionWrap').innerHTML = `
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-num">Question ${currentQ + 1}</span>
+        <span class="q-standard">${q.standard}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="choices">
+        ${q.choices.map((c, i) => `
+          <button class="choice${answers[currentQ] === i ? ' selected' : ''}"
+            onclick="selectAnswer(${i})"
+            ${examSubmitted ? 'disabled' : ''}>
+            <span class="choice-letter">${letters[i]}</span>
+            <span class="choice-text">${c}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-explanation" id="qExpl"></div>
+    </div>
+  `;
+}
+
+function selectAnswer(idx) {
+  if (examSubmitted) return;
+  answers[currentQ] = idx;
+  renderQ();
+  // auto-advance if not last question
+  if (currentQ < EXAM_DATA.length - 1) {
+    setTimeout(() => { currentQ++; renderQ(); }, 300);
+  }
+}
+
+function nextQ() {
+  if (currentQ < EXAM_DATA.length - 1) { currentQ++; renderQ(); }
+}
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQ(); }
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+  examSubmitted = true;
+
+  const correct = answers.filter((a, i) => a === EXAM_DATA[i].correct).length;
+  const total   = EXAM_DATA.length;
+  const pct     = Math.round((correct / total) * 100);
+  const passed  = pct >= EXAM_CONFIG.passPct;
+
+  // Save result + lock if failed
+  const result = { passed, pct, correct, total, date: Date.now() };
+  if (!passed) {
+    result.lockedUntil = Date.now() + (EXAM_CONFIG.retakeDays * 86400000);
+  }
+  setSaved(result);
+
+  // Score ring
+  const ring = document.getElementById('scoreRing');
+  ring.className = 'score-ring ' + (passed ? 'pass' : 'fail');
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('resultsVerdict').textContent = passed ? 'Exam Passed' : 'Exam Not Passed';
+  document.getElementById('resultsSub').textContent = passed
+    ? `You scored ${pct}% — above the ${EXAM_CONFIG.passPct}% threshold. This result has been recorded.`
+    : `You scored ${pct}% — below the ${EXAM_CONFIG.passPct}% threshold. Review the wrong answers below, then retake when the timer clears.`;
+
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = total - correct;
+  document.getElementById('statPct').textContent = pct + '%';
+
+  if (!passed) {
+    const unlockDate = new Date(result.lockedUntil);
+    document.getElementById('retakeInfo').textContent =
+      `Retake available after ${unlockDate.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric'})} at ${unlockDate.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'})}.`;
+    document.getElementById('btnRetake').disabled = true;
+  } else {
+    document.getElementById('retakeInfo').textContent = '';
+    document.getElementById('btnRetake').style.display = 'none';
+  }
+
+  // Build wrong-answer review
+  const wrong = answers.map((a, i) => ({i, a, q: EXAM_DATA[i]})).filter(x => x.a !== x.q.correct);
+  const letters = ['A','B','C','D'];
+  document.getElementById('reviewWrap').innerHTML = wrong.length === 0
+    ? '<p style="color:var(--teal);font-size:0.88rem;">Perfect score — no wrong answers to review.</p>'
+    : wrong.map(({i, a, q}) => `
+        <div class="review-item wrong-item">
+          <div class="review-q">Q${i+1}. ${q.q}</div>
+          <div class="review-answers">
+            <span class="your">Your answer: ${letters[a]}. ${q.choices[a]}</span><br>
+            <span class="correct">Correct: ${letters[q.correct]}. ${q.choices[q.correct]}</span>
+          </div>
+          <div class="review-explanation">${q.explanation}</div>
+          <span class="review-standard">${q.standard}</span>
+        </div>
+      `).join('');
+
+  show('screenResults');
+}
+
+function resetExam() {
+  const saved = getSaved();
+  if (saved && saved.lockedUntil && Date.now() < saved.lockedUntil) return;
+  examSubmitted = false;
+  startExam();
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+init();
+</script>
+</body>
+</html>
