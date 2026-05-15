@@ -716,7 +716,7 @@ const BADGE = {
   primary:'<span class="sbadge sbadge-p">Strong</span>',
   partial:'<span class="sbadge sbadge-t">Pass</span>',
   touched:'<span class="sbadge sbadge-n">Weak</span>',
-  none:'<span class="sbadge sbadge-n" style="opacity:0.4;">—</span>'
+  none:'<span class="sbadge sbadge-n" style="opacity:0.45;">Not Covered</span>'
 };
 function avgRating(courseId) {
   const scores = STANDARDS.map(std => LEVEL[overallLevel(COVERAGE[courseId][std.id])]||0);
@@ -846,7 +846,7 @@ function renderComponents(courseId, std) {
       <span class="std-comp-rank">${i+1}</span>
       <div style="flex:1">
         <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-          ${c.level!=='none'?BADGE[c.level]:''}
+          ${BADGE[c.level]||BADGE.none}
           <span class="std-comp-code">${c.code}</span>
         </div>
         <div class="std-comp-desc">${c.desc}</div>
