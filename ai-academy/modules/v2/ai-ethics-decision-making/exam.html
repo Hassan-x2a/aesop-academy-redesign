@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<!-- EXAM ENGINE TEMPLATE v1.0.0 — copy and populate EXAM_DATA below -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Ethics &amp; Decision Making — Final Exam · AESOP AI Academy</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+:root{
+  --bg:#080e16;
+  --surface:#0d1520;
+  --surface2:#111c28;
+  --border:#1a2738;
+  --text:#e8e3db;
+  --text-mid:#a89f93;
+  --text-muted:#6e6861;
+  --gold:#c9a05a;
+  --gold-dim:rgba(201,160,90,0.3);
+  --teal:#2ba898;
+  --rose:#f43f5e;
+  --topbar-h:56px;
+}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:200;
+  height:var(--topbar-h);
+  background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 1.5rem;gap:1rem;
+  backdrop-filter:blur(10px);
+}
+.topbar-back{
+  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold-dim);text-decoration:none;transition:color 0.15s;flex-shrink:0;
+}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{
+  font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;
+  color:rgba(255,255,255,0.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;
+}
+.topbar-timer{
+  font-family:'Nunito Sans',sans-serif;font-size:0.85rem;font-weight:700;
+  letter-spacing:0.06em;color:var(--gold);flex-shrink:0;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.topbar-timer.warning{color:var(--rose);animation:pulse 1s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.6;}}
+.topbar-progress{
+  font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text-muted);flex-shrink:0;white-space:nowrap;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-track{height:2px;background:var(--border);}
+.progress-fill{height:100%;background:var(--gold);transition:width 0.3s ease;}
+
+/* ── SCREENS ── */
+.screen{display:none;max-width:780px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+.screen.active{display:block;}
+
+/* ── START SCREEN ── */
+.start-hero{text-align:center;padding:3rem 1rem;}
+.start-eyebrow{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
+}
+.start-title{
+  font-family:'Crimson Pro',Georgia,serif;font-size:2.2rem;font-weight:600;
+  color:var(--text);line-height:1.2;margin-bottom:1rem;
+}
+.start-desc{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.05rem;line-height:1.75;
+  color:var(--text-mid);max-width:520px;margin:0 auto 2rem;
+}
+.rules-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1rem;margin:0 auto 2.5rem;max-width:600px;
+}
+.rule-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:1rem;text-align:center;
+}
+.rule-card-val{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.6rem;font-weight:700;
+  color:var(--gold);display:block;margin-bottom:0.25rem;
+}
+.rule-card-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
+
+.retake-notice{
+  background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.2);
+  border-radius:10px;padding:1rem 1.25rem;margin:0 auto 2rem;max-width:500px;
+  font-size:0.82rem;line-height:1.6;color:#f43f5e;text-align:center;
+}
+
+.btn-start{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.8rem 2rem;border-radius:8px;
+  background:var(--gold);color:#080e16;
+  font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  border:none;cursor:pointer;transition:opacity 0.2s;
+}
+.btn-start:hover{opacity:0.88;}
+.btn-start:disabled{opacity:0.35;cursor:not-allowed;}
+
+/* ── EXAM SCREEN ── */
+.question-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:2rem;margin-bottom:1rem;
+}
+.q-meta{
+  display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;flex-wrap:wrap;
+}
+.q-num{
+  font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+.q-standard{
+  font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  padding:2px 8px;border-radius:10px;
+  background:rgba(201,160,90,0.1);border:1px solid var(--gold-dim);color:var(--gold);
+}
+.q-text{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.1rem;line-height:1.65;
+  color:var(--text);margin-bottom:1.5rem;
+}
+.choices{display:flex;flex-direction:column;gap:0.6rem;}
+.choice{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  padding:0.75rem 1rem;border-radius:8px;
+  border:1px solid var(--border);background:transparent;
+  cursor:pointer;text-align:left;width:100%;transition:border-color 0.15s,background 0.15s;
+  color:var(--text);font-family:'Nunito Sans',sans-serif;
+}
+.choice:hover:not(:disabled){border-color:rgba(201,160,90,0.4);background:rgba(201,160,90,0.04);}
+.choice.selected{border-color:var(--gold);background:rgba(201,160,90,0.08);}
+.choice:disabled{cursor:default;}
+.choice-letter{
+  font-size:0.65rem;font-weight:700;letter-spacing:0.08em;
+  color:var(--text-muted);flex-shrink:0;margin-top:0.1rem;width:1rem;
+}
+.choice-text{font-size:0.88rem;line-height:1.55;color:var(--text-mid);}
+.choice.selected .choice-text{color:var(--text);}
+
+/* Answered states */
+.choice.correct{border-color:var(--teal)!important;background:rgba(43,168,152,0.1)!important;}
+.choice.correct .choice-text{color:#2ba898;}
+.choice.wrong{border-color:var(--rose)!important;background:rgba(244,63,94,0.08)!important;}
+.choice.wrong .choice-text{color:#f43f5e;}
+
+.q-explanation{
+  margin-top:1.25rem;padding:1rem 1.25rem;border-radius:8px;
+  background:var(--surface2);border-left:3px solid var(--teal);
+  font-size:0.82rem;line-height:1.65;color:var(--text-mid);
+  display:none;
+}
+.q-explanation.visible{display:block;}
+.q-explanation strong{color:var(--text);font-weight:600;}
+
+/* ── NAV ── */
+.exam-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.5rem 0 0;
+}
+.btn-nav{
+  padding:0.6rem 1.4rem;border-radius:8px;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;border:1px solid var(--border);
+  background:transparent;color:var(--text-muted);cursor:pointer;transition:all 0.15s;
+}
+.btn-nav:hover:not(:disabled){border-color:var(--gold-dim);color:var(--gold);}
+.btn-nav:disabled{opacity:0.3;cursor:default;}
+.btn-nav.primary{
+  background:var(--gold);color:#080e16;border-color:var(--gold);
+}
+.btn-nav.primary:hover{opacity:0.88;}
+
+/* ── RESULTS SCREEN ── */
+.results-hero{text-align:center;padding:3rem 1rem 2rem;}
+.score-ring{
+  width:140px;height:140px;border-radius:50%;margin:0 auto 1.5rem;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  border:4px solid var(--gold);background:var(--surface);
+}
+.score-ring.pass{border-color:var(--teal);}
+.score-ring.fail{border-color:var(--rose);}
+.score-pct{
+  font-family:'Crimson Pro',Georgia,serif;font-size:2.2rem;font-weight:700;
+  color:var(--gold);line-height:1;
+}
+.score-ring.pass .score-pct{color:var(--teal);}
+.score-ring.fail .score-pct{color:var(--rose);}
+.score-label{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
+.results-verdict{
+  font-family:'Crimson Pro',Georgia,serif;font-size:1.6rem;font-weight:600;
+  color:var(--text);margin-bottom:0.5rem;
+}
+.results-sub{font-size:0.88rem;line-height:1.6;color:var(--text-mid);margin-bottom:2rem;}
+.results-stats{
+  display:flex;justify-content:center;gap:2rem;margin-bottom:2rem;flex-wrap:wrap;
+}
+.stat{text-align:center;}
+.stat-n{font-family:'Crimson Pro',Georgia,serif;font-size:1.5rem;font-weight:700;color:var(--gold);display:block;}
+.stat-l{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
+.retake-info{
+  font-size:0.78rem;color:var(--text-muted);margin-bottom:1.5rem;
+}
+.btn-retake{
+  padding:0.7rem 1.8rem;border-radius:8px;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  border:1px solid var(--border);background:transparent;
+  color:var(--text-muted);cursor:pointer;transition:all 0.15s;
+}
+.btn-retake:hover:not(:disabled){border-color:var(--gold-dim);color:var(--gold);}
+.btn-retake:disabled{opacity:0.35;cursor:not-allowed;}
+
+.review-section{margin-top:3rem;}
+.review-title{
+  font-size:0.62rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:1.25rem;padding-bottom:0.75rem;
+  border-bottom:1px solid var(--border);
+}
+.review-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:1.25rem;margin-bottom:0.75rem;
+}
+.review-item.correct-item{border-left:3px solid var(--teal);}
+.review-item.wrong-item{border-left:3px solid var(--rose);}
+.review-q{
+  font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.55;
+  color:var(--text);margin-bottom:0.6rem;
+}
+.review-answers{font-size:0.78rem;line-height:1.5;color:var(--text-muted);margin-bottom:0.6rem;}
+.review-answers .your{color:var(--rose);}
+.review-answers .correct{color:var(--teal);}
+.review-explanation{
+  font-size:0.78rem;line-height:1.6;color:var(--text-muted);
+  padding-top:0.6rem;border-top:1px solid var(--border);
+}
+.review-standard{
+  display:inline-block;margin-top:0.5rem;
+  font-size:0.55rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  padding:2px 7px;border-radius:8px;
+  background:rgba(201,160,90,0.08);border:1px solid var(--gold-dim);color:var(--gold);
+}
+
+@media(max-width:600px){
+  .rules-grid{grid-template-columns:repeat(2,1fr);}
+  .results-stats{gap:1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a class="topbar-back" id="topbarBack" href="#">← Course</a>
+  <div class="topbar-sep"></div>
+  <span class="topbar-course" id="topbarCourse">Course Exam</span>
+  <span class="topbar-timer" id="timer">1:00:00</span>
+  <span class="topbar-progress" id="topbarProgress"></span>
+</nav>
+<div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<!-- START SCREEN -->
+<div class="screen active" id="screenStart">
+  <div class="start-hero">
+    <div class="start-eyebrow" id="startEyebrow">Final Exam</div>
+    <h1 class="start-title" id="startTitle">Course Exam</h1>
+    <p class="start-desc" id="startDesc">This exam covers all 8 modules. Every question is mapped to an education or employment standard.</p>
+    <div class="rules-grid">
+      <div class="rule-card"><span class="rule-card-val">30</span><span class="rule-card-label">Questions</span></div>
+      <div class="rule-card"><span class="rule-card-val">70%</span><span class="rule-card-label">Pass Threshold</span></div>
+      <div class="rule-card"><span class="rule-card-val">1 hr</span><span class="rule-card-label">Time Limit</span></div>
+      <div class="rule-card"><span class="rule-card-val">3 days</span><span class="rule-card-label">Retake Wait</span></div>
+    </div>
+    <div class="retake-notice" id="retakeNotice" style="display:none;"></div>
+    <button class="btn-start" id="btnStart" onclick="startExam()">Begin Exam →</button>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div class="screen" id="screenExam">
+  <div id="questionWrap"></div>
+  <div class="exam-nav">
+    <button class="btn-nav" id="btnPrev" onclick="prevQ()" disabled>← Previous</button>
+    <span id="qCounter" style="font-size:0.72rem;color:var(--text-muted);font-weight:700;letter-spacing:0.08em;"></span>
+    <button class="btn-nav primary" id="btnNext" onclick="nextQ()">Next →</button>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div class="screen" id="screenResults">
+  <div class="results-hero">
+    <div class="score-ring" id="scoreRing">
+      <span class="score-pct" id="scorePct">—</span>
+      <span class="score-label">Score</span>
+    </div>
+    <div class="results-verdict" id="resultsVerdict"></div>
+    <div class="results-sub" id="resultsSub"></div>
+    <div class="results-stats">
+      <div class="stat"><span class="stat-n" id="statCorrect">—</span><span class="stat-l">Correct</span></div>
+      <div class="stat"><span class="stat-n" id="statWrong">—</span><span class="stat-l">Wrong</span></div>
+      <div class="stat"><span class="stat-n" id="statPct">—</span><span class="stat-l">Score</span></div>
+    </div>
+    <div class="retake-info" id="retakeInfo"></div>
+    <button class="btn-retake" id="btnRetake" onclick="resetExam()">Retake Exam</button>
+  </div>
+  <div class="review-section">
+    <div class="review-title">Question Review — Wrong Answers Only</div>
+    <div id="reviewWrap"></div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// EXAM CONFIGURATION
+// ─────────────────────────────────────────────────────────────
+const EXAM_CONFIG = {
+  courseId: 'ai-ethics-decision-making-v2',
+  courseTitle: 'AI Ethics & Decision Making',
+  backUrl: '/ai-academy/modules/v2/ai-ethics-decision-making/m8.html',
+  passPct: 70,
+  timeLimitSeconds: 3600,
+  retakeDays: 3,
+};
+
+// ─────────────────────────────────────────────────────────────
+// EXAM DATA — 30 questions across 8 modules + synthesis
+// ─────────────────────────────────────────────────────────────
+const EXAM_DATA = [
+  // ── MODULE 1: Ethical Decision-Making Frameworks ──
+  {
+    q: "An AI hiring tool trained on historical promotion data systematically underscores candidates from non-traditional educational backgrounds. According to the Three Doors framework, this is primarily which type of failure?",
+    choices: [
+      "Deployment bias — the tool was used in a context it wasn't designed for",
+      "Data bias — the training data encoded historical patterns that disadvantaged certain candidates",
+      "Optimization bias — the model was told to optimize for the wrong outcome",
+      "Algorithmic bias — the model architecture itself introduced the disparity"
+    ],
+    correct: 1,
+    standard: "AI4K12 Big Idea 4",
+    explanation: "The failure originates at the data door: training on historical promotions bakes in whatever biases existed in past decisions. Deployment bias would apply if the tool were used outside its intended scope; optimization bias would apply if the objective function itself was flawed. 'Algorithmic bias' is not a category in the Three Doors framework and conflates the source of bias with its mechanism."
+  },
+  {
+    q: "A city uses a predictive policing algorithm optimized to minimize reported crime. Over time, officers are directed only to neighborhoods that historically filed more reports, causing crime in other areas to go undetected and unrecorded. Which door of AI failure does this best illustrate?",
+    choices: [
+      "Data bias — the training dataset underrepresented certain neighborhoods",
+      "Deployment bias — the system is being used in a setting its designers never intended",
+      "Optimization bias — the objective (minimize reported crime) diverges from the true goal (reduce actual crime)",
+      "Feedback bias — the model continuously retrains on its own outputs"
+    ],
+    correct: 2,
+    standard: "AI4K12 Big Idea 5",
+    explanation: "The system is doing exactly what it was told — minimizing reported crime — but the objective itself is misaligned with public safety. This is the optimization door: the goal specified to the model is not the goal the community actually wants. Data bias is a contributing factor but not the primary failure; deployment bias would apply if the tool were used for a completely different purpose than intended."
+  },
+  {
+    q: "When embedding values into an AI system through its design choices, which of the following is the most accurate description of how values enter code?",
+    choices: [
+      "Values only enter AI systems through explicit ethical constraints added by compliance teams after development",
+      "Values are encoded through every design decision — what data to collect, what to optimize for, and who gets to define success",
+      "Values in AI are primarily determined by the end users who interact with the system, not by developers",
+      "Values enter AI systems mainly through the choice of programming language and software architecture"
+    ],
+    correct: 1,
+    standard: "CSTA 3B-IC-27",
+    explanation: "Every design decision — what data to collect, which metric to optimize, who is included in testing — encodes values, whether intentionally or not. Limiting values to explicit compliance constraints misses the vast majority of value-laden choices made during development. End users shape how a system is used but rarely control how it was built or what it optimizes."
+  },
+  {
+    q: "A developer argues that their image-recognition model is 'objective' because it uses no human judgment — only mathematical operations on pixel data. Which ethical framework concept most directly challenges this claim?",
+    choices: [
+      "The precautionary principle — untested AI should be assumed harmful until proven otherwise",
+      "Consequentialism — the outputs of the model, not its process, determine its ethical status",
+      "Values in code — the choices of training data, labels, and objective function all reflect human judgments",
+      "Deontological neutrality — mathematical processes are inherently bound by universal rules"
+    ],
+    correct: 2,
+    standard: "UNESCO AI Competency · Ethics",
+    explanation: "The 'objectivity' claim ignores that every step of model building — selecting training images, choosing who labels them and how, defining what counts as a correct classification — involves human value judgments. Consequentialism is relevant to evaluating outcomes but doesn't directly challenge the objectivity claim. 'Deontological neutrality' is not a real ethical framework concept."
+  },
+
+  // ── MODULE 2: Bias Detection ──
+  {
+    q: "A resume-screening AI performs equally well by aggregate accuracy across demographic groups, but produces significantly higher false-rejection rates for qualified candidates from one ethnic group. Which bias type does this most directly reflect?",
+    choices: [
+      "Data bias — the training set contained fewer resumes from that ethnic group",
+      "Deployment bias — the tool is being used in a hiring context outside its design scope",
+      "Optimization bias — the accuracy metric obscures differential error rates across groups",
+      "Sampling bias — the audit dataset was not drawn randomly from the applicant pool"
+    ],
+    correct: 2,
+    standard: "NIST AI RMF · Measure",
+    explanation: "When a model optimizes for aggregate accuracy, it can achieve high overall performance while systematically failing a subgroup — because the subgroup is small enough that its errors barely move the aggregate number. This is optimization bias: the metric chosen to measure success masks the true harm. Data bias may also be present, but the described failure mechanism — the metric hiding differential error rates — is optimization bias."
+  },
+  {
+    q: "During a bias audit, an evaluator finds that a loan-approval model was trained exclusively on applications from urban zip codes but is now deployed statewide, including rural areas. This is best classified as which type of bias?",
+    choices: [
+      "Data bias — the training data does not represent the population the model now serves",
+      "Optimization bias — the model's objective function penalizes rural applicants",
+      "Confirmation bias — auditors are looking for rural disparities and finding them",
+      "Label bias — the loan-approval labels in the training set were incorrectly assigned"
+    ],
+    correct: 0,
+    standard: "AI4K12 Big Idea 4",
+    explanation: "The mismatch between training population (urban) and deployment population (statewide) is a textbook case of data bias — the training set is not representative of the people the model will actually affect. Optimization bias would require a flawed objective function, which is not described here. Confirmation bias is a human cognitive pattern, not a model failure type in this framework."
+  },
+  {
+    q: "A bias audit reveals that an AI content-moderation tool flags posts in African American Vernacular English (AAVE) at three times the rate of Standard American English posts with equivalent sentiment. The model was trained on posts already flagged by human moderators. What makes this particularly difficult to detect through standard accuracy testing?",
+    choices: [
+      "The model performs poorly overall, so standard accuracy metrics reveal the problem immediately",
+      "AAVE posts are rare in the dataset, so errors on them contribute minimally to aggregate accuracy scores",
+      "Human auditors introduce confirmation bias when reviewing AAVE content, inflating accuracy scores",
+      "Standard accuracy tests do not measure sentiment, so they cannot detect language-based disparities"
+    ],
+    correct: 1,
+    standard: "CSTA 3B-IC-28",
+    explanation: "When a subgroup is underrepresented in the test set, its error rate has little impact on the aggregate accuracy score, allowing systematic disparities to remain invisible. The original human moderators likely brought their own biases into the training labels — this compounds the problem but isn't the reason standard testing fails to detect it. Aggregate accuracy is inherently blind to subgroup performance when subgroups are small."
+  },
+
+  // ── MODULE 3: AI Transparency ──
+  {
+    q: "A hospital deploys an AI diagnostic tool. A physician asks what information was used to train the model and what its known failure modes are. Which transparency artifact is specifically designed to answer these questions?",
+    choices: [
+      "An audit log — a record of every prediction the model has made since deployment",
+      "A model card — a standardized document describing the model's training data, intended uses, and known limitations",
+      "An accountability chain — a document mapping which individuals approved the deployment",
+      "A terms-of-service agreement — a legal document outlining how the model's outputs may be used"
+    ],
+    correct: 1,
+    standard: "EU AI Act · Art. 13",
+    explanation: "A model card is the standard artifact for communicating training data provenance, intended use cases, out-of-scope uses, and known limitations — exactly what the physician needs. An audit log records runtime decisions, not model characteristics. An accountability chain documents human responsibility, not model properties. Terms of service are legal instruments, not technical transparency tools."
+  },
+  {
+    q: "Under EU AI Act Article 13, high-risk AI systems must provide transparency to users. Which of the following best describes what 'transparency' requires in this context?",
+    choices: [
+      "The AI must explain every internal mathematical operation in plain language to any user who asks",
+      "Operators must disclose that an AI is being used and provide sufficient information for users to understand its capabilities and limitations",
+      "The source code of the AI system must be made publicly available so independent researchers can audit it",
+      "All training data used to build the AI must be released to regulators upon request"
+    ],
+    correct: 1,
+    standard: "EU AI Act · Art. 13",
+    explanation: "Article 13 requires that high-risk AI systems be transparent enough for users to understand what the system is, what it does, and its limitations — not that every internal operation be explainable in plain language. Full source-code disclosure and training-data release may be required in some contexts but are not what Art. 13 transparency specifically mandates."
+  },
+  {
+    q: "An audit log for an AI decision system is most valuable when it records which of the following?",
+    choices: [
+      "The emotional reactions of users who received unfavorable decisions",
+      "The input data, model version, output, confidence score, and timestamp for each decision",
+      "Only the final decisions that were appealed or overturned by human reviewers",
+      "The aggregate accuracy metrics of the model computed at monthly intervals"
+    ],
+    correct: 1,
+    standard: "NIST AI RMF · Govern",
+    explanation: "A meaningful audit log must capture enough detail to reconstruct what happened: what inputs the model received, which version of the model processed them, what it decided, how confident it was, and when. Logging only appealed decisions creates survivorship bias and hides the majority of potentially problematic cases. Aggregate monthly metrics are summaries, not auditable records of individual decisions."
+  },
+  {
+    q: "An accountability chain for an AI system typically documents which of the following?",
+    choices: [
+      "The mathematical weights inside the neural network responsible for each output",
+      "The sequence of individuals and organizations responsible for designing, approving, deploying, and monitoring the AI",
+      "The list of users who have interacted with the AI system since its launch",
+      "The chain of datasets that were merged to create the final training corpus"
+    ],
+    correct: 1,
+    standard: "NIST AI RMF · Govern",
+    explanation: "An accountability chain maps human and organizational responsibility — who built it, who approved it for deployment, who monitors it, and who is answerable when something goes wrong. It is a governance artifact, not a technical one. Documenting neural network weights or dataset lineage addresses different concerns (interpretability and data provenance, respectively)."
+  },
+
+  // ── MODULE 4: Authority and Permission ──
+  {
+    q: "A school district is considering deploying an AI attendance-prediction tool that flags students at risk of dropping out. According to the four layers of AI authority, which layer is responsible for deciding whether this deployment aligns with community values?",
+    choices: [
+      "The technical layer — the data scientists who built the model determine whether it is appropriate",
+      "The operational layer — the school principal decides based on administrative efficiency",
+      "The governance layer — elected officials or their designated bodies set policy boundaries for AI use",
+      "The legal layer — courts decide appropriateness only after a harm has occurred"
+    ],
+    correct: 2,
+    standard: "NIST AI RMF · Govern",
+    explanation: "The governance layer — which includes elected bodies, school boards, and community policy processes — is responsible for deciding whether an AI deployment is consistent with public values and priorities. Technical teams determine feasibility; operational staff implement approved tools. Courts address harms after the fact, but the decision about whether to deploy belongs to governance, before deployment."
+  },
+  {
+    q: "A technology company deploys a facial recognition system in a public park without notifying city residents. From a community-voice perspective, what is the primary problem with this approach?",
+    choices: [
+      "Facial recognition technology is inherently inaccurate and should never be used in public spaces",
+      "The people most affected by the deployment had no opportunity to consent, object, or shape its use",
+      "The company failed to obtain a software patent for the system before deploying it",
+      "Public parks are federal property, so only federal agencies may authorize AI deployments there"
+    ],
+    correct: 1,
+    standard: "UNESCO AI Competency · Ethics",
+    explanation: "Community voice requires that people who will be affected by an AI system have meaningful opportunity to participate in decisions about it — including whether it should exist, under what conditions, and with what safeguards. The accuracy of the technology is a separate concern. Property jurisdiction and patent status are irrelevant to the ethical problem of deploying surveillance without community consent."
+  },
+  {
+    q: "Which of the following scenarios best illustrates the distinction between who has the authority to deploy an AI system versus who has the legitimate right to decide whether it should be deployed?",
+    choices: [
+      "A software engineer who can build a facial recognition tool versus a city council that votes on whether to authorize its public use",
+      "A company that owns the AI patent versus a competitor who wants to use the same technology",
+      "A government agency that funded AI research versus a university that conducted the research",
+      "A product manager who approves a feature versus a developer who implements it"
+    ],
+    correct: 0,
+    standard: "ISTE Standard 2.7",
+    explanation: "Technical capability (the engineer can build it) is distinct from democratic legitimacy (the council represents the community that will live with the consequences). This gap between 'can deploy' and 'should deploy' is the core of the authority question in AI ethics. Patent ownership and funding relationships address intellectual property, not governance authority."
+  },
+
+  // ── MODULE 5: Explainability ──
+  {
+    q: "A loan applicant is denied credit by an AI model. She asks: 'Why was I denied, and what would have made the outcome different?' Which explainability technique is best suited to answer this specific form of question?",
+    choices: [
+      "Feature importance — ranking all input variables by their overall influence on the model's predictions",
+      "Contrastive explanation — identifying the smallest change to her application that would have produced an approval",
+      "Model card review — checking the documented limitations of the credit-scoring model",
+      "Confidence score disclosure — reporting the model's probability estimate that she would default"
+    ],
+    correct: 1,
+    standard: "EU AI Act · Art. 22",
+    explanation: "Contrastive explanation answers 'what would need to be different for the outcome to change' — precisely the question the applicant is asking. Feature importance tells her which variables matter most to the model globally, but does not tell her what to do differently. A confidence score tells her how certain the model is, but not what factors drove her specific denial."
+  },
+  {
+    q: "A model's feature importance output shows that 'zip code' is the third most influential variable in an insurance pricing model. Why might this finding alone be insufficient for a meaningful explanation to a customer?",
+    choices: [
+      "Feature importance scores are always incorrect when computed on categorical variables like zip code",
+      "Global feature importance shows which variables matter on average, but does not explain how zip code affected this specific customer's price",
+      "Zip code is a protected attribute and therefore cannot be disclosed to customers under any circumstances",
+      "Feature importance only applies to tree-based models and would be invalid for insurance pricing algorithms"
+    ],
+    correct: 1,
+    standard: "ISTE Standard 2.4",
+    explanation: "Global feature importance is an aggregate statistic — it says zip code matters a lot across all customers, but it does not say whether zip code raised or lowered this particular customer's price, or by how much. A customer needs a local, individual explanation. Feature importance is not inherently invalid for categorical variables or restricted to tree models, and zip code disclosure rules vary by jurisdiction."
+  },
+  {
+    q: "The 'right to explanation' under EU AI Act Article 22 applies primarily in which context?",
+    choices: [
+      "Any time a person interacts with an AI system, regardless of how significant the decision is",
+      "When an AI system makes or significantly influences a decision that produces legal or similarly significant effects on a person",
+      "Only when a person formally requests an explanation through a government portal within 30 days of a decision",
+      "Whenever an AI system uses personal data, regardless of whether a decision was made"
+    ],
+    correct: 1,
+    standard: "EU AI Act · Art. 22",
+    explanation: "Article 22 focuses on automated decision-making that produces legal or similarly significant effects — credit, employment, housing, and similar high-stakes contexts. It does not require explanation for every AI interaction (e.g., a recommendation algorithm suggesting a playlist). The right is triggered by the significance of the decision's impact, not by a formal request process or mere data use."
+  },
+
+  // ── MODULE 6: AI Policy Writing ──
+  {
+    q: "A school is drafting an AI use policy. The policy's scope section should accomplish which of the following?",
+    choices: [
+      "List every specific AI tool currently approved for use, with version numbers and license expiration dates",
+      "Define which people, settings, activities, and AI systems the policy governs — and explicitly state what it does not cover",
+      "Describe the penalties for policy violations in detail so students understand the consequences",
+      "Summarize the technical architecture of each AI system the school has purchased"
+    ],
+    correct: 1,
+    standard: "O*NET 15-2051 · AI Ethics Competency",
+    explanation: "A scope section answers 'who and what does this policy apply to' — defining coverage boundaries clearly so readers know whether a given situation is governed by the policy. Listing specific tool versions belongs in an approved-tools appendix, not the scope section. Penalties belong in an accountability section. Technical architecture descriptions are not part of policy documents."
+  },
+  {
+    q: "In a five-section AI policy, the 'data handling' section is primarily responsible for addressing which concern?",
+    choices: [
+      "Who is authorized to approve new AI deployments within the organization",
+      "How student or employee data is collected, stored, used, and protected when AI systems process it",
+      "The procedure for filing a complaint when an AI system produces a harmful output",
+      "Which AI vendors have signed non-disclosure agreements with the organization"
+    ],
+    correct: 1,
+    standard: "NIST AI RMF · Manage",
+    explanation: "The data handling section governs the lifecycle of personal and sensitive data as it flows through AI systems — collection purpose, retention limits, access controls, and deletion procedures. Authorization for new deployments belongs in the accountability section. Complaint procedures belong in the accountability or incident-response sections. Vendor NDAs are legal contracts, not policy content."
+  },
+  {
+    q: "A company's AI policy includes a disclosure section. Which of the following is the most important element this section should contain?",
+    choices: [
+      "A description of the company's AI research roadmap and planned future features",
+      "A clear statement of when and how the company will inform individuals that an AI system is being used to make or influence decisions about them",
+      "The names of the executive sponsors who approved the AI strategy",
+      "A list of all third-party AI APIs the company uses, including pricing tiers"
+    ],
+    correct: 1,
+    standard: "EU AI Act · Art. 13",
+    explanation: "Disclosure in an AI policy addresses the obligation to tell people when AI is involved in decisions that affect them — this is foundational to informed consent and trust. Executive sponsors and API pricing are operational details, not disclosure commitments. A research roadmap is forward-looking strategy, not a disclosure obligation to individuals."
+  },
+  {
+    q: "Which of the following best describes the purpose of an 'acceptable use' section in an organizational AI policy?",
+    choices: [
+      "To rank AI tools by cost-effectiveness so procurement teams can make informed purchasing decisions",
+      "To define what uses of AI are permitted, what uses are prohibited, and the reasoning behind those boundaries",
+      "To describe the technical safeguards built into approved AI systems that prevent misuse",
+      "To provide a glossary of AI terminology so all employees share a common vocabulary"
+    ],
+    correct: 1,
+    standard: "NIST AI RMF · Govern",
+    explanation: "An acceptable-use section draws the lines: here is what you may do, here is what you may not do, and here is why. It is a behavioral framework, not a technical one. Technical safeguards belong in a system documentation section; cost comparisons belong in procurement guidance; glossaries are appendices. The 'and the reasoning behind those boundaries' element is critical — it allows staff to apply the policy to novel situations."
+  },
+
+  // ── MODULE 7: AI Incident Reports ──
+  {
+    q: "An AI-powered customer-service chatbot begins providing incorrect medical dosage information to users. The incident response team drafts a report. Which section of the report anatomy should describe when the erroneous outputs first appeared, when they were detected, and when the system was taken offline?",
+    choices: [
+      "Root cause — explaining the underlying technical reason for the failure",
+      "Impact — quantifying how many users received incorrect information",
+      "Timeline — recording the sequence of events from first error to resolution",
+      "Prevention — describing what changes will stop this from recurring"
+    ],
+    correct: 2,
+    standard: "NIST AI RMF · Manage",
+    explanation: "The timeline section establishes the chronology of the incident — when the failure began, when it was noticed, and when corrective action was taken. This sequence is essential for accountability and for analyzing detection lag. Root cause explains why the failure occurred; impact quantifies harm; prevention specifies future controls. Each serves a distinct purpose."
+  },
+  {
+    q: "An incident report's 'root cause' section concludes: 'The model was retrained on user feedback that included a spike of adversarial inputs during a coordinated abuse campaign.' What does this finding most directly inform?",
+    choices: [
+      "The timeline section — it pinpoints exactly when the failure began",
+      "The impact section — it determines how many users were harmed",
+      "The prevention section — it identifies that input validation and retraining safeguards need to be strengthened",
+      "The accountability section — it identifies which engineer approved the retraining run"
+    ],
+    correct: 2,
+    standard: "NIST AI RMF · Manage",
+    explanation: "Root cause analysis exists to inform prevention: once you know the failure originated from adversarial retraining inputs, the prevention section can specify input validation, anomaly detection on feedback data, and human review gates before retraining. Root cause findings do not by themselves establish when the failure began (timeline) or how many were harmed (impact); those sections use the root cause as context, not as content."
+  },
+  {
+    q: "Why is the 'impact' section of an AI incident report often the hardest section to write accurately?",
+    choices: [
+      "Organizations rarely know which AI system caused the problem, making it impossible to assign impact",
+      "Legal counsel typically prevents disclosure of impact data to protect the organization from liability",
+      "Harms from AI decisions often affect individuals who never report them, and downstream effects can take time to manifest",
+      "The impact section is optional and most organizations omit it to keep reports concise"
+    ],
+    correct: 2,
+    standard: "WEF Future of Jobs · Critical Thinking",
+    explanation: "AI harms are frequently invisible to the organization: a person denied a loan may not know an AI was involved, may not complain, and may suffer consequences (housing instability, reduced credit score) that emerge months later. This makes impact underestimation a systematic risk in incident reporting. Legal reluctance to disclose is a real organizational pressure but is not the reason the section is hard to write accurately."
+  },
+
+  // ── MODULE 8: AI Governance Frameworks ──
+  {
+    q: "The NIST AI Risk Management Framework organizes its guidance into four functions. Which function is specifically responsible for defining the organizational context, risk tolerances, and policies before an AI system is built or deployed?",
+    choices: [
+      "Map — identifying and classifying risks associated with a specific AI system",
+      "Govern — establishing the culture, processes, and accountability structures for AI risk management across the organization",
+      "Measure — analyzing and prioritizing identified AI risks",
+      "Manage — implementing risk treatments and monitoring their effectiveness"
+    ],
+    correct: 1,
+    standard: "NIST AI RMF · Govern",
+    explanation: "Govern is the foundational function that sets organizational context — policies, roles, risk appetite, and accountability structures — before any specific system is evaluated. Map applies those organizational standards to a particular AI system to identify its risks. Measure and Manage address how identified risks are analyzed and treated. Govern is the only function that operates at the organizational level rather than the system level."
+  },
+  {
+    q: "Which of the five pillars of AI governance specifically addresses the obligation to ensure that affected communities — including marginalized groups — have meaningful input into AI decisions that affect them?",
+    choices: [
+      "Transparency — making AI systems and their limitations visible to all stakeholders",
+      "Adaptability — updating governance frameworks as technology and context evolve",
+      "Inclusivity — actively engaging diverse communities in AI design and governance",
+      "Accountability — ensuring individuals and organizations can be held responsible for AI outcomes"
+    ],
+    correct: 2,
+    standard: "UNESCO AI Competency · Ethics",
+    explanation: "Inclusivity is the pillar that addresses participation: who has a voice in decisions about AI systems, and whether that voice includes communities most likely to be harmed. Transparency makes information available but does not by itself give communities decision-making power. Accountability addresses responsibility after the fact. Adaptability ensures governance stays current — it does not address who participates."
+  },
+  {
+    q: "A governance framework requires that every AI system be reviewed and potentially updated whenever significant new evidence about its real-world impacts emerges. This requirement reflects which pillar of AI governance?",
+    choices: [
+      "Oversight — ensuring human reviewers can monitor AI system behavior in production",
+      "Accountability — establishing who is responsible for acting on new evidence",
+      "Adaptability — designing governance so it can evolve as context and knowledge change",
+      "Transparency — requiring that new impact evidence be disclosed to regulators"
+    ],
+    correct: 2,
+    standard: "NIST AI RMF · Manage",
+    explanation: "Adaptability is the pillar that requires governance structures — and the AI systems they govern — to update when new information warrants it. Oversight involves ongoing monitoring but does not specifically require policy revision in response to new evidence. Accountability assigns responsibility; adaptability specifies that the system itself must be capable of change. Transparency is about disclosure, not revision."
+  },
+  {
+    q: "Under the oversight pillar of AI governance, which of the following best describes the concept of 'meaningful human control'?",
+    choices: [
+      "A human must personally review and approve every individual decision made by an AI system",
+      "Humans must be able to understand, monitor, intervene in, and if necessary override AI system behavior in ways that genuinely affect outcomes",
+      "AI systems must display a notice indicating that human oversight is available upon request",
+      "At least one engineer must be on call at all times to restart the AI system if it crashes"
+    ],
+    correct: 1,
+    standard: "NIST AI RMF · Govern",
+    explanation: "Meaningful human control requires more than nominal oversight — humans must have genuine capacity to understand what the AI is doing, detect when it is going wrong, and intervene effectively. Reviewing every individual decision is one possible implementation but is often impractical and not required by the concept. Displaying a notice is performative, not substantive. On-call engineers address availability, not oversight."
+  },
+
+  // ── CROSS-MODULE SYNTHESIS ──
+  {
+    q: "A county deploys a child-welfare risk-scoring AI. An investigation finds: (1) the training data overrepresented low-income families due to higher rates of prior system contact; (2) the model optimized for 'risk score' without defining what risk means; and (3) caseworkers were never told how to use or challenge the scores. Which combination of failures is present?",
+    choices: [
+      "Data bias and deployment bias only — the optimization goal was appropriate but the data and rollout were flawed",
+      "Optimization bias and transparency failure only — the data was representative but the goal and disclosure were wrong",
+      "Data bias, optimization bias, and transparency failure — all three doors were open simultaneously",
+      "Deployment bias only — the model was used in a child-welfare context it was not designed for"
+    ],
+    correct: 2,
+    standard: "AI4K12 Big Idea 5",
+    explanation: "The scenario explicitly describes problems at all three doors: the training data skewed toward families already in the system (data bias), the optimization target was undefined (optimization bias), and caseworkers lacked the information needed to use or challenge the tool (transparency failure, which maps to the deployment door). Selecting only two failures would ignore evidence stated directly in the question."
+  },
+  {
+    q: "A journalist asks a government agency for the audit logs of an AI system used to prioritize benefits applications. The agency refuses, citing proprietary vendor contracts. Which governance pillar is most directly in tension with the agency's refusal?",
+    choices: [
+      "Adaptability — the agency is failing to update its governance in response to public pressure",
+      "Accountability — without audit logs, it is impossible to determine whether the system has caused harm or assign responsibility",
+      "Inclusivity — the journalist represents marginalized communities who cannot access the system",
+      "Oversight — the agency's internal oversight team cannot review what it cannot see"
+    ],
+    correct: 1,
+    standard: "NIST AI RMF · Govern",
+    explanation: "Accountability requires that it be possible to determine what happened and who is responsible — audit logs are the primary mechanism for this. Without them, neither journalists, courts, nor regulators can assess whether the system operated as intended or caused harm. Oversight is also affected, but oversight is an internal function; accountability addresses the external and legal dimension the journalist's request invokes. Vendor proprietary claims do not override public-sector accountability obligations."
+  },
+  {
+    q: "An organization's AI policy states: 'AI systems may not be used to make final decisions on employment terminations.' A manager uses the AI to generate a ranked list and terminates everyone below the 50th percentile without additional review. Is this a policy violation, and under which policy section would it be addressed?",
+    choices: [
+      "Not a violation — the manager made the final decision, not the AI, so the policy's prohibition was technically respected",
+      "A violation of the acceptable-use section — using AI output as the de facto basis for termination circumvents the prohibition on AI-driven final decisions",
+      "A violation of the data handling section — the AI processed employee performance data without consent",
+      "A violation of the scope section — employment terminations are outside the policy's defined coverage"
+    ],
+    correct: 1,
+    standard: "O*NET 15-2051 · AI Ethics Competency",
+    explanation: "The manager's action is a violation because the AI's ranking was the operative decision — the human step was procedural, not substantive. This is exactly the misuse the acceptable-use prohibition was designed to prevent. Good policy must close this 'rubber stamp' loophole. Data handling and scope concerns might exist separately, but the primary violation is the circumvention of the acceptable-use rule."
+  },
+  {
+    q: "A student completing this course is asked to evaluate whether an AI tool used at their school is ethically deployed. Which combination of frameworks from across the course provides the most comprehensive evaluation lens?",
+    choices: [
+      "Three Doors framework for failure type + model card review for transparency + governance pillars for institutional accountability",
+      "Feature importance analysis + audit log review + acceptable-use policy check",
+      "Contrastive explanation technique + EU AI Act Article 22 + NIST Manage function",
+      "Bias auditing checklist + incident report anatomy + retake-day calculation"
+    ],
+    correct: 0,
+    standard: "WEF Future of Jobs · Critical Thinking",
+    explanation: "A comprehensive ethical evaluation needs to assess the source of potential failures (Three Doors), whether the system is documented honestly (model card / transparency), and whether institutional structures hold it accountable (governance pillars). The other options are narrower: feature importance and contrastive explanation are explainability techniques, not evaluation frameworks; incident report anatomy applies after a failure occurs; retake-day calculation is a course mechanic."
+  }
+];
+
+// ─────────────────────────────────────────────────────────────
+// ENGINE — do not modify below
+// ─────────────────────────────────────────────────────────────
+const STORAGE_KEY = `aesop_exam_${EXAM_CONFIG.courseId}`;
+let currentQ = 0;
+let answers = new Array(EXAM_DATA.length).fill(-1);
+let timerInterval = null;
+let secondsLeft = EXAM_CONFIG.timeLimitSeconds;
+let examStarted = false;
+let examSubmitted = false;
+
+function init() {
+  document.getElementById('topbarBack').href = EXAM_CONFIG.backUrl;
+  document.getElementById('topbarCourse').textContent = EXAM_CONFIG.courseTitle;
+  document.getElementById('topbarProgress').textContent = '';
+  document.getElementById('startTitle').textContent = EXAM_CONFIG.courseTitle + ' — Final Exam';
+  document.getElementById('startEyebrow').textContent = 'Module 8 Complete · Final Exam';
+
+  const saved = getSaved();
+  if (saved && saved.lockedUntil && Date.now() < saved.lockedUntil) {
+    const days = Math.ceil((saved.lockedUntil - Date.now()) / 86400000);
+    const hrs  = Math.ceil((saved.lockedUntil - Date.now()) / 3600000);
+    document.getElementById('retakeNotice').style.display = 'block';
+    document.getElementById('retakeNotice').textContent =
+      `You did not pass. Retakes are available in ${hrs < 24 ? hrs + ' hour(s)' : days + ' day(s)'}.`;
+    document.getElementById('btnStart').disabled = true;
+  }
+}
+
+function getSaved() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch { return null; }
+}
+function setSaved(obj) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+}
+
+function startExam() {
+  examStarted = true;
+  answers = new Array(EXAM_DATA.length).fill(-1);
+  currentQ = 0;
+  secondsLeft = EXAM_CONFIG.timeLimitSeconds;
+  show('screenExam');
+  renderQ();
+  startTimer();
+}
+
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const h = Math.floor(secondsLeft / 3600);
+  const m = Math.floor((secondsLeft % 3600) / 60);
+  const s = secondsLeft % 60;
+  const str = `${h}:${pad(m)}:${pad(s)}`;
+  const el = document.getElementById('timer');
+  el.textContent = str;
+  el.className = 'topbar-timer' + (secondsLeft < 300 ? ' warning' : '');
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function renderQ() {
+  const q = EXAM_DATA[currentQ];
+  const answered = answers[currentQ] !== -1;
+  const pct = Math.round(((currentQ + 1) / EXAM_DATA.length) * 100);
+
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('topbarProgress').textContent = `${currentQ + 1} / ${EXAM_DATA.length}`;
+  document.getElementById('qCounter').textContent = `Question ${currentQ + 1} of ${EXAM_DATA.length}`;
+  document.getElementById('btnPrev').disabled = currentQ === 0;
+
+  const isLast = currentQ === EXAM_DATA.length - 1;
+  const allAnswered = answers.every(a => a !== -1);
+  const btn = document.getElementById('btnNext');
+  if (isLast) {
+    btn.textContent = allAnswered ? 'Submit Exam →' : 'Next →';
+    btn.onclick = allAnswered ? submitExam : nextQ;
+  } else {
+    btn.textContent = 'Next →';
+    btn.onclick = nextQ;
+  }
+
+  const letters = ['A', 'B', 'C', 'D'];
+  document.getElementById('questionWrap').innerHTML = `
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-num">Question ${currentQ + 1}</span>
+        <span class="q-standard">${q.standard}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="choices">
+        ${q.choices.map((c, i) => `
+          <button class="choice${answers[currentQ] === i ? ' selected' : ''}"
+            onclick="selectAnswer(${i})"
+            ${examSubmitted ? 'disabled' : ''}>
+            <span class="choice-letter">${letters[i]}</span>
+            <span class="choice-text">${c}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-explanation" id="qExpl"></div>
+    </div>
+  `;
+}
+
+function selectAnswer(idx) {
+  if (examSubmitted) return;
+  answers[currentQ] = idx;
+  renderQ();
+  // auto-advance if not last question
+  if (currentQ < EXAM_DATA.length - 1) {
+    setTimeout(() => { currentQ++; renderQ(); }, 300);
+  }
+}
+
+function nextQ() {
+  if (currentQ < EXAM_DATA.length - 1) { currentQ++; renderQ(); }
+}
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQ(); }
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+  examSubmitted = true;
+
+  const correct = answers.filter((a, i) => a === EXAM_DATA[i].correct).length;
+  const total   = EXAM_DATA.length;
+  const pct     = Math.round((correct / total) * 100);
+  const passed  = pct >= EXAM_CONFIG.passPct;
+
+  // Save result + lock if failed
+  const result = { passed, pct, correct, total, date: Date.now() };
+  if (!passed) {
+    result.lockedUntil = Date.now() + (EXAM_CONFIG.retakeDays * 86400000);
+  }
+  setSaved(result);
+
+  // Score ring
+  const ring = document.getElementById('scoreRing');
+  ring.className = 'score-ring ' + (passed ? 'pass' : 'fail');
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('resultsVerdict').textContent = passed ? 'Exam Passed' : 'Exam Not Passed';
+  document.getElementById('resultsSub').textContent = passed
+    ? `You scored ${pct}% — above the ${EXAM_CONFIG.passPct}% threshold. This result has been recorded.`
+    : `You scored ${pct}% — below the ${EXAM_CONFIG.passPct}% threshold. Review the wrong answers below, then retake when the timer clears.`;
+
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = total - correct;
+  document.getElementById('statPct').textContent = pct + '%';
+
+  if (!passed) {
+    const unlockDate = new Date(result.lockedUntil);
+    document.getElementById('retakeInfo').textContent =
+      `Retake available after ${unlockDate.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric'})} at ${unlockDate.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'})}.`;
+    document.getElementById('btnRetake').disabled = true;
+  } else {
+    document.getElementById('retakeInfo').textContent = '';
+    document.getElementById('btnRetake').style.display = 'none';
+  }
+
+  // Build wrong-answer review
+  const wrong = answers.map((a, i) => ({i, a, q: EXAM_DATA[i]})).filter(x => x.a !== x.q.correct);
+  const letters = ['A','B','C','D'];
+  document.getElementById('reviewWrap').innerHTML = wrong.length === 0
+    ? '<p style="color:var(--teal);font-size:0.88rem;">Perfect score — no wrong answers to review.</p>'
+    : wrong.map(({i, a, q}) => `
+        <div class="review-item wrong-item">
+          <div class="review-q">Q${i+1}. ${q.q}</div>
+          <div class="review-answers">
+            <span class="your">Your answer: ${letters[a]}. ${q.choices[a]}</span><br>
+            <span class="correct">Correct: ${letters[q.correct]}. ${q.choices[q.correct]}</span>
+          </div>
+          <div class="review-explanation">${q.explanation}</div>
+          <span class="review-standard">${q.standard}</span>
+        </div>
+      `).join('');
+
+  show('screenResults');
+}
+
+function resetExam() {
+  const saved = getSaved();
+  if (saved && saved.lockedUntil && Date.now() < saved.lockedUntil) return;
+  examSubmitted = false;
+  startExam();
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+init();
+</script>
+</body>
+</html>
