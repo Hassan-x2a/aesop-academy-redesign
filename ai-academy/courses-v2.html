@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.4.0 | 2026-05-14 -->
+<!-- v1.5.0 | 2026-05-14 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -139,6 +139,22 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
 .cnav-link-primary:hover{background:rgba(201,160,90,0.18);border-color:var(--gold);color:var(--gold);}
 .cnav-link-teal{border-color:rgba(43,168,152,0.25);color:rgba(43,168,152,0.7);}
 .cnav-link-teal:hover{border-color:var(--teal);color:var(--teal);background:rgba(43,168,152,0.07);}
+.cnav-meta{font-size:0.62rem;color:var(--text-muted);letter-spacing:0.04em;margin-top:0.1rem;}
+.cnav-desc{font-size:0.78rem;color:var(--text-muted);line-height:1.55;padding:0.5rem 0 0.6rem;border-bottom:1px solid var(--border);margin-bottom:0.4rem;}
+.cnav-modules{display:flex;flex-direction:column;gap:0;margin-bottom:0.75rem;}
+.cnav-mod{
+  display:flex;align-items:center;gap:0.6rem;padding:0.38rem 0.4rem;
+  text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.04);
+  transition:background 0.12s;border-radius:3px;
+}
+.cnav-mod:last-child{border-bottom:none;}
+.cnav-mod:hover{background:rgba(255,255,255,0.04);}
+.cnav-mod-n{font-size:0.62rem;color:var(--text-muted);font-family:monospace;min-width:1.4rem;}
+.cnav-mod-title{font-size:0.78rem;color:var(--text);flex:1;}
+.cnav-mod-badge{font-size:0.55rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.12rem 0.45rem;border-radius:3px;}
+.cnav-badge-debate{background:rgba(244,63,94,0.12);color:#f43f5e;border:1px solid rgba(244,63,94,0.2);}
+.cnav-badge-skill{background:rgba(43,168,152,0.12);color:#2ba898;border:1px solid rgba(43,168,152,0.2);}
+.cnav-badge-build{background:rgba(154,95,176,0.12);color:#9a5fb0;border:1px solid rgba(154,95,176,0.2);}
 
 /* ── COURSES GRID ── */
 .courses-wrap{
@@ -372,12 +388,28 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
 <!-- COURSE NAV -->
 <div class="course-nav">
   <ul class="cnav-list">
+
+    <!-- Course 1 -->
     <li>
       <button class="cnav-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
-        <span class="cnav-name">AI Ethics &amp; Decision Making</span>
+        <span>
+          <div class="cnav-name">AI Ethics &amp; Decision Making</div>
+          <div class="cnav-meta">8 modules · 2 debate · 3 skill · 3 build</div>
+        </span>
         <span class="cnav-arrow">▶</span>
       </button>
       <div class="cnav-panel">
+        <div class="cnav-desc">The decisions being made about AI aren't technical — they're political, ethical, and institutional. This course teaches you to evaluate, challenge, and govern them.</div>
+        <div class="cnav-modules">
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-ethics-decision-making/m1.html"><span class="cnav-mod-n">01</span><span class="cnav-mod-title">The Deployment Review</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-ethics-decision-making/m2.html"><span class="cnav-mod-n">02</span><span class="cnav-mod-title">Reading the Room</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-ethics-decision-making/m3.html"><span class="cnav-mod-n">03</span><span class="cnav-mod-title">The Paper Trail</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-ethics-decision-making/m4.html"><span class="cnav-mod-n">04</span><span class="cnav-mod-title">Who Has the Power?</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-ethics-decision-making/m5.html"><span class="cnav-mod-n">05</span><span class="cnav-mod-title">Making the Black Box Speak</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-ethics-decision-making/m6.html"><span class="cnav-mod-n">06</span><span class="cnav-mod-title">The AI Policy</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-ethics-decision-making/m7.html"><span class="cnav-mod-n">07</span><span class="cnav-mod-title">The Incident Report</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-ethics-decision-making/m8.html"><span class="cnav-mod-n">08</span><span class="cnav-mod-title">The Governance Proposal</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+        </div>
         <div class="cnav-links">
           <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/ai-ethics-decision-making/m1.html">Start Course →</a>
           <a class="cnav-link" href="/ai-academy/modules/v2/ai-ethics-decision-making/exam.html">◈ Final Exam</a>
@@ -385,12 +417,28 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
         </div>
       </div>
     </li>
+
+    <!-- Course 2 -->
     <li>
       <button class="cnav-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
-        <span class="cnav-name">Building with AI</span>
+        <span>
+          <div class="cnav-name">Building with AI</div>
+          <div class="cnav-meta">8 modules · 2 debate · 3 skill · 3 build</div>
+        </span>
         <span class="cnav-arrow">▶</span>
       </button>
       <div class="cnav-panel">
+        <div class="cnav-desc">From your first prompt to a complete AI product spec. This course builds the practical skills that make AI useful at work — and gives you a portfolio to prove it.</div>
+        <div class="cnav-modules">
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-with-ai/m1.html"><span class="cnav-mod-n">01</span><span class="cnav-mod-title">The Prompt is the Program</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-with-ai/m2.html"><span class="cnav-mod-n">02</span><span class="cnav-mod-title">Context and Memory</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-with-ai/m3.html"><span class="cnav-mod-n">03</span><span class="cnav-mod-title">Should AI Do This?</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-with-ai/m4.html"><span class="cnav-mod-n">04</span><span class="cnav-mod-title">Patterns That Work</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-with-ai/m5.html"><span class="cnav-mod-n">05</span><span class="cnav-mod-title">Build a Research Assistant</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-with-ai/m6.html"><span class="cnav-mod-n">06</span><span class="cnav-mod-title">Build a Writing Workflow</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-with-ai/m7.html"><span class="cnav-mod-n">07</span><span class="cnav-mod-title">The Human Handoff</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-with-ai/m8.html"><span class="cnav-mod-n">08</span><span class="cnav-mod-title">Ship Something Real</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+        </div>
         <div class="cnav-links">
           <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/building-with-ai/m1.html">Start Course →</a>
           <a class="cnav-link" href="/ai-academy/modules/v2/building-with-ai/exam.html">◈ Final Exam</a>
@@ -398,12 +446,28 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
         </div>
       </div>
     </li>
+
+    <!-- Course 3 -->
     <li>
       <button class="cnav-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
-        <span class="cnav-name">Building AI Agents: Use Cases</span>
+        <span>
+          <div class="cnav-name">Building AI Agents: Use Cases</div>
+          <div class="cnav-meta">8 modules · 2 debate · 3 skill · 3 build</div>
+        </span>
         <span class="cnav-arrow">▶</span>
       </button>
       <div class="cnav-panel">
+        <div class="cnav-desc">Agents are AI that thinks, acts, and loops. This course teaches you how they work, how they fail, and how to design ones worth deploying — with three agent specs in your portfolio.</div>
+        <div class="cnav-modules">
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m1.html"><span class="cnav-mod-n">01</span><span class="cnav-mod-title">What Is an Agent?</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m2.html"><span class="cnav-mod-n">02</span><span class="cnav-mod-title">Writing Agent Instructions</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m3.html"><span class="cnav-mod-n">03</span><span class="cnav-mod-title">When Agents Go Wrong</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m4.html"><span class="cnav-mod-n">04</span><span class="cnav-mod-title">Tools and Actions</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m5.html"><span class="cnav-mod-n">05</span><span class="cnav-mod-title">Build a Research Agent</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m6.html"><span class="cnav-mod-n">06</span><span class="cnav-mod-title">Build a Content Agent</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m7.html"><span class="cnav-mod-n">07</span><span class="cnav-mod-title">The Oversight Question</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m8.html"><span class="cnav-mod-n">08</span><span class="cnav-mod-title">Your Agent Portfolio</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+        </div>
         <div class="cnav-links">
           <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/building-ai-agents-use-cases/m1.html">Start Course →</a>
           <a class="cnav-link" href="/ai-academy/modules/v2/building-ai-agents-use-cases/exam.html">◈ Final Exam</a>
@@ -411,13 +475,12 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
         </div>
       </div>
     </li>
+
   </ul>
 </div>
 
-<!-- COURSES GRID -->
-<div class="courses-wrap">
-
-  <!-- COURSE 1: AI Ethics & Decision Making -->
+<!-- COURSES GRID (removed) -->
+<div class="courses-wrap" style="display:none">
   <div class="course-card">
     <div class="course-card-header">
       <div class="course-number">Course 1 of 3</div>
@@ -621,7 +684,7 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
     </div>
   </div>
 
-</div><!-- /.courses-wrap -->
+</div><!-- /.courses-wrap (hidden) -->
 
 <!-- ══ STANDARDS ASSESSMENT ══ -->
 <section class="std-section">
