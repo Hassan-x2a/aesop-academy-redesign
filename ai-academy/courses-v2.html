@@ -1133,7 +1133,7 @@ document.addEventListener('click', e => {
         <div class="audit-mtitle" id="auditModalTitle"></div>
         <div class="audit-msub" id="auditModalSub"></div>
       </div>
-      <button class="audit-mclose" id="auditClose">✕ Close</button>
+      <button class="audit-mclose" id="auditClose" onclick="document.getElementById('auditOverlay').classList.remove('open')">✕ Close</button>
     </div>
     <div class="audit-mbody" id="auditModalBody"></div>
   </div>
