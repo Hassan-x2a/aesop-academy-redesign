@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-19 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Command Center — Module 4 · AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#2ba898;--accent-rgb:43,168,152;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Cinzel',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Cinzel',Georgia,serif;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:600;color:#fff;line-height:1.18;margin-bottom:0.4rem;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-size:1.05rem;line-height:1.9;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label,.pa-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc,.pa-desc{font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.pa-type{font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.continue-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0;}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Cinzel',Georgia,serif;font-size:1.1rem;font-weight:600;color:#fff;line-height:1.25;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.cmsg.system{align-self:center;background:rgba(var(--accent-rgb),0.04);border:1px solid rgba(var(--accent-rgb),0.12);color:var(--accent);font-size:0.76rem;text-align:center;max-width:90%;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Build a Command Center</div>
+  <div class="topbar-badge">SKILL LAB</div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Skill</span>
+    <span class="tab-dur">~20–30 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Module 4 — Intro</div>
+        <h1 class="read-title">Prompt Engineering and Management</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Prompt engineering gets treated as a dark art — intuition, trial and error, and "it worked for me once." But in a command center that handles multiple task types across a team, prompts are infrastructure. They need to be versioned, tested, and managed like any other configuration. This module is about building that discipline: not just writing better prompts, but creating a system for managing them over time.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="pa-label">Portfolio Artifact</div>
+            <div class="pa-type">Skill Lab — Prompt Library</div>
+            <div class="pa-desc">A prompt management structure — at least three named, versioned prompt templates for different task types in a command center, each with role, task, constraints, output format, and a test criterion defined.</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Write prompts that specify role, task, constraints, and output format explicitly</li>
+            <li>Version and store prompts as named, reusable artifacts rather than ephemeral inputs</li>
+            <li>Test prompt changes against a baseline before deploying to production task flows</li>
+            <li>Apply O*NET Active Learning to identify when a prompt is failing and why</li>
+            <li>Build a prompt library structure for a multi-task command center</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">The Prompt That No One Owns</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A developer built a command center with three task flows: code review, document synthesis, and a daily standup summarizer. Each flow started with an ad-hoc prompt written once and never revisited.</p>
+          <p>Six months later, the code review prompts have been edited in-place by two different developers. No one knows what the original looked like. There's no diff, no change note, no reason attached to the edits — just a prompt in a config file that works differently than anyone remembers, and a vague sense that the output quality dropped somewhere along the way.</p>
+          <p>The standup summarizer started producing inconsistent output after a model upgrade. The team can't tell if the model changed behavior or if the prompt drifted. Without a baseline, there's nothing to test against. Both explanations are equally plausible and equally unfixable.</p>
+          <p>The document synthesis prompt works — probably. No one wants to touch it. It's become the kind of configuration that gets preserved out of superstition rather than understanding. One developer described it as "the prompt we don't edit." That's not a stable foundation for infrastructure.</p>
+          <p>The real failure wasn't in any individual prompt. It was the absence of a system: no versioning, no test criteria, no ownership. Three prompts written once, edited whenever, with no record of why. At team scale, that's not a process problem — it's a governance problem.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">A Prompt Is a Contract</h1>
+        <div class="read-time">5 min read</div>
+        <div class="read-body">
+          <p>A prompt is a contract between your command center and the model. Like any contract, it needs to be explicit, versioned, and testable. When a prompt is vague, the model fills the gaps with its own judgment — which changes across versions, temperatures, and context lengths. When a prompt has no version, every edit overwrites the baseline. When a prompt has no test criterion, you can't tell if a change improved it or degraded it.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">The four elements of a well-formed prompt</div>
+          <div class="framework-item">
+            <strong>Role — who the model is</strong>
+            <p>The role defines the model's perspective, expertise, and authority within this task. It's not a personality flourish — it's a constraint on how the model should reason and what it's permitted to do. "You are a senior code reviewer" sets different behavior than "You are a helpful assistant reviewing code." The role is the most durable element; it rarely changes between minor versions.</p>
+          </div>
+          <div class="framework-item">
+            <strong>Task — what it must do</strong>
+            <p>The task is the specific action the model must take on the input. It should be stated as a verb phrase, not a topic: "Identify the three highest-priority issues in this diff and explain each in one sentence" is a task. "Code review" is not. The more precisely the task is scoped, the more consistently the output can be tested.</p>
+          </div>
+          <div class="framework-item">
+            <strong>Constraints — what it must not do or must respect</strong>
+            <p>The constraint is the element most often skipped. A constraint is something the model must <strong>not</strong> do, or a limit it must respect. "Do not suggest architectural changes — scope the review to the code as written." "Do not exceed three bullet points." "Do not reference information outside the provided document." Constraints prevent the model from being helpful in ways you don't want. Skipping constraints is how prompts produce useful-looking output that subtly violates the intended scope.</p>
+          </div>
+          <div class="framework-item">
+            <strong>Output format — exactly what to return</strong>
+            <p>The format specifies the structure of the response: a bulleted list, a JSON object, a numbered summary with a specific field order. "A structured summary" is not a format. "A JSON object with keys: summary (≤50 words), issues (array of strings), recommendation (one sentence)" is. Without an explicit format, the model uses whatever format it judges appropriate — which varies by model version and context.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Why in-place editing is dangerous</div>
+          <div class="framework-item">
+            <strong>You lose the diff, the baseline, and the rollback</strong>
+            <p>When you edit a prompt in place, you overwrite the only copy. There is no diff — no record of what changed or why. There is no baseline — no version to test the new prompt against. There is no rollback — if the edit degrades output quality, you're restoring from memory. For infrastructure that runs dozens or hundreds of times per day, that's an unacceptable risk. Treat a prompt like a config file: never edit in place, always version.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Prompt versioning</div>
+          <div class="framework-item">
+            <strong>Semantic versioning for prompts</strong>
+            <p>Version prompts as named files using semantic versioning: <em>task-slug-v{major}.{minor}</em> — e.g., <em>code-review-v1.2</em>. A minor version bump (1.0 → 1.1) changes phrasing, examples, or constraint wording without changing the model's role or output format. A major version bump (1.x → 2.0) changes the model's role or output format — a structural change that breaks any downstream code expecting the previous format. Document what changed and why in a one-line change note attached to the version.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Prompt testing</div>
+          <div class="framework-item">
+            <strong>A test criterion is a specific, checkable property</strong>
+            <p>"Produces a good summary" is not a test criterion. "Returns a bulleted list with ≤5 items, each ≤25 words, covering only the content provided" is. A test criterion must be checkable without judgment — ideally, checkable by a script. Before writing a prompt, write the test criterion. This inverts the usual order: instead of writing a prompt and then deciding whether you like the output, you define what "correct" looks like first, and then write the prompt that produces it. That inversion exposes vague intent before you commit to a direction.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance Standards — The Regulatory Layer</div>
+          <div class="framework-item">
+            <strong>O*NET — Active Learning (4.A.6.b)</strong>
+            <p>Active Learning means continuously monitoring your system's output and updating your understanding of how it behaves over time. Applied to prompts: recognizing when a prompt has drifted — when output quality degrades gradually rather than suddenly — requires sustained attention, not just deployment testing. A prompt that passed its test criterion at v1.0 may fail it after a model upgrade or after accumulated context changes. Active Learning is the habit of checking prompt performance after every significant change, not just at launch.</p>
+          </div>
+          <div class="framework-item">
+            <strong>NIST AI RMF — MEASURE Function</strong>
+            <p>The MEASURE function establishes metrics and evaluation methods for AI system performance. For prompt management, MEASURE means treating prompt outputs as a measurement target: track output quality across versions, flag regressions, and keep a version history that makes those comparisons possible. Without measurement, you can't distinguish a prompt failure from a model failure — and you can't make the case to roll back a change.</p>
+          </div>
+          <div class="framework-item">
+            <strong>NIST AI RMF — GOVERN Function</strong>
+            <p>The GOVERN function establishes policies, processes, and accountability for AI risk management. Versioning is a governance mechanism: it creates a record of who changed what and when, enables audit, and makes rollback possible. A prompt library without versioning has no governance — just a set of configuration files that can be changed by anyone at any time with no traceability.</p>
+          </div>
+          <div class="framework-item">
+            <strong>O*NET — Critical Thinking (4.A.4.a)</strong>
+            <p>Critical Thinking is the active analysis of information to make reasoned judgments. Applied here: when output quality degrades, the question is not just "fix the prompt" — it's "diagnose whether the failure is in the prompt, the model version, the input data, or the context window." That diagnosis requires comparing the current state to a known baseline, which is only possible if you've maintained one. Critical Thinking about prompt failures starts with versioning.</p>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Three Techniques for the Lab</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>The lab asks you to build three named, versioned prompt templates. These three techniques apply directly to each one. Work through them in order for every template you build.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">1 — Role-Task-Constraint-Format decomposition</div>
+          <div class="framework-item">
+            <strong>Write the four elements separately before writing the prompt</strong>
+            <p>Before drafting a prompt, write each element in isolation: Role (who the model is), Task (what it must do), Constraints (what it must not do or must respect), Output Format (exactly what to return). The constraint is the hardest — most people skip it because it requires thinking about failure modes before the prompt has failed. A constraint is something the model must <strong>not</strong> do, or a limit it must respect: "do not suggest architectural changes — scope review to the code as written," "do not include information not present in the input document," "do not exceed five bullet points." Writing constraints separately forces you to think about where the prompt could go wrong before it does.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">2 — The test criterion first</div>
+          <div class="framework-item">
+            <strong>Define checkable before writing the prompt</strong>
+            <p>Write the test criterion before you write the prompt. What specific, checkable property must the output have? Not "produces a useful summary" — that's a judgment. A checkable property is something you could verify with a script or a 10-second scan: "Returns exactly three items," "Each item is ≤25 words," "No item references information not in the input." Writing the test criterion first inverts the usual order and exposes vague intent before you've committed to a direction. If you can't write a checkable test criterion, your task definition is still too vague — sharpen the task before writing the prompt.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">3 — Version naming convention</div>
+          <div class="framework-item">
+            <strong>{task-slug}-v{major}.{minor} with a change note</strong>
+            <p>Name every prompt template using the convention <em>{task-slug}-v{major}.{minor}</em> — for example, <em>code-review-v1.2</em> or <em>standup-summary-v2.0</em>. A minor version bump (1.0 → 1.1) changes phrasing, constraint wording, or examples without changing the model's role or output format. A major version bump (1.x → 2.0) changes the model's role or the output format — a structural change. Attach a one-line change note to every version: what changed and why. The change note is what makes the version history useful. Without it, you have a list of numbered files but no record of why each one exists.</p>
+          </div>
+          <div class="read-divider"></div>
+          <p>In the lab, the AI will review each prompt template you build and check whether it has a complete decomposition (role, task, constraints, format), a testable criterion, and a version name with a change note. You'll build at least three templates — across different task types in your command center — before the lab is complete.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+      <div class="lab-brief">
+        <div class="lab-type-badge">◆ Skill Lab</div>
+        <div class="lab-brief-title">Prompt Engineering and Management</div>
+        <div class="lab-brief-dur">~20–30 minutes · 5 exchanges to complete</div>
+
+        <div class="brief-section">
+          <div class="brief-label">Your role</div>
+          <div class="role-card">
+            <div class="role-card-icon">🧑‍💻</div>
+            <div><strong>Prompt Engineer</strong>Building a versioned prompt library for your command center. You'll write at least three named, versioned templates across different task types — each with a complete Role-Task-Constraint-Format decomposition and a testable criterion.</div>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-label">AI role</div>
+          <div class="role-card">
+            <div class="role-card-icon">🔍</div>
+            <div><strong>Prompt Reviewer</strong>Checks each template for completeness — role, task, constraints, format — and asks for the test criterion before accepting any template as done. Enforces version naming and pushes for checkable criteria rather than quality claims.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+        <div class="brief-section">
+          <div class="brief-label">Framework reminders</div>
+          <div class="fw-reminder">
+            <div class="fw-item"><strong>Role-Task-Constraint-Format:</strong> All four elements, separately defined before writing the prompt.</div>
+            <div class="fw-item"><strong>Test criterion first:</strong> Specific and checkable — not "produces good output."</div>
+            <div class="fw-item"><strong>Version naming:</strong> {task-slug}-v{major}.{minor} + one-line change note.</div>
+            <div class="fw-item"><strong>O*NET 4.A.6.b:</strong> Active Learning — monitor prompt output over time, not just at launch.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+        <div class="brief-section">
+          <div class="brief-label">How to complete</div>
+          <div class="brief-text">Name a task your command center runs and build the first prompt template together. The reviewer will check each element and require a test criterion before moving on. Lab completes after 5 substantive exchanges across at least three templates.</div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="Tell me one task your command center runs — code review, summarization, routing decision — and we'll build the first prompt template together…" onkeydown="labKeydown(event)"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='ai-command-center-v2';
+var MODULE_ID='m4';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_TYPE='skill';
+var ARTIFACT_DESC='A prompt management structure — at least three named, versioned prompt templates for different task types in a command center, each with role, task, constraints, output format, and a test criterion defined';
+var LAB_COMPLETE_THRESHOLD=5;
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a prompt reviewer for AESOP AI Academy — Build a Command Center (v2.0), Module 4: Prompt Engineering and Management. Stay strictly on topic: prompt engineering, versioning, and prompt management for AI command centers. Reference O*NET Active Learning (4.A.6.b) when relevant to monitoring prompt performance over time. Reference NIST MEASURE when discussing prompt outputs as a measurement target. Do not write full application code. Help the learner build named, versioned prompt templates with Role-Task-Constraint-Format decomposition, testable criteria, and version naming conventions.\n\n';
+
+var LAB_SYSTEM='You are a prompt reviewer for a custom AI command center. The learner is building a versioned prompt library with at least three templates across different task types.\n\nFor each template the learner proposes, check all four elements:\n1. Role — who the model is. If missing or vague ("you are a helpful assistant"), push for a specific role that scopes the model\'s authority and perspective.\n2. Task — what it must do. If stated as a topic rather than a verb phrase, push for a specific action: not "code review" but "identify the three highest-priority issues in this diff and explain each in one sentence."\n3. Constraints — what the model must NOT do, or limits it must respect. This is the element most often skipped. If missing, surface it explicitly: "You haven\'t defined what the model should not do. What should it avoid? What scope should it not exceed?" Common omissions: scope constraints (do not suggest architectural changes), length constraints (do not exceed N items), content constraints (do not reference information outside the input).\n4. Output format — the exact structure of the response. "A structured summary" is not a format. Push for field names, types, and limits: "A JSON object with keys: summary (≤50 words), issues (array of strings, max 5), recommendation (one sentence)."\n\nBefore accepting any template as complete, ask for the test criterion: "What specific, checkable property must the output have? Not quality — something verifiable without judgment." If they give a quality claim ("produces a good summary"), push back: "That\'s not checkable. Give me something you could verify in 10 seconds without reading the full output."\n\nEnforce version naming: every template must have a name in the format {task-slug}-v{major}.{minor}. If they name the prompt without a version, ask: "What version is this, and what would a v1.1 change vs. a v2.0 change look like for this template?"\n\nTrack how many templates the learner has completed (all four elements + test criterion + version name). After three complete templates, acknowledge that the prompt library structure is in place.\n\nTone: precise and constructive. You\'re not grading — you\'re making the library defensible. Every gap you surface now is a production failure you\'re preventing.';
+
+var FALLBACKS=[
+  'Let\'s check the four elements. You\'ve described the task, but I\'m not seeing all four components. Walk me through each separately: Role (who is the model in this prompt?), Task (the specific verb phrase — what must it do?), Constraints (what must it NOT do or what scope must it respect?), and Output Format (the exact structure — field names, types, limits). Which element needs the most work?',
+  'I need a test criterion before we can call this template complete. Not a quality claim — a specific, checkable property. What must the output have that you could verify in 10 seconds without reading the full thing? For example: "Returns exactly three items," "Each item is ≤25 words," "No field is blank." Give me one checkable property for this template\'s output.',
+  'Every template needs a version name. Use the format {task-slug}-v{major}.{minor} — for example, code-review-v1.0 or standup-summary-v2.1. Then tell me: what would a v1.1 change look like for this template (phrasing or constraint wording, same role and format), and what would make you bump it to v2.0 (role change or output format change)?',
+  'The constraint element is the most commonly skipped, so let\'s focus on it. A constraint is something the model must NOT do, or a limit it must respect. For this task, what should the model avoid? What scope should it not exceed? Common patterns: "do not suggest changes outside the provided scope," "do not reference information not present in the input," "do not exceed N items in the output." Write at least one explicit constraint for this template.',
+  'This connects to O*NET Active Learning (4.A.6.b): after this template is deployed, how will you know if it\'s drifting? Not at launch — six months from now, after a model upgrade or after someone edits the constraint wording. What would you check? The test criterion you defined is the anchor. Describe one monitoring check you\'d run monthly to verify this prompt still meets its criterion.'
+];
+
+var LAB_OPENING='Let\'s build your prompt library.\n\nTell me one task your command center runs — code review, summarization, routing decision, anything — and we\'ll build the first prompt template together.\n\nStart with the task: what does this prompt ask the model to do? State it as a verb phrase, not a topic.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},400);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function labKeydown(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();labSend();}
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+    },600);
+    return;
+  }
+
+  var thinking=addMsg('thinking','Thinking…');
+
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:520,
+          system:ACADEMY_GUARDRAIL+LAB_SYSTEM,
+          messages:chatHistory
+        })
+      });
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+      return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;
+      fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];
+      fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+    }
+  }
+  btn.disabled=false;
+  inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    addMsg('system','Lab complete — prompt library structure built. Your artifact has been recorded.');
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,160)+'px';
+});
+
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

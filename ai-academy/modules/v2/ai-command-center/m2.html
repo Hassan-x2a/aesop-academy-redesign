@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-19 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Multi-Model Configuration — Build a Command Center | AESOP AI Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --border: #2e3140;
+  --text: #e8eaf0;
+  --muted: #8b90a8;
+  --accent: #9a5fb0;
+  --accent-rgb: 154,95,176;
+}
+[data-theme="light"] {
+  --bg: #f4f5f9;
+  --surface: #ffffff;
+  --border: #dde0ea;
+  --text: #1a1d27;
+  --muted: #5c6080;
+  --accent: #9a5fb0;
+  --accent-rgb: 154,95,176;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:15px;line-height:1.65;}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;height:48px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100;}
+.tb-back{color:var(--accent);text-decoration:none;font-size:13px;white-space:nowrap;}
+.tb-back:hover{text-decoration:underline;}
+.tb-title{flex:1;font-family:'Cinzel',serif;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tb-badge{font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:20px;background:rgba(var(--accent-rgb),.15);color:var(--accent);white-space:nowrap;}
+.tb-theme{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;}
+.tb-theme:hover{border-color:var(--accent);color:var(--accent);}
+
+/* TABSTRIP */
+.tabstrip{position:fixed;top:48px;left:0;right:0;height:44px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 8px;gap:2px;z-index:99;}
+.tab{background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer;font-family:'Nunito Sans',sans-serif;font-size:13px;font-weight:600;padding:0 14px;transition:color .15s,border-color .15s;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* PAGES */
+.pages{position:fixed;top:92px;left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;overflow-y:auto;}
+.page.active{display:block;}
+.page-content{max-width:780px;margin:0 auto;padding:36px 24px 60px;}
+
+/* TYPOGRAPHY */
+h1{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:600;margin-bottom:8px;color:var(--text);}
+h2{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;margin:32px 0 12px;color:var(--text);}
+h3{font-size:1rem;font-weight:700;margin:24px 0 8px;color:var(--text);}
+p{margin-bottom:14px;color:var(--text);}
+.lead{font-size:1.05rem;color:var(--muted);margin-bottom:24px;}
+ul,ol{margin:0 0 14px 20px;color:var(--text);}
+li{margin-bottom:6px;}
+
+/* OUTCOMES */
+.outcomes-list{list-style:none;margin:0 0 28px;padding:0;}
+.outcomes-list li{padding:8px 10px 8px 32px;position:relative;border-left:3px solid rgba(var(--accent-rgb),.35);margin-bottom:6px;background:rgba(var(--accent-rgb),.05);border-radius:0 6px 6px 0;}
+.outcomes-list li::before{content:'→';position:absolute;left:10px;color:var(--accent);font-weight:700;}
+
+/* PORTFOLIO ARTIFACT */
+.portfolio-artifact{background:rgba(var(--accent-rgb),.08);border:1px solid rgba(var(--accent-rgb),.25);border-radius:10px;padding:18px 20px;margin:24px 0;}
+.pa-label{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:6px;}
+.pa-type{font-size:13px;font-weight:700;margin-bottom:4px;color:var(--text);}
+.pa-desc{font-size:13px;color:var(--muted);}
+
+/* SCENARIO CALLOUT */
+.scenario-box{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:18px 20px;margin:20px 0;}
+.scenario-box p:last-child{margin-bottom:0;}
+
+/* GOVERNANCE FRAMEWORK */
+.fw-section{margin:28px 0;}
+.fw-section-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.fw-item{display:flex;gap:12px;padding:10px 14px;background:rgba(var(--accent-rgb),.06);border-radius:8px;margin-bottom:8px;}
+.fw-label{font-size:12px;font-weight:800;color:var(--accent);min-width:140px;flex-shrink:0;}
+.fw-desc{font-size:13px;color:var(--muted);}
+
+/* DATA TABLE */
+.model-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;}
+.model-table th{background:rgba(var(--accent-rgb),.12);color:var(--accent);font-weight:700;padding:10px 12px;text-align:left;border-bottom:2px solid var(--border);}
+.model-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text);}
+.model-table tr:last-child td{border-bottom:none;}
+.model-table tr:hover td{background:rgba(var(--accent-rgb),.04);}
+.tier-best{color:#2ba898;font-weight:700;}
+.tier-good{color:#f59e0b;font-weight:700;}
+.tier-heavy{color:#f43f5e;font-weight:700;}
+
+/* PAGE NAV */
+.page-nav{margin-top:40px;padding-top:24px;border-top:1px solid var(--border);}
+.btn-continue{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:12px 28px;font-family:'Nunito Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+.btn-continue:hover{opacity:.85;}
+
+/* LAB LAYOUT */
+#page-lab{overflow:hidden;}
+.lab-split{display:flex;height:100%;}
+.lab-brief{width:38%;min-width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:24px 20px;}
+.lab-workspace{width:62%;display:flex;flex-direction:column;}
+.lab-msgs{flex:1;overflow-y:auto;padding:16px;}
+.lab-compose{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);}
+.compose-ta{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:14px;line-height:1.5;min-height:72px;padding:10px 12px;resize:vertical;}
+.compose-ta:focus{outline:none;border-color:var(--accent);}
+.compose-send{background:var(--accent);border:none;border-radius:8px;color:#fff;cursor:pointer;font-weight:700;padding:0 20px;transition:opacity .15s;}
+.compose-send:hover{opacity:.85;}
+.compose-send:disabled{opacity:.4;cursor:not-allowed;}
+.compose-hint{font-size:11px;color:var(--muted);padding:0 16px 8px;text-align:right;}
+
+/* CHAT MESSAGES */
+.cmsg{margin-bottom:14px;max-width:88%;padding:12px 14px;border-radius:12px;font-size:14px;line-height:1.6;}
+.cmsg.ai{background:var(--surface);border:1px solid var(--border);margin-right:auto;border-bottom-left-radius:4px;}
+.cmsg.user{background:rgba(var(--accent-rgb),.15);border:1px solid rgba(var(--accent-rgb),.25);margin-left:auto;text-align:right;border-bottom-right-radius:4px;}
+.cmsg.thinking{color:var(--muted);font-style:italic;}
+.cmsg.error{background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.25);color:#f43f5e;}
+.cmsg.system{background:rgba(var(--accent-rgb),.08);border:1px solid rgba(var(--accent-rgb),.2);color:var(--accent);text-align:center;font-size:13px;font-weight:700;max-width:100%;}
+
+/* BRIEF ELEMENTS */
+.brief-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;padding:4px 12px;border-radius:20px;background:rgba(var(--accent-rgb),.15);color:var(--accent);margin-bottom:14px;}
+.brief-duration{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.role-card{background:rgba(var(--accent-rgb),.06);border:1px solid rgba(var(--accent-rgb),.2);border-radius:8px;padding:12px 14px;margin-bottom:10px;}
+.role-card-label{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:4px;}
+.role-card-desc{font-size:13px;color:var(--muted);}
+.brief-section-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px;}
+.complete-banner{background:rgba(var(--accent-rgb),.15);border:1px solid rgba(var(--accent-rgb),.35);border-radius:8px;padding:14px;text-align:center;font-weight:700;color:var(--accent);margin-top:16px;display:none;}
+
+@media (max-width:820px) {
+  .lab-split{flex-direction:column;}
+  .lab-brief{width:100%;border-right:none;border-bottom:1px solid var(--border);max-height:220px;}
+  .lab-workspace{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-back" href="/ai-academy/courses-v2.html">← Courses</a>
+  <div class="tb-title">Build a Command Center · Module 2: Multi-Model Configuration</div>
+  <div class="tb-badge">BUILD LAB</div>
+  <button class="tb-theme" onclick="toggleTheme()">☀ / ☾</button>
+</div>
+
+<div class="tabstrip">
+  <button class="tab active" data-tab="intro" onclick="gotoPage('intro')">Intro</button>
+  <button class="tab" data-tab="scenario" onclick="gotoPage('scenario')">Scenario</button>
+  <button class="tab" data-tab="lesson" onclick="gotoPage('lesson')">Lesson</button>
+  <button class="tab" data-tab="context" onclick="gotoPage('context')">Context</button>
+  <button class="tab" data-tab="lab" onclick="gotoPage('lab')">Lab</button>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="page-content">
+      <h1>Multi-Model Configuration</h1>
+      <p class="lead">Module 2 of 8 — Build a Command Center</p>
+
+      <p>One of the first things people discover when they build their own command center: not all tasks deserve the same model. Paying flagship prices for a task a lighter model handles perfectly isn't a minor inefficiency — it's a signal that your system has no brain. Choosing the right model for the right job is one of the clearest wins you get from owning your own infrastructure.</p>
+
+      <p>But model selection isn't just about cost. Capability ceilings matter. Context window limits matter. Latency for interactive tasks matters. A routing configuration that maps task types to models — and enforces cost ceilings when things go wrong — is a piece of infrastructure that pays for itself on the first week of real use.</p>
+
+      <p>In this module, you'll build that routing configuration. You'll work through a model selection matrix, define task-type routing rules, set API key management strategy, and write cost threshold behavior. By the end, your command center will know which model to call and why — not just "the latest one."</p>
+
+      <h2>What You'll Be Able to Do</h2>
+      <ul class="outcomes-list">
+        <li>Build a model selection matrix mapping task types to specific models with cost and capability justification</li>
+        <li>Write routing rules that direct traffic by task classification, not just user preference</li>
+        <li>Define cost ceiling behavior — what the system does when usage hits a threshold</li>
+        <li>Articulate API key management strategy for multi-model setups</li>
+        <li>Apply NIST MAP to identify model selection failure modes before they happen</li>
+      </ul>
+
+      <div class="portfolio-artifact">
+        <div class="pa-label">Portfolio Artifact</div>
+        <div class="pa-type">Build Lab — Routing Configuration Document</div>
+        <div class="pa-desc">A multi-model routing specification: task-type classifications, model assignments with cost and capability justification, API key management approach, and cost ceiling behavior — documented with explicit NIST MAP failure mode identification.</div>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-continue" onclick="gotoPage('scenario')">Continue to Scenario →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="page-content">
+      <h1>One Model for Everything</h1>
+
+      <p>A solo developer is building a research assistant for their team. The assistant handles three very different tasks: quick reformatting of pasted text, multi-document synthesis for reports, and a coding sub-agent that writes and critiques implementation plans. All three currently call the same model — the largest, most capable one available.</p>
+
+      <div class="scenario-box">
+        <p>Month one invoice: $340. Month two: $390. The developer pulls usage logs and finds that 68% of API spend went to reformatting tasks — work that's essentially find-and-replace with light reasoning. The synthesis tasks, which require multi-document context and careful argument construction, used 19% of the spend. The coding sub-agent, which needed real capability, used 13%.</p>
+        <p>The allocation is backwards. The most expensive model is doing the cheapest work at scale, while the tasks that actually need heavy reasoning are a small slice of traffic.</p>
+      </div>
+
+      <p>The developer's instinct is correct: this is a routing problem, not a model problem. The tools exist. What's missing is a configuration layer that classifies tasks and assigns them to appropriate models — with explicit rules, not intuition.</p>
+
+      <h2>What This Reveals</h2>
+
+      <p>Vendor-provided clients give you one model selector and one API key. You pick a model at session start, and everything that session uses it. That's fine for exploration. It breaks down the moment you have a system with heterogeneous task types running at any meaningful volume.</p>
+
+      <p>A command center with routing configuration changes the cost structure of AI work. It also changes the failure structure: when you've explicitly mapped task types to models, you can see exactly where the system is calling the wrong tool. Debugging gets easier. Costs become predictable. And you have a document that explains the system's decisions, which matters when something goes wrong at 2am.</p>
+
+      <div class="page-nav">
+        <button class="btn-continue" onclick="gotoPage('lesson')">Continue to Lesson →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="page-content">
+      <h1>The Model Selection Matrix</h1>
+
+      <p>The most important insight in multi-model configuration: <strong>task type is the primary routing variable, not user preference.</strong> Users don't know which model handles their task best. Your configuration layer should. The routing config is the place where that knowledge lives — explicit, versioned, and auditable.</p>
+
+      <h2>Four Dimensions of Model Selection</h2>
+
+      <p>When you're building a routing matrix, evaluate models along four axes:</p>
+
+      <table class="model-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>What It Drives</th>
+            <th>When It's Binding</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cost per token</strong></td>
+            <td>Monthly spend at scale</td>
+            <td>High-volume, low-complexity tasks</td>
+          </tr>
+          <tr>
+            <td><strong>Capability ceiling</strong></td>
+            <td>Output quality on hard problems</td>
+            <td>Multi-step reasoning, synthesis, code review</td>
+          </tr>
+          <tr>
+            <td><strong>Context window</strong></td>
+            <td>How much input it can hold</td>
+            <td>Long document tasks, multi-turn sessions</td>
+          </tr>
+          <tr>
+            <td><strong>Latency profile</strong></td>
+            <td>Responsiveness for interactive use</td>
+            <td>Real-time chat, streaming interfaces</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>A routing matrix picks the cheapest model whose capability ceiling, context window, and latency all clear the bar for the task. You don't use a heavier model than the task requires. You don't use a lighter model that can't reliably hit the quality floor.</p>
+
+      <h2>Task Classification</h2>
+
+      <p>Before you can route, you need a taxonomy. A workable starting taxonomy has three tiers:</p>
+
+      <ul>
+        <li><strong>Tier 1 — Lightweight:</strong> Reformatting, summarization of short inputs, classification, extraction from structured data. These tasks have clear correct answers, bounded scope, and rarely require judgment. Route to the cheapest capable model.</li>
+        <li><strong>Tier 2 — Standard:</strong> Multi-turn conversation, code generation, single-document analysis, short-form writing with revision. These tasks need fluency and moderate reasoning. Route to mid-tier.</li>
+        <li><strong>Tier 3 — Heavy:</strong> Multi-document synthesis, architectural review, complex reasoning chains, tasks where errors compound. Route to the most capable model you have configured.</li>
+      </ul>
+
+      <h2>Cost Ceiling Behavior</h2>
+
+      <p>A routing config without a cost ceiling is incomplete. Define what happens when a session, user, or day hits a spend threshold:</p>
+      <ul>
+        <li><strong>Soft ceiling:</strong> Notify and continue — log the breach, alert the operator, keep serving.</li>
+        <li><strong>Hard ceiling:</strong> Downgrade routing — bump all Tier 3 tasks to Tier 2 until reset.</li>
+        <li><strong>Shutdown ceiling:</strong> Stop serving API calls until a human intervenes.</li>
+      </ul>
+
+      <p>Which ceiling behavior you pick depends on who pays the bill and what the tolerance for service interruption is. Document the choice. If you don't, the default behavior is "keep spending," which is not a choice — it's an omission.</p>
+
+      <div class="fw-section">
+        <div class="fw-section-title">Governance Standards — The Regulatory Layer</div>
+        <div class="fw-item">
+          <span class="fw-label">NIST AI RMF — MAP</span>
+          <span class="fw-desc">MAP requires identifying and categorizing AI tasks before deployment. A routing matrix is a MAP artifact: it documents which model handles which task class and why, creating an auditable record of system design decisions.</span>
+        </div>
+        <div class="fw-item">
+          <span class="fw-label">NIST AI RMF — MEASURE</span>
+          <span class="fw-desc">Cost ceilings and routing logs create measurement infrastructure. Without them, you can't tell whether the system is behaving as designed or drifting toward unintended spend or capability mismatches.</span>
+        </div>
+        <div class="fw-item">
+          <span class="fw-label">O*NET — Complex Problem Solving (4.A.4.b)</span>
+          <span class="fw-desc">Designing a routing matrix requires identifying the problem (heterogeneous tasks, one model), developing and evaluating alternatives (tier taxonomy, model options), and selecting the appropriate solution — the core O*NET complex problem solving skill.</span>
+        </div>
+        <div class="fw-item">
+          <span class="fw-label">NIST AI RMF — GOVERN</span>
+          <span class="fw-desc">Documenting routing decisions, cost threshold behavior, and API key strategy creates the governance record that lets a team understand, audit, and change the system's behavior over time.</span>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-continue" onclick="gotoPage('context')">Continue to Context →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="page-content">
+      <h1>Three Decisions Before You Route</h1>
+
+      <p>A routing configuration document needs to answer three structural questions before it covers task-to-model mappings. These are the decisions that determine whether the routing rules are coherent or just a list of preferences.</p>
+
+      <div class="fw-section">
+        <div class="fw-section-title">Decision 1 — What is the unit of classification?</div>
+      </div>
+
+      <p>Are you routing by <em>request type</em> (what the user asked for), <em>agent identity</em> (which sub-agent is calling), or <em>content characteristics</em> (length, complexity, presence of code)? These aren't the same. A coding sub-agent making a simple lookup is a Tier 1 task, even though it came from a "heavy" agent. Define the unit before you define the rules — otherwise, the rules will be ambiguous at every edge case.</p>
+
+      <div class="fw-section">
+        <div class="fw-section-title">Decision 2 — How many API keys, and who holds them?</div>
+      </div>
+
+      <p>Multi-model setups typically need at least one API key per provider. The questions that matter: Are keys stored at the system level or per-user? Who can rotate them? What's the access control model if this command center serves a team? A routing config that doesn't specify key management is assuming someone else has figured this out. They probably haven't.</p>
+
+      <div class="fw-section">
+        <div class="fw-section-title">Decision 3 — What does the system do when it can't classify?</div>
+      </div>
+
+      <p>Every routing system has an unclassified case — the task that doesn't fit any tier. Define the fallback now: default to mid-tier? Route to the operator for classification? Reject with an explanation? The fallback behavior is often where cost surprises and capability gaps hide. Your configuration document should state it explicitly.</p>
+
+      <p class="lead">You'll apply all three decisions in the lab — the AI will push you to define each one before accepting a routing rule as complete.</p>
+
+      <div class="page-nav">
+        <button class="btn-continue" onclick="gotoPage('lab')">Enter the Lab →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+      <div class="lab-brief">
+        <div class="brief-badge">BUILD LAB</div>
+        <div class="brief-duration">⏱ Estimated time: 20–30 minutes</div>
+
+        <div class="brief-section-title">Your Role</div>
+        <div class="role-card">
+          <div class="role-card-label">You</div>
+          <div class="role-card-desc">Architect. You're designing a routing configuration document for your command center — making explicit decisions about task classification, model assignment, API key strategy, and cost ceiling behavior.</div>
+        </div>
+
+        <div class="brief-section-title">AI Role</div>
+        <div class="role-card">
+          <div class="role-card-label">Infrastructure Reviewer</div>
+          <div class="role-card-desc">Challenges vague routing rules, asks what happens at the edges, and checks whether the three structural decisions (classification unit, key management, fallback behavior) are actually answered before accepting a routing config as complete.</div>
+        </div>
+
+        <div class="brief-section-title">Framework Reminders</div>
+        <div class="fw-item">
+          <span class="fw-label">Classification unit</span>
+          <span class="fw-desc">What determines the tier — request type, agent identity, or content characteristics?</span>
+        </div>
+        <div class="fw-item">
+          <span class="fw-label">Key management</span>
+          <span class="fw-desc">Per-provider keys, storage level, rotation ownership.</span>
+        </div>
+        <div class="fw-item">
+          <span class="fw-label">Fallback behavior</span>
+          <span class="fw-desc">What happens to a task that doesn't fit any tier?</span>
+        </div>
+        <div class="fw-item">
+          <span class="fw-label">Cost ceiling</span>
+          <span class="fw-desc">Soft / hard / shutdown — and who decides?</span>
+        </div>
+
+        <div class="brief-section-title">Completion Criteria</div>
+        <p style="font-size:13px;color:var(--muted);">Produce a routing configuration document that covers: task tier taxonomy, model assignments with justification, API key strategy, cost ceiling behavior, and fallback handling. The AI will check each element.</p>
+
+        <div class="complete-banner" id="completeBanner">✓ Lab Complete — Routing Config Built</div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <textarea class="compose-ta" id="lab-inp" placeholder="Describe your command center's task types, or start with a draft routing rule… (Shift+Enter for new line)" onkeydown="labKeydown(event)"></textarea>
+          <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+        </div>
+        <div class="compose-hint">Shift + Enter for new line</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.pages -->
+
+<script>
+var COURSE_ID = 'ai-command-center-v2';
+var MODULE_ID = 'm2';
+var MODULE_NUM = 2;
+var LAB_TYPE = 'build';
+var ARTIFACT_DESC = 'A multi-model routing configuration document — task tier taxonomy, model assignments with cost and capability justification, API key management strategy, cost ceiling behavior, and fallback handling explicitly defined';
+var PROXY_URL = '/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD = 4;
+
+var ACADEMY_GUARDRAIL = 'You are an infrastructure reviewer helping a developer build a multi-model routing configuration for their AI command center. You are operating within the AESOP AI Academy, a free AI literacy platform. Stay focused on routing architecture, model selection decisions, API key management, and cost ceiling design. Reference NIST AI RMF MAP and MEASURE where appropriate — these frameworks require documenting task classifications and measurement infrastructure before deployment. Do not produce full code implementations — this is a configuration design exercise. If the learner raises topics outside command center infrastructure, redirect them politely.';
+
+var LAB_SYSTEM = ACADEMY_GUARDRAIL + '\n\n' +
+'Your role: Infrastructure Reviewer. You are reviewing a developer\'s routing configuration document for their AI command center.\n\n' +
+'Your job is to challenge incomplete routing rules, surface the three structural decisions that must be answered before any routing rule is complete — (1) what is the unit of classification?, (2) how many API keys and who holds them?, and (3) what does the system do when it can\'t classify a task? — and check that cost ceiling behavior is explicitly defined.\n\n' +
+'NIST AI RMF MAP requires that task classification and model assignment decisions be documented before deployment. Your review enforces this: you do not accept "route complex tasks to the bigger model" as a complete routing rule. Push for specific tier definitions, explicit model names, and documented fallback behavior.\n\n' +
+'Open the conversation by asking the developer to describe what task types their command center handles — this is the starting point for the routing matrix. Keep responses focused and direct: 2–4 short paragraphs maximum. Ask one clarifying question per turn, not several at once.';
+
+var FALLBACKS = [
+  "What tasks does your command center actually run? Routing rules are only as good as the taxonomy underneath them — I need to know what you're classifying before I can review how you're classifying it.",
+  "You've described the task types, but I don't see a classification unit yet. Are you routing by request type, by which sub-agent is calling, or by content characteristics like length or complexity? These produce different rules and different edge cases.",
+  "The model assignments look reasonable, but what's the fallback? When a task arrives that doesn't fit any tier — and it will — what does the system do? Default to mid-tier, reject it, or escalate to the operator?",
+  "API key management: are these stored at the system level or per-user? And who has rotation access? This isn't a security lecture — it's a configuration completeness check. The routing config needs to know where the keys live.",
+  "I need to see the cost ceiling decision explicitly. Soft ceiling (notify and continue), hard ceiling (downgrade routing), or shutdown? Without this, the config is incomplete — the default behavior is 'keep spending,' which is an omission, not a choice.",
+  "NIST MAP asks whether your task classification schema will hold under load. Walk me through the hardest case: a long document that needs both extraction (Tier 1) and synthesis (Tier 3). How does your routing handle a task that spans tiers?"
+];
+
+var chatHistory = [];
+var chatExchanges = 0;
+var labStarted = false;
+var labSignaled = false;
+var offlineMode = false;
+var fallbackIdx = 0;
+
+var LAB_OPENING = "Let's build your routing configuration document. Before we write any routing rules, I need to understand what your command center actually does.\n\nDescribe the task types it handles — even rough categories are fine to start. What does it do when users interact with it? Once I know the task landscape, we can work through tier assignments, model selection, and cost ceiling behavior together.";
+
+function toggleTheme() {
+  var t = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', t === 'light' ? 'dark' : 'light');
+}
+
+function gotoPage(name) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector('[data-tab="' + name + '"]').classList.add('active');
+  if (name === 'lab' && !labStarted) {
+    labStarted = true;
+    setTimeout(function() { addMsg('ai', LAB_OPENING); }, 400);
+  }
+}
+
+function addMsg(role, text) {
+  var msgs = document.getElementById('lab-msgs');
+  var div = document.createElement('div');
+  div.className = 'cmsg ' + role;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function fallbackReply() {
+  var idx = Math.min(fallbackIdx, FALLBACKS.length - 1);
+  fallbackIdx++;
+  return FALLBACKS[idx];
+}
+
+async function labSend() {
+  var inp = document.getElementById('lab-inp');
+  var btn = document.getElementById('lab-btn');
+  var text = inp.value.trim();
+  if (!text) return;
+
+  inp.value = '';
+  btn.disabled = true;
+  addMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+
+  var thinking = addMsg('ai', '…');
+  thinking.classList.add('thinking');
+
+  var reply = await labCall(false);
+  thinking.remove();
+  addMsg('ai', reply);
+  chatHistory.push({ role: 'assistant', content: reply });
+  chatExchanges++;
+  checkComplete();
+  btn.disabled = false;
+}
+
+async function labCall(isOpener) {
+  if (offlineMode) return fallbackReply();
+
+  var messages = isOpener ? [] : chatHistory;
+
+  for (var attempt = 0; attempt < 2; attempt++) {
+    try {
+      var resp = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 600,
+          system: LAB_SYSTEM,
+          messages: messages.length ? messages : [{ role: 'user', content: '__open__' }]
+        })
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      var data = await resp.json();
+      if (data && data.content && data.content[0] && data.content[0].text) {
+        return data.content[0].text;
+      }
+      throw new Error('Bad response shape');
+    } catch (e) {
+      if (attempt === 0) {
+        await new Promise(function(r) { setTimeout(r, 1500); });
+      } else {
+        offlineMode = true;
+        addMsg('system', '⚠ Working offline — AI responses are pre-loaded.');
+        return fallbackReply();
+      }
+    }
+  }
+}
+
+function checkComplete() {
+  if (chatExchanges >= LAB_COMPLETE_THRESHOLD && !labSignaled) {
+    labSignaled = true;
+    document.getElementById('completeBanner').style.display = 'block';
+    window.parent.postMessage({
+      type: 'labComplete',
+      courseId: COURSE_ID,
+      moduleId: MODULE_ID,
+      labId: 'lab',
+      exchangeCount: chatExchanges,
+      artifactType: LAB_TYPE,
+      artifactDesc: ARTIFACT_DESC
+    }, '*');
+    addMsg('system', '✓ Lab complete — your routing configuration document is part of your portfolio.');
+  }
+}
+
+function labKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); labSend(); }
+}
+</script>
+</body>
+</html>

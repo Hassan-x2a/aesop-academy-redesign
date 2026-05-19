@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-19 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Build vs. Buy — Build a Command Center | AESOP AI Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --border: #2e3140;
+  --text: #e8eaf0;
+  --muted: #8b90a8;
+  --accent: #f43f5e;
+  --accent-rgb: 244,63,94;
+}
+[data-theme="light"] {
+  --bg: #f4f5f9;
+  --surface: #ffffff;
+  --border: #dde0ea;
+  --text: #1a1d27;
+  --muted: #5c6080;
+  --accent: #f43f5e;
+  --accent-rgb: 244,63,94;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:15px;line-height:1.65;}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;height:48px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100;}
+.tb-back{color:var(--accent);text-decoration:none;font-size:13px;white-space:nowrap;}
+.tb-back:hover{text-decoration:underline;}
+.tb-title{flex:1;font-family:'Cinzel',serif;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tb-badge{font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:20px;background:rgba(var(--accent-rgb),.15);color:var(--accent);white-space:nowrap;}
+.tb-theme{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;}
+.tb-theme:hover{border-color:var(--accent);color:var(--accent);}
+
+/* TABSTRIP */
+.tabstrip{position:fixed;top:48px;left:0;right:0;height:44px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 8px;gap:2px;z-index:99;}
+.tab{background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer;font-family:'Nunito Sans',sans-serif;font-size:13px;font-weight:600;padding:0 14px;transition:color .15s,border-color .15s;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* PAGES */
+.pages{position:fixed;top:92px;left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;overflow-y:auto;}
+.page.active{display:block;}
+.page-content{max-width:780px;margin:0 auto;padding:36px 24px 60px;}
+
+/* TYPOGRAPHY */
+h1{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:600;margin-bottom:8px;color:var(--text);}
+h2{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:600;margin:32px 0 12px;color:var(--text);}
+h3{font-size:1rem;font-weight:700;margin:24px 0 8px;color:var(--text);}
+p{margin-bottom:14px;color:var(--text);}
+.lead{font-size:1.05rem;color:var(--muted);margin-bottom:24px;}
+ul,ol{margin:0 0 14px 20px;color:var(--text);}
+li{margin-bottom:6px;}
+
+/* OUTCOMES */
+.outcomes-list{list-style:none;margin:0 0 28px;padding:0;}
+.outcomes-list li{padding:8px 10px 8px 32px;position:relative;border-left:3px solid rgba(var(--accent-rgb),.35);margin-bottom:6px;background:rgba(var(--accent-rgb),.05);border-radius:0 6px 6px 0;}
+.outcomes-list li::before{content:'→';position:absolute;left:10px;color:var(--accent);font-weight:700;}
+
+/* PORTFOLIO ARTIFACT */
+.portfolio-artifact{background:rgba(var(--accent-rgb),.08);border:1px solid rgba(var(--accent-rgb),.25);border-radius:10px;padding:18px 20px;margin:24px 0;}
+.pa-label{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:6px;}
+.pa-type{font-size:13px;font-weight:700;margin-bottom:4px;color:var(--text);}
+.pa-desc{font-size:13px;color:var(--muted);}
+
+/* SCENARIO CALLOUT */
+.scenario-box{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:18px 20px;margin:20px 0;}
+.scenario-box p:last-child{margin-bottom:0;}
+
+/* GOVERNANCE FRAMEWORK */
+.fw-section{margin:28px 0;}
+.fw-section-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.fw-item{display:flex;gap:12px;padding:10px 14px;background:rgba(var(--accent-rgb),.06);border-radius:8px;margin-bottom:8px;}
+.fw-label{font-size:12px;font-weight:800;color:var(--accent);min-width:140px;flex-shrink:0;}
+.fw-desc{font-size:13px;color:var(--muted);}
+
+/* CALLOUT BOX */
+.callout{background:rgba(var(--accent-rgb),.06);border:1px solid rgba(var(--accent-rgb),.2);border-radius:8px;padding:16px 18px;margin:20px 0;}
+.callout-label{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+.callout p:last-child{margin-bottom:0;}
+
+/* PAGE NAV */
+.page-nav{margin-top:40px;padding-top:24px;border-top:1px solid var(--border);}
+.btn-continue{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:12px 28px;font-family:'Nunito Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+.btn-continue:hover{opacity:.85;}
+
+/* LAB LAYOUT */
+#page-lab{overflow:hidden;}
+.lab-split{display:flex;height:100%;}
+.lab-brief{width:38%;min-width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:24px 20px;flex-shrink:0;}
+.lab-workspace{width:62%;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;}
+.lab-compose{padding:12px 16px 14px;border-top:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column;gap:6px;}
+.compose-row{display:flex;gap:8px;align-items:flex-end;}
+.compose-ta{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:14px;line-height:1.5;min-height:72px;padding:10px 12px;resize:none;}
+.compose-ta:focus{outline:none;border-color:var(--accent);}
+.compose-send{background:var(--accent);border:none;border-radius:8px;color:#fff;cursor:pointer;font-family:'Nunito Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;padding:0 20px;height:50px;min-width:72px;transition:opacity .15s;flex-shrink:0;}
+.compose-send:hover:not(:disabled){opacity:.85;}
+.compose-send:disabled{opacity:.4;cursor:not-allowed;}
+.compose-hint{font-size:11px;color:var(--muted);text-align:right;}
+
+/* CHAT MESSAGES */
+.cmsg{max-width:88%;padding:12px 14px;border-radius:12px;font-size:14px;line-height:1.6;}
+.cmsg.ai{background:var(--surface);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:4px;}
+.cmsg.user{background:rgba(var(--accent-rgb),.15);border:1px solid rgba(var(--accent-rgb),.25);align-self:flex-end;border-bottom-right-radius:4px;}
+.cmsg.thinking{align-self:flex-start;color:var(--muted);font-style:italic;background:var(--surface);border:1px solid var(--border);}
+.cmsg.error{align-self:flex-start;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.25);color:#f43f5e;}
+.cmsg.system{align-self:center;background:rgba(var(--accent-rgb),.08);border:1px solid rgba(var(--accent-rgb),.2);color:var(--accent);text-align:center;font-size:13px;font-weight:700;max-width:100%;}
+
+/* BRIEF ELEMENTS */
+.brief-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;padding:4px 12px;border-radius:20px;background:rgba(var(--accent-rgb),.15);color:var(--accent);margin-bottom:14px;}
+.brief-duration{font-size:12px;color:var(--muted);margin-bottom:18px;}
+.role-card{background:rgba(var(--accent-rgb),.06);border:1px solid rgba(var(--accent-rgb),.2);border-radius:8px;padding:12px 14px;margin-bottom:10px;}
+.role-card-label{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:4px;}
+.role-card-desc{font-size:13px;color:var(--muted);}
+.brief-section-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px;}
+.brief-fw-item{font-size:13px;color:var(--muted);padding:8px 10px;background:rgba(var(--accent-rgb),.05);border-left:3px solid rgba(var(--accent-rgb),.3);border-radius:0 6px 6px 0;margin-bottom:6px;}
+.brief-fw-item strong{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;}
+.complete-banner{background:rgba(var(--accent-rgb),.15);border:1px solid rgba(var(--accent-rgb),.35);border-radius:8px;padding:14px;text-align:center;font-weight:700;color:var(--accent);margin-top:16px;display:none;}
+
+@media (max-width:820px) {
+  .lab-split{flex-direction:column;}
+  .lab-brief{width:100%;border-right:none;border-bottom:1px solid var(--border);max-height:220px;}
+  .lab-workspace{width:100%;}
+}
+@media (max-width:520px) {
+  .page-content{padding:24px 16px 48px;}
+  .tab{padding:0 10px;font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="tb-back" href="/ai-academy/courses-v2.html">← Courses</a>
+  <div class="tb-title">Build a Command Center · Module 3: Build vs. Buy</div>
+  <div class="tb-badge">DEBATE LAB</div>
+  <button class="tb-theme" onclick="toggleTheme()">☀ / ☾</button>
+</div>
+
+<div class="tabstrip">
+  <button class="tab active" data-tab="intro" onclick="gotoPage('intro')">Intro</button>
+  <button class="tab" data-tab="scenario" onclick="gotoPage('scenario')">Scenario</button>
+  <button class="tab" data-tab="lesson" onclick="gotoPage('lesson')">Lesson</button>
+  <button class="tab" data-tab="context" onclick="gotoPage('context')">Context</button>
+  <button class="tab" data-tab="lab" onclick="gotoPage('lab')">Lab</button>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="page-content">
+      <h1>Build vs. Buy — When a Vendor Client Is Enough</h1>
+      <p class="lead">Module 3 of 8 — Build a Command Center</p>
+
+      <p>Most developers who build a command center don't need to. The honest question before you invest engineering time is whether the vendor client already solves your problem. This module is about making that decision deliberately — not defaulting to "build" because it's interesting, and not defaulting to "buy" because it's easy.</p>
+
+      <p>The debate space is real. Every hour spent building infrastructure is an hour not spent on the actual work the tool supports. A custom command center that one developer maintains is also a liability the moment that developer leaves. Vendor clients handle compliance, uptime, and model updates automatically — these are costs you absorb when you build. The question isn't whether custom infrastructure has advantages. It does. The question is whether your specific situation justifies absorbing those costs.</p>
+
+      <p>What makes this decision hard is that the wrong answer looks like the right answer at the beginning. A vendor client that "mostly works" feels like a temporary compromise until the day it breaks at team scale. A custom build that "solves everything" feels like progress until you're maintaining it six months later with half the original team.</p>
+
+      <h2>What You'll Be Able to Do</h2>
+      <ul class="outcomes-list">
+        <li>Identify the specific capability gaps that justify building over buying</li>
+        <li>Articulate the maintenance cost of custom infrastructure versus vendor dependency</li>
+        <li>Defend a build or buy decision under adversarial questioning about the opposite position</li>
+        <li>Apply NIST GOVERN to document the decision rationale in a form that survives personnel changes</li>
+        <li>Recognize which vendor limitations are configuration problems versus architectural limits</li>
+      </ul>
+
+      <div class="portfolio-artifact">
+        <div class="pa-label">Portfolio Artifact — Debate Lab</div>
+        <div class="pa-type">Written Defense of a Build-or-Buy Position</div>
+        <div class="pa-desc">Specific capability gaps or vendor limitations identified, maintenance and dependency costs weighed, decision rationale documented in a form that survives review.</div>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-continue" onclick="gotoPage('scenario')">Continue to Scenario →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="page-content">
+      <h1>Four Developers, One Question</h1>
+
+      <p>A product team of four developers has been using Claude.ai for team AI work. It works well for individual sessions — everyone can explore ideas, draft code, write documentation. The friction shows up at the edges: when the team needs AI to behave consistently across all four of them, the vendor client breaks down.</p>
+
+      <div class="scenario-box">
+        <p><strong>The pain points:</strong> There's no shared project memory across sessions — each conversation starts fresh, and institutional context lives in whoever's head was involved in the original session. Different developers are routing different task types to different models based on personal preference, with no consistency. There's no usage logging, so cost allocation across projects is guesswork. And there's no way to enforce a shared system prompt — each developer's Claude.ai is a slightly different version of the tool.</p>
+        <p>These aren't catastrophic failures. The team is getting work done. But they're paying a coordination tax on every AI-assisted task, and that tax increases as the team grows.</p>
+      </div>
+
+      <p>The team is now evaluating two paths. Path A: build a minimal custom layer — a shared system prompt enforcer, a usage logger, a session store — on top of the API. Path B: invest in configuring Claude.ai more carefully, explore team plan features, and see whether the limitations are actually configuration problems they haven't solved yet.</p>
+
+      <h2>The Right Question</h2>
+
+      <p>The wrong question is "which path is better?" The right question is "which of these pain points are architectural limits of the vendor tool, and which are configuration problems we haven't fixed yet?"</p>
+
+      <p>Shared system prompts can sometimes be approximated with persistent instructions. Multi-model routing cannot — that's infrastructure you'd have to build. Usage logging via the API is possible with a thin proxy. Session memory across team members is not a Claude.ai feature; it's an architectural gap.</p>
+
+      <p>The decision turns on which of these pain points the team actually needs solved — and which ones they're willing to live with in exchange for not maintaining a codebase.</p>
+
+      <div class="page-nav">
+        <button class="btn-continue" onclick="gotoPage('lesson')">Continue to Lesson →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="page-content">
+      <h1>The Capability Gap Analysis</h1>
+
+      <p>The core insight of build vs. buy: <strong>it's a capability gap analysis, not a preference question.</strong> The right answer depends on three things — whether the gap is architectural or configurable, what the maintenance cost of custom infrastructure is over 18 months, and whether the team has the capacity to own what they build.</p>
+
+      <h2>Architectural Limits vs. Configuration Problems</h2>
+
+      <p>Vendor tools have two kinds of limitations. Configuration problems are things the tool can do but that you haven't set up correctly — a different plan tier, a feature you haven't enabled, a prompt structure you haven't tried. Architectural limits are things the vendor client cannot do regardless of how you configure it, because they require infrastructure that runs outside the vendor's system.</p>
+
+      <div class="callout">
+        <div class="callout-label">The test</div>
+        <p>Can the vendor's API or admin settings solve this, or does the solution require infrastructure you'd have to build and host? Shared system prompts can often be approximated with persistent instructions or team-level configurations. Multi-model routing cannot — the vendor client calls one model per session, and routing task types to different models requires a proxy layer you control. That's architectural. Usage logging via a custom proxy is buildable. Shared project memory across team members requires a database you own. That's also architectural.</p>
+      </div>
+
+      <p>The reason this distinction matters: if you build custom infrastructure to solve a configuration problem, you've created maintenance debt for something the vendor would have solved for you. If you use a vendor client when you have a genuine architectural gap, you're patching around the gap indefinitely.</p>
+
+      <h2>The 18-Month Maintenance Question</h2>
+
+      <p>Custom infrastructure has a lifecycle cost that initial build estimates almost always undercount. The questions to answer before committing to build:</p>
+
+      <ul>
+        <li>Who will own this code in 18 months?</li>
+        <li>What happens if that person leaves?</li>
+        <li>When the API changes (and it will), who updates the integration?</li>
+        <li>When a security vulnerability is disclosed in a dependency, who patches it?</li>
+      </ul>
+
+      <p>A command center that only one developer fully understands is not an asset — it's a bus factor problem. Vendor clients don't have bus factors. They have support contracts and uptime SLAs. The maintenance cost of custom infrastructure includes the ongoing personnel dependency, not just the initial build time.</p>
+
+      <h2>The Hybrid Path</h2>
+
+      <p>The least costly option is often neither "full build" nor "vendor only." A minimal custom layer — a proxy for usage logging, a shared system prompt enforcer, a thin session store — solves the specific architectural gaps without replacing the vendor client entirely. Team members still use the Claude.ai interface for individual work; the custom layer adds only the team-coordination features the vendor can't provide.</p>
+
+      <p>This is almost always cheaper to build, easier to maintain, and faster to deliver than a full command center. The question is whether your architectural gaps are narrow enough that a thin layer addresses them — or whether the gaps are fundamental enough that you're better off owning the whole stack.</p>
+
+      <div class="fw-section">
+        <div class="fw-section-title">Governance Framework</div>
+        <div class="fw-item">
+          <div class="fw-label">NIST GOVERN</div>
+          <div class="fw-desc">Document the build/buy decision rationale — what evidence led to the decision, what assumptions it rests on, and what would change it. A decision that isn't documented is a decision that gets re-litigated every time personnel changes.</div>
+        </div>
+        <div class="fw-item">
+          <div class="fw-label">EU AI Act Art.17</div>
+          <div class="fw-desc">Custom AI infrastructure requires documented quality management procedures — incident response, update management, testing before deployment. Vendor tools handle this for you. When you build, you own the quality management obligation.</div>
+        </div>
+        <div class="fw-item">
+          <div class="fw-label">O*NET 6.A.4.a</div>
+          <div class="fw-desc">Systems evaluation: define the success criteria for the build/buy decision before making it. What does "the vendor client is sufficient" look like, measurably? What pain point frequency or severity would trigger a build decision?</div>
+        </div>
+        <div class="fw-item">
+          <div class="fw-label">NIST MAP</div>
+          <div class="fw-desc">Catalog capability gaps before deciding. Map what the vendor can and cannot do against what the team actually needs. The map is what makes the decision auditable — not the conclusion, but the evidence that led to it.</div>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-continue" onclick="gotoPage('context')">Continue to Context →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="page-content">
+      <h1>Three Frameworks for the Debate</h1>
+
+      <p>You'll use all three of these in the lab. The AI will argue the opposite position — if you choose build, it argues buy; if you choose vendor, it argues build. These frameworks are what let you hold a position under challenge, or update it with evidence when the challenge lands.</p>
+
+      <h2>1. The Architectural Limit Test</h2>
+
+      <div class="scenario-box">
+        <p>Can the vendor's API or settings solve this, or does the solution require infrastructure you'd have to build and host? Run every pain point through this test before deciding anything. The test is binary: configurable (vendor can solve it) or architectural (you'd have to build it). Don't let "we'd have to pay for a higher tier" count as architectural — that's a cost decision, not an architectural one. Real architectural limits are things that no vendor plan change or configuration setting would fix.</p>
+      </div>
+
+      <h2>2. The 18-Month Maintenance Question</h2>
+
+      <div class="scenario-box">
+        <p>Who will own the custom code in 18 months? What happens if that person leaves? A command center that only one developer understands is a liability, not an asset. If you can't answer the ownership question, you don't have a build decision — you have a build wish. The maintenance question is what separates a sustainable custom infrastructure decision from a short-term fix that creates long-term debt. If you're arguing for build, you need a credible answer to who owns it over time, not just who builds it initially.</p>
+      </div>
+
+      <h2>3. The Reversal Test</h2>
+
+      <div class="scenario-box">
+        <p>What evidence would make you change your decision? If you can't answer this, you don't have a reasoned position — you have a preference. The reversal test is what separates a defensible decision from an opinion. For a build decision: what would have to be true about vendor capabilities that would make you abandon the build? For a buy decision: what pain point frequency or severity would push you to build? The reversal test is also what NIST GOVERN requires — a decision isn't documented until you've written down what would invalidate it.</p>
+      </div>
+
+      <p>In the lab, you'll apply all three frameworks. The AI will argue the opposite position and push you to hold your ground or update it with evidence. A defense that survives challenge on capability gaps, maintenance cost, and decision reversibility is what goes in the portfolio.</p>
+
+      <div class="page-nav">
+        <button class="btn-continue" onclick="gotoPage('lab')">Enter the Lab →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+
+      <div class="lab-brief">
+        <div class="brief-badge">◆ Debate Lab</div>
+        <div class="brief-duration">25–35 minutes · 6 exchanges to complete</div>
+
+        <div class="role-card">
+          <div class="role-card-label">Your role — Decision Defender</div>
+          <div class="role-card-desc">You've made a build-or-buy decision for a real or hypothetical command center. You must defend it against adversarial questioning — with evidence, not preference.</div>
+        </div>
+
+        <div class="role-card">
+          <div class="role-card-label">AI role — Devil's Advocate</div>
+          <div class="role-card-desc">Argues the opposite position. If you chose build, it argues buy. If you chose vendor, it argues build. It demands evidence for every claim and won't let you appeal to preference.</div>
+        </div>
+
+        <div class="brief-section-title">Framework Reminders</div>
+        <div class="brief-fw-item">
+          <strong>Architectural limit test</strong>
+          Is the gap configurable (vendor can fix it) or architectural (you'd have to build it)?
+        </div>
+        <div class="brief-fw-item">
+          <strong>18-month maintenance question</strong>
+          Who owns the custom code when the builder leaves?
+        </div>
+        <div class="brief-fw-item">
+          <strong>Reversal test</strong>
+          What evidence would change your decision?
+        </div>
+
+        <div class="brief-section-title">How to Complete</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">State your decision and the one capability gap that drove it. The AI argues the opposite. Lab completes after 6 substantive exchanges — your defense must survive challenge on capability gaps, maintenance cost, and reversibility.</p>
+
+        <div class="complete-banner" id="completeBanner">
+          ✓ Lab complete — your written defense is part of your portfolio.
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea
+              class="compose-ta"
+              id="lab-inp"
+              placeholder="State your decision: build a custom command center, or stick with the vendor client. Give the one capability gap that drove it."
+              onkeydown="labKeydown(event)"
+            ></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID = 'ai-command-center-v2';
+var MODULE_ID = 'm3';
+var PROXY_URL = '/aesop-api/proxy.php';
+var LAB_TYPE = 'debate';
+var ARTIFACT_DESC = 'A written defense of a build-or-buy position — specific capability gaps or vendor limitations identified, maintenance and dependency costs weighed, decision rationale documented in a form that survives review';
+var LAB_COMPLETE_THRESHOLD = 6;
+
+var ACADEMY_GUARDRAIL = 'You are a Devil\'s Advocate for AESOP AI Academy — Build a Command Center (v2.0), Module 3: Build vs. Buy. Stay strictly on topic: build-vs-buy decisions for AI command centers, referencing NIST GOVERN and EU AI Act Art.17. Your job is to argue the opposite position from the learner and demand evidence for every claim. Do not help build actual implementation code. If the learner raises topics outside build/buy decision-making for AI infrastructure, redirect them.';
+
+var LAB_SYSTEM = ACADEMY_GUARDRAIL + '\n\n' +
+'Your role: Devil\'s Advocate. The learner will state a build-or-buy decision for their AI command center.\n\n' +
+'If they chose BUILD — argue for the vendor client. Challenge whether their pain points are actually architectural limits or just configuration problems they haven\'t solved. Ask who will own the code in 18 months. Point out that vendor clients handle compliance (EU AI Act Art.17 quality management), uptime, and model updates automatically. Calculate the real maintenance cost they haven\'t accounted for.\n\n' +
+'If they chose VENDOR / BUY — argue for building. Challenge whether their current pain points will scale. Point out the architectural limits they\'re papering over. Ask what they\'ll do when the vendor\'s roadmap diverges from their needs. Point out that vendor dependency is also a risk — pricing changes, API deprecations, feature removals.\n\n' +
+'Three frameworks to deploy in the debate:\n1. Architectural limit test — is this gap configurable or architectural? Push them to be specific.\n2. 18-month maintenance question — who owns the code when the builder leaves? Force a real answer.\n3. Reversal test — what evidence would change their decision? If they can\'t answer, they have a preference, not a position.\n\n' +
+'NIST GOVERN: push them to document what evidence led to their decision and what would change it. EU AI Act Art.17: if they\'re building, they own quality management. If they\'re buying, the vendor handles it.\n\n' +
+'Tone: adversarial but fair. You\'re not trying to win — you\'re trying to find the holes in their reasoning. When they give a good answer, acknowledge it and press on the next weakness. Keep responses focused: 2–4 short paragraphs maximum, one direct challenge per turn.';
+
+var FALLBACKS = [
+  "That\'s a position, not a defense. Tell me the one capability gap that makes this the right call — something the vendor genuinely cannot do, not something you haven\'t configured yet. Run it through the architectural limit test: can the vendor\'s API or settings solve this, or does the solution require infrastructure you\'d have to build and host?",
+  "You\'ve identified a real gap. Now answer the 18-month maintenance question: who owns this code when the person who built it leaves? If the answer is \'we\'ll figure it out,\' that\'s not an answer — that\'s a bus factor problem waiting to happen. Vendor clients don\'t have bus factors. What\'s your plan?",
+  "I want to run the reversal test on your position. What evidence would make you change your decision? If you\'re arguing build: what would the vendor have to offer that would make you abandon the custom work? If you\'re arguing vendor: what pain point frequency or severity would push you to build? If you can\'t answer this, you have a preference, not a position. NIST GOVERN requires this: a decision isn\'t documented until you\'ve written down what would invalidate it.",
+  "Consider the hybrid path. A minimal custom layer — a usage-logging proxy, a shared system prompt enforcer — solves specific architectural gaps without replacing the vendor client entirely. It\'s cheaper to build, easier to maintain, and faster to deliver than a full command center. Does your decision account for this middle option, or are you treating it as binary when it doesn\'t have to be?",
+  "NIST GOVERN question: if the person who made this decision left tomorrow, what documentation exists to explain why this choice was made, what evidence supported it, and what would change the decision? A build-vs-buy call that lives only in someone\'s head is not a decision — it\'s a single point of failure. What\'s your documentation?",
+  "EU AI Act Art.17 — quality management for custom AI systems. If you\'re building, you own incident response, update management, and testing before deployment. The vendor handles all of this for you in a buy scenario. Have you accounted for this obligation in your build estimate? It\'s not hypothetical — under Art.17, \'we\'ll deal with it when it comes up\' is not a quality management procedure."
+];
+
+var LAB_OPENING = 'Tell me your decision: build a custom command center, or stick with the vendor client.\n\nAnd tell me the one capability gap that drove it — the specific thing the vendor can\'t do that you need.\n\nOnce I know your position, I\'ll argue the other side.';
+
+var chatHistory = [];
+var chatExchanges = 0;
+var labStarted = false;
+var labSignaled = false;
+var offlineMode = false;
+var fallbackIdx = 0;
+
+function toggleTheme() {
+  var t = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', t === 'light' ? 'dark' : 'light');
+}
+
+function gotoPage(name) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector('[data-tab="' + name + '"]').classList.add('active');
+  if (name === 'lab' && !labStarted) {
+    labStarted = true;
+    setTimeout(function() { addMsg('ai', LAB_OPENING); }, 400);
+  }
+}
+
+function addMsg(role, text) {
+  var msgs = document.getElementById('lab-msgs');
+  var div = document.createElement('div');
+  div.className = 'cmsg ' + role;
+  div.innerHTML = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function fallbackReply() {
+  var idx = Math.min(fallbackIdx, FALLBACKS.length - 1);
+  fallbackIdx++;
+  return FALLBACKS[idx];
+}
+
+async function labSend() {
+  var inp = document.getElementById('lab-inp');
+  var btn = document.getElementById('lab-btn');
+  var text = inp.value.trim();
+  if (!text) return;
+
+  inp.value = '';
+  inp.style.height = 'auto';
+  btn.disabled = true;
+  addMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+
+  if (offlineMode) {
+    var fb = fallbackReply();
+    setTimeout(function() {
+      chatHistory.push({ role: 'assistant', content: fb });
+      addMsg('ai', fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled = false;
+      inp.focus();
+    }, 600);
+    return;
+  }
+
+  var thinking = addMsg('thinking', 'Thinking…');
+  var reply = await labCall();
+  if (thinking.parentNode) thinking.remove();
+  addMsg('ai', reply);
+  chatHistory.push({ role: 'assistant', content: reply });
+  chatExchanges++;
+  checkComplete();
+  btn.disabled = false;
+  inp.focus();
+}
+
+async function labCall() {
+  if (offlineMode) return fallbackReply();
+
+  for (var attempt = 0; attempt < 2; attempt++) {
+    try {
+      var resp = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 560,
+          system: LAB_SYSTEM,
+          messages: chatHistory
+        })
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      var data = await resp.json();
+      if (data && data.content && data.content[0] && data.content[0].text) {
+        return data.content[0].text;
+      }
+      throw new Error('Bad response shape');
+    } catch (e) {
+      if (attempt === 0) {
+        await new Promise(function(r) { setTimeout(r, 1500); });
+      } else {
+        offlineMode = true;
+        addMsg('error', '⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+        return fallbackReply();
+      }
+    }
+  }
+}
+
+function checkComplete() {
+  if (chatExchanges >= LAB_COMPLETE_THRESHOLD && !labSignaled) {
+    labSignaled = true;
+    document.getElementById('completeBanner').style.display = 'block';
+    window.parent.postMessage({
+      type: 'labComplete',
+      courseId: COURSE_ID,
+      moduleId: MODULE_ID,
+      labId: 'lab',
+      exchangeCount: chatExchanges,
+      artifactType: LAB_TYPE,
+      artifactDesc: ARTIFACT_DESC
+    }, '*');
+    addMsg('system', '✓ Lab complete — your written defense is part of your portfolio.');
+  }
+}
+
+function labKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); labSend(); }
+}
+
+document.getElementById('lab-inp').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 160) + 'px';
+});
+
+(function() {
+  var t = localStorage.getItem('aesop-theme');
+  if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+})();
+</script>
+</body>
+</html>

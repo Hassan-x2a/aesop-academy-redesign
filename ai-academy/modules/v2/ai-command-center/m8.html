@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-19 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Command Center — Module 8 · AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#9a5fb0;--accent-rgb:154,95,176;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Cinzel',Georgia,serif;font-size:0.88rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Cinzel',Georgia,serif;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:600;color:#fff;line-height:1.15;margin-bottom:0.4rem;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-size:1.0rem;line-height:1.88;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.capstone-banner{padding:0.85rem 1.1rem;border:1px solid rgba(var(--accent-rgb),0.3);background:rgba(var(--accent-rgb),0.06);border-radius:5px;margin-bottom:1.75rem;}
+.capstone-banner-label{font-size:0.58rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.35rem;}
+.capstone-banner-text{font-size:0.82rem;line-height:1.65;color:var(--text-mid);}
+.module-refs{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.65rem;}
+.mref{font-size:0.65rem;font-weight:700;letter-spacing:0.08em;padding:0.18rem 0.5rem;border-radius:3px;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.continue-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0;}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Cinzel',Georgia,serif;font-size:1.05rem;font-weight:600;color:#fff;line-height:1.25;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.cmsg.system{align-self:center;background:rgba(var(--accent-rgb),0.05);border:1px solid rgba(var(--accent-rgb),0.15);color:var(--accent);font-size:0.76rem;text-align:center;border-radius:4px;padding:0.55rem 1rem;max-width:90%;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Build a Command Center</div>
+  <div class="topbar-badge">BUILD LAB</div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Build</span>
+    <span class="tab-dur">~35 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro · Module 8 of 8</div>
+        <h1 class="read-title">Code Checks, Debug Logging, and Skill Development — Capstone</h1>
+        <div class="read-time">3 min read</div>
+
+        <div class="capstone-banner">
+          <div class="capstone-banner-label">Capstone module</div>
+          <div class="capstone-banner-text">This module synthesizes everything built across the course. The readiness review you produce here draws directly on your work in all prior modules.</div>
+          <div class="module-refs">
+            <span class="mref">M1 Navigation</span>
+            <span class="mref">M2 Routing</span>
+            <span class="mref">M3 Build vs Buy</span>
+            <span class="mref">M4 Prompts</span>
+            <span class="mref">M5 Control Files</span>
+            <span class="mref">M6 Session Logging</span>
+            <span class="mref">M7 Oversight</span>
+          </div>
+        </div>
+
+        <div class="read-body">
+          <p>A command center that <em>works</em> is a system that can tell you when it is failing. Code checks, debug logging, and the ability to develop new skills safely are the three capabilities that separate a command center you can trust from one you can only hope is operating correctly.</p>
+          <p>You have spent seven modules building the layers of that system: the navigation shell (M1), multi-model routing (M2), the build-vs-buy decision for integrations (M3), prompt management (M4), control files (M5), session logging (M6), and oversight checkpoints (M7). Each layer works. The question this module asks is whether the whole system is <strong>ready</strong> — ready to be handed to someone who didn't build it, ready to survive a skill failure without human error, ready to be maintained a year from now.</p>
+          <p>This capstone asks you to produce a <em>system readiness review</em>: a defensible, specific document that answers four questions drawn from the NIST AI Risk Management Framework. Not a checklist — a claim, with evidence, that your command center is ready for real use. The four NIST functions — GOVERN, MAP, MEASURE, MANAGE — provide the structure. Your prior modules provide the content.</p>
+
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Your artifact — Build Lab · Capstone</div>
+            <div class="portfolio-desc">A command center system readiness review — code check protocol, debug logging specification, skill development process, and a four-function NIST AI RMF readiness assessment. This artifact synthesizes all prior modules into a single authoritative system document.</div>
+          </div>
+
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Design a code check protocol for skills added to the command center</li>
+            <li>Define debug logging — what gets captured when a skill fails, at what granularity</li>
+            <li>Document a skill development process — how new skills are added safely</li>
+            <li>Apply all four NIST AI RMF functions (GOVERN, MAP, MEASURE, MANAGE) to assess system readiness</li>
+            <li>Produce a system readiness review that could be handed to a new team member as the authoritative description of the command center</li>
+          </ul>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">Can You Hand It Off?</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A developer has built a command center over several months. It has a navigation layer, multi-model routing, prompt templates, control files, session logging, and automated skill routing with oversight checkpoints. Each layer was added when it was needed. Each one works.</p>
+          <p>A new developer joins the team. The question: can the system be handed off?</p>
+          <p>Is there a document that describes how the routing layer decides which model handles which task? Is there a record of which skills exist, what their input contracts are, and what happens when one of them fails? Is there a logging schema that captures enough information to detect a silent failure — an output that looks correct but isn't — within 48 hours? If a skill starts misbehaving in production right now, who gets notified, what gets disabled, and how long until a human reviews the outputs?</p>
+          <p>The answer, as built, is "mostly." The routing logic is in code but not documented as decisions. The code checks for new skills are informal — whoever wrote the skill ran it against a few test cases and it passed. The debug logging is inconsistent across skills: some emit structured error data, some emit nothing, one emits raw exception traces that include API keys. The skill development process is "ask the person who built it."</p>
+          <p>The new developer spends three days trying to understand the system before writing a line of code. They break a routing rule on day two because they didn't know it existed. They can't tell whether the session logs from M6 would catch a fact-check failure of the kind described in M7, because no one tested that scenario.</p>
+          <p>The capstone is writing the document that makes the handoff possible — and then defending it against four specific questions.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">The Three Mechanisms of Maintainability</h1>
+        <div class="read-time">5 min read</div>
+        <div class="read-body">
+          <p>A command center is ready when someone who didn't build it can maintain it. Code checks, debug logging, and a skill development process are the three mechanisms that make this possible. Each one addresses a different failure mode. Together, they are what separates infrastructure from a personal tool that happens to work.</p>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">Code check protocol</div>
+          <div class="framework-item">
+            <strong>What gets checked when a new skill is added</strong>
+            <p>A code check protocol is not a full QA suite. It is a minimum viable check that catches the most common failure modes before a skill reaches user-facing flows. The four elements: (1) <strong>input validation</strong> — does the skill reject malformed or out-of-scope inputs gracefully rather than silently failing? (2) <strong>output format compliance</strong> — does the output match the contract specified in the agents.md control file (M5)? (3) <strong>error handling</strong> — does the skill surface a structured error when it fails, or does it crash and emit nothing? (4) <strong>integration test against the routing layer</strong> — does the routing logic from M2 correctly dispatch to this skill given its declared trigger conditions, and correctly route away from it when conditions are not met? These four checks take fifteen minutes and catch 80% of integration failures before they reach production.</p>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">Debug logging</div>
+          <div class="framework-item">
+            <strong>Distinct from session logging (M6)</strong>
+            <p>Session logging (M6) captures what the user sent, what the system returned, and metadata for compliance and retrieval. Debug logging captures what happened <em>inside</em> a skill execution — which branch was taken, what intermediate values were, where execution stopped. The two are different in purpose, retention, and audience. Session logs are for users and compliance. Debug logs are for engineers.</p>
+          </div>
+          <div class="framework-item">
+            <strong>Operational, not compliance</strong>
+            <p>Debug logs are operational: their purpose is to let an engineer reconstruct a failure from the log alone, without needing to reproduce it. Retention should be short — 14 to 30 days — because the volume is high and the purpose is diagnosis, not record-keeping. Granularity should be high during development and reduced in production: log branch decisions and error states always; log intermediate values only in development or behind a debug flag. Never log raw API responses that may contain user data or credentials.</p>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">Skill development process</div>
+          <div class="framework-item">
+            <strong>Four gates before a skill reaches user-facing flows</strong>
+            <p>(1) <strong>Define the input/output contract first</strong> — before writing any implementation, specify what the skill accepts, what it returns, and what it does on error. This contract goes into agents.md (M5) before the code exists. (2) <strong>Test against the routing layer in isolation</strong> — confirm that the routing logic dispatches to this skill correctly and that the skill returns the expected output format. Do not test in production flows. (3) <strong>Review against the oversight policy (M7)</strong> — does this skill's output type require a human checkpoint? Is it high-stakes enough to trigger the fact-check behavior defined in M7? If yes, configure the checkpoint before enabling. (4) <strong>Add to agents.md with delegation criteria</strong> — the control file (M5) is the authoritative registry. A skill does not exist officially until it is documented there with its trigger conditions, input contract, output contract, and oversight classification.</p>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">NIST AI RMF — four-function synthesis</div>
+          <div class="framework-item">
+            <strong>GOVERN — are the decision rules documented?</strong>
+            <p>Governance asks: who can change this system, and do they know the rules? For a command center, governance means the routing logic (M2) is documented as decisions, not just code; the control files (M5) are the authoritative source of truth; and there is a change process — even an informal one — for modifying routing rules or skill configurations. If the rules exist only in the mind of the person who built the system, it is ungoverned.</p>
+          </div>
+          <div class="framework-item">
+            <strong>MAP — is the skill topology catalogued?</strong>
+            <p>Mapping asks: what does this system do, and what are all the ways it can interact with itself? For a command center, MAP means every skill in agents.md (M5) has its input contract, output contract, and routing condition documented. Skill interactions — what calls what — are specified. The routing graph from M2 can be traced end-to-end for any input type. A system that cannot be mapped cannot be debugged.</p>
+          </div>
+          <div class="framework-item">
+            <strong>MEASURE — does the logging give you detection within 48 hours?</strong>
+            <p>Measurement asks: do you have the data to detect a failure before it causes harm? For a command center, MEASURE means the session logs (M6) and debug logs together provide enough signal to detect a silent failure — an output that looks correct but isn't, like the fact-check scenario in M7 — within 48 hours. "We have logging" is not a MEASURE answer. "We capture token counts, error flags, output previews, and model-id per session, with a 90-day retention policy and a daily anomaly check on error flag rate" is a MEASURE answer.</p>
+          </div>
+          <div class="framework-item">
+            <strong>MANAGE — is the incident response procedure defined?</strong>
+            <p>Management asks: if something goes wrong right now, what happens? For a command center, MANAGE means there is a defined response procedure for a skill failure: who gets notified, what gets disabled (individual skill or full routing layer?), how long until a human reviews affected outputs, and what the recovery criterion is. If you can't describe this procedure in under 60 seconds, risk management is incomplete.</p>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance standards</div>
+          <div class="framework-item">
+            <strong>NIST GOVERN — system documentation as governance</strong>
+            <p>A system is governed when its decision rules are documented and accessible. Tribal knowledge is not governance.</p>
+          </div>
+          <div class="framework-item">
+            <strong>NIST MAP — skill topology documented</strong>
+            <p>The agents.md control file (M5) is the map. It must be complete — every skill, every contract, every routing condition.</p>
+          </div>
+          <div class="framework-item">
+            <strong>NIST MEASURE — debug and session logging as measurement</strong>
+            <p>Two logging layers (session logs + debug logs) serve two purposes (compliance + diagnosis). Both are required for full measurement coverage.</p>
+          </div>
+          <div class="framework-item">
+            <strong>NIST MANAGE — code checks and oversight as risk management</strong>
+            <p>The code check protocol prevents failures from entering production. The oversight policy (M7) catches failures that occur in production. Together they are the risk management layer.</p>
+          </div>
+          <div class="framework-item">
+            <strong>O*NET Active Learning (4.A.6.b)</strong>
+            <p>The skill development process is a continuous learning procedure: every new skill added to the command center is also a decision about what the system can do and who is responsible for it. Documenting that process is what makes learning transferable beyond the original builder.</p>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Four Readiness Questions</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>The four NIST AI RMF functions applied as a capstone review. Each question is specific. Each one has a failure mode that looks like a passing answer.</p>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">1 — GOVERN: can someone new change it safely?</div>
+          <div class="framework-item">
+            <strong>The tribal knowledge trap</strong>
+            <p>If a new developer joined your team tomorrow and needed to change a routing rule, what document would they read first? If the answer is "they'd ask me" or "it's in the code," governance is incomplete. A governed system has a document — not code comments, not a Slack thread, but a maintained document — that describes the routing decisions (M2), the control file conventions (M5), and the change process for each. The document doesn't need to be long. It needs to exist and be current. "It's documented somewhere" does not pass the GOVERN check.</p>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">2 — MAP: is the skill topology actually catalogued?</div>
+          <div class="framework-item">
+            <strong>The understood-but-not-documented trap</strong>
+            <p>Every skill in the command center was built by someone who understood what it did. That understanding does not constitute a map. MAP is complete only when agents.md (M5) contains, for every skill: the input contract, the output contract, the routing condition, and the oversight classification. Test: close your eyes and describe one skill's input/output contract from memory. Then open agents.md and check. If there is any gap — if the file is missing a skill, or a contract is described loosely — MAP is incomplete. A system that cannot be fully mapped from its control files cannot be debugged by someone who wasn't there when it was built.</p>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">3 — MEASURE: can you detect a silent failure in 48 hours?</div>
+          <div class="framework-item">
+            <strong>The "we have logging" trap</strong>
+            <p>Logging exists is not measurement. The question is whether the data you log is sufficient to detect the specific failure mode you care about — specifically, the silent failure: an output that looks correct but contains a factual error or policy violation (the scenario from M7). For detection within 48 hours, the logging schema (M6) must capture: output previews or content hashes that can be spot-checked, error flags for model refusals and confidence drops, token counts as a proxy for anomalous outputs (an unusually short output from a fact-check skill is a signal), and the model ID and timestamp for every session. If your logging schema from M6 cannot support this detection, MEASURE is incomplete regardless of how much data you are storing.</p>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">4 — MANAGE: what is the response procedure right now?</div>
+          <div class="framework-item">
+            <strong>The "we'd figure it out" trap</strong>
+            <p>If a skill starts failing in production right now — not returning errors, just returning low-quality outputs that pass format checks — what happens? Who gets notified? How? What gets disabled, and by what mechanism? How long until a human reviews outputs from the last 24 hours? If the answer involves figuring it out at the time, MANAGE is incomplete. The response procedure does not need to be elaborate. It needs to be decided in advance and written down. A simple procedure, written and accessible, is more valuable than a sophisticated procedure that exists only as intention. The test: describe the procedure in under 60 seconds without consulting notes. If you can't, it hasn't been decided yet.</p>
+          </div>
+
+          <div class="read-divider"></div>
+          <p>In the lab, you will work through all four readiness questions for your own command center — real or hypothetical. The AI will hold you to specificity. "It's documented somewhere" does not pass GOVERN. "We have logging" does not pass MEASURE. The standard is evidence, not assertion.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+      <div class="lab-brief">
+        <div class="lab-type-badge">◆ Build Lab · Capstone</div>
+        <div class="lab-brief-title">System Readiness Review</div>
+        <div class="lab-brief-dur">~25–40 minutes · 4 exchanges to complete</div>
+
+        <div class="brief-section">
+          <div class="brief-label">Capstone synthesis</div>
+          <div class="brief-text">This lab draws on all prior modules. You are producing a system readiness review that integrates navigation (M1), routing (M2), build vs buy (M3), prompt management (M4), control files (M5), session logging (M6), and oversight (M7) into a single authoritative document.</div>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-label">Your role</div>
+          <div class="role-card">
+            <div class="role-card-icon">🏗️</div>
+            <div><strong>System Architect</strong>Conducting a readiness review of your command center. You will work through all four NIST functions in sequence, providing specific evidence for each claim. You may use a real or hypothetical command center — the standard of specificity is the same either way.</div>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-label">AI role</div>
+          <div class="role-card">
+            <div class="role-card-icon">🔎</div>
+            <div><strong>Readiness Reviewer</strong>Works through the four NIST functions in order. Asks for specific evidence for each claim. Does not accept vague answers — "we have logging" fails MEASURE; a logging schema with retention policy, captured fields, and detection scenario passes.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+        <div class="brief-section">
+          <div class="brief-label">Framework reminders</div>
+          <div class="fw-reminder">
+            <div class="fw-item"><strong>GOVERN:</strong> Can someone new change it safely? Is the routing logic (M2) documented as decisions, not just code?</div>
+            <div class="fw-item"><strong>MAP:</strong> Is every skill in agents.md (M5) with its input/output contract and routing condition?</div>
+            <div class="fw-item"><strong>MEASURE:</strong> Does the logging schema (M6) detect a silent failure within 48 hours?</div>
+            <div class="fw-item"><strong>MANAGE:</strong> Describe the incident response procedure in under 60 seconds: notification, disable, human review timeline.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+        <div class="brief-section">
+          <div class="brief-label">How to complete</div>
+          <div class="brief-text">Work through each NIST function with specific answers. The reviewer will push back on assertions without evidence. Lab completes after 4 substantive exchanges covering all four functions.</div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="Describe the document a new developer would read first to change a routing rule — its name, location, what it contains, and how current it is…" onkeydown="labKeydown(event)"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='ai-command-center-v2';
+var MODULE_ID='m8';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_TYPE='build';
+var ARTIFACT_DESC='A command center system readiness review — code check protocol, debug logging specification, skill development process, and a four-function NIST AI RMF readiness assessment synthesizing all prior modules';
+var LAB_COMPLETE_THRESHOLD=4;
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a readiness reviewer for AESOP AI Academy — Build a Command Center (v2.2.0), Module 8: Code Checks, Debug Logging, and Skill Development — Capstone. Stay strictly on the command center readiness review using the four NIST AI RMF functions (GOVERN, MAP, MEASURE, MANAGE). This is the capstone module — references and synthesizes all prior modules: navigation from M1, routing from M2, build-vs-buy from M3, prompt management from M4, control files from M5, session logging from M6, oversight from M7. Do not implement code. Do not accept vague answers — require specific evidence for every readiness claim.\n\n';
+
+var LAB_SYSTEM='You are conducting a system readiness review for a custom AI command center. The learner is the System Architect. Work through the four NIST AI RMF functions in order — GOVERN, MAP, MEASURE, MANAGE — one per exchange. Do not move to the next function until the learner has provided specific evidence (not assertions) for the current one.\n\nGOVERN check: Ask what document a new developer would read first to change a routing rule. Require: the document\'s name, where it lives, what it contains (routing decision rationale from M2, control file conventions from M5, change process), and how it is kept current. Reject answers that amount to "the code documents itself" or "I\'d explain it to them."\n\nMAP check: Ask whether agents.md (M5) is complete. Require: confirmation that every skill has its input contract, output contract, routing condition, and oversight classification documented. Ask them to describe one skill\'s entry from memory, then verify whether the file would match. Surface any gaps.\n\nMEASURE check: Ask whether the logging schema from M6 can detect a silent failure within 48 hours. Use the fact-check failure scenario from M7 as the test case. Require: specific captured fields (not just "we log sessions"), retention policy, and a description of what the alert or anomaly signal looks like for that specific scenario. "We have logging" fails. A schema with fields, retention, and a detection scenario passes.\n\nMANAGE check: Ask them to describe the incident response procedure for a skill failure in production right now. Require: notification path (who, how), disable mechanism (individual skill or full routing layer, and how), human review timeline, and recovery criterion. If they cannot describe this in under 60 seconds from memory, the procedure has not been decided yet.\n\nAfter all four functions pass, confirm the readiness review is complete and note which elements would constitute the strongest parts of the capstone artifact.\n\nTone: precise and constructive. You are helping them produce a document that will outlast the session. Vague answers are not useful to them or to a future team member.';
+
+var FALLBACKS=[
+  'GOVERN check — describe the document a new developer would read to change a routing rule. Be specific: its name, where it lives, what decisions it captures (not just the code), and how it stays current. "It\'s in the code" and "I\'d walk them through it" both fail this check.',
+  'MAP check — is the skill topology actually catalogued, or just understood by the person who built it? Describe one skill\'s entry in agents.md: input contract, output contract, routing condition, and oversight classification. If you can\'t describe it from the file without paraphrasing, MAP is incomplete.',
+  'MEASURE check — does the logging schema from M6 give you 48-hour silent failure detection? Use the fact-check scenario from M7 as the test: what specific fields in your logs would surface that failure, and what does the anomaly signal look like? "We log sessions" does not answer this.',
+  'MANAGE check — describe the specific response procedure for a skill failure in production right now: who gets notified and how, what gets disabled and by what mechanism, how long until a human reviews affected outputs, and what the recovery criterion is. If you\'d figure it out at the time, the procedure hasn\'t been decided yet.'
+];
+
+var LAB_OPENING='We\'re doing a readiness review. I\'ll work through the four NIST AI RMF functions — GOVERN, MAP, MEASURE, MANAGE — in order. For each one, I\'ll ask you a specific question and you\'ll need to give me a specific answer. Not assertions: evidence.\n\nLet\'s start with GOVERN.\n\nHere\'s the question: If a new developer joined your team tomorrow and needed to change a routing rule, what document would they read first? Describe it — its name, where it lives, what decisions it captures, and how it is kept current.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},400);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function labKeydown(event){
+  if(event.key==='Enter'&&!event.shiftKey){
+    event.preventDefault();
+    labSend();
+  }
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+    },600);
+    return;
+  }
+
+  var thinking=addMsg('thinking','Thinking…');
+
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:520,
+          system:ACADEMY_GUARDRAIL+LAB_SYSTEM,
+          messages:chatHistory
+        })
+      });
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+      return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;
+      fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];
+      fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+    }
+  }
+  btn.disabled=false;
+  inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    addMsg('system','Readiness review complete. Your system readiness artifact has been recorded.');
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,160)+'px';
+});
+
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

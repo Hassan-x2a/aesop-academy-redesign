@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-19 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Command Center — Module 7 · AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#f43f5e;--accent-rgb:244,63,94;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Cinzel',Georgia,serif;font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Cinzel',Georgia,serif;font-size:clamp(1.5rem,3.5vw,2.1rem);font-weight:600;color:#fff;line-height:1.15;margin-bottom:0.4rem;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-size:1.04rem;line-height:1.9;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-weight:700;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.continue-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0;}
+.position-block{padding:1.1rem 1.2rem;border:1px solid var(--border);border-left:3px solid rgba(var(--accent-rgb),0.4);background:rgba(255,255,255,0.015);border-radius:0 4px 4px 0;margin-bottom:1.1rem;}
+.position-block .pos-label{font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.position-block p{font-size:0.95rem;line-height:1.82;color:var(--text-muted);}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Cinzel',Georgia,serif;font-size:1.05rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.cmsg.system{align-self:center;background:rgba(var(--accent-rgb),0.05);border:1px solid rgba(var(--accent-rgb),0.15);color:var(--accent);font-size:0.76rem;text-align:center;max-width:90%;border-radius:4px;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+[data-theme="light"] .position-block{background:rgba(0,0,0,0.02);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Build a Command Center</div>
+  <div class="topbar-badge">DEBATE LAB</div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Debate</span>
+    <span class="tab-dur">~30 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro · Module 7 of 8</div>
+        <h1 class="read-title">Skill Routing and Human Oversight</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>Routing tasks to automated skills is the <em>efficiency case</em> for a command center. Connecting skills together into pipelines is the <em>power case</em>. But the more tasks run autonomously, the more consequential the question becomes: where does the human stay in the loop?</p>
+          <p>This module is the ethical core of command center design. Automated skill routing is not neutral — it's a decision about when humans hand off judgment to a machine, and that decision has <strong>accountability consequences</strong>. A pipeline that runs without human visibility is a pipeline where no one can answer "what did the model do?" when something goes wrong.</p>
+          <p>The question is not whether to automate. The question is where oversight must remain — and what oversight actually means in a system that is designed to run without you watching.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Your artifact — Debate Lab</div>
+            <div class="portfolio-desc">A written defense of a human oversight policy for a specific skill routing pipeline — oversight checkpoints identified, accountability chain documented, and the policy defended against the efficiency case for full automation.</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Define the specific human oversight checkpoints in a skill routing pipeline</li>
+            <li>Argue for and against automated routing for a specific task class under adversarial questioning</li>
+            <li>Apply NIST MANAGE and EU AI Act Art.14 to identify where human oversight is required vs. recommended</li>
+            <li>Distinguish between monitoring (observing after the fact) and oversight (intervening before harm)</li>
+            <li>Articulate what happens when a skill routing decision is wrong — who is accountable, and how is it corrected</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">Six Weeks of Wrong Reports</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A team runs a command center that routes incoming documents through a four-skill pipeline: extract key claims → fact-check claims against a knowledge base → flag potential hallucinations → generate a summary report. The pipeline runs automatically. A report enters a client's workflow before a human ever sees the output.</p>
+          <p>Three months in, the fact-check skill begins <strong>silently failing</strong> on a new document format. It doesn't throw an error. It doesn't alert anyone. It returns "no issues found" for documents it can't parse — because returning no issues is its default behavior when parsing fails. The summary reports downstream are wrong, built on unvalidated claims, and no one notices for six weeks.</p>
+          <p>When the failure is finally discovered, the accountability question is hard. The skill was automated. The human never saw the intermediate outputs. No one knows which reports are affected. The fact-check skill's logs exist, but they were never reviewed — they were treated as monitoring data, not oversight data. No one was watching for silent failures because no one defined what a silent failure would look like.</p>
+          <p>The question the team faces now is not technical. The pipeline can be fixed. The harder question is: <strong>whose responsibility was this, and what design decision made it possible?</strong> The answer is somewhere in the gap between "we have logs" and "someone had the obligation to intervene before harm reached the client."</p>
+          <p>That gap has a name. It's the gap between monitoring and oversight — and it's the subject of this module.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">Oversight Is Not the Opposite of Automation</h1>
+        <div class="read-time">5 min read</div>
+        <div class="read-body">
+          <p>The core insight of this module: <strong>human oversight is not the opposite of automation — it's the condition that makes automation trustworthy.</strong> The question is not whether to automate, but where oversight must remain.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Monitoring vs. oversight — a critical distinction</div>
+          <div class="framework-item">
+            <strong>Monitoring: observing after the fact</strong>
+            <p>Monitoring is the collection of logs, metrics, and alerts that tell you what happened. It is passive and retrospective. A monitoring system records that the fact-check skill returned "no issues found" 847 times over six weeks. It does not tell you that those returns were wrong, and it does not intervene. Monitoring is necessary but not sufficient — it can tell you when a failure occurred; it cannot prevent a failure from reaching a user.</p>
+          </div>
+          <div class="framework-item">
+            <strong>Oversight: the ability to intervene before harm</strong>
+            <p>Oversight is the capacity to stop, redirect, or correct an automated output <em>before</em> it reaches a user or downstream system. Oversight requires both visibility into intermediate pipeline states and a defined obligation to act on that visibility. A pipeline with monitoring but no oversight is a pipeline where someone can see the logs after the harm — but no one had the job of catching the harm before it happened.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance frameworks — what the regulations actually say</div>
+          <div class="framework-item">
+            <strong>EU AI Act Art.14 — Human Oversight</strong>
+            <p>For AI systems affecting users, operators must implement appropriate human oversight measures, particularly where errors could compound before detection. The regulation does not require a human to approve every output — it requires that oversight be <em>implemented</em>, meaning that someone has the capability and the obligation to intervene when the system produces problematic outputs. Automated pipelines are not exempt. The six-week silent failure in the scenario is precisely the type of compounding error Art.14 is designed to prevent.</p>
+          </div>
+          <div class="framework-item">
+            <strong>NIST MANAGE — Managing risks in automated pipelines</strong>
+            <p>The MANAGE function of the NIST AI RMF includes defining the conditions under which automated decisions are reviewed. A skill pipeline without defined review triggers is an unmanaged risk — not because automation is wrong, but because no one has specified what would cause a human to look at the intermediate outputs. MANAGE requires the team to answer in advance: under what conditions does this pipeline pause for human review?</p>
+          </div>
+          <div class="framework-item">
+            <strong>NIST GOVERN — Accountability chain documentation</strong>
+            <p>When an automated skill produces a harmful output, who is responsible? GOVERN requires that this answer be specified in the pipeline design, not left to post-incident interpretation. The accountability chain is not "whoever built the skill" or "whoever approved the pipeline" — it is a documented map of which role has oversight responsibility at each stage, and what they are expected to do when something goes wrong.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Oversight checkpoints — where to put them</div>
+          <div class="framework-item">
+            <strong>The three placement criteria</strong>
+            <p>The right place for a human oversight checkpoint is where a failure would be: (1) <em>hard to detect</em> — the skill can fail silently without obvious error signals; (2) <em>hard to reverse</em> — the output enters a downstream system or reaches a user before the error can be corrected; or (3) <em>consequential</em> — the failure has real-world impact on a user's decisions or actions. Every pipeline should have an explicit map of these points. The fact-check skill in the scenario fails all three criteria — and had no checkpoint.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">O*NET Systems Evaluation (6.A.4.a)</div>
+          <div class="framework-item">
+            <strong>Evaluating when automated systems require human intervention</strong>
+            <p>O*NET 6.A.4.a — Systems Evaluation — includes the capability to identify when an automated system is not performing as expected and to determine whether human intervention is appropriate. For a command center, this means building the evaluation criteria into the pipeline design: what does normal behavior look like, what does failure look like, and at what threshold does the pipeline require a human to intervene rather than continue automatically?</p>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Two Defensible Positions</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>The debate in this module is not between "oversight is good" and "oversight is bad." Both positions below take oversight seriously. The disagreement is about <em>which oversight mechanism is more effective</em> — and which failure mode is harder to recover from.</p>
+          <div class="read-divider"></div>
+          <div class="position-block">
+            <div class="pos-label">Position A — Stricter Oversight: mandatory checkpoints</div>
+            <p>Automated skill routing should include at least one human review checkpoint before outputs enter a user-facing workflow. The efficiency cost is worth the accountability gain. Pipelines that run without human visibility are systems where no one can answer "what did the model do?" when something goes wrong. This is an accountability structure problem, not a technology problem. Checkpoints are not bottlenecks — they are the mechanism by which teams know what their pipeline is producing. Without them, the accountability chain is a fiction written after the fact.</p>
+          </div>
+          <div class="position-block">
+            <div class="pos-label">Position B — Better Monitoring: sampling and anomaly detection</div>
+            <p>Mandatory human review checkpoints scale poorly and defeat the purpose of automation. The answer is better monitoring, not more interruptions — alert thresholds, anomaly detection, and sampling-based audits catch failures without requiring humans to touch every output. Over-oversight creates a false sense of security and pushes teams to rubber-stamp reviews rather than actually read them. A team that reviews every output reads none of them carefully. A team with well-designed anomaly detection catches the silent failures that mandatory reviews miss because reviewers have grown complacent.</p>
+          </div>
+          <div class="read-divider"></div>
+          <p>Both positions are defensible. The debate is about which failure mode is worse: <strong>undetected automation errors</strong> in a pipeline with no checkpoints, or <strong>oversight theater</strong> where checkpoints exist but provide no real protection because reviewers have stopped reading.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Framework for the debate</div>
+          <div class="framework-item">
+            <strong>NIST MANAGE failure modes</strong>
+            <p>What does each position fail to catch? Position A fails when checkpoints become perfunctory — when the human reviewer stops reading and starts approving. Position B fails when monitoring misses novel failure modes — when the alert thresholds were set for known failure patterns and a new one emerges silently. Name the specific failure mode your position doesn't handle before the AI does it for you.</p>
+          </div>
+          <div class="framework-item">
+            <strong>EU AI Act Art.14 compliance</strong>
+            <p>Art.14 requires "appropriate" human oversight measures. It does not specify checkpoints vs. monitoring. The question for the debate: which position more reliably produces oversight that is actually appropriate — capable of catching compounding errors before they reach users? The regulation is outcome-focused: it does not care whether you chose checkpoints or sampling, only whether the oversight mechanism works.</p>
+          </div>
+          <div class="framework-item">
+            <strong>The reversibility test</strong>
+            <p>If the pipeline produces a wrong output, how quickly can it be corrected under each model? Position A: the checkpoint catches the error before it reaches the user — but only if the reviewer is actually reading. Position B: the anomaly detection catches the error after some outputs have reached users — but how many, and how quickly? The reversibility test forces the debate out of the abstract and into the specific: for your pipeline, what is the cost of a six-week silent failure?</p>
+          </div>
+          <div class="read-divider"></div>
+          <p>In the lab, you'll choose one position and defend it. The AI will argue the other side, push on the failure modes your position doesn't handle, and ask what evidence would make you switch.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+      <div class="lab-brief">
+        <div class="lab-type-badge">◆ Debate Lab</div>
+        <div class="lab-brief-title">Skill Routing Oversight Policy</div>
+        <div class="lab-brief-dur">~25–35 minutes · 6 exchanges to complete</div>
+
+        <div class="brief-section">
+          <div class="brief-label">Your role</div>
+          <div class="role-card">
+            <div class="role-card-icon">🧑‍⚖️</div>
+            <div><strong>Policy Defender</strong>You've chosen Position A or B for your command center's oversight policy. Defend it against adversarial questioning on its failure modes, scalability, and EU AI Act Art.14 compliance.</div>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-label">AI role</div>
+          <div class="role-card">
+            <div class="role-card-icon">⚔️</div>
+            <div><strong>Devil's Advocate</strong>Argues the opposite position. Focuses on failure modes your position doesn't handle, scalability objections, and EU AI Act Art.14 compliance questions. Does not concede until you address the core failure mode.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+        <div class="brief-section">
+          <div class="brief-label">Framework reminders</div>
+          <div class="fw-reminder">
+            <div class="fw-item"><strong>NIST MANAGE:</strong> What failure mode does your position not catch?</div>
+            <div class="fw-item"><strong>EU AI Act Art.14:</strong> Does your model produce oversight that is actually appropriate?</div>
+            <div class="fw-item"><strong>Reversibility test:</strong> If the pipeline is wrong, how quickly corrected under your model?</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+        <div class="brief-section">
+          <div class="brief-label">How to complete</div>
+          <div class="brief-text">Choose Position A (mandatory checkpoints) or Position B (better monitoring). Name your pipeline and the user-facing output. Defend your position against failure mode challenges. Lab completes after 6 substantive exchanges, with a written defense that addresses at least three opposing failure modes and documents an accountability chain.</div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="Choose your position (A or B), name the skill pipeline you're defending it for, and describe the user-facing output…" onkeydown="labKeydown(event)"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='ai-command-center-v2';
+var MODULE_ID='m7';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_TYPE='debate';
+var ARTIFACT_DESC='A written defense of a human oversight policy for a specific skill routing pipeline — oversight checkpoints identified, accountability chain documented, and the policy defended against the efficiency case for full automation';
+var LAB_COMPLETE_THRESHOLD=6;
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a debate partner for AESOP AI Academy — Build a Command Center (v2.2.0), Module 7: Skill Routing and Human Oversight. Stay strictly on topic: human oversight policy for AI skill routing pipelines. Reference NIST MANAGE (managing risks in automated pipelines), EU AI Act Art.14 (human oversight requirements for systems affecting users), NIST GOVERN (accountability chain documentation), and O*NET Systems Evaluation (6.A.4.a). Do not implement pipeline code. Do not discuss unrelated AI topics.\n\n';
+
+var LAB_SYSTEM='You are the Devil\'s Advocate in a structured policy debate about human oversight in AI skill routing pipelines. The learner has chosen either Position A (mandatory human review checkpoints before user-facing output) or Position B (better monitoring and sampling-based audits, no mandatory checkpoints).\n\nYour job: argue the opposite position. Do this rigorously.\n\nIf they chose Position A:\n- Challenge them on oversight theater: mandatory checkpoints where reviewers rubber-stamp approvals provide no real oversight and create false confidence. How does their design prevent reviewers from becoming complacent?\n- Push on scalability: as pipeline volume grows, checkpoints become bottlenecks. What happens to their oversight model at 10x current volume?\n- Ask whether Art.14 actually requires checkpoints, or just "appropriate" oversight — and whether well-designed monitoring meets that standard.\n\nIf they chose Position B:\n- Challenge them on the reversibility test: monitoring catches failures after outputs reach users. For their specific pipeline, what is the cost of a six-week silent failure? Who absorbs that cost?\n- Push on novel failure modes: monitoring thresholds are calibrated for known failure patterns. The scenario\'s silent failure was a new format the skill couldn\'t parse — the monitoring system had no threshold for it. How does their model catch failures it hasn\'t seen before?\n- Ask how they document an accountability chain under Art.14 when no human ever reviewed the intermediate outputs.\n\nFor both positions:\n- Ask for the accountability chain: when this pipeline produces a harmful output, who is responsible, and what are they responsible for?\n- Apply the reversibility test concretely to their specific pipeline.\n- Ask what evidence would make them switch positions — and push back if the answer is vague.\n\nTone: rigorous and precise, but not hostile. You are stress-testing the policy, not attacking the person. Your goal is to force them to articulate the failure mode their position doesn\'t handle — and either defend against it or refine their position to address it.\n\nCompletion: the lab is complete when they have addressed at least three failure modes from your side and documented an accountability chain for their chosen model. At that point, acknowledge the defense and name what they\'ve demonstrated.';
+
+var FALLBACKS=[
+  'About the monitoring vs. oversight distinction — your position relies on detecting failures. But the scenario\'s fact-check skill failed silently: it returned "no issues found" for documents it couldn\'t parse. That\'s a signal that looks like success. How does your monitoring system distinguish between "no issues found because the check passed" and "no issues found because the check never ran"?',
+  'About EU AI Act Art.14 compliance — Art.14 requires appropriate human oversight for systems affecting users. Under your model, when does a human actually see the intermediate pipeline outputs? If the answer is "only when an alert fires," how do you establish that the alert thresholds are calibrated correctly for a failure mode you haven\'t seen before?',
+  'About the reversibility test — if your pipeline produces wrong outputs for six weeks, how many users are affected and how quickly can the harm be corrected under your oversight model? Walk me through the concrete steps, not the general principle.',
+  'About the accountability chain — when the automated output causes harm under your oversight model, who is responsible? Not "the team" — which role, with which specific obligation, failed to catch this? If you can\'t name a role and an obligation, you don\'t have an accountability chain, you have a description of what happened after the fact.',
+  'About oversight theater — you\'ve added a checkpoint. But a checkpoint that no one reads carefully is worse than no checkpoint: it creates documented evidence that a human "reviewed" the output, which makes accountability harder to establish, not easier. How does your checkpoint design prevent rubber-stamping? What happens to the reviewer\'s incentives at high volume?',
+  'About failure mode asymmetry — you\'ve defended your position against the failure mode I raised. Now tell me: which failure mode is actually harder to detect and correct in your specific pipeline — the undetected automation error, or the oversight theater problem? The answer should inform where you invest your oversight resources.'
+];
+
+var LAB_OPENING='Choose your position: **Position A** (at least one human review checkpoint before user-facing output) or **Position B** (better monitoring and sampling, no mandatory checkpoints).\n\nTell me which you\'re defending and name the skill pipeline you\'re applying it to — what does the pipeline do, and what\'s the output that reaches a user?\n\nOnce I know both, I\'ll argue the other side.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},400);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function labKeydown(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();labSend();}
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+    },600);
+    return;
+  }
+
+  var thinking=addMsg('thinking','Thinking…');
+
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:520,
+          system:ACADEMY_GUARDRAIL+LAB_SYSTEM,
+          messages:chatHistory
+        })
+      });
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+      return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;
+      fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];
+      fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+    }
+  }
+  btn.disabled=false;
+  inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    addMsg('system','Lab complete — your oversight policy defense has been recorded.');
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,160)+'px';
+});
+
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

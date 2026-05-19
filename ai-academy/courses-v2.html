@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.12.0 | 2026-05-18 -->
+<!-- v1.13.0 | 2026-05-19 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -402,8 +402,8 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
   <h1 class="page-title">Learn by doing.<br><em>Leave with proof.</em></h1>
   <p class="page-desc">Each course is 8 modules — scenario, lesson, context, and a 15–30 min lab. You debate decisions, build skills, and ship things. At the end, you have a portfolio.</p>
   <div class="page-meta">
-    <span>5 courses</span><span class="page-meta-dot">·</span>
-    <span>40 modules</span><span class="page-meta-dot">·</span>
+    <span>6 courses</span><span class="page-meta-dot">·</span>
+    <span>48 modules</span><span class="page-meta-dot">·</span>
     <span>Free</span><span class="page-meta-dot">·</span>
     <span>No account required</span>
   </div>
@@ -506,6 +506,33 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
         </div>
         <div class="cnav-links">
           <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/leveraging-rag-ai-development/m1.html">Start Course →</a>
+        </div>
+      </div>
+    </li>
+
+    <!-- Course 6 -->
+    <li>
+      <button class="cnav-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span>
+          <div class="cnav-name">Build a Command Center</div>
+          <div class="cnav-meta">8 modules · 2 debate · 3 skill · 3 build</div>
+          <div class="cnav-blurb">Vendor clients have limits. This course teaches you to replace them — building your own command center with multi-model routing, prompt management, control files, session logging, and automated skill pipelines with human oversight.</div>
+        </span>
+        <span class="cnav-arrow">▶</span>
+      </button>
+      <div class="cnav-panel">
+        <div class="cnav-modules">
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-command-center/m1.html"><span class="cnav-mod-n">01</span><span class="cnav-mod-title">The Command Center Shell</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-command-center/m2.html"><span class="cnav-mod-n">02</span><span class="cnav-mod-title">Multi-Model Configuration</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-command-center/m3.html"><span class="cnav-mod-n">03</span><span class="cnav-mod-title">Build vs. Buy</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-command-center/m4.html"><span class="cnav-mod-n">04</span><span class="cnav-mod-title">Prompt Engineering and Management</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-command-center/m5.html"><span class="cnav-mod-n">05</span><span class="cnav-mod-title">Control Files: CLAUDE.md and agents.md</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-command-center/m6.html"><span class="cnav-mod-n">06</span><span class="cnav-mod-title">Session Logging and Archival</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-command-center/m7.html"><span class="cnav-mod-n">07</span><span class="cnav-mod-title">Skill Routing and Human Oversight</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/ai-command-center/m8.html"><span class="cnav-mod-n">08</span><span class="cnav-mod-title">Code Checks, Debug Logging, and Skill Development</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+        </div>
+        <div class="cnav-links">
+          <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/ai-command-center/m1.html">Start Course →</a>
         </div>
       </div>
     </li>
@@ -920,6 +947,14 @@ const COVERAGE = {
     'unesco':    ['none','none','partial','partial','primary','none'],
     'csta':      ['touched','none','primary','primary'],
   },
+  'ai-command-center': {
+    'ai4k12':    ['touched','partial','none','primary','touched'],
+    'eu-ai-act': ['partial','partial','partial','primary','partial','none','touched'],
+    'nist':      ['primary','primary','primary','primary'],
+    'onet':      ['primary','primary','primary','primary'],
+    'unesco':    ['none','none','partial','partial','primary','partial'],
+    'csta':      ['partial','none','primary','primary'],
+  },
 };
 
 // Evidence refs: [courseId][standardId][componentIndex] = [{module, section, note}]
@@ -1139,6 +1174,50 @@ const EVIDENCE = {
       [{module:'M2 Lab',section:'Build lab',note:'Context.md, Claude.md, and ARD are computational artifacts — specification documents that govern pipeline behavior.'},{module:'M6 Lab',section:'Build lab',note:'Gate specification document is a computational artifact — a formal record of what a pipeline stage accepts, produces, and guarantees.'},{module:'M8 Lab',section:'Capstone build lab',note:'Backlog integration design is the culminating computational artifact — a complete technical specification for a production pipeline governance system.'}],
     ],
   },
+  'ai-command-center': {
+    'ai4k12':[
+      [],
+      [{module:'M2 Lesson',section:'"The Model Selection Matrix"',note:'Routing configuration document defines data structures for task classification and model assignment — applied AI4K12 data representation in a system design context.'}],
+      [],
+      [{module:'All modules',section:'Course design',note:'The entire course is structured around applying AI in a custom command center context — every portfolio artifact is a real system configuration applied to actual developer workflows.'}],
+      [{module:'M7 Lesson & Lab',section:'"Skill Routing and Human Oversight"',note:'Oversight policy debate explores the societal implications of automated routing decisions — who is accountable when a system acts autonomously.'}],
+    ],
+    'eu-ai-act':[
+      [{module:'M5 Lesson',section:'"Governance Standards — NIST GOVERN"',note:'"EU AI Act Art.4 AI literacy — understanding how context shapes model behavior." Control files lesson builds literacy about how AI systems receive and use persistent context.'}],
+      [{module:'M2 Lesson',section:'"Cost Ceiling Behavior"',note:'Cost ceilings and routing failure modes are risk management decisions — Art.9 applied to infrastructure configuration.'},{module:'M8 Lesson',section:'"Code Check Protocol"',note:'Code check protocol and incident response procedures are the practical implementation of Art.9 risk management for custom AI systems.'}],
+      [{module:'M6 Lesson',section:'"Governance Standards — EU AI Act Art.13 Transparency"',note:'"EU AI Act Art.13 Transparency: keeping records of AI outputs that affect users" — session logging schema explicitly designed around this requirement.'}],
+      [{module:'M7 Lesson',section:'"Governance Standards — EU AI Act Art.14"',note:'EU AI Act Art.14 Human Oversight applied directly to skill routing pipelines — oversight checkpoints, intervention windows, and accountability chain.'},{module:'M7 Lab',section:'LAB_SYSTEM',note:'"EU AI Act Art.14 — whether the chosen oversight model gives humans meaningful intervention windows for consequential decisions."'}],
+      [{module:'M3 Lesson',section:'"Governance Standards — EU AI Act Art.17"',note:'"EU AI Act Art.17 Quality Management: custom AI infrastructure requires documented quality management procedures; vendor tools handle this for you."'}],
+      [],
+      [{module:'M7 Lesson',section:'"The Accountability Chain"',note:'Accountability chain documentation — when an automated skill produces harmful output, who is responsible — addresses Art.29 deployer obligations.'}],
+    ],
+    'nist':[
+      [{module:'M3 Lesson',section:'"Governance Standards — NIST GOVERN"',note:'"Documenting the decision rationale so it can be audited and revisited — the decision isn\'t just build or buy, it\'s a record of what evidence led to the decision."'},{module:'M5 Lesson',section:'"Governance Standards — NIST GOVERN"',note:'"Control files are a governance mechanism — they encode decisions about what the model knows and how it behaves. Versioning them creates an audit trail."'}],
+      [{module:'M1 Lesson',section:'"Governance Standards — NIST MAP"',note:'"NIST MAP: documenting the navigation design before building ensures the system\'s information architecture is an explicit decision, not an accident."'},{module:'M2 Lesson',section:'"Governance Standards — NIST AI RMF — MAP"',note:'"MAP requires identifying and categorizing AI tasks before deployment. A routing matrix is a MAP artifact."'}],
+      [{module:'M6 Lesson',section:'"Governance Standards — NIST MEASURE"',note:'"NIST MEASURE: measurement requires defined metrics and a means of collecting them. Session logs are the collection mechanism — without a schema, you have no measurement, only storage."'},{module:'M4 Lesson',section:'"Governance Standards — NIST MEASURE"',note:'Prompt testing criteria are measurement targets — NIST MEASURE applied to prompt quality monitoring over time.'}],
+      [{module:'M7 Lesson',section:'"Governance Standards — NIST AI RMF — MANAGE"',note:'"NIST MANAGE: managing AI risks includes defining the conditions under which automated decisions are reviewed. A skill pipeline without defined review triggers is an unmanaged risk."'},{module:'M8 Lab',section:'Capstone readiness review',note:'All four NIST functions applied in sequence as the capstone readiness review framework — MANAGE check asks for specific incident response procedure.'}],
+    ],
+    'onet':[
+      [{module:'M3 Lab',section:'Debate lab',note:'Build-vs-buy decision requires evaluating evidence for and against each position under adversarial questioning — core O*NET 4.A.4.a critical thinking competency.'},{module:'M7 Lab',section:'Debate lab',note:'Human oversight policy debate requires evaluating competing positions and defending evidence-based claims against adversarial challenge.'}],
+      [{module:'M2 Lesson',section:'"Governance Standards — O*NET — Complex Problem Solving (4.A.4.b)"',note:'"Designing a routing matrix requires identifying the problem (heterogeneous tasks, one model), developing and evaluating alternatives (tier taxonomy, model options), and selecting the appropriate solution."'}],
+      [{module:'M4 Lesson',section:'"Governance Standards — O*NET Active Learning (4.A.6.b)"',note:'"Recognizing when a prompt is failing requires active attention to output quality over time, not just initial deployment testing."'},{module:'M8 Lesson',section:'"Skill Development Process"',note:'Skill development process as continuous learning — adding new capabilities to the command center incrementally with testing and governance review.'}],
+      [{module:'M1 Lesson',section:'"Governance Standards — O*NET Systems Evaluation (6.A.1.b)"',note:'Navigation architecture design requires evaluating the system\'s structural properties — what a navigation layer must always expose and what it separates.'},{module:'M3 Lesson',section:'"Governance Standards — O*NET Systems Evaluation (6.A.4.a)"',note:'Build-vs-buy analysis applies O*NET 6.A.4.a systems evaluation — evaluating when vendor systems meet requirements and when custom infrastructure is needed.'}],
+    ],
+    'unesco':[
+      [],
+      [],
+      [{module:'M7 Lesson',section:'"Human Oversight Policy"',note:'Oversight checkpoints and incident response procedures address safety — when automated skill routing fails, safety depends on whether humans can intervene before harm reaches users.'}],
+      [{module:'M6 Lesson',section:'"Session Logging and Archival"',note:'Session logs create transparency about AI system behavior — what was asked, what was returned, what errors occurred.'},{module:'M5 Lesson',section:'"Control Files: CLAUDE.md and agents.md"',note:'Control files make the AI system\'s persistent context explicit and versioned — transparency about what the model knows and how it behaves.'}],
+      [{module:'M7 Lesson',section:'"Governance Standards"',note:'NIST MANAGE + EU AI Act Art.14 applied to skill routing — the entire module is about preserving human agency in automated AI systems.'},{module:'M7 Lab',section:'Debate lab',note:'Position A vs. B debate forces explicit articulation of where human agency must be preserved in automated routing pipelines.'}],
+      [{module:'M7 Lesson',section:'"The Accountability Chain"',note:'Accountability chain documentation — when an automated skill produces harmful output, who is responsible and how is it corrected.'},{module:'M8 Lab',section:'Capstone readiness review',note:'MANAGE check asks: "What is the response procedure for a skill failure in production right now? Who gets notified? What gets disabled?"'}],
+    ],
+    'csta':[
+      [{module:'M3 Lesson & Lab',section:'"Build vs. Buy"',note:'Build-vs-buy decision and EU AI Act Art.17 quality management requirements — the societal context of deploying custom AI infrastructure vs. relying on vendor systems.'}],
+      [],
+      [{module:'All modules',section:'Course design',note:'The entire course is about designing and building a computing system — the AI command center — from navigation layer through routing, logging, and skill development.'},{module:'M8 Lesson',section:'"Code Check Protocol"',note:'Code check protocol for skills and the four-function NIST readiness review are direct applications of computing systems design and maintenance.'}],
+      [{module:'M2 Lab',section:'Build lab',note:'Routing configuration document is a computational artifact — defines how the command center classifies tasks and routes them to models.'},{module:'M5 Lab',section:'Build lab',note:'CLAUDE.md and agents.md are computational artifacts — control files that encode the AI system\'s persistent context and agent delegation topology.'}],
+    ],
+  },
 };
 
 const COURSES = [
@@ -1147,6 +1226,7 @@ const COURSES = [
   { id:'agents',           name:'Building AI Agents: Use Cases',       modules:'8 modules — 2 debate · 3 skill · 3 build' },
   { id:'leveraging-rag',              name:'Leveraging RAG for AI Development',   modules:'8 modules — 2 debate · 3 skill · 3 build' },
   { id:'building-agentic-pipelines',  name:'Building Agentic Pipelines',          modules:'8 modules — 2 debate · 3 skill · 3 build' },
+  { id:'ai-command-center',           name:'Build a Command Center',               modules:'8 modules — 2 debate · 3 skill · 3 build' },
 ];
 
 function overallLevel(cov) {
