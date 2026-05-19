@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.11.0 | 2026-05-17 -->
+<!-- v1.12.0 | 2026-05-18 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -402,8 +402,8 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
   <h1 class="page-title">Learn by doing.<br><em>Leave with proof.</em></h1>
   <p class="page-desc">Each course is 8 modules — scenario, lesson, context, and a 15–30 min lab. You debate decisions, build skills, and ship things. At the end, you have a portfolio.</p>
   <div class="page-meta">
-    <span>4 courses</span><span class="page-meta-dot">·</span>
-    <span>32 modules</span><span class="page-meta-dot">·</span>
+    <span>5 courses</span><span class="page-meta-dot">·</span>
+    <span>40 modules</span><span class="page-meta-dot">·</span>
     <span>Free</span><span class="page-meta-dot">·</span>
     <span>No account required</span>
   </div>
@@ -506,6 +506,33 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
         </div>
         <div class="cnav-links">
           <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/leveraging-rag-ai-development/m1.html">Start Course →</a>
+        </div>
+      </div>
+    </li>
+
+    <!-- Course 5 -->
+    <li>
+      <button class="cnav-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span>
+          <div class="cnav-name">Building Agentic Pipelines</div>
+          <div class="cnav-meta">8 modules · 2 debate · 3 skill · 3 build</div>
+          <div class="cnav-blurb">Pipelines are how AI ships. This course teaches you to design, build, and govern agentic pipelines — from specs and gates to TDD, cross-model review, and backlog-driven execution.</div>
+        </span>
+        <span class="cnav-arrow">▶</span>
+      </button>
+      <div class="cnav-panel">
+        <div class="cnav-modules">
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-agentic-pipelines/m1.html"><span class="cnav-mod-n">01</span><span class="cnav-mod-title">The Pipeline Mindset</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-agentic-pipelines/m2.html"><span class="cnav-mod-n">02</span><span class="cnav-mod-title">Specs That Agents Can Execute</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-agentic-pipelines/m3.html"><span class="cnav-mod-n">03</span><span class="cnav-mod-title">Orchestration vs. Chaining</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-agentic-pipelines/m4.html"><span class="cnav-mod-n">04</span><span class="cnav-mod-title">TDD Gating</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-agentic-pipelines/m5.html"><span class="cnav-mod-n">05</span><span class="cnav-mod-title">Cross-Model Review</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-agentic-pipelines/m6.html"><span class="cnav-mod-n">06</span><span class="cnav-mod-title">Staging, Linting, and Quality Gates</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-agentic-pipelines/m7.html"><span class="cnav-mod-n">07</span><span class="cnav-mod-title">Failure, Recovery, and Human Escalation</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/building-agentic-pipelines/m8.html"><span class="cnav-mod-n">08</span><span class="cnav-mod-title">Backlog-Driven Pipelines</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+        </div>
+        <div class="cnav-links">
+          <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/building-agentic-pipelines/m1.html">Start Course →</a>
         </div>
       </div>
     </li>
@@ -885,6 +912,14 @@ const COVERAGE = {
     'unesco':    ['touched','partial','primary','partial','partial','none'],
     'csta':      ['touched','partial','partial','partial'],
   },
+  'building-agentic-pipelines': {
+    'ai4k12':    ['partial','partial','none','primary','touched'],
+    'eu-ai-act': ['partial','partial','touched','primary','partial','none','touched'],
+    'nist':      ['partial','primary','primary','primary'],
+    'onet':      ['primary','primary','primary','primary'],
+    'unesco':    ['none','none','partial','partial','primary','none'],
+    'csta':      ['touched','none','primary','primary'],
+  },
 };
 
 // Evidence refs: [courseId][standardId][componentIndex] = [{module, section, note}]
@@ -1060,13 +1095,58 @@ const EVIDENCE = {
       [{module:'M5',section:'Build lab',note:'Pipeline design document is a computational artifact defining the full architecture of a production retrieval system.'},{module:'M8',section:'Capstone build',note:'Production memory specification is the culminating computational artifact — a complete technical document for a live AI system.'}],
     ],
   },
+  'building-agentic-pipelines': {
+    'ai4k12':[
+      [{module:'M1 Lesson',section:'"Project Pipelines vs. Task Pipelines"',note:'Students recognize agentic pipelines as a distinct AI architecture — coordinated multi-stage systems distinct from single-call AI use.'}],
+      [{module:'M2 Lesson',section:'"Context.md, Claude.md, and ARD"',note:'Spec documents define the data structures and schemas that pipeline stages exchange — applied AI4K12 data representation in a pipeline context.'},{module:'M6 Lesson',section:'"First-Class Gates"',note:'Input and output schemas for gates are explicit data representation decisions — what fields, what types, what format constraints.'}],
+      [],
+      [{module:'All modules',section:'Course design',note:'The entire course is structured around applying AI in real pipeline contexts — from classification to spec writing to gate design to backlog integration.'},{module:'M8 Lesson',section:'Capstone',note:'Backlog integration design applies all pipeline components to a production system.'}],
+      [{module:'M7 Lesson & Lab',section:'"Failure, Recovery, and Human Escalation"',note:'The autonomy debate explores AI pipeline decisions that affect human work — who decides, who reviews, and what accountability means when pipelines act autonomously.'}],
+    ],
+    'eu-ai-act':[
+      [{module:'All modules',section:'Course design',note:'Building AI literacy for pipeline developers — the Art.4 objective embedded across all 8 modules.'}],
+      [{module:'M6 Lesson',section:'"First-Class Gates"',note:'Gate specification documents are the practical implementation of Art.9 risk management — defining what can go wrong, how it\'s detected, and what the response is.'},{module:'M7 Lesson',section:'"The Autonomy Policy"',note:'Autonomous recovery policies require documented risk management for failure scenarios — Art.9 applied to pipeline autonomy decisions.'}],
+      [{module:'M5 Lesson',section:'"When cross-model review is and isn\'t sufficient"',note:'"Cross-model review is a gate, not a substitute for human review for high-stakes decisions" — Art.13 transparency applied to reviewer model design.'},{module:'M6 Lesson',section:'"Three types of validation"',note:'Schema validation, semantic validation, and regression validation as transparency mechanisms — what the pipeline can and cannot guarantee about its outputs.'}],
+      [{module:'M7 Lesson',section:'"EU AI Act Article 14 (Human Oversight)"',note:'"A pipeline that rolls back a deployment in 90 seconds doesn\'t give humans a meaningful intervention window." Article 14 applied directly to escalation policy design.'},{module:'M7 Lab',section:'ACADEMY_GUARDRAIL',note:'"EU AI Act Article 14 (Human Oversight) — probe whether the learner\'s policy gives humans meaningful intervention windows for consequential decisions."'}],
+      [{module:'M6 Lesson',section:'"Governance Standards — NIST MANAGE"',note:'Gate specification documents as quality management artifacts — NIST MANAGE and Art.17 applied: maintaining gate specs over time when the pipeline evolves.'},{module:'M2 Lesson',section:'"Context.md, Claude.md, and ARD"',note:'Pipeline specification documents are quality management records — Art.17 applied to pipeline design as a governance artifact.'}],
+      [],
+      [{module:'M8 Lesson',section:'"Completion write-back — the accountability trail"',note:'Backlog write-back creates an auditable record of pipeline decisions — deployer obligations under Art.29 applied to backlog-driven pipeline accountability.'}],
+    ],
+    'nist':[
+      [{module:'M2 Lesson',section:'"Context.md, Claude.md, and ARD"',note:'"NIST AI RMF — GOVERN Function: who owns the pipeline? Who decides what behavior is acceptable? GOVERN means writing it down before the pipeline runs."'},{module:'M8 Lesson',section:'"NIST GOVERN — System-Level Policy Document"',note:'Backlog integration design requires explicit role assignments, policies for which items are eligible for automated processing, and governance accountability.'}],
+      [{module:'M1 Lesson',section:'"NIST AI RMF — MAP Function"',note:'"MAP requires identifying AI system risks before building. For a pipeline, this means: What are the failure modes at each stage? What is the blast radius of a gate failure?"'},{module:'M3 Lesson',section:'"NIST AI RMF — MAP Function"',note:'"MAP requires documenting both failure maps before committing to either architecture. An orchestrated pipeline fails differently than a chain."'}],
+      [{module:'M4 Lesson',section:'"NIST MEASURE"',note:'"MEASURE requires establishing metrics for AI system performance. For pipeline gates, MEASURE means: what is the gate actually measuring, and is that measurement a valid proxy for what you care about?"'},{module:'M5 Lesson',section:'"NIST MEASURE: The cross-model reviewer is a measurement instrument"',note:'"Like any instrument, it measures what it was calibrated to measure. NIST MEASURE requires periodic recalibration: updating the reviewer\'s failure pattern list as new failure modes emerge."'}],
+      [{module:'M6 Lesson',section:'"NIST MANAGE"',note:'"The MANAGE function requires maintaining AI system performance over time — including after model updates. A gate specification that was written at deployment and never updated describes the past, not the present."'},{module:'M7 Lesson',section:'"NIST MANAGE — Maintain"',note:'"Autonomous recovery policies degrade — as pipelines evolve, new failure modes emerge that the original policy didn\'t anticipate. NIST MANAGE requires scheduled policy reviews."'},{module:'M8 Lesson',section:'All four NIST functions applied',note:'Capstone module explicitly applies GOVERN (backlog ownership), MAP (integration layer failure modes), MEASURE (coverage and latency metrics), and MANAGE (schema evolution) to the backlog integration design.'}],
+    ],
+    'onet':[
+      [{module:'M3 Lab',section:'Architectural defense debate',note:'Students evaluate three pipeline architectures and defend one against adversarial questioning — core O*NET critical thinking competency applied to technical architectural decisions.'},{module:'M7 Lab',section:'Escalation policy debate',note:'Students defend an escalation policy against specific failure scenarios — ethical and technical reasoning under adversarial pressure.'}],
+      [{module:'M3 Lesson',section:'"O*NET — Complex Problem Solving (2.B.3.g)"',note:'"Architectural choices compound. Choosing the wrong control model doesn\'t produce a one-time rework — it propagates into every stage the pipeline adds later."'},{module:'M7 Lesson',section:'"O*NET — Complex Problem Solving"',note:'Escalation policy design requires identifying long-term constraints — what failure modes will the policy encounter that the author didn\'t anticipate?'}],
+      [{module:'M1 Lesson',section:'"O*NET — Systems Evaluation (6.A.1.b)"',note:'"Every stage must have nameable success criteria." Applied to pipeline stage design before implementation.'},{module:'M6 Lesson',section:'"O*NET Systems Evaluation (6.A.1.b)"',note:'"Systems evaluation requires measuring whether the system is doing what it should — and identifying the indicators that would tell you it isn\'t."'}],
+      [{module:'M4 Lesson',section:'"O*NET Active Learning"',note:'"TDD is a disciplined form of active learning — you generate a prediction (this implementation will satisfy this gate), test it, and update based on results."'},{module:'M5 Lesson',section:'"O*NET Active Learning: The grill-me pattern"',note:'Cross-model review is a structured learning mechanism — reviewer critiques feed back into producing model improvement as a named active learning cycle.'}],
+    ],
+    'unesco':[
+      [],
+      [],
+      [{module:'M5 Lesson',section:'"When cross-model review is and isn\'t sufficient"',note:'Cross-model review as a transparency mechanism — the accountability trail for why an AI output was accepted or rejected.'},{module:'M8 Lesson',section:'"Completion write-back — the accountability trail"',note:'Backlog write-back must provide an auditable record of pipeline decisions — transparency in what the pipeline did and why.'}],
+      [{module:'M6 Lesson',section:'"Staging environments for pipelines"',note:'"A staging environment must expose the same failure modes as production, or it is useless." Safety through validation before production consequences.'},{module:'M7 Lesson',section:'"Recoverable vs. compounding failures"',note:'Distinguishing when autonomous recovery reduces vs. compounds damage — safety analysis applied to pipeline autonomy decisions.'}],
+      [{module:'M7 Lesson',section:'"UNESCO AI Ethics (Human Agency)"',note:'"Preserving human agency means ensuring that pipelines augment human decision-making rather than replacing it for decisions that humans should own."'},{module:'M7 Lab',section:'ACADEMY_GUARDRAIL',note:'"UNESCO Human Agency applies: some decisions carry accountability that belongs with humans."'}],
+      [],
+    ],
+    'csta':[
+      [{module:'M7 Lesson & Lab',section:'"Failure, Recovery, and Human Escalation"',note:'Students debate how pipeline autonomy decisions affect the humans who work alongside and depend on automated systems — direct analysis of computing impacts on human work.'}],
+      [],
+      [{module:'All modules',section:'Course design',note:'The course is entirely about designing, building, and governing pipeline automation — who gets automated, what remains human, and what accountability looks like in automated systems.'},{module:'M7 Lesson',section:'"Recoverable vs. compounding failures"',note:'Automation failure taxonomy — what automated recovery is appropriate for, and what failure modes require humans to remain in the loop.'}],
+      [{module:'M2 Lab',section:'Build lab',note:'Context.md, Claude.md, and ARD are computational artifacts — specification documents that govern pipeline behavior.'},{module:'M6 Lab',section:'Build lab',note:'Gate specification document is a computational artifact — a formal record of what a pipeline stage accepts, produces, and guarantees.'},{module:'M8 Lab',section:'Capstone build lab',note:'Backlog integration design is the culminating computational artifact — a complete technical specification for a production pipeline governance system.'}],
+    ],
+  },
 };
 
 const COURSES = [
   { id:'ethics',           name:'AI Ethics & Decision Making',         modules:'8 modules — 2 debate · 3 skill · 3 build' },
   { id:'building-with-ai', name:'Building with AI',                    modules:'8 modules — 2 debate · 3 skill · 3 build' },
   { id:'agents',           name:'Building AI Agents: Use Cases',       modules:'8 modules — 2 debate · 3 skill · 3 build' },
-  { id:'leveraging-rag',   name:'Leveraging RAG for AI Development',   modules:'8 modules — 2 debate · 3 skill · 3 build' },
+  { id:'leveraging-rag',              name:'Leveraging RAG for AI Development',   modules:'8 modules — 2 debate · 3 skill · 3 build' },
+  { id:'building-agentic-pipelines',  name:'Building Agentic Pipelines',          modules:'8 modules — 2 debate · 3 skill · 3 build' },
 ];
 
 function overallLevel(cov) {

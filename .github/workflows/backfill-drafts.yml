@@ -14,7 +14,8 @@ name: Backfill Drafts (one-time)
 # Or in the GitHub UI:
 #   Actions → "Backfill Drafts (one-time)" → Run workflow → set apply=true
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   backfill:

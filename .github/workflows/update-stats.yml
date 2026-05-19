@@ -1,6 +1,7 @@
 name: Update Homepage Stats
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   refresh:

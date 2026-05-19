@@ -1,6 +1,7 @@
 name: Cybersecurity Research Agent
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   cyber-research:

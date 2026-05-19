@@ -1,6 +1,7 @@
 name: K-12 AI Education Research Agent
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   k12-research:

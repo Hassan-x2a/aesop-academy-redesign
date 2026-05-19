@@ -1,6 +1,7 @@
 name: Firebase Backup
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   backup:

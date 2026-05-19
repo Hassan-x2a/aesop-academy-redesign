@@ -1,6 +1,7 @@
 name: Generate AI News Articles
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   generate:

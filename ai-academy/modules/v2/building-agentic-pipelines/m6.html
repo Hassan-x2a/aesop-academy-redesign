@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-18 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Agentic Pipelines — Module 6 · AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+
+:root{
+  --accent:#9a5fb0;
+  --accent-rgb:154,95,176;
+  --bg:#080e16;
+  --surface:#0d1520;
+  --surface2:#111c28;
+  --border:#1a2738;
+  --text:#e8e3db;
+  --text-mid:#a89f93;
+  --text-muted:#6e6861;
+  --text-dim:#3a4a5a;
+  --gold:#c9a05a;
+  --gold-dim:rgba(201,160,90,0.35);
+  --topbar-h:48px;
+  --tabstrip-h:44px;
+  --chrome-h:92px;
+}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Crimson Pro',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-family:'Crimson Pro',Georgia,serif;font-size:1.08rem;line-height:1.92;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-family:'Crimson Pro',Georgia,serif;font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-family:'Crimson Pro',Georgia,serif;font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.continue-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0;}
+
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Building Agentic Pipelines</div>
+  <div class="topbar-badge">Module 6 of 8</div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Build</span>
+    <span class="tab-dur">~25 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">Staging, Linting, and Quality Gates</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>A pipeline without a staging environment is a pipeline where the first real test is in production. Staging, linting, and quality gates are not bureaucratic overhead — they are the infrastructure that makes pipeline failures recoverable instead of catastrophic. This module is about building them as first-class pipeline components, not as afterthoughts bolted on after the first production incident.</p>
+          <p>The artifact you'll produce: a <strong>gate specification document</strong> — the formal record of what a pipeline stage accepts as input, what it must produce as output, what validation rules apply, and what happens when validation fails. This document is what you hand to the next engineer who maintains the pipeline. Without it, every gate is undocumented behavior.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Your artifact — Build Lab</div>
+            <div class="portfolio-desc">A gate specification document — input schema, output schema, validation rules, failure behavior, and staging environment requirements written for a real pipeline stage</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Write a gate specification document with input schema, output schema, and validation rules</li>
+            <li>Define the failure behavior for a gate — retry, reroute, escalate, or terminate — before the gate is deployed</li>
+            <li>Specify a staging environment for a pipeline stage — what does the stage need to run safely without production consequences?</li>
+            <li>Apply NIST MANAGE to pipeline gates — maintaining pipeline integrity means maintaining gate specifications over time</li>
+            <li>Identify which validation rules are schema-checkable vs. which require semantic evaluation</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">Three Weeks of Silent Failures</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A team's pipeline has been running in production for four months. The pipeline takes a natural language task description and produces a database migration script. The script runs through a syntax validator and, if it passes, is queued for execution.</p>
+          <p>Four months in, the team's database model provider updates their API. The update introduces a subtle change to the model's output format — field names that were camelCase become snake_case. The syntax validator passes the new output because snake_case is syntactically valid. The migration scripts execute. They insert records with wrong field names, which create new columns that don't match the application's schema.</p>
+          <p>For three weeks, the application creates ghost columns in the database while the expected columns receive no data. The symptom — silently missing data — only appears in reports. Reports run weekly. Three report cycles pass before anyone notices. By the time the diagnosis is complete, 47,000 records have missing data that must be manually corrected.</p>
+          <p>The syntax validator caught what it was designed to catch. No one designed it to catch <strong>schema drift</strong>. There was no output schema — no document that said "field names must match this list." There was no staging environment — the first run on the new model output format was a production run. There was no failure behavior defined for format mismatches — because the possibility of a format mismatch wasn't anticipated.</p>
+          <p>A gate specification document would not have prevented the model update. It would have defined an output schema with explicit field name validation, caught the format change in staging before production, and defined a failure behavior — alert, quarantine, do not execute — for schema validation failures.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">First-Class Gates</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>A gate is a contract. The input schema describes what the gate will accept. The output schema describes what the gate guarantees will pass. The validation rules are the terms of the contract. The failure behavior is what happens when the contract is violated.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Three types of validation — know which you're using</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>Schema Validation</strong>
+              <p>Does the output match the expected structure? Field names, types, required fields, format constraints. Automatable. Fast. Catches format drift, model update surprises, and missing fields. The most common type to implement and the easiest to skip because it feels like overhead — until it isn't.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Semantic Validation</strong>
+              <p>Does the output mean what it's supposed to mean? Does the migration script actually implement the intent of the task description? Requires a model or human reviewer. Slower. Catches logical errors that are structurally valid. The most common type to skip because it's harder — and the most common source of production failures.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Regression Validation</strong>
+              <p>Does the output match the expected output for known inputs? Requires a test suite of input-output pairs. Catches regressions when the producing model or stage changes. The least commonly implemented and the most valuable when the producing stage undergoes a model update.</p>
+            </div>
+          </div>
+          <p>All three are different, and the most common mistake is using schema validation when semantic validation is needed — or skipping validation entirely because semantic validation is hard.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Staging environments for pipelines</div>
+          <p>A staging environment for a pipeline stage is any execution context where the stage can run without production consequences. It doesn't have to be a separate server — it can be a dry-run mode that logs what the stage would do without doing it, a separate database schema, a sandboxed execution environment, or a test dataset that mirrors production without being production.</p>
+          <p>The key requirement: <strong>the staging environment must expose the same failure modes as production, or it is useless.</strong> A staging environment that only tests happy paths is not a staging environment — it's a formality.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance Standards — The Regulatory Layer</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>NIST AI RMF — MANAGE Function</strong>
+              <p>The MANAGE function requires maintaining AI system performance over time — including after model updates, input distribution changes, and scaling events. For pipeline gates, MANAGE means maintaining the gate specification as the pipeline evolves. A gate specification that was written at deployment and never updated is an artifact that describes the past, not the present. NIST MANAGE applied to gate design means scheduling gate specification reviews when the producing stage changes.</p>
+            </div>
+            <div class="framework-item">
+              <strong>O*NET — Systems Evaluation (6.A.1.b)</strong>
+              <p>Systems evaluation requires identifying when a system is not meeting its goals. A gate specification document is the primary tool for systems evaluation in a pipeline — it defines what "meeting goals" means for each stage, which is the prerequisite for evaluating whether it's happening. If the spec doesn't exist, evaluation is guesswork.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">What the Spec Must Contain</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>Three sections every gate specification document must contain — all produced in the lab.</p>
+          <div class="read-divider"></div>
+          <div class="fw-reminder" style="margin-bottom:0;">
+            <div class="framework-item">
+              <strong>1. Input and output schemas — the contract's terms</strong>
+              <p>The input schema describes what the gate will accept: data types, required fields, format constraints, size limits. The output schema describes what the gate guarantees will pass to the next stage: what fields are present, what format they're in, what invariants hold. Both schemas must be specific enough to write a validator for. "Valid JSON" is not an output schema. "Valid JSON with fields: task_id (string), migration_sql (string, max 10,000 chars), target_table (string matching /^[a-z_]+$/)" is.</p>
+            </div>
+            <div class="framework-item">
+              <strong>2. Validation rules — the specific checks</strong>
+              <p>List each validation rule explicitly: what it checks, what it accepts, what it rejects, and which rule type it is (schema / semantic / regression). This list is what you maintain when the pipeline changes. If a new failure mode is discovered in production, the fix is adding a validation rule to this list — not patching the producing stage in isolation.</p>
+            </div>
+            <div class="framework-item">
+              <strong>3. Failure behavior — what happens when the contract is violated</strong>
+              <p>For each validation rule, specify the failure behavior: retry the producing stage with the same input, retry with modified parameters, escalate to a human reviewer, or terminate and log. Some violations are recoverable — nondeterministic model outputs that might succeed on retry. Some are not — input that violates the input schema before the stage even runs means the upstream stage needs to be fixed. Specify which is which before the gate is deployed.</p>
+            </div>
+          </div>
+          <div class="read-divider"></div>
+          <p>In the lab, you'll produce a gate specification document for a real pipeline stage — your own or the database migration stage from the scenario. The AI will push you to complete all three sections with sufficient specificity for implementation.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+      <div class="lab-brief">
+        <div class="lab-type-badge">◆ Build Lab</div>
+        <div class="lab-brief-title">Gate Specification Document</div>
+        <div class="lab-brief-dur">~25 minutes · 1 pipeline stage</div>
+
+        <div class="brief-section">
+          <div class="brief-label">What you're building</div>
+          <div class="brief-text">A gate specification document for a real pipeline stage — input schema, output schema, validation rules with types, failure behavior per rule, and staging environment requirements. Use your own pipeline or the database migration stage from the scenario.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Roles</div>
+          <div class="role-card">
+            <div class="role-card-icon">🏗</div>
+            <div><strong>You — Gate Architect</strong>Produce the spec. Start with schemas, add validation rules, define failure behavior. Be specific enough to implement.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-icon">🔍</div>
+            <div><strong>AI — Specification Reviewer</strong>A senior engineer reviewing your gate spec before implementation. Will not accept vague schemas or undefined failure behavior.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Framework — apply to your gate</div>
+          <div class="fw-reminder">
+            <div class="fw-item">Input schema: data types, required fields, format constraints</div>
+            <div class="fw-item">Output schema: specific enough to write a validator for</div>
+            <div class="fw-item">Validation rule types: schema / semantic / regression</div>
+            <div class="fw-item">Failure behavior: retry / escalate / terminate — per rule, not per gate</div>
+            <div class="fw-item">Staging environment: exposes the same failure modes as production</div>
+            <div class="fw-item">NIST MANAGE: when does this spec get reviewed and by whom?</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Success criteria</div>
+          <div class="brief-text">A complete spec: both schemas specific enough to validate, at least three validation rules with types named, failure behavior defined per rule, and a maintenance trigger for NIST MANAGE.</div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="Name the pipeline stage and describe its inputs and outputs…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='building-agentic-pipelines-v2';
+var MODULE_ID='m6';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_TYPE='build';
+var ARTIFACT_DESC='A gate specification document — input schema, output schema, validation rules, failure behavior, and staging environment requirements written for a real pipeline stage';
+var LAB_COMPLETE_THRESHOLD=4;
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a gate specification reviewer for AESOP AI Academy — Building Agentic Pipelines (v2.0), Module 6: Staging, Linting, and Quality Gates. Stay strictly on topic: building gate specification documents — input schemas, output schemas, validation rules, and failure behaviors. Apply NIST AI RMF MANAGE — pipeline integrity requires maintaining gate specifications over time, not just writing them once at deployment. O*NET Systems Evaluation (6.A.1.b) applies: a gate spec is the definition of what "working correctly" means for a stage, and it must be specific enough to test against. Do not accept vague schemas or undefined failure behavior.\n\n';
+
+var LAB_SYSTEM='You are a senior engineer reviewing a gate specification document before it goes to implementation. Your job is to ensure the spec is specific enough to implement and maintain. Push for: schemas with explicit field names and types (not "valid JSON"); validation rules that are testable (not "good quality"); failure behavior that is specified per rule (not per gate); and a maintenance plan for when the producing stage changes. You are not building the stage — you are reviewing the spec for the gate that validates the stage\'s output. Do not let the learner move to implementation until the spec has all three sections completed.';
+
+var FALLBACKS=[
+  'The output schema isn\'t specific enough to validate. Tell me: what are the exact fields in the output? What type is each field? Are there format constraints — patterns the value must match, length limits, enumerated values? Write the output schema as if you\'re going to hand it to a validator library. What does the validator need to know?',
+  'You have schemas — now let\'s write the validation rules. Name the three most likely ways this stage produces wrong output. Not wrong format — wrong meaning. A structurally valid output that would cause a downstream failure. For each one, tell me what property of the output would indicate the failure. That property becomes a validation rule.',
+  'What\'s the failure behavior for each rule? "Fail the gate" is not a failure behavior — it\'s what happens when validation fails, but it doesn\'t specify what happens next. For each validation rule, pick one: retry the producing stage with the same input, retry with modified parameters (specify which), escalate to human review, or terminate and log. Some rules should trigger retries; others should terminate immediately. Which is which, and why?',
+  'What does the staging environment for this gate look like? Before this gate runs in production, it needs a staging context — an execution environment where failures have no production consequences. Describe it: is it a test dataset, a dry-run mode, a separate schema, a sandboxed executor? And does your staging environment expose the same failure modes as production? If not, it won\'t catch what you\'re trying to catch.',
+  'Apply NIST MANAGE: when does this gate specification get reviewed? The most common reason a gate stops working correctly is that the producing stage changed and the gate spec wasn\'t updated. Set a maintenance trigger: the spec is reviewed whenever the producing stage changes its model, prompt, or output format. Who owns that review?'
+];
+
+var LAB_OPENING='Let\'s build a gate specification document.\n\nTell me about a pipeline stage you own or are designing — or use the database migration stage from the scenario. Name the stage and answer:\n\n1. What is the input? (What does the stage receive?)\n2. What is the output supposed to be? (What does the stage produce when it works?)\n\nDon\'t give me the validation rules yet. Give me the inputs and outputs first — in enough detail that I could write schema checks for them.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+    },600);
+    return;
+  }
+
+  var thinking=addMsg('thinking','Thinking…');
+
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:480,
+          system:ACADEMY_GUARDRAIL+LAB_SYSTEM,
+          messages:chatHistory
+        })
+      });
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+      return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;
+      fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];
+      fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+    }
+  }
+  btn.disabled=false;
+  inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,160)+'px';
+});
+
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

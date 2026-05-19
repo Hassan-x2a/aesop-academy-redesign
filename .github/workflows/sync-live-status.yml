@@ -8,7 +8,8 @@ name: Sync Live Status
 # This is the safety net for cases where activation happens outside the
 # mod-gen UI (direct registry edits, batch scripts, etc.).
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   sync:

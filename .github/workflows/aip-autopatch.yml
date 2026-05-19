@@ -1,6 +1,7 @@
 name: AIP Auto-Patch courses.html
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   autopatch:

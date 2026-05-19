@@ -11,7 +11,8 @@ name: Build Trend Data
 # so the push re-triggers the Pages/cPanel deploy. Falls back to the
 # default GITHUB_TOKEN if the secret is absent (deploy won't cascade).
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   scan:

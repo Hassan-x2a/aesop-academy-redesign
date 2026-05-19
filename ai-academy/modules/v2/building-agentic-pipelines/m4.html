@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-18 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Agentic Pipelines — Module 4 · AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+
+:root{
+  --accent:#2ba898;
+  --accent-rgb:43,168,152;
+  --bg:#080e16;
+  --surface:#0d1520;
+  --surface2:#111c28;
+  --border:#1a2738;
+  --text:#e8e3db;
+  --text-mid:#a89f93;
+  --text-muted:#6e6861;
+  --text-dim:#3a4a5a;
+  --gold:#c9a05a;
+  --gold-dim:rgba(201,160,90,0.35);
+  --topbar-h:48px;
+  --tabstrip-h:44px;
+  --chrome-h:92px;
+}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Crimson Pro',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-family:'Crimson Pro',Georgia,serif;font-size:1.08rem;line-height:1.92;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-family:'Crimson Pro',Georgia,serif;font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-family:'Crimson Pro',Georgia,serif;font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.continue-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0;}
+
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Building Agentic Pipelines</div>
+  <div class="topbar-badge">Module 4 of 8</div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Skill</span>
+    <span class="tab-dur">~20 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">TDD Gating</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Most developers write tests for pipeline stages after the stage is working. This means the test is written to match what the stage already does — including its bugs. TDD (Test-Driven Development) applied to pipeline gates inverts this. You write the failing test — the validation rule the stage output must pass — before implementing the stage. The stage then exists to satisfy the test, not the other way around.</p>
+          <p>The core mindset shift: a gate is not a check that output is correct. A gate is a <em>specification of what correct means</em>. Writing the gate first forces you to answer the question before you can avoid it: what does bad output look like, exactly?</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Your artifact — Skill Lab</div>
+            <div class="portfolio-desc">A TDD gate specification — a failing test written for a real pipeline stage before implementation, with the success criteria, failure criteria, and retry trigger explicitly defined</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Write a gate specification as a failing test before implementing the stage it validates</li>
+            <li>Distinguish a gate that describes success from a gate that actually catches failure</li>
+            <li>Apply NIST MEASURE thinking to pipeline gates — what are you measuring, and how do you know the measurement is correct?</li>
+            <li>Name the retry trigger for a gate failure — when does the pipeline retry vs. escalate vs. terminate?</li>
+            <li>Identify which gates in an existing pipeline were written after the fact, and why that matters</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">The Test That Passes Everything</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A team has built a spec generation stage for their pipeline. The stage takes a GitHub issue and produces a technical specification. They wrote a validation gate that checks: (1) the output is valid JSON, (2) it contains a "title" field, (3) it is longer than 200 characters.</p>
+          <p>The gate passes. Almost always. The stage gets deployed.</p>
+          <p>Three weeks later, a senior engineer is reviewing pipeline outputs manually and notices that roughly one in five specifications is technically valid — all fields present, appropriate length — but completely generic. The spec for a rate limiting bug and the spec for a UI theming issue look nearly identical: same structure, same sections, same boilerplate. The gate they wrote never caught this because it was written to validate format, not quality.</p>
+          <p>The problem: the gate was written after the stage was working. They knew what the stage produced, so they wrote a gate that passed what the stage produced. They measured format because format was measurable. They skipped quality because quality was harder to define.</p>
+          <p>Contrast this with TDD: if they had written the gate first, the first question would have been <strong>"what does a bad spec look like?"</strong> — not "what does a good spec contain?" A bad spec, stated precisely, is: a spec that cannot be distinguished from a spec for a different issue. A gate that catches that failure would require semantic comparison or at minimum a check that key terms from the issue appear in the spec. That gate, written before the stage, would have forced a different implementation.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">Write the Failure First</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>Core insight: <strong>the gate defines what the stage must not produce.</strong> Implementation satisfies the gate. This order matters because it forces you to define failure before you have something you're trying to protect.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Red-green-refactor applied to pipeline stages</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>Red — Write the failing gate</strong>
+              <p>The stage doesn't exist yet. The gate specifies: given this input, what would make the output unacceptable? Name it precisely enough that you could automate the check. This is the question most developers never ask before building.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Green — Implement minimally to pass</strong>
+              <p>Implement the stage minimally enough to pass the gate. Not more. If the gate says "the spec must contain at least 3 terms from the original issue title," the stage must produce a spec that satisfies that, and nothing is required beyond that.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Refactor — Improve without breaking</strong>
+              <p>Once the gate passes, improve the stage without breaking the gate. The gate is the regression test. If a refactor breaks the gate, the refactor broke the stage. The gate holds the line.</p>
+            </div>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance Standards — The Regulatory Layer</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>NIST AI RMF — MEASURE Function</strong>
+              <p>The MEASURE function requires establishing metrics for AI system performance. For pipeline gates, MEASURE means: what is the gate actually measuring, and is that measurement a valid proxy for what you care about? A character count gate measures output length. It is a valid proxy for output completeness only if short outputs are always bad. If that assumption fails, the measurement is wrong. NIST MEASURE applied to gate design requires tracing from the metric back to the property you care about, before you deploy.</p>
+            </div>
+            <div class="framework-item">
+              <strong>O*NET — Active Learning (4.A.1.a)</strong>
+              <p>TDD is a disciplined form of active learning — you generate a prediction (this implementation will satisfy this gate), test it, and update based on results. O*NET's Active Learning competency means applying this cycle systematically rather than writing tests as documentation after you already know the answer. Gates written after the fact are not tests; they are assertions about what already works.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Three Things a Good Gate Specifies</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>Every gate must specify three things. All three are applied in the lab — in this order.</p>
+          <div class="read-divider"></div>
+          <div class="fw-reminder" style="margin-bottom:0;">
+            <div class="framework-item">
+              <strong>1. The failure criterion — write this first</strong>
+              <p>What does the output look like when the stage broke? This is the TDD question. Write it before anything else. "The spec is incomplete" is not a failure criterion. "The spec's 'Acceptance Criteria' section is missing or contains fewer than two bullet points" is a failure criterion you can test. Specific enough to automate means specific enough to use.</p>
+            </div>
+            <div class="framework-item">
+              <strong>2. The success criterion — write this second</strong>
+              <p>What does the output look like when the stage worked? Make this precise enough to automate. Not "the spec is complete" but "the spec contains a section titled 'Acceptance Criteria' with at least two bullet points, and each bullet point contains a verb." Note: success and failure are not inverses. A gate that only checks for success will pass everything that isn't obviously broken.</p>
+            </div>
+            <div class="framework-item">
+              <strong>3. The retry trigger — write this third</strong>
+              <p>What happens when the gate fails? Three options: retry the stage with the same input (appropriate for nondeterministic failures), retry with modified parameters (appropriate when the failure suggests a prompt needs adjustment), or escalate (appropriate when the gate failure indicates the input itself is unsalvageable). The retry trigger must be specified in the gate — not decided at failure time.</p>
+            </div>
+          </div>
+          <div class="read-divider"></div>
+          <p>In the lab, you'll bring a real pipeline stage you own and write the gate for it — failure criterion first, then success criterion, then retry trigger. You'll apply all three before writing a single line of implementation.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+      <div class="lab-brief">
+        <div class="lab-type-badge">◆ Skill Lab</div>
+        <div class="lab-brief-title">TDD Gate Specification</div>
+        <div class="lab-brief-dur">~20 minutes · 1 gate spec</div>
+
+        <div class="brief-section">
+          <div class="brief-label">What you're doing</div>
+          <div class="brief-text">Pick a real pipeline stage you own or are designing — or use the spec generation stage from the scenario. Write the gate for it using TDD order: failure criterion first, then success criterion, then retry trigger. No implementation until the gate is fully specified.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Roles</div>
+          <div class="role-card">
+            <div class="role-card-icon">🏗</div>
+            <div><strong>You — Stage Owner</strong>Bring a real pipeline stage and write its gate spec. Failure criterion first. Don't describe what good output looks like until you've named what bad output looks like.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-icon">🔍</div>
+            <div><strong>AI — Gate Reviewer</strong>A TDD coach who will not let you define success without first defining failure. I'll probe whether your failure criterion is specific enough to automate and whether your retry trigger covers the failure modes you've named.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Framework — apply in this order</div>
+          <div class="fw-reminder">
+            <div class="fw-item">Red first: failure criterion before success criterion</div>
+            <div class="fw-item">NIST MEASURE: is your measurement a valid proxy?</div>
+            <div class="fw-item">Retry trigger: retry same / retry modified / escalate</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Success criteria</div>
+          <div class="brief-text">A complete gate spec with all three components: a failure criterion specific enough to automate, a success criterion distinct from it, and a retry trigger that names which failure modes map to which response.</div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="Describe a pipeline stage — name it, its input, its output. Then tell me what bad output looks like…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='building-agentic-pipelines-v2';
+var MODULE_ID='m4';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_TYPE='skill';
+var ARTIFACT_DESC='A TDD gate specification — a failing test written for a real pipeline stage before implementation, with the success criteria, failure criteria, and retry trigger explicitly defined';
+var LAB_COMPLETE_THRESHOLD=5;
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a TDD coach for AESOP AI Academy — Building Agentic Pipelines (v2.0), Module 4: TDD Gating. Stay strictly on topic: applying test-driven development to pipeline gate specification — writing failure criteria before success criteria before implementation. Apply NIST AI RMF MEASURE — push learners to verify their gate is measuring a valid proxy for what they care about, not just what is easy to measure. O*NET Active Learning applies: gates must be written as testable predictions, not as documentation after the fact. Do not let the learner define success without first defining failure.\n\n';
+
+var LAB_SYSTEM='You are a TDD coach and gate reviewer for a developer writing a pipeline gate specification before implementing the stage it validates.\n\nYour job is to review gate specs, not pipeline designs. Stay scoped to the gate writing process.\n\nStart by asking them to name their stage, its input, and its output — then immediately ask: what does bad output look like? Do not let them describe good output first. The TDD order is: failure criterion, then success criterion, then retry trigger.\n\nFor the failure criterion, push until it is specific enough to automate. "Low quality output" fails this bar. "The output lacks a section titled X" or "the output does not contain any term from the input title" passes it. If they give a vague failure criterion, ask: could I write a function that returns true when this failure occurs? If not, it is not specific enough.\n\nFor the success criterion, verify it is distinct from the failure criterion — not just the inverse. A gate that only checks for success will pass borderline output that should fail.\n\nFor NIST MEASURE: when they name a metric (length, presence of a field, JSON validity), ask them to trace it. Is this measurement a valid proxy for what they actually care about? Name the input type where the measurement breaks. If they cannot name one, the measurement has not been interrogated.\n\nFor the retry trigger: when the gate fails, what does the pipeline do? Three options — retry same (nondeterministic failure), retry modified (systematic prompt/parameter failure), escalate (unsalvageable input). They must name which failure modes map to which response. Vague triggers ("we\'ll figure it out") are not accepted.\n\nTone: precise, direct, not unkind. This is a specification review, not a brainstorm. You are the person who makes gate specs rigorous before they ship.';
+
+var FALLBACKS=[
+  'The failure criterion isn\'t specific enough to automate. "The output is low quality" can\'t be checked by a program. Restate it as: given this exact input, what specific property would the output have if the stage failed? Try to phrase it as a condition: "the output lacks X" or "the output contains Y but Y is wrong because Z."',
+  'You\'ve described success — now describe failure. These are not inverses. A gate that checks for success will pass everything that isn\'t obviously broken. A gate that checks for failure will catch the subtle cases. What does a passing output look like when it actually failed? That\'s what the gate needs to catch.',
+  'What\'s your retry trigger? When this gate fails — and it will — does the pipeline retry the same stage, retry it with different parameters, or escalate? The answer depends on what kind of failure you\'re describing. A nondeterministic failure (the model had a bad day) retries the same. A systematic failure (the prompt produces bad output for this input type) retries with modified parameters. An unsalvageable failure (the input itself is malformed) escalates.',
+  'Apply NIST MEASURE: is your gate measuring what you actually care about, or is it measuring a proxy? If you\'re measuring output length as a proxy for completeness, trace that assumption. Are short outputs always incomplete? Are long outputs always complete? If either assumption can fail, your measurement is wrong for some inputs. Name the input type where your measurement breaks.',
+  'Write the gate as a function signature: given(input) → passes/fails with reason. What\'s the input? What does the function check? What reason does it give when it fails? This format forces you to be specific. Vague gates fail silently; specific gates fail loudly.'
+];
+
+var LAB_OPENING='Let\'s write a gate specification using TDD order.\n\nDescribe a real pipeline stage you own or are designing — or use the spec generation stage from the scenario. Name the stage and tell me: what is the input? What is the output supposed to be?\n\nDon\'t tell me what good output looks like yet. Tell me what bad output looks like. What does the stage produce when it goes wrong? Be specific enough that I could write an automated check for it.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+    },600);
+    return;
+  }
+
+  var thinking=addMsg('thinking','Thinking…');
+
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:480,
+          system:ACADEMY_GUARDRAIL+LAB_SYSTEM,
+          messages:chatHistory
+        })
+      });
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+      return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;
+      fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];
+      fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+    }
+  }
+  btn.disabled=false;
+  inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,160)+'px';
+});
+
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

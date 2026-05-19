@@ -1,6 +1,7 @@
 name: Register Unregistered Courses
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   register:

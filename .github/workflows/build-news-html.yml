@@ -11,7 +11,8 @@ name: Build AI News HTML
 # didn't pick up. build-articles.py is idempotent — rebuilding
 # existing HTML is harmless.
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   build:

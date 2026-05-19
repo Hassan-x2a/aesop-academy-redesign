@@ -10,7 +10,8 @@ name: Daily Reconcile (safety net)
 # pipeline runs even on quiet days. Manual workflow_dispatch is also
 # allowed for one-off triggers.
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   reconcile:

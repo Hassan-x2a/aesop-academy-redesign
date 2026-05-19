@@ -15,7 +15,8 @@ name: Guard courses.html
 # deploys-to-prod by itself — each downstream workflow decides whether
 # to depend on this guard via `needs:`.
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   guard:

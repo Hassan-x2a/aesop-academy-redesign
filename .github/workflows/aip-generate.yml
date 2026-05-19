@@ -1,6 +1,7 @@
 name: AIP Research Agent
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   generate-drafts:

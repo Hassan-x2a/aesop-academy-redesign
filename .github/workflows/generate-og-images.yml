@@ -4,7 +4,8 @@ name: Generate OG Images
 # Generates 1200x630 PNG cards for every live course.
 # Output committed to assets/og/courses/ and deployed with the next FTP push.
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   generate:

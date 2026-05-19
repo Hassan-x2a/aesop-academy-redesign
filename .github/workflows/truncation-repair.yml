@@ -1,6 +1,7 @@
 name: Truncation Repair (daily)
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   repair:

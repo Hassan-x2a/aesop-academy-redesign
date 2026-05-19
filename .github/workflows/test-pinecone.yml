@@ -1,6 +1,7 @@
 name: AIP Pinecone Test
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   test:

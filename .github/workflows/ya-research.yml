@@ -1,6 +1,7 @@
 name: Young Adult AIP Research Agent
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   ya-research:

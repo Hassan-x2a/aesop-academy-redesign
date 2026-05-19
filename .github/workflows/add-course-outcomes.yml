@@ -14,7 +14,8 @@ name: Add Course Outcomes Block (one-time)
 #     slug=<slug>  (optional — process only one course)
 #     limit=<N>    (optional — cap total courses processed)
 
-on: {}
+on:
+  workflow_dispatch:
 
 jobs:
   add-outcomes:
