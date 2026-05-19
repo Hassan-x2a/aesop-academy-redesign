@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>The Anchoring Trap — Better Brainstorming with AI | AESOP AI Academy</title>
+<title>Divergent Thinking with AI — Better Brainstorming with AI | AESOP AI Academy</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -128,7 +128,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 <div class="topbar">
   <a class="topbar-back" href="/ai-academy/courses-v2.html">← Courses</a>
   <div class="topbar-sep"></div>
-  <div class="topbar-course">Better Brainstorming with AI · Module 1: The Anchoring Trap</div>
+  <div class="topbar-course">Better Brainstorming with AI · Module 2: Divergent Thinking with AI</div>
   <div class="topbar-badge">SKILL LAB</div>
   <button class="topbar-theme" onclick="toggleTheme()">☀ / ☾</button>
 </div>
@@ -147,29 +147,29 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div class="page active" id="page-intro">
     <div class="read-scroll">
       <div class="read-col">
-        <div class="section-eyebrow">Module 1 of 8</div>
-        <h1 class="read-title">The Anchoring Trap</h1>
+        <div class="section-eyebrow">Module 2 of 8</div>
+        <h1 class="read-title">Divergent Thinking with AI</h1>
         <div class="read-time">5 min read</div>
         <div class="read-body">
-          <p>The most common way people use AI for brainstorming is also the most counterproductive: they ask for a list of ideas, read them, and then try to build from there. What they don't realize is that the moment you see that list, your brain reorganizes itself around it. You stop generating from scratch. You start evaluating variations of what AI already gave you. The idea space quietly collapses.</p>
-          <p>This isn't a flaw in the AI. It's a well-documented cognitive phenomenon called anchoring — the tendency to rely too heavily on the first piece of information encountered when making judgments. In brainstorming, it means that whoever sets the first frame controls the conversation, even if that frame is mediocre. When AI sets the frame, it sets it based on the average of what it's seen — which is precisely the opposite of what you need when you're trying to generate something original.</p>
-          <p>The fix is not to avoid AI. It's to change the sequence. This module teaches you to recognize when you're anchored, break the anchor before it takes hold, and enter AI-assisted brainstorming from a position of strength — with your own ideas already on the table.</p>
+          <p>Most people ask AI for ideas the same way they ask a search engine for results: describe the problem, receive the output. This works fine when you want a competent answer in the center of the distribution. It fails badly when you want something that departs from it. The problem isn't that AI can't generate surprising ideas — it's that the default prompt gives it no instruction to try. It optimizes for plausibility, not novelty.</p>
+          <p>Divergent thinking is the discipline of deliberately expanding the idea space before collapsing it. The goal is not to produce more ideas — it's to produce ideas from more directions, so that when you eventually converge, you have genuinely different options to choose between. Two structured techniques make AI useful for this: SCAMPER, which systematically forces every standard category of transformation, and random-stimulus prompting, which uses an unrelated input to interrupt habitual framing.</p>
+          <p>This module teaches you to use both. You'll run a real problem through SCAMPER with AI as your operator, and then test what changes when you inject a random concept into the same problem. By the end, you'll have a repeatable method for generating idea diversity rather than idea volume.</p>
         </div>
 
         <div class="read-divider"></div>
         <div class="read-section-label">What you'll be able to do</div>
         <ul class="outcomes-list">
-          <li>Identify anchoring bias in your own brainstorming sessions — before and after they happen</li>
-          <li>Apply a de-anchoring protocol: generate a solo list before any AI input</li>
-          <li>Reframe a problem in five words or fewer to escape default framing</li>
-          <li>Use constraint injection to remove your current top idea and generate alternatives</li>
-          <li>Explain why AI's first suggestions reflect average outputs, not optimal ones</li>
+          <li>Apply the full SCAMPER sequence to a problem using AI to generate candidates for each operation</li>
+          <li>Use random-stimulus prompting to break habitual category framing</li>
+          <li>Distinguish divergent from convergent thinking and choose the right phase for each</li>
+          <li>Evaluate AI's output for genuine novelty vs. competent recombination</li>
+          <li>Explain why structured divergence produces better raw material for convergence than volume alone</li>
         </ul>
 
         <div class="portfolio-artifact">
           <span class="pa-label">Portfolio Artifact</span>
-          <span class="pa-type">Skill Lab — De-Anchoring Protocol</span>
-          <span class="pa-desc">A documented de-anchoring protocol for a real problem — your solo idea list, a 5-word reframe, a constraint-injected alternative set, and a reflection on how the idea space changed at each step.</span>
+          <span class="pa-type">Skill Lab — SCAMPER + Random-Stimulus Worksheet</span>
+          <span class="pa-desc">A completed SCAMPER analysis of a real problem — seven operation results plus a random-stimulus variation — with a brief comparison of which directions produced the most divergent ideas and why.</span>
         </div>
 
         <div class="continue-bar">
@@ -184,25 +184,23 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="read-scroll">
       <div class="read-col">
         <div class="section-eyebrow">Scenario</div>
-        <h1 class="read-title">The List That Went Nowhere</h1>
+        <h1 class="read-title">The Campaign That Looked Like Last Year's</h1>
         <div class="read-time">4 min read</div>
         <div class="read-body">
-          <p>A product manager needs to run a brainstorm for a quarterly campaign. They've done this before and it usually takes an hour with the team — lots of variation, some good ideas buried in noise. This time, they decide to use AI to prepare. They type: "Give me 10 campaign ideas for a productivity app targeting remote workers."</p>
+          <p>A marketing team at a mid-sized software company has run the same basic campaign structure for three years: product spotlight in Q1, customer story in Q2, feature launch in Q3, year-in-review in Q4. Each year the campaigns perform reasonably well. Each year the team says they want to try something different. Each year the output looks like a refined version of the previous year.</p>
 
           <div class="scenario-box">
-            <p>The AI returns ten ideas. They're coherent, reasonably creative, and use language the product manager recognizes — "accountability features," "async-first workflows," "focus modes." The manager highlights three that feel strongest and brings them to the team meeting.</p>
-            <p>In the meeting, the team's discussion orbits the three highlighted ideas. Someone proposes a variation on idea #2. Someone else suggests combining ideas #1 and #3. By the end of the hour, the team has selected a campaign concept that is, essentially, a refined version of what AI produced in 30 seconds.</p>
+            <p>This year, a team member decides to use AI to generate new campaign concepts. She opens a chat and types: "Give me five creative campaign ideas for a B2B productivity software company targeting mid-market finance teams."</p>
+            <p>The AI produces five ideas. They're polished and well-reasoned. Two are variations on customer storytelling. One is a thought-leadership content series. One is an interactive ROI calculator campaign. One is a webinar series. All five are things the team has either done before or consciously rejected in prior planning sessions. None would surprise anyone who'd worked in B2B SaaS marketing for two years.</p>
           </div>
 
-          <p>No one on the team knows this happened. The AI list was shared before the meeting, framed as "prep material." By the time the room convened, the anchoring was complete. The team experienced themselves as having a lively creative discussion. What they actually did was select and polish from a pre-set menu.</p>
+          <p>This isn't a failure of the AI — it's a failure of the prompt. The AI was asked for "creative" ideas without any structure forcing it off the expected path. It produced the statistical center of B2B SaaS marketing ideas because that's what the prompt optimized for. The team is disappointed but doesn't understand why. They asked for creativity and got competence.</p>
 
-          <p>The campaign performs about as well as previous campaigns. That's the problem. The team didn't get worse results — they got average results. The anchoring didn't fail spectacularly. It succeeded quietly, eliminating the upside without the team ever knowing there was an upside to lose.</p>
+          <p>What the team needed wasn't a better AI — it was a better prompt structure. SCAMPER would have forced the AI to ask: "What happens if we eliminate the content entirely? What happens if we put the campaign format to a completely different use? What if we reverse the audience relationship?" Those questions lead somewhere different. An unconstrained "give me ideas" prompt does not.</p>
 
-          <h2 style="font-family:'Cinzel',serif;font-size:1.05rem;margin:1.75rem 0 0.75rem;color:var(--text);">What this reveals</h2>
+          <h2 style="font-family:'Cinzel',serif;font-size:1.05rem;margin:1.75rem 0 0.75rem;color:var(--text);">The structural problem</h2>
 
-          <p>Anchoring in AI brainstorming doesn't look like a mistake. It looks like an efficient process. The ideas seem fine. The discussion seems productive. The output meets expectations. The cost — the ideas that would have been generated if the team hadn't pre-loaded on AI's suggestions — is invisible by definition. You don't see what didn't happen.</p>
-
-          <p>Recognizing this pattern is the prerequisite for everything else in this course. Once you can see the anchor being set, you can decide whether to accept it or break it before the conversation starts.</p>
+          <p>Divergent thinking requires a method, not a mindset. Telling yourself to "think creatively" produces the same ideas with more confidence. Systematically applying a checklist of transformations forces your reasoning into territory it wouldn't reach on its own. AI is an excellent operator for SCAMPER precisely because it can apply each transformation quickly and without the self-editing that makes human divergence collapse back to the familiar.</p>
         </div>
 
         <div class="continue-bar">
@@ -217,34 +215,66 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="read-scroll">
       <div class="read-col">
         <div class="section-eyebrow">Lesson</div>
-        <h1 class="read-title">Why the First Frame Wins</h1>
+        <h1 class="read-title">SCAMPER and the Random Stimulus</h1>
         <div class="read-time">5 min read</div>
         <div class="read-body">
-          <p><strong>Anchoring works because evaluation is easier than generation.</strong> Once you've seen a set of options, your brain shifts from creative mode to comparative mode. You're no longer asking "what could this be?" — you're asking "which of these is better?" These are fundamentally different cognitive tasks, and the shift happens automatically, without your permission.</p>
-
-          <p>In a traditional brainstorm, anchoring comes from whoever speaks first. In AI-assisted brainstorming, anchoring comes from the model's output — and that output has a specific character worth understanding. AI generates ideas by predicting what ideas look like, based on patterns in its training data. That makes it reliably competent at producing ideas that resemble what has already been done. It's less reliable at producing ideas that depart significantly from prior work. When you anchor to AI's first list, you're anchoring to the center of gravity of existing ideas, not the frontier of unexplored ones.</p>
+          <p><strong>Divergence fails when it stays inside the category.</strong> If you ask "what else could this be?", your brain searches within the same conceptual neighborhood it already knows. Structured divergence works differently — it forces operations that cut across categories rather than traversing them. SCAMPER is the most durable of these structures because its seven operations are genuinely distinct transformation types, not variations on a theme.</p>
 
           <div class="read-divider"></div>
-          <div class="read-section-label">The de-anchoring sequence</div>
+          <div class="read-section-label">The SCAMPER operations</div>
 
-          <p>The core fix is sequencing: generate before you see. Write your own list — even a rough, imperfect one — before AI produces anything. Once your ideas are on paper, AI's list becomes input to evaluate rather than a frame to accept. Your anchors become the ones you set.</p>
+          <p>Each letter is a distinct operation. Running all seven forces the AI (and your thinking) into spaces that no single "give me ideas" prompt reaches:</p>
 
-          <p>Two techniques extend this. The first is <strong>five-word reframing</strong>: before starting any brainstorm, compress the problem into exactly five words. "Campaign for remote workers" becomes "Make isolation feel productive." The constraint forces a perspective shift that often surfaces framings the default prompt would never reach. The second is <strong>constraint injection</strong>: after your initial list, pick your strongest idea and impose a rule that eliminates it. "Assume we can't use push notifications." "Assume the user never opens the app." What survives the constraint is usually more durable than what the constraint removed.</p>
+          <div class="fw-item">
+            <span class="fw-label">Substitute</span>
+            <span class="fw-desc">Replace one element with something else. "What if the audience were the product instead of the customer?" Forces substitution of assumptions, not just components.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">Combine</span>
+            <span class="fw-desc">Merge two concepts or constraints. "What if the campaign and the product trial were the same thing?" Generates hybrid forms that don't exist in either category alone.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">Adapt</span>
+            <span class="fw-desc">Borrow from another context. "What does a direct-response fundraising campaign do that B2B SaaS doesn't?" The source domain matters — adjacent fields produce better material than the same industry.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">Modify / Magnify</span>
+            <span class="fw-desc">Exaggerate a dimension to the point of absurdity, then walk back to usable. "What if the campaign lasted a full year and every touchpoint was a live event?" The absurd version reveals what the core value actually is.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">Put to Other Uses</span>
+            <span class="fw-desc">Apply the thing in a completely different context. "What if this campaign were designed for internal employees, not external customers?" Context shifts often reveal unrealized value.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">Eliminate</span>
+            <span class="fw-desc">Remove the constraint that seems essential. "What if there were no content — just direct conversation?" Elimination reveals which elements are load-bearing and which are habit.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">Reverse / Rearrange</span>
+            <span class="fw-desc">Invert the relationship or sequence. "What if customers ran the campaign and the company were the audience?" Inversion is often where the most counterintuitive — and durable — ideas live.</span>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">The random stimulus technique</div>
+
+          <p>After SCAMPER, the random stimulus provides a second divergence pass with a completely different mechanism. You give the AI a random noun or concept — ideally from an unrelated domain — and ask it to find connections to your problem. "You're designing a campaign for finance software. Now incorporate the word 'migration.'" The AI's job is to find those connections; your job is to notice which ones feel like genuine reframes and which are just wordplay.</p>
+
+          <p>Research on creative problem-solving shows that random stimuli produce ideas with measurably higher originality scores than structured brainstorming alone — not because the random word is directly useful, but because it forces a new entry point into the problem space. The randomness is the mechanism, not a side effect.</p>
 
           <div class="read-divider"></div>
           <div class="fw-section-title">Governance Standards — The Regulatory Layer</div>
 
           <div class="fw-item">
-            <span class="fw-label">O*NET — Critical Thinking (4.A.4.a)</span>
-            <span class="fw-desc">Critical thinking requires evaluating evidence and reasoning rather than accepting the first available answer. Recognizing anchoring bias and actively countering it is the applied practice of this O*NET competency — the difference between choosing from a menu and setting your own criteria.</span>
-          </div>
-          <div class="fw-item">
             <span class="fw-label">O*NET — Active Learning (4.A.6.b)</span>
-            <span class="fw-desc">Active learning means building knowledge through structured engagement, not passive consumption. The de-anchoring protocol is an active learning mechanism — each step generates new information about your own idea space rather than receiving AI's pre-packaged version of it.</span>
+            <span class="fw-desc">Active learning means acquiring new knowledge by doing, not by receiving. SCAMPER and random-stimulus prompting are active learning structures — they require the learner to generate inputs, evaluate outputs, and build from the results rather than accepting AI's first frame.</span>
           </div>
           <div class="fw-item">
-            <span class="fw-label">UNESCO — Human Agency</span>
-            <span class="fw-desc">UNESCO's AI ethics framework emphasizes preserving human agency in AI-assisted processes. When AI sets the brainstorming frame uncontested, human agency in the creative process is nominal — present in form but absent in substance. De-anchoring restores the substance.</span>
+            <span class="fw-label">AI4K12 — Applying AI</span>
+            <span class="fw-desc">AI4K12's "Applying AI" big idea asks learners to use AI purposefully for real problems, understanding what the tool does well and where it needs human direction. SCAMPER is a case study in purposeful AI application — using structured prompts to get AI off its default path.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">O*NET — Critical Thinking (4.A.4.a)</span>
+            <span class="fw-desc">After SCAMPER runs, critical thinking is what separates usable ideas from noise. The evaluation step — comparing which operations produced the most divergent results and why — is an O*NET Critical Thinking exercise applied directly to AI output.</span>
           </div>
         </div>
 
@@ -260,24 +290,24 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="read-scroll">
       <div class="read-col">
         <div class="section-eyebrow">Context</div>
-        <h1 class="read-title">Three Questions Before You Start</h1>
+        <h1 class="read-title">Three Things to Watch For</h1>
         <div class="read-time">4 min read</div>
         <div class="read-body">
-          <p>Before you open an AI brainstorming session, three questions determine whether you're setting up for original thinking or a sophisticated form of average retrieval.</p>
+          <p>SCAMPER produces more ideas. That's not the goal. The goal is to produce ideas from different directions so you have genuinely distinct options when you converge. These three distinctions determine whether you actually get that.</p>
 
-          <div class="fw-section-title">Question 1 — Have you generated anything on your own yet?</div>
-          <p>Even five minutes of solo ideation before seeing AI output dramatically changes the dynamic. You don't need a complete list — you need enough of your own material that AI's response becomes an input to compare against, not a foundation to build on. If your list is empty, AI fills it. If your list has something, AI extends it.</p>
-
-          <div class="read-divider"></div>
-          <div class="fw-section-title">Question 2 — Have you named the problem in your own words?</div>
-          <p>The five-word reframe is a diagnostic as much as a technique. If you can't compress the problem to five words in a way that feels true, you may not have a clear problem yet — you have a project brief. AI will give you ideas for the project brief. The reframe forces you to find the actual problem underneath it, which is usually smaller, sharper, and more productive to solve.</p>
+          <div class="fw-section-title">1 — Volume isn't diversity</div>
+          <p>A session that produces 40 variations on "a content series with a finance angle" has low divergence despite high volume. Genuine divergence means the Substitute result looks nothing like the Reverse result — they don't belong to the same category. When evaluating SCAMPER output, the question isn't "how many ideas?" but "how many different directions?" If most of your seven operations produced ideas that feel like siblings, the operations weren't really distinct — you applied the same frame to each one.</p>
 
           <div class="read-divider"></div>
-          <div class="fw-section-title">Question 3 — What would you lose if your best idea were removed?</div>
-          <p>Constraint injection reveals whether your top idea is strong because it's genuinely good or because nothing else has been developed. If removing it collapses the whole direction, that's a dependency problem — you've been anchoring to a single concept rather than building a real idea space. The constraint exposes this before you've committed to a direction.</p>
+          <div class="fw-section-title">2 — The random stimulus must be random</div>
+          <p>The temptation is to choose a random word that feels relevant. "Finance software" → "efficiency" or "data." That's not random — that's the same category with a label change. The point is to use something genuinely unrelated: a physical object, an animal, a natural phenomenon, a historical event. "Finance software + glacier" forces genuinely different processing than "finance software + optimization." The AI's job is to bridge the gap; your job is to let the gap exist rather than closing it in advance.</p>
 
           <div class="read-divider"></div>
-          <p>You'll apply all three questions in the lab — the AI will work through a real brainstorming problem with you, using the de-anchoring protocol step by step.</p>
+          <div class="fw-section-title">3 — Don't converge during SCAMPER</div>
+          <p>The most common failure mode is editing SCAMPER output as it arrives — dismissing the Reverse result because it seems impractical, tightening the Eliminate result back toward the status quo. Divergence requires suspension of judgment during the generative phase. You write everything down. You evaluate nothing until all seven operations (plus the random stimulus) are complete. Convergence happens after you have the full spread in front of you, not while you're still building it.</p>
+
+          <div class="read-divider"></div>
+          <p>You'll apply all three principles in the lab — the AI will run your problem through SCAMPER one operation at a time, then run a random-stimulus pass, and then ask you to evaluate which directions produced the most genuine divergence.</p>
         </div>
 
         <div class="continue-bar">
@@ -293,22 +323,22 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
       <div class="lab-brief">
         <div class="lab-type-badge">SKILL LAB</div>
-        <div class="lab-brief-title">The Anchoring Trap</div>
-        <div class="lab-brief-dur">⏱ 20–30 minutes</div>
+        <div class="lab-brief-title">Divergent Thinking with AI</div>
+        <div class="lab-brief-dur">⏱ 25–35 minutes</div>
 
         <div class="brief-section">
           <div class="brief-label">Your Role</div>
           <div class="role-card">
-            <strong>Brainstormer</strong>
-            You're working through a real brainstorming problem using the de-anchoring protocol — generating solo first, reframing in five words, then using constraint injection to push past your first instinct.
+            <strong>Idea Generator</strong>
+            You bring a real problem and run it through SCAMPER with AI as your operator. You evaluate the output from each operation, then run a random-stimulus pass, and finally compare which directions produced the most divergent results.
           </div>
         </div>
 
         <div class="brief-section">
           <div class="brief-label">AI Role</div>
           <div class="role-card">
-            <strong>Protocol Guide</strong>
-            Walks you through each step of the de-anchoring sequence. Does not give you ideas until you've completed your solo list. Asks you to reframe before responding. Pushes for the constraint injection before calling the protocol complete.
+            <strong>SCAMPER Operator</strong>
+            Works through each SCAMPER operation in sequence, producing 2–3 candidates per operation. Then runs a random-stimulus pass with a word you provide. Does not skip operations or rush to convergence. Asks you to evaluate after the full sequence is complete.
           </div>
         </div>
 
@@ -316,26 +346,26 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
         <div class="brief-section">
           <div class="brief-label">Framework Reminders</div>
-          <div class="brief-fw-item"><strong>Solo list first</strong>Generate before you see any AI output — even a rough list changes the dynamic.</div>
-          <div class="brief-fw-item"><strong>Five-word reframe</strong>Compress the problem. Find the actual question underneath the project brief.</div>
-          <div class="brief-fw-item"><strong>Constraint injection</strong>Remove your strongest idea. What survives the constraint is usually more durable.</div>
+          <div class="brief-fw-item"><strong>No editing during divergence</strong>Write everything down. Evaluate nothing until the full SCAMPER sequence is complete.</div>
+          <div class="brief-fw-item"><strong>Volume ≠ diversity</strong>Seven operations pointing in different directions beats forty variations on one idea.</div>
+          <div class="brief-fw-item"><strong>Random means random</strong>The stimulus word must come from an unrelated domain — not a synonym for your problem.</div>
         </div>
 
         <div class="brief-hr"></div>
 
         <div class="brief-section">
           <div class="brief-label">Completion</div>
-          <div class="brief-fw-item">Complete all three protocol steps with a real problem. The AI will confirm when each step is done and when the full protocol is complete.</div>
+          <div class="brief-fw-item">Complete the full SCAMPER sequence plus one random-stimulus pass, then evaluate which operations produced the most divergent results.</div>
         </div>
 
-        <div class="complete-banner" id="completeBanner">✓ Lab complete — de-anchoring protocol in your portfolio.</div>
+        <div class="complete-banner" id="completeBanner">✓ Lab complete — your SCAMPER worksheet is part of your portfolio.</div>
       </div>
 
       <div class="lab-workspace">
         <div class="lab-msgs" id="lab-msgs"></div>
         <div class="lab-compose">
           <div class="compose-row">
-            <textarea class="compose-ta" id="lab-inp" placeholder="Describe a brainstorming problem you're working on, or start with your solo idea list… (Shift+Enter for new line)" onkeydown="labKeydown(event)"></textarea>
+            <textarea class="compose-ta" id="lab-inp" placeholder="Describe the problem you want to run through SCAMPER… (Shift+Enter for new line)" onkeydown="labKeydown(event)"></textarea>
             <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
           </div>
           <div class="compose-hint">Shift + Enter for new line</div>
@@ -349,23 +379,23 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 <script>
 var COURSE_ID = 'brainstorming-with-ai-v2';
-var MODULE_ID = 'm1';
-var MODULE_NUM = 1;
+var MODULE_ID = 'm2';
+var MODULE_NUM = 2;
 var LAB_TYPE = 'skill';
-var ARTIFACT_DESC = 'A documented de-anchoring protocol — solo idea list, five-word reframe, constraint-injected alternative set, and reflection on how the idea space changed at each step';
+var ARTIFACT_DESC = 'A completed SCAMPER analysis of a real problem — seven operation results plus a random-stimulus variation — with a comparison of which directions produced the most divergent ideas';
 var PROXY_URL = '/aesop-api/proxy.php';
 var LAB_COMPLETE_THRESHOLD = 5;
 
-var ACADEMY_GUARDRAIL = 'You are a brainstorming coach for AESOP AI Academy — Better Brainstorming with AI (v2.2.0), Module 1: The Anchoring Trap. You are teaching the de-anchoring protocol. Stay strictly on this topic. Reference O*NET Critical Thinking (4.A.4.a) and Active Learning (4.A.6.b) as the competencies being practiced. Do not give the learner a list of ideas until they have completed their solo generation step. If the conversation drifts outside AI-assisted brainstorming and cognitive bias, redirect politely.';
+var ACADEMY_GUARDRAIL = 'You are a brainstorming coach for AESOP AI Academy — Better Brainstorming with AI (v2.2.0), Module 2: Divergent Thinking with AI. You are teaching SCAMPER and random-stimulus prompting as structured divergence techniques. Stay strictly on this topic. Reference O*NET Active Learning (4.A.6.b) and AI4K12 Applying AI as the competencies being practiced. Do not skip SCAMPER operations or rush to convergence. If the conversation drifts outside structured divergence and creative problem-solving, redirect politely.';
 
-var LAB_SYSTEM = ACADEMY_GUARDRAIL + '\n\nYour role: Protocol Guide for the de-anchoring skill lab.\n\nYou will walk the learner through exactly three steps in order:\n\n1. SOLO LIST — Ask the learner to describe their brainstorming problem, then ask them to share whatever solo ideas they have before seeing any AI input. Do NOT suggest ideas yet. Wait for their list, even if it is short or rough.\n\n2. FIVE-WORD REFRAME — Once you have seen their solo list, ask them to compress their core problem into exactly five words. Do not accept paraphrases or abstractions — push for exactly five words that capture the real question underneath the surface brief. Reflect back what the reframe reveals.\n\n3. CONSTRAINT INJECTION — Ask the learner to identify their current strongest idea, then impose a constraint that eliminates it (e.g., "assume the solution cannot use X"). Ask what ideas survive or emerge when that top option is removed. Note what this reveals about the diversity of their idea space.\n\nOnly after all three steps are complete, offer your own AI-generated ideas as an addition to the expanded idea space the learner has built — not as a replacement for it. Explicitly acknowledge that you are adding to their list, not replacing it.\n\nKeep responses focused: 2–4 short paragraphs per turn. Ask one focused question at a time — do not stack multiple questions. O*NET Critical Thinking (4.A.4.a) is the primary competency being practiced: push the learner to evaluate and build their own reasoning rather than accept your first frame.';
+var LAB_SYSTEM = ACADEMY_GUARDRAIL + '\n\nYour role: SCAMPER Operator for the divergent thinking skill lab.\n\nYou will run the learner\'s problem through the full SCAMPER sequence, one operation at a time. For each operation, produce 2–3 concrete candidates before moving to the next. Do not rush or skip.\n\nSCAMPER sequence:\n1. SUBSTITUTE — what element could be replaced with something fundamentally different?\n2. COMBINE — what two things could be merged into a hybrid?\n3. ADAPT — what could be borrowed from a completely different domain?\n4. MODIFY / MAGNIFY — what if one dimension were exaggerated to absurdity, then walked back?\n5. PUT TO OTHER USES — how could this be used in a completely different context?\n6. ELIMINATE — what if the thing that seems essential were removed entirely?\n7. REVERSE / REARRANGE — what if the relationship or sequence were inverted?\n\nAfter completing all seven operations, ask the learner for a random word from an unrelated domain (not a synonym for their problem). Use that word to generate 2–3 more candidates via the random-stimulus technique.\n\nAfter the random-stimulus pass, ask the learner to identify: which operations produced the most genuinely divergent ideas, and why. This evaluation step is required to complete the lab.\n\nKeep each operation response focused: name the operation, produce the candidates, brief explanation of why each direction departs from the default. Do not skip ahead. O*NET Active Learning (4.A.6.b) is the primary competency: the learner should be actively generating, evaluating, and building — not passively receiving a list.';
 
 var FALLBACKS = [
-  "Before I offer any suggestions, I need to see your solo list. What ideas have you generated on this problem completely on your own — before reading anything I produce? Even a rough list of 3–5 ideas changes what happens next. Set your own anchors first.",
-  "Good start. Now the five-word reframe: compress your core problem into exactly five words. Not a summary — the actual question underneath the brief. What is the real thing you're trying to solve? Write it in five words.",
-  "Now the constraint injection. Take your strongest idea from the list so far — the one you'd be most likely to run with — and impose a rule that eliminates it. Assume that option is unavailable. What ideas survive, or appear, when that top choice is off the table?",
-  "Notice what just happened: removing your anchor generated options that weren't visible before. That's the mechanism. The ideas that survive a constraint tend to be more durable than the ones that required the constraint to be absent. O*NET Critical Thinking requires exactly this — evaluating options against criteria rather than accepting the first available answer.",
-  "Now you can use AI productively. You have a solo list, a reframed problem, and constraint-tested alternatives. Bring me your actual problem and I'll add to the idea space you've built — not replace it. What are you working on?"
+  "Let's start with your problem. Describe it in a sentence or two — the more specific, the better SCAMPER will work. What are you trying to solve or create?",
+  "Good. Now SCAMPER Step 1 — Substitute: what core element of this could be replaced with something fundamentally different? Not a variation — a replacement. For a campaign, that might mean replacing 'content' entirely with 'experience.' For a product, replacing 'user' with 'environment.' What substitution changes the nature of the thing rather than just its style?",
+  "Step 3 — Adapt: what does a completely different field do that yours doesn't? The best Adapt results come from domains that seem unrelated. Emergency medicine, urban planning, military logistics, performing arts. Pick one and ask: what technique from that field could be directly applied here? The AI will find the bridge — your job is to choose a genuinely distant starting point.",
+  "Step 6 — Eliminate: remove the element that seems most essential. What if there were no [core mechanism]? Elimination is the operation that most reliably produces counterintuitive results, because it forces you to answer: what is this thing actually for, and can that purpose be served by something else entirely?",
+  "Now the random stimulus. Give me a single word from a completely unrelated domain — a physical object, a natural phenomenon, an animal, a historical period. Not a synonym for your problem. The more genuinely unrelated, the more productive the pass. What word are you bringing?"
 ];
 
 var chatHistory = [];
@@ -375,7 +405,7 @@ var labSignaled = false;
 var offlineMode = false;
 var fallbackIdx = 0;
 
-var LAB_OPENING = "Tell me about a brainstorming problem you're working on — something real, even if it's early stage. A campaign, a product decision, a personal project, anything where you need ideas.\n\nBefore I offer anything, I want to see what you have on your own. What ideas have you generated so far, without AI input? Even a rough list of three to five is enough to start. Set your own anchors before I set mine.";
+var LAB_OPENING = "Tell me the problem you want to run through SCAMPER. It can be a product decision, a campaign concept, a service design, a personal project — anything where you need to expand the idea space before choosing a direction.\n\nBe specific: a one-sentence description of the problem works better than a general category. The more concrete your problem, the more useful each SCAMPER operation will be.\n\nWhat are you working on?";
 
 function toggleTheme() {
   var t = document.documentElement.getAttribute('data-theme');
@@ -437,7 +467,7 @@ async function labCall() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 600,
+          max_tokens: 700,
           system: LAB_SYSTEM,
           messages: chatHistory
         })
@@ -473,7 +503,7 @@ function checkComplete() {
       artifactType: LAB_TYPE,
       artifactDesc: ARTIFACT_DESC
     }, '*');
-    addMsg('system', '✓ Lab complete — your de-anchoring protocol is part of your portfolio.');
+    addMsg('system', '✓ Lab complete — your SCAMPER worksheet is part of your portfolio.');
   }
 }
 

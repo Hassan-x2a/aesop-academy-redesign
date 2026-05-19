@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.13.0 | 2026-05-19 -->
+<!-- v1.14.0 | 2026-05-19 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -402,8 +402,8 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
   <h1 class="page-title">Learn by doing.<br><em>Leave with proof.</em></h1>
   <p class="page-desc">Each course is 8 modules — scenario, lesson, context, and a 15–30 min lab. You debate decisions, build skills, and ship things. At the end, you have a portfolio.</p>
   <div class="page-meta">
-    <span>6 courses</span><span class="page-meta-dot">·</span>
-    <span>48 modules</span><span class="page-meta-dot">·</span>
+    <span>7 courses</span><span class="page-meta-dot">·</span>
+    <span>56 modules</span><span class="page-meta-dot">·</span>
     <span>Free</span><span class="page-meta-dot">·</span>
     <span>No account required</span>
   </div>
@@ -560,6 +560,33 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
         </div>
         <div class="cnav-links">
           <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/building-agentic-pipelines/m1.html">Start Course →</a>
+        </div>
+      </div>
+    </li>
+
+    <!-- Course 7 -->
+    <li>
+      <button class="cnav-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span>
+          <div class="cnav-name">Better Brainstorming with AI</div>
+          <div class="cnav-meta">8 modules · 2 debate · 3 skill · 3 build</div>
+          <div class="cnav-blurb">AI improves individual brainstorming — but anchors your thinking if you let it go first. This course teaches structured techniques: SCAMPER, Six Thinking Hats, red teaming, cross-domain pollination, and convergence — so you lead the process and AI serves it.</div>
+        </span>
+        <span class="cnav-arrow">▶</span>
+      </button>
+      <div class="cnav-panel">
+        <div class="cnav-modules">
+          <a class="cnav-mod" href="/ai-academy/modules/v2/brainstorming-with-ai/m1.html"><span class="cnav-mod-n">01</span><span class="cnav-mod-title">The Anchoring Trap</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/brainstorming-with-ai/m2.html"><span class="cnav-mod-n">02</span><span class="cnav-mod-title">Divergent Thinking with AI</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/brainstorming-with-ai/m3.html"><span class="cnav-mod-n">03</span><span class="cnav-mod-title">Red Teaming Your Own Ideas</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/brainstorming-with-ai/m4.html"><span class="cnav-mod-n">04</span><span class="cnav-mod-title">Six Thinking Hats with AI</span><span class="cnav-mod-badge cnav-badge-skill">Skill</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/brainstorming-with-ai/m5.html"><span class="cnav-mod-n">05</span><span class="cnav-mod-title">Convergent Thinking — From 80 Ideas to One Direction</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/brainstorming-with-ai/m6.html"><span class="cnav-mod-n">06</span><span class="cnav-mod-title">Cross-Domain Pollination</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/brainstorming-with-ai/m7.html"><span class="cnav-mod-n">07</span><span class="cnav-mod-title">The Homogenization Problem</span><span class="cnav-mod-badge cnav-badge-debate">Debate</span></a>
+          <a class="cnav-mod" href="/ai-academy/modules/v2/brainstorming-with-ai/m8.html"><span class="cnav-mod-n">08</span><span class="cnav-mod-title">Your Brainstorming System</span><span class="cnav-mod-badge cnav-badge-build">Build</span></a>
+        </div>
+        <div class="cnav-links">
+          <a class="cnav-link cnav-link-primary" href="/ai-academy/modules/v2/brainstorming-with-ai/m1.html">Start Course →</a>
         </div>
       </div>
     </li>
@@ -955,6 +982,14 @@ const COVERAGE = {
     'unesco':    ['none','none','partial','partial','primary','partial'],
     'csta':      ['partial','none','primary','primary'],
   },
+  'brainstorming-with-ai': {
+    'ai4k12':    ['partial','none','partial','primary','primary'],
+    'eu-ai-act': ['partial','none','partial','touched','none','none','none'],
+    'nist':      ['touched','none','none','none'],
+    'onet':      ['primary','primary','primary','primary'],
+    'unesco':    ['none','primary','partial','partial','none','partial'],
+    'csta':      ['partial','partial','primary','partial'],
+  },
 };
 
 // Evidence refs: [courseId][standardId][componentIndex] = [{module, section, note}]
@@ -1218,6 +1253,50 @@ const EVIDENCE = {
       [{module:'M2 Lab',section:'Build lab',note:'Routing configuration document is a computational artifact — defines how the command center classifies tasks and routes them to models.'},{module:'M5 Lab',section:'Build lab',note:'CLAUDE.md and agents.md are computational artifacts — control files that encode the AI system\'s persistent context and agent delegation topology.'}],
     ],
   },
+  'brainstorming-with-ai': {
+    'ai4k12':[
+      [{module:'M1 Lesson',section:'"Why the First Frame Wins"',note:'Explains how AI generates from statistical patterns in training data — recognizing how AI outputs reflect the center of existing knowledge rather than novel frontiers.'},{module:'M7 Lesson',section:'"Diversity vs. Lift"',note:'Homogenization effect is explained as a structural consequence of how large language models predict statistically likely outputs from similar prompts.'}],
+      [],
+      [{module:'M7 Lesson',section:'"Diversity vs. Lift — A Real Trade-Off"',note:'Homogenization problem is directly tied to how AI training data determines output distribution — data-trained programs produce statistically central ideas that reduce population-level creative variance.'}],
+      [{module:'M2 Lesson',section:'"SCAMPER and the Random Stimulus"',note:'SCAMPER and random-stimulus prompting are structured AI application techniques — using purposeful prompts to move AI output off its default statistical path.'},{module:'M6 Lesson',section:'"How to Import a Solution"',note:'Cross-domain prompting applies AI purposefully for multi-domain knowledge bridging — using structural problem restatement to access AI\'s cross-domain training.'}],
+      [{module:'M7 Lesson & Lab',section:'"The Homogenization Problem"',note:'The entire module examines the societal implications of AI-assisted brainstorming at scale — creative diversity as a form of intellectual biodiversity with economic and cultural consequences.'}],
+    ],
+    'eu-ai-act':[
+      [{module:'M1 Lesson',section:'"Governance Standards — UNESCO Human Agency"',note:'De-anchoring protocol addresses AI literacy: understanding how AI generates outputs that anchor human thinking — building awareness of AI influence on creative processes.'}],
+      [],
+      [{module:'M7 Lesson',section:'"Governance Standards — O*NET Critical Thinking"',note:'UNESCO Fairness framing in M7 touches on transparency — making AI\'s homogenization effect visible so practitioners can account for it.'}],
+      [{module:'M3 Lesson',section:'"Governance Standards — EU AI Act Art.14 (Human Oversight)"',note:'"When AI polishes your pitch without challenging it, you\'ve added speed but removed an oversight function. Red teaming restores that function deliberately."'}],
+      [],
+      [],
+      [],
+    ],
+    'nist':[
+      [{module:'M8 Lesson',section:'"Three Things That Make Systems Work"',note:'Personal brainstorming system design is a lightweight GOVERN exercise — documenting decision logic so it can be audited and improved over time.'}],
+      [],
+      [],
+      [],
+    ],
+    'onet':[
+      [{module:'M1 Lesson',section:'"Governance Standards — O*NET — Critical Thinking (4.A.4.a)"',note:'"Critical thinking requires evaluating evidence and reasoning rather than accepting the first available answer. Recognizing anchoring bias and actively countering it is the applied practice of this O*NET competency."'},{module:'M3 Lesson',section:'"Governance Standards — O*NET Critical Thinking (4.A.4.a)"',note:'Red teaming requires constructing the best possible case against your own conclusion — the most demanding form of O*NET Critical Thinking.'},{module:'M5 Lesson',section:'"Governance Standards — O*NET Critical Thinking (4.A.4.a)"',note:'Convergence requires critical evaluation of the conditions an idea requires rather than the appeal of the idea itself.'}],
+      [{module:'M3 Lesson',section:'"Governance Standards — O*NET Complex Problem Solving (2.B.3.g)"',note:'"Complex problem solving requires identifying the real constraints in a situation, not just the visible ones. Red teaming is the applied practice of this competency — finding the hidden conditions your solution requires before committing resources to it."'},{module:'M5 Lesson',section:'"Governance Standards — O*NET Systems Evaluation (6.A.1.b)"',note:'Convergence requires assessing trade-offs across the whole solution space — systems evaluation rather than single-option selection.'}],
+      [{module:'M4 Lesson',section:'"Governance Standards — O*NET Systems Evaluation (6.A.1.b)"',note:'"Systems evaluation requires assessing how the parts of a situation interact and affect outcomes. Six Thinking Hats is a structured systems evaluation — it forces you to assess the same decision through multiple lenses rather than optimizing within a single frame."'},{module:'M8 Lesson',section:'"Governance Standards — O*NET Systems Evaluation (6.A.1.b)"',note:'Personal brainstorming system design requires evaluating whether the chosen sequence produces better outcomes — and how to update it based on results.'}],
+      [{module:'M1 Lesson',section:'"Governance Standards — O*NET — Active Learning (4.A.6.b)"',note:'"Active learning means building knowledge through structured engagement. The de-anchoring protocol is an active learning mechanism — each step generates new information about your own idea space."'},{module:'M2 Lesson',section:'"Governance Standards — O*NET — Active Learning (4.A.6.b)"',note:'"SCAMPER and random-stimulus prompting are active learning structures — they require the learner to generate inputs, evaluate outputs, and build from the results."'},{module:'M8 Lesson',section:'"Governance Standards — O*NET Active Learning (4.A.6.b)"',note:'Personal brainstorming system includes a feedback loop — noting which steps produced most value after each session is the active learning mechanism that improves the system over time.'}],
+    ],
+    'unesco':[
+      [],
+      [{module:'M5 Lesson',section:'"Governance Standards — UNESCO Fairness"',note:'"A convergence process that relies on social dominance rather than explicit criteria systematically favors ideas from people with more status or confidence in the room. Structured convergence is a fairness mechanism — it makes the selection criteria legible so they can be examined and challenged by anyone in the process."'},{module:'M7 Lesson',section:'"Governance Standards — UNESCO Fairness (primary)"',note:'"UNESCO\'s AI ethics framework specifically addresses fairness in knowledge production. The homogenization effect is a fairness concern at scale: if AI brainstorming tools systematically favor certain types of ideas, they may disadvantage knowledge workers whose value comes from genuinely different thinking."'}],
+      [{module:'M7 Lab',section:'Debate lab',note:'Position A defense requires arguing that homogenization constitutes a real systemic risk — evaluation of whether AI brainstorming tools are safe for broad organizational deployment.'}],
+      [{module:'M7 Lesson',section:'"What collective diversity is for"',note:'Making the homogenization effect visible and measurable is a transparency function — practitioners cannot account for what they cannot see.'}],
+      [],
+      [{module:'M1 Lesson',section:'"Governance Standards — UNESCO Human Agency"',note:'"UNESCO\'s AI ethics framework emphasizes preserving human agency in AI-assisted processes. When AI sets the brainstorming frame uncontested, human agency in the creative process is nominal — present in form but absent in substance."'},{module:'M4 Lesson',section:'"Governance Standards — UNESCO Human Agency"',note:'"Six Thinking Hats with AI keeps humans in the Blue Hat role — structuring the thinking and deciding which modes to apply — while AI operates the individual hats on command."'}],
+    ],
+    'csta':[
+      [{module:'M7 Lesson & Lab',section:'"The Homogenization Problem"',note:'The entire module examines the societal implications of widespread AI brainstorming adoption — creative homogenization as a computing impact on the knowledge economy.'}],
+      [{module:'M2 Lesson',section:'"SCAMPER and the Random Stimulus"',note:'SCAMPER is a computational decomposition of the creative problem-solving space — seven distinct transformation operations applied as a structured algorithm.'},{module:'M5 Lesson',section:'"Three Convergence Tools"',note:'Two-axis grid, assumption audit, and forced choice are systematic algorithms for decision-making — computational thinking applied to creative convergence.'}],
+      [{module:'All modules',section:'Course design',note:'The course designs a personal system for AI-assisted creative work — a computing system applied to knowledge production with documented decision logic.'},{module:'M8 Lesson',section:'"Designing Your Personal System"',note:'Personal brainstorming system is a documented decision tree — a formal specification of what cognitive operations to apply in what order for different problem types.'}],
+      [{module:'M5 Lab',section:'Build lab',note:'Convergence decision document is a computational artifact — a structured record of selection criteria, trade-offs, and decision rationale.'},{module:'M6 Lab',section:'Build lab',note:'Cross-domain solution brief is a computational artifact — structured documentation of structural problem restatement, source domains, mechanisms, and translation conditions.'},{module:'M8 Lab',section:'Capstone build lab',note:'Personal brainstorming system document is the culminating computational artifact — a complete specification of problem taxonomy, tool sequences, minimum viable versions, and diversity countermeasures.'}],
+    ],
+  },
 };
 
 const COURSES = [
@@ -1227,6 +1306,7 @@ const COURSES = [
   { id:'leveraging-rag',              name:'Leveraging RAG for AI Development',   modules:'8 modules — 2 debate · 3 skill · 3 build' },
   { id:'building-agentic-pipelines',  name:'Building Agentic Pipelines',          modules:'8 modules — 2 debate · 3 skill · 3 build' },
   { id:'ai-command-center',           name:'Build a Command Center',               modules:'8 modules — 2 debate · 3 skill · 3 build' },
+  { id:'brainstorming-with-ai',       name:'Better Brainstorming with AI',         modules:'8 modules — 2 debate · 3 skill · 3 build' },
 ];
 
 function overallLevel(cov) {

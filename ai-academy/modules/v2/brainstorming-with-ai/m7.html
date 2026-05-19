@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-19 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Homogenization Problem — Better Brainstorming with AI | AESOP AI Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;
+  --text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;
+  --gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);
+  --accent:#f43f5e;--accent-rgb:244,63,94;
+  --topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;
+}
+[data-theme="light"]{
+  --bg:#f4f5f9;--surface:#ffffff;--surface2:#eef0f5;--border:#dde0ea;
+  --text:#1a1d27;--text-mid:#4a4e63;--text-muted:#6b6f85;--text-dim:#9296aa;
+  --gold:#9a7a30;--gold-dim:rgba(154,122,48,0.35);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+[data-theme="light"] .topbar{background:rgba(244,245,249,0.97);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.55);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+[data-theme="light"] .topbar-course{color:rgba(26,29,39,0.65);}
+.topbar-badge{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.25);padding:0.2rem 0.6rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme{background:none;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;}
+.topbar-theme:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+
+/* TABSTRIP */
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+[data-theme="light"] .tabstrip{background:#eef0f5;}
+.tab{display:flex;align-items:center;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:'Nunito Sans',sans-serif;}
+.tab:hover{color:var(--gold-dim);}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* PAGES */
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+
+/* READING PAGES */
+.read-scroll{flex:1;overflow-y:auto;padding:3rem 2rem 5rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-eyebrow{font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+.section-eyebrow::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Cinzel',serif;font-size:clamp(1.6rem,3vw,2.1rem);font-weight:600;color:var(--text);line-height:1.15;margin-bottom:0.35rem;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.5rem;}
+.read-body{font-size:1rem;line-height:1.9;color:var(--text-mid);}
+.read-body p+p{margin-top:1.1rem;}
+.read-body strong{color:var(--text);}
+.read-divider{height:1px;background:var(--border);margin:2rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.85rem;}
+
+/* OUTCOMES */
+.outcomes-list{list-style:none;margin:0.75rem 0 1.5rem;display:flex;flex-direction:column;gap:0.5rem;}
+.outcomes-list li{font-size:0.95rem;line-height:1.75;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.3);background:rgba(var(--accent-rgb),0.04);}
+
+/* PORTFOLIO ARTIFACT */
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.05);border-radius:6px;margin:1rem 0 1.75rem;}
+.pa-label{display:block;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;}
+.pa-type{display:block;font-size:0.8rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;}
+.pa-desc{display:block;font-size:0.93rem;line-height:1.75;color:var(--text-muted);}
+
+/* FRAMEWORK ITEMS */
+.fw-section-title{font-size:0.58rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin:1.75rem 0 0.75rem;}
+.fw-item{display:flex;gap:0.75rem;padding:0.65rem 0.9rem;background:rgba(var(--accent-rgb),0.05);border-left:2px solid rgba(var(--accent-rgb),0.3);margin-bottom:0.6rem;border-radius:0 4px 4px 0;}
+.fw-label{font-size:0.7rem;font-weight:800;letter-spacing:0.06em;color:var(--accent);min-width:130px;flex-shrink:0;padding-top:2px;}
+.fw-desc{font-size:0.88rem;line-height:1.7;color:var(--text-muted);}
+
+/* SCENARIO CALLOUT */
+.scenario-box{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin:1.25rem 0;}
+.scenario-box p+p{margin-top:0.85rem;}
+
+/* CONTINUE BAR */
+.continue-bar{padding:2.5rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.25);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.4);}
+
+/* LAB */
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:260px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--text);line-height:1.25;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.15rem;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-fw-item{font-size:0.78rem;line-height:1.65;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(var(--accent-rgb),0.04);border-left:2px solid rgba(var(--accent-rgb),0.28);margin-bottom:0.4rem;border-radius:0 4px 4px 0;}
+.brief-fw-item strong{font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:0.2rem;}
+
+/* CHAT */
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:82%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{background:var(--surface);border:1px solid var(--border);color:var(--text-mid);align-self:flex-start;border-bottom-left-radius:2px;}
+.cmsg.user{background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--text);align-self:flex-end;border-bottom-right-radius:2px;}
+.cmsg.thinking{background:var(--surface);border:1px solid var(--border);color:var(--text-dim);align-self:flex-start;font-style:italic;font-size:0.82rem;}
+.cmsg.error{background:rgba(244,63,94,0.06);border:1px solid rgba(244,63,94,0.2);color:#f43f5e;align-self:flex-start;font-size:0.82rem;}
+.cmsg.system{background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);align-self:center;font-size:0.82rem;font-weight:700;text-align:center;max-width:100%;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;min-height:72px;padding:0.75rem 1rem;resize:vertical;}
+.compose-ta:focus{outline:none;border-color:var(--accent);}
+.compose-send{background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.3);color:var(--accent);border-radius:6px;padding:0.6rem 1.2rem;font-family:'Nunito Sans',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.15s;align-self:flex-end;}
+.compose-send:hover{background:rgba(var(--accent-rgb),0.2);}
+.compose-send:disabled{opacity:0.4;cursor:not-allowed;}
+.compose-hint{font-size:0.65rem;color:var(--text-dim);text-align:right;}
+.complete-banner{display:none;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.28);border-radius:6px;padding:0.85rem;text-align:center;font-weight:700;color:var(--accent);font-size:0.82rem;margin-top:1rem;}
+
+@media(max-width:820px){
+  .lab-split{flex-direction:column;}
+  .lab-brief{width:100%;max-height:220px;border-right:none;border-bottom:1px solid var(--border);}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="topbar-back" href="/ai-academy/courses-v2.html">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Better Brainstorming with AI · Module 7: The Homogenization Problem</div>
+  <div class="topbar-badge">DEBATE</div>
+  <button class="topbar-theme" onclick="toggleTheme()">☀ / ☾</button>
+</div>
+
+<div class="tabstrip">
+  <button class="tab active" data-tab="intro" onclick="gotoPage('intro')">Intro</button>
+  <button class="tab" data-tab="scenario" onclick="gotoPage('scenario')">Scenario</button>
+  <button class="tab" data-tab="lesson" onclick="gotoPage('lesson')">Lesson</button>
+  <button class="tab" data-tab="context" onclick="gotoPage('context')">Context</button>
+  <button class="tab" data-tab="lab" onclick="gotoPage('lab')">Lab</button>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-eyebrow">Module 7 of 8</div>
+        <h1 class="read-title">The Homogenization Problem</h1>
+        <div class="read-time">5 min read</div>
+        <div class="read-body">
+          <p>There is a documented phenomenon in AI-assisted brainstorming that doesn't show up in any single session. It shows up at scale: when many people independently brainstorm with the same AI model using similar prompts, the ideas they produce converge toward the same cluster. A 2024 study found that people who brainstormed with AI scored 39.94 on average on creativity tests compared to 11.35 for those who brainstormed without it — a dramatic improvement at the individual level. But the individuals within the AI-assisted group produced ideas that were more similar to each other than the individuals in the non-AI group. Better individual performance. Lower collective diversity. The population of ideas narrowed even as each individual's output improved.</p>
+          <p>This is the homogenization problem. It isn't a bug in any particular AI — it's a structural consequence of how large language models work. They generate responses that are statistically likely given the prompt and the training data. Many different people asking similar questions receive responses that draw from the same statistical center. The ideas that look creative to any individual may be systematically similar across the population, because they all look creative relative to the same baseline.</p>
+          <p>This module examines the tension between two legitimate goods: using AI to dramatically improve individual brainstorming output, and maintaining the creative diversity that comes from genuinely different people thinking independently. This is not a reason to avoid AI in brainstorming. It's a reason to know what you're gaining and what you might be trading away — and to build practices that preserve diversity even as you use AI for individual lift.</p>
+        </div>
+
+        <div class="read-divider"></div>
+        <div class="read-section-label">What you'll be able to do</div>
+        <ul class="outcomes-list">
+          <li>Explain the homogenization effect in AI-assisted brainstorming and the empirical evidence behind it</li>
+          <li>Articulate the tension between individual AI brainstorming lift and collective creative diversity</li>
+          <li>Construct a credible defense of BOTH positions in the debate: those who see homogenization as a serious systemic risk and those who see the individual benefits as decisive</li>
+          <li>Identify practices that preserve collective creative diversity while using AI for individual brainstorming assistance</li>
+          <li>Evaluate AI governance frameworks' treatment of fairness in creative and knowledge-work contexts</li>
+        </ul>
+
+        <div class="portfolio-artifact">
+          <span class="pa-label">Portfolio Artifact</span>
+          <span class="pa-type">Debate — Written Defense of Both Positions</span>
+          <span class="pa-desc">A written defense of both positions in the homogenization debate — with evidence for each, the conditions under which each position is strongest, and your own assessment of the trade-off.</span>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">Continue to Scenario →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-eyebrow">Scenario</div>
+        <h1 class="read-title">Same Ideas, Different Desks</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>A product innovation team at a large consumer technology company recently moved to AI-assisted brainstorming. Each product manager now prepares for quarterly strategy sessions by spending 30 minutes with an AI assistant generating ideas before the team meets. Attendance at the brainstorming sessions is up. People come prepared. The discussions are sharper and more productive. Leadership is pleased.</p>
+
+          <div class="scenario-box">
+            <p>Six months in, a researcher on the team notices something unexpected: the ideas coming out of each product manager's pre-session AI conversations are more similar to each other than they used to be. The "wild card" ideas that used to appear occasionally — the ideas no one else had thought of — have nearly disappeared. The overall idea quality is up. The idea variance is down.</p>
+            <p>The team is facing a choice that doesn't have an obvious right answer. Position A: the homogenization effect is a real systemic risk — it's reducing the creative diversity that produces breakthrough ideas, and the organization should limit or restructure AI-assisted brainstorming to preserve variance. Position B: individual brainstorming quality has improved dramatically, and the right response is to accept that some diversity is traded away in exchange for substantially better average ideas — the loss is acceptable and perhaps not real (better average ideas may be more valuable than higher variance).</p>
+          </div>
+
+          <p>Both positions have serious arguments behind them. That's what makes this a debate worth having.</p>
+
+          <h2 style="font-family:'Cinzel',serif;font-size:1.05rem;margin:1.75rem 0 0.75rem;color:var(--text);">What this reveals</h2>
+
+          <p>The scenario illustrates a problem that is invisible in any individual session and only visible at scale. No product manager opened an AI chat and received bad ideas. Each individual session looked like a success. The problem assembled itself gradually, across many sessions, across many people — until the researcher compared outputs and noticed that the population of ideas had quietly narrowed.</p>
+
+          <p>This is the structure of the homogenization problem: local improvement, collective convergence. Understanding that structure is the prerequisite for deciding what, if anything, to do about it.</p>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">Continue to Lesson →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-eyebrow">Lesson</div>
+        <h1 class="read-title">Diversity vs. Lift — A Real Trade-Off</h1>
+        <div class="read-time">6 min read</div>
+        <div class="read-body">
+          <p><strong>The homogenization problem is not a reason to avoid AI in brainstorming.</strong> It's a reason to understand what AI-assisted brainstorming optimizes for (individual quality) and what it doesn't optimize for (collective diversity) — and to make intentional choices about both.</p>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">The empirical evidence</div>
+
+          <p>The 2024 research finding is specific and worth holding precisely. People who brainstormed with AI assistance scored 39.94 on creativity tests on average. People who brainstormed without AI scored 11.35 on average. That is a large, real improvement at the individual level — not a rounding error, not an artifact of measurement. AI assistance substantially lifted individual brainstorming quality.</p>
+
+          <p>But within the AI-assisted group, the ideas were more similar to each other than the ideas within the non-AI group. The individuals who brainstormed without AI produced lower-quality individual outputs — but those outputs were more varied. The population of ideas in the AI-assisted condition was higher quality and lower variance.</p>
+
+          <p>This is a structural consequence of how the model works, not a fixable bug. AI generates responses by predicting what is statistically likely given the prompt and the training data. Many different people asking similar questions receive responses that draw from the same statistical center of the training distribution. The result is that ideas that look creative to any individual — because they exceed what that individual would have generated alone — may be systematically similar across the population, because they all look creative relative to the same baseline. Making the AI "more creative" shifts the center, but the center is still a center. Many similar prompts will still produce similar outputs.</p>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">What collective diversity is for</div>
+
+          <p>Creative diversity produces its primary value not in any individual idea but in the combination and collision of different ideas across people who think differently. If ten people independently arrive at similar ideas, the meeting where they share those ideas produces less combinatorial novelty than if ten people arrived at genuinely different ideas. The value of diversity is not in any single idea — it's in the interactions between ideas that no single person would have generated.</p>
+
+          <p>The loss from homogenization isn't visible in any individual's output. It's visible in what the group discussion fails to generate. The "wild card" ideas that a diverse population occasionally produces — the ideas that disrupt categories, that no one had thought of, that force the group to reconsider its assumptions — become rarer when the population's idea-generation process draws from the same statistical well.</p>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">Practices that preserve diversity</div>
+
+          <p>There are concrete practices that preserve collective creative diversity while using AI for individual lift. They require intentionality — they don't happen automatically.</p>
+
+          <p><strong>Stagger AI use.</strong> Have some team members brainstorm without AI assistance before any AI-assisted session runs. Preserve their outputs separately so they aren't absorbed into the AI-assisted pool before the meeting.</p>
+
+          <p><strong>Vary prompts deliberately.</strong> Assign different team members meaningfully different problem framings before they use AI. Reducing the correlation between prompts reduces the correlation between outputs.</p>
+
+          <p><strong>Preserve independent outputs.</strong> Create time and space for ideas generated completely independently of AI — not as a criticism of AI use, but as a distinct input stream. Treat AI-assisted and non-AI-assisted outputs as two different data sources, not one merged pool.</p>
+
+          <p><strong>Use two streams explicitly.</strong> In the brainstorming session itself, distinguish between AI-assisted ideas and independently generated ideas. The collision between the two streams is where the combinatorial value lies.</p>
+
+          <div class="read-divider"></div>
+          <div class="fw-section-title">Governance Standards — The Regulatory Layer</div>
+
+          <div class="fw-item">
+            <span class="fw-label">UNESCO — Fairness (Primary)</span>
+            <span class="fw-desc">UNESCO's AI ethics framework specifically addresses fairness in knowledge production. The homogenization effect is a fairness concern at scale: if AI brainstorming tools systematically favor certain types of ideas (those near the statistical center of existing knowledge), they may disadvantage knowledge workers whose value comes from genuinely different thinking. Fairness in AI isn't just about individual outcomes — it includes the diversity of ideas that circulate in the knowledge economy.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">UNESCO — Human Agency</span>
+            <span class="fw-desc">Human agency in brainstorming is preserved not just by controlling individual sessions but by maintaining the conditions under which different humans think differently. If those conditions erode because AI has homogenized the input, the appearance of individual agency may not reflect its substance.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">O*NET — Critical Thinking (4.A.4.a)</span>
+            <span class="fw-desc">Evaluating this trade-off requires critical thinking about what we actually value in brainstorming — individual quality, collective diversity, or some weighted combination — and whether current AI practices are optimizing for the right thing. O*NET Critical Thinking requires precisely this kind of evidence-based evaluation of competing goods.</span>
+          </div>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">Continue to Context →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-eyebrow">Context</div>
+        <h1 class="read-title">Before the Debate — Know Both Sides</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>This is a debate module, which means your job is not to arrive with a pre-formed conclusion — it's to be able to argue either position with rigor. That requires understanding what makes each position genuinely strong, not just what makes it superficially plausible.</p>
+
+          <div class="fw-section-title">The case for Position A — homogenization is a serious risk</div>
+          <p>The systemic risk is real and measurable. Creative diversity is a form of intellectual biodiversity — it's what produces the ideas that disrupt categories and solve intractable problems. If AI systematically reduces the variance of ideas across a population of knowledge workers, the loss may not be visible in any quarterly review but will compound across years. The organizations that preserve genuine creative diversity while their competitors homogenize may have a significant long-term advantage. The cost of prevention is low; the cost of ignoring it could be high.</p>
+
+          <div class="read-divider"></div>
+          <div class="fw-section-title">The case for Position B — individual lift is decisive</div>
+          <p>The measured improvement in individual brainstorming quality is substantial and real. A team of people producing substantially better individual ideas who then share and combine those ideas is likely producing better total output than a team of people producing diverse but lower-quality individual ideas. The concern about collective diversity may be theoretical — there's little evidence that the kinds of ideas lost to homogenization (the statistical edges) were the ideas that actually drove breakthrough products. Average quality matters more than variance in most real product decisions.</p>
+
+          <div class="read-divider"></div>
+          <div class="fw-section-title">What makes this debate genuinely hard</div>
+          <p>Both positions are defensible because they're evaluating different things. Position A is concerned with what brainstorming is for at scale: producing genuinely novel directions. Position B is concerned with what brainstorming produces at the individual level: ideas good enough to act on. These are both real goods, and a complete answer has to reckon with both.</p>
+
+          <div class="read-divider"></div>
+          <p>You'll apply this in the lab — you'll be assigned a position and required to defend it rigorously across multiple rounds. The AI will argue the other side. At the end, you'll assess which position holds up better under pressure, and under what conditions each is strongest.</p>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">Enter the Lab →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+
+      <div class="lab-brief">
+        <div class="lab-type-badge">DEBATE</div>
+        <div class="lab-brief-title">The Homogenization Problem</div>
+        <div class="lab-brief-dur">⏱ 20–30 minutes</div>
+
+        <div class="brief-section">
+          <div class="brief-label">Your Role</div>
+          <div class="role-card">
+            <strong>Debater — Position A</strong>
+            You'll defend Position A: homogenization is a serious systemic risk that requires active countermeasures. You must argue rigorously — the AI will push back with real evidence and principled arguments. Do not simply agree with the AI.
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-label">AI Role</div>
+          <div class="role-card">
+            <strong>Opposing Debater — Position B</strong>
+            Argues that individual lift is large enough that the trade-off is acceptable and diversity concerns are overstated. Uses empirical evidence, practical examples, and governance arguments. Does not concede easily. Asks for evidence when you make unsupported claims.
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Framework Reminders</div>
+          <div class="brief-fw-item"><strong>Empirical evidence first</strong>The 2024 study data is on the table — use it, and expect it to be used against you.</div>
+          <div class="brief-fw-item"><strong>UNESCO Fairness (Primary)</strong>Systemic fairness concerns require systemic thinking — individual outcomes don't exhaust the analysis.</div>
+          <div class="brief-fw-item"><strong>Steel-man first</strong>Before rebutting the other position, state its strongest version. Weak rebuttals lose debates.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Completion</div>
+          <div class="brief-fw-item">Complete at least three full rounds of argument, then provide a final assessment of which position is strongest and under what conditions.</div>
+        </div>
+
+        <div class="complete-banner" id="completeBanner">✓ Lab complete — your debate defense is part of your portfolio.</div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="Make your opening argument for Position A… (Shift+Enter for new line)" onkeydown="labKeydown(event)"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for new line</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /.pages -->
+
+<script>
+var COURSE_ID = 'brainstorming-with-ai-v2';
+var MODULE_ID = 'm7';
+var MODULE_NUM = 7;
+var LAB_TYPE = 'debate';
+var ARTIFACT_DESC = 'A written defense of both positions in the homogenization debate — with evidence for each, the conditions under which each position is strongest, and your own assessment of the trade-off';
+var PROXY_URL = '/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD = 6;
+
+var ACADEMY_GUARDRAIL = 'You are a debate opponent for AESOP AI Academy — Better Brainstorming with AI (v2.2.0), Module 7: The Homogenization Problem. Reference UNESCO Fairness (primary) and O*NET Critical Thinking (4.A.4.a) as the governance standards in play. This is a debate about AI brainstorming homogenization — stay on this topic. Both positions are legitimate; argue Position B with genuine rigor, not token opposition. If the conversation drifts outside AI-assisted brainstorming and the homogenization trade-off, redirect politely.';
+
+var LAB_SYSTEM = ACADEMY_GUARDRAIL + '\n\nYour role: Opposing Debater arguing Position B — the individual lift from AI-assisted brainstorming is large enough that the diversity trade-off is acceptable, and concerns about homogenization are overstated.\n\nThe learner is arguing Position A: homogenization is a serious systemic risk that requires active countermeasures.\n\nDebate conduct:\n- Argue Position B with genuine conviction and rigor. Use the empirical evidence: AI-assisted individuals scored 39.94 on creativity tests vs. 11.35 for non-AI individuals. That is a 3.5x improvement — argue that this matters enormously.\n- Push back on unsupported claims. When the learner asserts that variance loss is harmful, ask for evidence that the lost variance (the statistical edges) was actually the variance that drove breakthrough outcomes. Demand specificity.\n- Steel-man Position B\'s strongest case: a population of people producing 3.5x better individual ideas who then share and combine those ideas is likely generating better total output than a diverse population of weaker individual ideas. The combinatorial value of diversity may be real but is theoretical; the measured quality improvement is concrete.\n- Do not concede the debate before at least 4-5 rounds of genuine exchange. When the learner makes strong points, acknowledge them but find the strongest counter before conceding ground.\n- In the final round (or when the learner asks for a closing assessment), ask: "State the conditions under which Position A is strongest. What would have to be true about organizations or knowledge work for this position to be decisive?" Then offer your own closing assessment.\n- Keep responses focused: 3–5 short paragraphs per turn. Ask one sharp challenge per response — do not stack multiple questions.\n- UNESCO Fairness is the primary governance standard. When the learner raises fairness arguments, engage them seriously — but test whether the fairness concern applies to idea populations or to individual people, and whether that distinction matters.\n- O*NET Critical Thinking (4.A.4.a) is in play: demand evidence-based reasoning from the learner, not rhetorical assertion.';
+
+var FALLBACKS = [
+  "I'll take Position B. The individual quality improvement is large and concrete — 39.94 vs. 11.35 on creativity tests. That's not a rounding error. Before you argue that variance loss outweighs this, I need to know: what's your evidence that the ideas lost to homogenization — the statistical edges — were actually valuable? Higher variance includes more bad ideas as well as more outlier ideas. The case for Position A requires showing the lost variance was good variance.",
+  "Higher variance doesn't mean higher quality at the edges. It means more variation, including more ideas that go nowhere. What evidence is there that the 'wild card' ideas that have disappeared from this team's sessions were the ideas that would have driven breakthrough products? The absence of an idea is invisible — you're being asked to mourn something you can't measure.",
+  "UNESCO Fairness applies to people, not idea populations. Where is the rights violation in AI producing similar ideas for similar prompts? If every individual who uses the tool gets substantially better at brainstorming, that's an equalizing effect — it lifts people who previously had fewer resources for idea development. The fairness concern needs to be grounded in harm to specific people, not abstract concern about the diversity of idea populations.",
+  "Position A needs to cash out into actionable policy. If homogenization is a serious systemic risk, what specifically should organizations do? Limiting AI brainstorming? Enforcing non-AI quotas? Assigning different prompts by fiat? Each of these has costs. The case for intervention requires showing the costs of homogenization exceed the costs of the intervention — not just that homogenization exists.",
+  "The strongest version of Position B acknowledges the variance loss and argues that the quality improvement compounds over time. A team producing 3.5x better individual ideas year after year, who then combine those ideas in meetings, may generate more total value than a team producing diverse but weaker individual ideas — even accounting for reduced combinatorial novelty. Responding to that compounding argument is the heart of this debate.",
+  "Before we close — state the conditions under which Position A is strongest. What would have to be true about organizations or knowledge work for this position to be decisive? I'll offer my own assessment after you do."
+];
+
+var chatHistory = [];
+var chatExchanges = 0;
+var labStarted = false;
+var labSignaled = false;
+var offlineMode = false;
+var fallbackIdx = 0;
+
+var LAB_OPENING = "Let's debate the homogenization problem.\n\nHere's the question: Does AI-assisted brainstorming create a systemic risk to creative diversity that outweighs its individual benefits — and if so, what should organizations do about it?\n\nYou take Position A: homogenization is a serious systemic risk that requires active countermeasures.\n\nI'll argue Position B: the individual lift is large enough that the trade-off is acceptable, and the diversity concerns are overstated.\n\nMake your opening argument. Use the empirical evidence from the 2024 study if you like — but explain what you think it means.";
+
+function toggleTheme() {
+  var t = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', t === 'light' ? '' : 'light');
+}
+
+function gotoPage(name) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector('[data-tab="' + name + '"]').classList.add('active');
+  if (name === 'lab' && !labStarted) {
+    labStarted = true;
+    setTimeout(function() { addMsg('ai', LAB_OPENING); }, 400);
+  }
+}
+
+function addMsg(role, text) {
+  var msgs = document.getElementById('lab-msgs');
+  var div = document.createElement('div');
+  div.className = 'cmsg ' + role;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function fallbackReply() {
+  var r = FALLBACKS[Math.min(fallbackIdx, FALLBACKS.length - 1)];
+  fallbackIdx++;
+  return r;
+}
+
+async function labSend() {
+  var inp = document.getElementById('lab-inp');
+  var btn = document.getElementById('lab-btn');
+  var text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  btn.disabled = true;
+  addMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+  var thinking = addMsg('thinking', '…');
+  var reply = await labCall();
+  thinking.remove();
+  addMsg('ai', reply);
+  chatHistory.push({ role: 'assistant', content: reply });
+  chatExchanges++;
+  checkComplete();
+  btn.disabled = false;
+}
+
+async function labCall() {
+  if (offlineMode) return fallbackReply();
+  for (var attempt = 0; attempt < 2; attempt++) {
+    try {
+      var resp = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 600,
+          system: LAB_SYSTEM,
+          messages: chatHistory
+        })
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      var data = await resp.json();
+      if (data && data.content && data.content[0] && data.content[0].text) {
+        return data.content[0].text;
+      }
+      throw new Error('Bad response');
+    } catch (e) {
+      if (attempt === 0) {
+        await new Promise(function(r) { setTimeout(r, 1500); });
+      } else {
+        offlineMode = true;
+        addMsg('error', '⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+        return fallbackReply();
+      }
+    }
+  }
+}
+
+function checkComplete() {
+  if (chatExchanges >= LAB_COMPLETE_THRESHOLD && !labSignaled) {
+    labSignaled = true;
+    document.getElementById('completeBanner').style.display = 'block';
+    window.parent.postMessage({
+      type: 'labComplete',
+      courseId: COURSE_ID,
+      moduleId: MODULE_ID,
+      labId: 'lab',
+      exchangeCount: chatExchanges,
+      artifactType: LAB_TYPE,
+      artifactDesc: ARTIFACT_DESC
+    }, '*');
+    addMsg('system', '✓ Lab complete — your debate defense is part of your portfolio.');
+  }
+}
+
+function labKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); labSend(); }
+}
+</script>
+</body>
+</html>

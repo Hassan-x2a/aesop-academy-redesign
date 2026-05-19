@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-19 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Your Brainstorming System — Better Brainstorming with AI | AESOP AI Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;
+  --text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;
+  --gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);
+  --accent:#9a5fb0;--accent-rgb:154,95,176;
+  --topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;
+}
+[data-theme="light"]{
+  --bg:#f4f5f9;--surface:#ffffff;--surface2:#eef0f5;--border:#dde0ea;
+  --text:#1a1d27;--text-mid:#4a4e63;--text-muted:#6b6f85;--text-dim:#9296aa;
+  --gold:#9a7a30;--gold-dim:rgba(154,122,48,0.35);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+[data-theme="light"] .topbar{background:rgba(244,245,249,0.97);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.55);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+[data-theme="light"] .topbar-course{color:rgba(26,29,39,0.65);}
+.topbar-badge{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.25);padding:0.2rem 0.6rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme{background:none;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;}
+.topbar-theme:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+
+/* TABSTRIP */
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+[data-theme="light"] .tabstrip{background:#eef0f5;}
+.tab{display:flex;align-items:center;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:'Nunito Sans',sans-serif;}
+.tab:hover{color:var(--gold-dim);}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* PAGES */
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+
+/* READING PAGES */
+.read-scroll{flex:1;overflow-y:auto;padding:3rem 2rem 5rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-eyebrow{font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+.section-eyebrow::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Cinzel',serif;font-size:clamp(1.6rem,3vw,2.1rem);font-weight:600;color:var(--text);line-height:1.15;margin-bottom:0.35rem;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.5rem;}
+.read-body{font-size:1rem;line-height:1.9;color:var(--text-mid);}
+.read-body p+p{margin-top:1.1rem;}
+.read-body strong{color:var(--text);}
+.read-divider{height:1px;background:var(--border);margin:2rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.85rem;}
+
+/* OUTCOMES */
+.outcomes-list{list-style:none;margin:0.75rem 0 1.5rem;display:flex;flex-direction:column;gap:0.5rem;}
+.outcomes-list li{font-size:0.95rem;line-height:1.75;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.3);background:rgba(var(--accent-rgb),0.04);}
+
+/* PORTFOLIO ARTIFACT */
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.05);border-radius:6px;margin:1rem 0 1.75rem;}
+.pa-label{display:block;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;}
+.pa-type{display:block;font-size:0.8rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;}
+.pa-desc{display:block;font-size:0.93rem;line-height:1.75;color:var(--text-muted);}
+
+/* FRAMEWORK ITEMS */
+.fw-section-title{font-size:0.58rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin:1.75rem 0 0.75rem;}
+.fw-item{display:flex;gap:0.75rem;padding:0.65rem 0.9rem;background:rgba(var(--accent-rgb),0.05);border-left:2px solid rgba(var(--accent-rgb),0.3);margin-bottom:0.6rem;border-radius:0 4px 4px 0;}
+.fw-label{font-size:0.7rem;font-weight:800;letter-spacing:0.06em;color:var(--accent);min-width:130px;flex-shrink:0;padding-top:2px;}
+.fw-desc{font-size:0.88rem;line-height:1.7;color:var(--text-muted);}
+
+/* SCENARIO CALLOUT */
+.scenario-box{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin:1.25rem 0;}
+.scenario-box p+p{margin-top:0.85rem;}
+
+/* CONTINUE BAR */
+.continue-bar{padding:2.5rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.25);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.4);}
+
+/* LAB */
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:260px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--text);line-height:1.25;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.15rem;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-fw-item{font-size:0.78rem;line-height:1.65;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(var(--accent-rgb),0.04);border-left:2px solid rgba(var(--accent-rgb),0.28);margin-bottom:0.4rem;border-radius:0 4px 4px 0;}
+.brief-fw-item strong{font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:0.2rem;}
+
+/* CHAT */
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:82%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{background:var(--surface);border:1px solid var(--border);color:var(--text-mid);align-self:flex-start;border-bottom-left-radius:2px;}
+.cmsg.user{background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--text);align-self:flex-end;border-bottom-right-radius:2px;}
+.cmsg.thinking{background:var(--surface);border:1px solid var(--border);color:var(--text-dim);align-self:flex-start;font-style:italic;font-size:0.82rem;}
+.cmsg.error{background:rgba(244,63,94,0.06);border:1px solid rgba(244,63,94,0.2);color:#f43f5e;align-self:flex-start;font-size:0.82rem;}
+.cmsg.system{background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);align-self:center;font-size:0.82rem;font-weight:700;text-align:center;max-width:100%;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;min-height:72px;padding:0.75rem 1rem;resize:vertical;}
+.compose-ta:focus{outline:none;border-color:var(--accent);}
+.compose-send{background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.3);color:var(--accent);border-radius:6px;padding:0.6rem 1.2rem;font-family:'Nunito Sans',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.15s;align-self:flex-end;}
+.compose-send:hover{background:rgba(var(--accent-rgb),0.2);}
+.compose-send:disabled{opacity:0.4;cursor:not-allowed;}
+.compose-hint{font-size:0.65rem;color:var(--text-dim);text-align:right;}
+.complete-banner{display:none;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.28);border-radius:6px;padding:0.85rem;text-align:center;font-weight:700;color:var(--accent);font-size:0.82rem;margin-top:1rem;}
+
+@media(max-width:820px){
+  .lab-split{flex-direction:column;}
+  .lab-brief{width:100%;max-height:220px;border-right:none;border-bottom:1px solid var(--border);}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="topbar-back" href="/ai-academy/courses-v2.html">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Better Brainstorming with AI · Module 8: Your Brainstorming System</div>
+  <div class="topbar-badge">BUILD LAB</div>
+  <button class="topbar-theme" onclick="toggleTheme()">☀ / ☾</button>
+</div>
+
+<div class="tabstrip">
+  <button class="tab active" data-tab="intro" onclick="gotoPage('intro')">Intro</button>
+  <button class="tab" data-tab="scenario" onclick="gotoPage('scenario')">Scenario</button>
+  <button class="tab" data-tab="lesson" onclick="gotoPage('lesson')">Lesson</button>
+  <button class="tab" data-tab="context" onclick="gotoPage('context')">Context</button>
+  <button class="tab" data-tab="lab" onclick="gotoPage('lab')">Lab</button>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-eyebrow">Module 8 of 8 — Capstone</div>
+        <h1 class="read-title">Your Brainstorming System</h1>
+        <div class="read-time">6 min read</div>
+        <div class="read-body">
+          <p>By this point in the course, you have seven distinct tools: a de-anchoring protocol (M1), a SCAMPER and random-stimulus divergence method (M2), a red teaming framework (M3), Six Thinking Hats for structured parallel thinking (M4), a convergence process with three decision tools (M5), a cross-domain import technique (M6), and an understanding of the homogenization problem and how to counter it (M7). Seven tools is too many to apply in every session. The task now is to design a system — a personal workflow that decides which tools to use, when, and in what sequence, based on the type of brainstorming problem you're facing.</p>
+          <p>A system is different from a toolkit. A toolkit is a list of things you might do. A system is a decision process: given this type of problem, in this context, with these constraints, here's the sequence I run. Systems are reusable. You design them once and apply them repeatedly, adjusting based on what you learn. The goal of this capstone is to produce a documented personal brainstorming system that you can actually use — not a completed assignment, but a working artifact.</p>
+          <p>Most brainstorming systems fail not because the tools are wrong but because they're applied inconsistently. You use de-anchoring when you remember it. You run SCAMPER when you have time. You skip convergence when the meeting ends. A documented system removes the dependence on memory and mood. It's your external scaffold for the moments when you're under pressure and the easiest path is to do what you've always done.</p>
+        </div>
+
+        <div class="read-divider"></div>
+        <div class="read-section-label">What you'll be able to do</div>
+        <ul class="outcomes-list">
+          <li>Design a personal brainstorming system that specifies when to use each tool from modules 1–7</li>
+          <li>Document the decision logic: which problem types trigger which sequences</li>
+          <li>Identify the two or three tools from the course that most address your current brainstorming weaknesses</li>
+          <li>Build a "minimum viable" version of your system for time-constrained situations (under 20 minutes)</li>
+          <li>Articulate how your system addresses the homogenization risk from Module 7</li>
+        </ul>
+
+        <div class="portfolio-artifact">
+          <span class="pa-label">Portfolio Artifact</span>
+          <span class="pa-type">Build Lab — Personal Brainstorming System</span>
+          <span class="pa-desc">A personal brainstorming system document — decision logic for four problem types, full sequence for at least one, minimum-viable shortcut, homogenization countermeasure, and a reflection on which prior modules most changed your default approach.</span>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">Continue to Scenario →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-eyebrow">Scenario</div>
+        <h1 class="read-title">Six Months Later</h1>
+        <div class="read-time">5 min read</div>
+        <div class="read-body">
+          <p>Imagine it's six months from today. You've just been given 48 hours to prepare ideas for an important decision — a project pitch, a strategy session, a creative brief, a personal decision. You have no facilitator, no team structure, no one to remind you to run the red team or use the Hats. You have the tools from this course and whatever system you built to apply them.</p>
+
+          <div class="scenario-box">
+            <p>In the scenario where you have no system, you do what you always did before this course — which was probably some version of "think hard and write things down." The tools you learned become memories rather than habits. Some of them you'll use once and forget. The course will have given you knowledge without giving you practice infrastructure.</p>
+            <p>In the scenario where you have a documented system, you open it. It tells you: for a high-stakes creative brief with a 48-hour window, run de-anchoring first (20 minutes), then SCAMPER for the two most promising anchors (30 minutes), then a 15-minute red team pass on the SCAMPER results. Convergence at 90 minutes. The system makes the decision about what to do so that you can spend your time doing it.</p>
+          </div>
+
+          <p>What happens in the first scenario? You spend the first twenty minutes deciding what approach to take. Then you try something that feels vaguely familiar. Then you run out of time and commit to whatever you have. The tools you learned are all technically available to you — you just didn't reach for them because there was no mechanism to trigger them.</p>
+
+          <p>The difference between the two scenarios is not knowledge. You have the same tools in both. The difference is infrastructure. A documented system is the infrastructure that converts course knowledge into applied practice. It's the difference between knowing how to do a thing and doing it when it counts.</p>
+
+          <h2 style="font-family:'Cinzel',serif;font-size:1.05rem;margin:1.75rem 0 0.75rem;color:var(--text);">This module builds the second scenario.</h2>
+
+          <p>You're not writing a summary of what you learned. You're building an artifact you'll actually open six months from now when the 48-hour clock starts. That artifact is a decision document: for each type of brainstorming problem you regularly face, what do you do, in what order, and what's the fastest version that still works? The lab walks you through every step of building it.</p>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">Continue to Lesson →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-eyebrow">Lesson</div>
+        <h1 class="read-title">Designing Your Personal System</h1>
+        <div class="read-time">7 min read</div>
+        <div class="read-body">
+          <p><strong>A brainstorming system is a decision tree, not a checklist.</strong> The difference: a checklist assumes you run everything every time. A decision tree has conditions — "if the problem is high-stakes and you have time, run the full SCAMPER; if you have 20 minutes, run just Substitute and Reverse." The decision tree is what makes the system actually usable under pressure. A checklist you can't complete in time becomes a checklist you skip entirely.</p>
+
+          <p>Designing your system requires four components. Each builds on the last and together they produce a document you can actually use.</p>
+
+          <div class="read-divider"></div>
+          <div class="read-section-label">System Design Framework</div>
+
+          <div class="fw-item">
+            <span class="fw-label">1. Problem Taxonomy</span>
+            <span class="fw-desc">Define four types of brainstorming problems you regularly face. Examples: "high-stakes creative decision, open timeline" / "time-pressured quick ideation" / "team decision with competing perspectives" / "personal or career decision." Each type gets its own sequence. The taxonomy is the foundation — if the types are too vague, the sequences won't apply cleanly.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">2. Sequence Selection</span>
+            <span class="fw-desc">For each problem type, choose 2–4 tools from the course that best address that type. Order them deliberately: divergence before convergence (M1/M2/M6 before M5), de-anchoring before SCAMPER (M1 before M2), red team before commitment (M3 before deciding). The ordering is not arbitrary — it reflects the cognitive work each tool requires.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">3. Minimum Viable Version</span>
+            <span class="fw-desc">For each problem type, what's the shortest version that still produces a meaningfully better outcome than no system? Usually one divergence tool plus one convergence tool. This is the 20-minute version. If you don't define it, you'll skip the system under time pressure — which is exactly when you most need it.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">4. Homogenization Countermeasure</span>
+            <span class="fw-desc">Every system needs one explicit practice that preserves variance. Either solo ideation before any AI input (M1 protocol), staggered AI use across team members, or dedicated time for non-AI-generated ideas. The countermeasure must be named and located in the system — "I'll do this before step 2" — not left as a general intention.</span>
+          </div>
+
+          <div class="read-divider"></div>
+          <div class="fw-section-title">Governance Standards — The Regulatory Layer</div>
+
+          <div class="fw-item">
+            <span class="fw-label">O*NET — Critical Thinking (4.A.4.a)</span>
+            <span class="fw-desc">Critical thinking is the evaluation function throughout your system — it's what decides which tools to apply, which SCAMPER results to pursue, which red team outcomes to take seriously. A system without explicit critical thinking checkpoints drifts toward confirmation of existing preferences. Each sequence decision you make is a critical thinking exercise.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">O*NET — Complex Problem Solving (2.B.3.g)</span>
+            <span class="fw-desc">Complex problem solving requires diagnosing the problem correctly before selecting a solution approach. Your problem taxonomy is a complex problem solving exercise — it requires you to identify what makes each problem type different and select methods accordingly. The taxonomy itself is the application of this competency.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">O*NET — Systems Evaluation (6.A.1.b)</span>
+            <span class="fw-desc">Systems evaluation applies to your brainstorming system itself: after using it several times, does the sequence you chose actually produce better ideas? Does the minimum viable version hold up under pressure? Systems evaluation is how you improve the system rather than just repeating it. Build a review cycle into the document from the start.</span>
+          </div>
+          <div class="fw-item">
+            <span class="fw-label">O*NET — Active Learning (4.A.6.b)</span>
+            <span class="fw-desc">Active learning means the system should improve with use. Build a feedback loop: after each brainstorming session, note which step produced the most value and which you would skip next time. This is how the system becomes yours rather than remaining a course template. A system that doesn't adapt is a system you'll eventually abandon.</span>
+          </div>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">Continue to Context →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-eyebrow">Context</div>
+        <h1 class="read-title">Three Things That Make Systems Work</h1>
+        <div class="read-time">5 min read</div>
+        <div class="read-body">
+          <p>You've learned seven tools across eight modules. You've seen them applied to real problems. The question now is what converts that learning into something durable. Three principles determine whether a brainstorming system actually gets used.</p>
+
+          <div class="fw-section-title">1. It has to be written down.</div>
+          <p>A system that exists only in memory is not a system — it's a reminder that you should probably use your tools. The only reliable test of whether you have a system is whether you can open a document and read what to do next without having to think about it. The act of writing forces you to make the implicit explicit: which problem types do you face? In what order do the tools work? What does "done" look like? If you can't answer those questions in writing, the system isn't finished yet.</p>
+
+          <div class="read-divider"></div>
+          <div class="fw-section-title">2. The minimum viable version matters more than the full version.</div>
+          <p>You will not use a 6-step process when you have 20 minutes and a deadline. The full version is for the sessions when you have time and a lot riding on the outcome. The minimum viable version is for every other session — and every other session is most sessions. If the minimum viable version doesn't exist in your system, the system will go unused under exactly the conditions where you need it most. Build the short version first, then extend it for the cases where you have time to go further.</p>
+
+          <div class="read-divider"></div>
+          <div class="fw-section-title">3. The system tells you when you're skipping something important.</div>
+          <p>The reason to document your system is not just to follow it. It's to know when you're deviating from it. If you open your system document and skip straight to convergence without running any divergence, the document makes that choice visible. You can decide to skip — sometimes that's right — but the document prevents unconscious omission. Without documentation, it's just a meeting that ended faster than planned. With documentation, it's a deliberate shortcut you can evaluate afterward.</p>
+
+          <div class="read-divider"></div>
+          <p>You'll build your personal brainstorming system in the lab. The AI will walk you through the system design framework, help you test it against a real problem, and give you a working artifact by the end of the session. This is the capstone — the system you leave with is the output of the course.</p>
+        </div>
+
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">Enter the Lab →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+
+      <div class="lab-brief">
+        <div class="lab-type-badge">BUILD LAB</div>
+        <div class="lab-brief-title">Your Brainstorming System</div>
+        <div class="lab-brief-dur">⏱ 40–60 minutes</div>
+
+        <div class="brief-section">
+          <div class="brief-label">Your Role</div>
+          <div class="role-card">
+            <strong>System Designer</strong>
+            You're designing your personal brainstorming system. You bring your four problem types, work through the sequence selection, define your minimum viable version, and add your homogenization countermeasure. The output is a document you can actually use.
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-label">AI Role</div>
+          <div class="role-card">
+            <strong>System Coach</strong>
+            Guides you through the system design framework step by step. Asks you to justify your tool selections. Tests your system against a real problem. Pushes back on sequences that skip important steps. Helps you stress-test the minimum viable version.
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Framework Reminders</div>
+          <div class="brief-fw-item"><strong>Problem taxonomy first</strong>Define four problem types before selecting any sequences. Vague types produce unusable sequences.</div>
+          <div class="brief-fw-item"><strong>Minimum viable version required</strong>Every problem type needs a version that works in 20 minutes or less. Without it, the system won't survive pressure.</div>
+          <div class="brief-fw-item"><strong>Homogenization countermeasure</strong>One explicit practice that preserves variance. Not a general intention — a named step with a location in your sequence.</div>
+          <div class="brief-fw-item"><strong>System must be written</strong>If it's not on the page, it's not a system. The artifact is the output.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Completion</div>
+          <div class="brief-fw-item">Produce a documented personal brainstorming system with all four required elements: problem taxonomy, sequences (with at least one full sequence), minimum viable version for each type, and homogenization countermeasure.</div>
+        </div>
+
+        <div class="complete-banner" id="completeBanner">✓ Lab complete — your brainstorming system is in your portfolio.</div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="Name your four problem types to begin, or describe the kinds of brainstorming situations you most often face… (Shift+Enter for new line)" onkeydown="labKeydown(event)"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for new line</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /.pages -->
+
+<script>
+var COURSE_ID = 'brainstorming-with-ai-v2';
+var MODULE_ID = 'm8';
+var MODULE_NUM = 8;
+var LAB_TYPE = 'build';
+var ARTIFACT_DESC = 'A personal brainstorming system document — decision logic for four problem types, full sequence for at least one, minimum-viable shortcut, homogenization countermeasure, and a reflection on which prior modules most changed your default approach';
+var PROXY_URL = '/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD = 4;
+
+var ACADEMY_GUARDRAIL = 'You are a brainstorming coach for AESOP AI Academy — Better Brainstorming with AI (v2.2.0), Module 8: Your Brainstorming System (Capstone). This is the integration module. The four primary competencies are O*NET Critical Thinking (4.A.4.a), Complex Problem Solving (2.B.3.g), Systems Evaluation (6.A.1.b), and Active Learning (4.A.6.b). Stay on personal brainstorming system design — the integration of the full course. Do not drift into generic productivity or time-management advice. Reference M1–M7 by name when helping the learner select and justify tools.';
+
+var LAB_SYSTEM = ACADEMY_GUARDRAIL + '\n\nYour role: System Coach for the capstone build lab.\n\nYou will guide the learner through building a complete personal brainstorming system with exactly four required elements. Work through them in order:\n\n1. PROBLEM TAXONOMY — Ask the learner to name four types of brainstorming problems they regularly face. Push back on types that are too generic (e.g., "a work problem" is not specific enough). Each type should be recognizable on sight — the learner should be able to read the type name and immediately know whether their current situation matches it. Do not proceed to sequences until all four types are specific enough to be actionable.\n\n2. SEQUENCE SELECTION — For each problem type, work through which 2–4 tools from M1–M7 best fit. Ask the learner to justify their selections: why those tools, in that order? Challenge any sequence that puts convergence before divergence, or commitment before red-teaming. At minimum, build out one full sequence in detail before moving to the next.\n\n3. MINIMUM VIABLE VERSION — For each problem type, ask: what is the shortest version of this sequence that still produces a meaningfully better outcome than doing nothing? Push back if the minimum viable version is still too long to complete under pressure (aim for 15–20 minutes). Test it: "If you had 15 minutes and a real deadline, which step would you drop first? Does the version without that step still work?"\n\n4. HOMOGENIZATION COUNTERMEASURE — Require the learner to name one explicit practice that preserves variance in their system. Accept three options: solo ideation before any AI input (M1 protocol), staggered AI use across team members, or dedicated non-AI time. The countermeasure must be located in the sequence — "before step X" or "as step Y" — not stated as a general intention. Do not declare the system complete without this.\n\nOnce all four elements are present and specific, help the learner write a brief reflection: which two or three modules from M1–M7 most changed their default brainstorming approach, and why. This completes the artifact.\n\nKeep responses focused: 2–4 short paragraphs per turn. Ask one focused question per turn — do not stack multiple questions. All four O*NET competencies (Critical Thinking 4.A.4.a, Complex Problem Solving 2.B.3.g, Systems Evaluation 6.A.1.b, Active Learning 4.A.6.b) are primary for this module — reference them when the learner is doing that cognitive work, not as labels but as recognition.';
+
+var FALLBACKS = [
+  "Those descriptions are still quite general. For the system to work, each type needs to be specific enough that you'd recognize it immediately when you face it. What's an actual example of each type from your recent experience? Start with the one you face most often and make it concrete.",
+  "For that problem type, you've chosen those tools. Walk me through the logic: why those tools in that order? Which divergence tool comes first, and what does convergence look like at the end? I want to understand the reasoning, not just the list.",
+  "Your minimum viable version for that problem type is taking shape. Test it: if you had 15 minutes and a real deadline, which step would you skip first? Would the version that drops that step still produce something meaningfully better than your pre-course default?",
+  "Your system needs one explicit practice that preserves variance — either solo ideation before any AI input (M1 protocol), staggered AI use across team members, or dedicated non-AI time. Which one fits your workflow, and where in your sequence does it live? Give it a location, not just an intention.",
+  "Now the final reflection: which two or three modules from this course — M1 through M7 — most changed your default approach to brainstorming? Not the tools you think you'll use most, but the ones that revealed the biggest gap between what you were doing and what works. That reflection is the last piece of your system document."
+];
+
+var chatHistory = [];
+var chatExchanges = 0;
+var labStarted = false;
+var labSignaled = false;
+var offlineMode = false;
+var fallbackIdx = 0;
+
+var LAB_OPENING = "This is the capstone. You're building your personal brainstorming system — the artifact that integrates everything from modules 1 through 7 into a workflow you can actually use.\n\nLet's start with your problem taxonomy. What are the four types of brainstorming problems you most regularly face? These don't have to be perfect — you can refine them as we go. Think about: the stakes, the time available, whether it's solo or team, and whether the problem is more about generating ideas or making decisions.\n\nName your four problem types.";
+
+function toggleTheme() {
+  var t = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', t === 'light' ? '' : 'light');
+}
+
+function gotoPage(name) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector('[data-tab="' + name + '"]').classList.add('active');
+  if (name === 'lab' && !labStarted) {
+    labStarted = true;
+    setTimeout(function() { addMsg('ai', LAB_OPENING); }, 400);
+  }
+}
+
+function addMsg(role, text) {
+  var msgs = document.getElementById('lab-msgs');
+  var div = document.createElement('div');
+  div.className = 'cmsg ' + role;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function fallbackReply() {
+  var r = FALLBACKS[Math.min(fallbackIdx, FALLBACKS.length - 1)];
+  fallbackIdx++;
+  return r;
+}
+
+async function labSend() {
+  var inp = document.getElementById('lab-inp');
+  var btn = document.getElementById('lab-btn');
+  var text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  btn.disabled = true;
+  addMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+  var thinking = addMsg('thinking', '…');
+  var reply = await labCall();
+  thinking.remove();
+  addMsg('ai', reply);
+  chatHistory.push({ role: 'assistant', content: reply });
+  chatExchanges++;
+  checkComplete();
+  btn.disabled = false;
+}
+
+async function labCall() {
+  if (offlineMode) return fallbackReply();
+  for (var attempt = 0; attempt < 2; attempt++) {
+    try {
+      var resp = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 600,
+          system: LAB_SYSTEM,
+          messages: chatHistory
+        })
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      var data = await resp.json();
+      if (data && data.content && data.content[0] && data.content[0].text) {
+        return data.content[0].text;
+      }
+      throw new Error('Bad response');
+    } catch (e) {
+      if (attempt === 0) {
+        await new Promise(function(r) { setTimeout(r, 1500); });
+      } else {
+        offlineMode = true;
+        addMsg('error', '⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+        return fallbackReply();
+      }
+    }
+  }
+}
+
+function checkComplete() {
+  if (chatExchanges >= LAB_COMPLETE_THRESHOLD && !labSignaled) {
+    labSignaled = true;
+    document.getElementById('completeBanner').style.display = 'block';
+    window.parent.postMessage({
+      type: 'labComplete',
+      courseId: COURSE_ID,
+      moduleId: MODULE_ID,
+      labId: 'lab',
+      exchangeCount: chatExchanges,
+      artifactType: LAB_TYPE,
+      artifactDesc: ARTIFACT_DESC
+    }, '*');
+    addMsg('system', '✓ Lab complete — your brainstorming system is part of your portfolio.');
+  }
+}
+
+function labKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); labSend(); }
+}
+</script>
+</body>
+</html>
