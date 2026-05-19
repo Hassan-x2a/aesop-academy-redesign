@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-18 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Agentic Pipelines — Module 3 · AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#f43f5e;--accent-rgb:244,63,94;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Crimson Pro',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-family:'Crimson Pro',Georgia,serif;font-size:1.08rem;line-height:1.92;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-family:'Crimson Pro',Georgia,serif;font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-family:'Crimson Pro',Georgia,serif;font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.continue-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0;}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Building Agentic Pipelines</div>
+  <div class="topbar-badge">Module 3 of 8</div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Debate</span>
+    <span class="tab-dur">~25 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">Orchestration vs. Chaining</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>There are two fundamentally different ways to connect agents. In a chain, output from one step becomes input to the next — the path is fixed, the sequence is predetermined, and every stage executes in order regardless of what happened upstream. In an orchestrated pipeline, a coordinator receives results, decides what happens next, and can route, retry, branch, or escalate based on the quality and content of each output.</p>
+          <p>Both approaches work. Neither is universally correct. The mistake most developers make is choosing one and applying it everywhere — building chains when they need routing, or adding orchestration overhead to workflows that run the same way every time.</p>
+          <p>This module forces the decision. You'll be handed three architectural approaches to the same pipeline problem and asked to defend one of them. A skeptical technical panel will pressure-test your reasoning against failure scenarios, coordination costs, and maintenance burden. The goal isn't to win — it's to understand exactly where your chosen architecture breaks down, and whether that's a tradeoff you can defend.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Your artifact — Debate Lab</div>
+            <div class="portfolio-desc">A written architectural defense — your chosen control model (chain, orchestrated, or hybrid) argued against the specific failure modes it doesn't handle well, with explicit tradeoffs stated</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Distinguish sequential chaining from coordinator-based orchestration and name the tradeoffs of each</li>
+            <li>Apply the routing test to determine when a pipeline genuinely needs a coordinator</li>
+            <li>Calculate the coordination tax for an orchestrated pipeline and decide if it's justified</li>
+            <li>Defend an architectural choice under adversarial questioning about its failure modes</li>
+            <li>Apply NIST MAP to architectural decisions — mapping how each design fails, not just how it succeeds</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">Three Proposals for the Same Pipeline</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>A development team is building an automated code review pipeline. The input is a GitHub pull request. The output is a structured review report — security findings, logic issues, style violations, and a ship/revise recommendation. The pipeline must handle PRs ranging from a one-line typo fix to a 2,000-line feature addition. Three engineers have each proposed a different architecture.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Architecture A — Sequential chain</div>
+          <p>The PR diff enters a linear sequence: diff normalization → security scan → logic review → style check → report assembly. Each stage passes its output directly to the next. If any stage fails, the chain terminates. There is no routing logic. The security scan runs on a one-liner the same way it runs on a 2,000-line feature. Report assembly receives all three upstream outputs and produces the final document.</p>
+          <p>Estimated cost: lowest. No coordinator, no state management. Easy to debug — each step is a function with a clear input and output.</p>
+          <div class="read-section-label">Architecture B — Orchestrated</div>
+          <p>A coordinator agent receives the PR and makes routing decisions. Small PRs go to a fast-path reviewer. Large PRs are split and dispatched to parallel specialized reviewers — one for security, one for logic, one for style — each running independently. The coordinator collects results, detects conflicts between reviewer outputs, and routes unresolved conflicts to a final arbitration step before report assembly.</p>
+          <p>Estimated cost: 40–60% higher token usage. The coordinator adds two round trips. Parallel execution reduces wall-clock time for large PRs. The arbitration step adds latency when reviewers disagree.</p>
+          <div class="read-section-label">Architecture C — Hybrid</div>
+          <p>A lightweight triage step classifies the PR as simple or complex. Simple PRs enter a sequential chain (Architecture A). Complex PRs enter an orchestrated flow with parallel reviewers but no arbitration step — conflicts in reviewer outputs are surfaced in the report rather than resolved automatically.</p>
+          <p>Estimated cost: slightly above A for simple PRs, slightly below B for complex ones. Adds a classification step with its own failure mode: misclassified PRs get the wrong architecture.</p>
+          <div class="read-divider"></div>
+          <p>The team needs to ship one of these architectures. You will defend one of them — including its failure modes — to the rest of the engineering team.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">The Coordination Tax</h1>
+        <div class="read-time">5 min read</div>
+        <div class="read-body">
+          <p>Orchestration is not an upgrade over chaining. It's a different tradeoff. A coordinator adds real costs — extra round trips, more failure modes, more state to manage — and it earns those costs only when you genuinely need routing logic at the control level. The question is never "should I orchestrate?" It's "does the routing flexibility I gain justify the coordination overhead I'm paying?"</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">When chains are correct</div>
+          <p>Chains are the right architecture when the execution path is fixed and the same for every input. When stage 2 always follows stage 1, regardless of what stage 1 produced. When failures are handled locally — retry the step, or terminate. When the pipeline runs the same way for a one-line input and a thousand-line input, and that's intentional.</p>
+          <p>Chains are often the wrong choice when developers treat them as a default. "I'll start with a chain and add routing later" almost never works — adding routing to a chain requires rearchitecting it as an orchestrated pipeline. The coupling runs in the wrong direction.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">When orchestration is justified</div>
+          <p>Orchestration earns its cost when any of the following are true:</p>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>Routing based on output</strong>
+              <p>The output of one stage determines which stage runs next — or whether multiple stages run in parallel. This is impossible in a chain without retrofitting a coordinator.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Isolated failure handling</strong>
+              <p>A failure in one parallel stream should not cascade to the others. A coordinator can isolate failures, route retries to different models, and aggregate partial results. A chain cannot.</p>
+            </div>
+            <div class="framework-item">
+              <strong>State that spans stages</strong>
+              <p>The pipeline needs to maintain context across branches and merges — decisions made in stage 1 affect arbitration in stage 4. A coordinator manages that state. A chain doesn't have a coordination layer to hold it.</p>
+            </div>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance Standards — The Regulatory Layer</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>NIST AI RMF — MAP Function</strong>
+              <p>MAP requires identifying how an AI system can fail before building it. For architectural decisions, this means mapping the failure modes of each proposed design — not just the happy path. An orchestrated pipeline fails differently than a chain. A chain's failures cascade linearly; an orchestrator's failures are concentrated in the coordinator. NIST MAP applied here means drawing both failure maps before committing to either architecture.</p>
+            </div>
+            <div class="framework-item">
+              <strong>O*NET — Complex Problem Solving (2.B.3.g)</strong>
+              <p>Architectural choices compound. Choosing the wrong control model doesn't produce a one-time rework — it propagates into every stage the pipeline adds later. O*NET's Complex Problem Solving framework requires identifying the long-term constraints of a decision, not just its immediate fit. A chain that needs routing in month three requires more rework than a chain that never needs routing at all.</p>
+            </div>
+            <div class="framework-item">
+              <strong>O*NET — Systems Evaluation (6.A.1.b)</strong>
+              <p>Systems evaluation means measuring whether the system is doing what it should — and identifying the indicators that would tell you it isn't. For a pipeline architecture decision, that means naming: what metric would tell you that Architecture A is underperforming versus Architecture B for your actual inputs? Cost per review? Latency on large PRs? Review accuracy on security findings?</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Three Tests Before You Commit</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>Before defending an architecture, you need three things: a routing test to determine whether coordination is required, a failure map to understand how your chosen design breaks, and a measurement criterion to know whether the architecture is actually performing. Apply all three in the lab.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">1 — The routing test</div>
+          <div class="framework-item">
+            <strong>Does stage output determine what runs next?</strong>
+            <p>Ask this question about every stage in your proposed architecture. If any stage's output changes which stage runs next — or whether multiple stages run in parallel — you need a coordinator. If every stage always calls the next stage regardless of output, a chain is sufficient and adding orchestration is waste. For the code review pipeline: does a small PR genuinely need the same review path as a 2,000-line feature? If yes, chain. If not, you need routing — which requires a coordinator.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">2 — The failure map</div>
+          <div class="framework-item">
+            <strong>Where does your architecture concentrate its failure risk?</strong>
+            <p>Every architecture has a failure concentration point. In a chain, failures cascade — a bad output in stage 2 corrupts every stage downstream. In an orchestrated pipeline, failures concentrate in the coordinator — if it misroutes, every parallel stream is wrong. In a hybrid, failures concentrate in the triage classifier — a misclassified PR gets the wrong architecture. NIST MAP requires naming this concentration point before committing. You're not choosing the architecture that never fails. You're choosing which failure mode you can monitor and recover from.</p>
+          </div>
+          <div class="read-divider"></div>
+          <div class="read-section-label">3 — The measurement criterion</div>
+          <div class="framework-item">
+            <strong>What observable metric tells you the architecture is wrong for your inputs?</strong>
+            <p>Name one metric — before shipping — that would indicate your chosen architecture is underperforming. For cost-sensitive teams: cost per review on PRs of different sizes. For latency-sensitive teams: wall-clock time on large PRs. For accuracy-sensitive teams: rate at which security findings are missed on small PRs that go through the fast path. O*NET Systems Evaluation requires that you know what you're measuring before you ship, not after you observe a problem.</p>
+          </div>
+          <div class="read-divider"></div>
+          <p>In the lab, you'll commit to one of the three architectures and defend it to a panel that has read the failure maps for all three. You'll apply the routing test, name your failure concentration point, and state your measurement criterion. All three, in your opening argument.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+      <div class="lab-brief">
+        <div class="lab-type-badge">⚡ Debate Lab</div>
+        <div class="lab-brief-title">Architectural Defense</div>
+        <div class="lab-brief-dur">~25 minutes · 6 exchanges to complete</div>
+
+        <div class="brief-section">
+          <div class="brief-label">Your role</div>
+          <div class="role-card">
+            <div class="role-card-icon">🧑‍💻</div>
+            <div><strong>Engineer</strong>Pick one architecture (A, B, or C) and defend it. State your reasoning using the three tests from Context. The panel will challenge your failure modes — defend them with specifics, not principles.</div>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-label">AI role</div>
+          <div class="role-card">
+            <div class="role-card-icon">🔬</div>
+            <div><strong>Technical Panel</strong>A skeptical engineering review panel that has read all three proposals and knows the failure modes of each. It will probe coordination overhead, cascade failures, triage accuracy, and measurement plans. It does not accept vague tradeoffs.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+        <div class="brief-section">
+          <div class="brief-label">Framework reminders</div>
+          <div class="fw-reminder">
+            <div class="fw-item"><strong>Routing test:</strong> Does stage output determine what runs next? If yes, you need a coordinator.</div>
+            <div class="fw-item"><strong>Failure concentration:</strong> Where does your architecture concentrate its failure risk?</div>
+            <div class="fw-item"><strong>Measurement criterion:</strong> What metric tells you the architecture is wrong for your inputs?</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+        <div class="brief-section">
+          <div class="brief-label">How to complete</div>
+          <div class="brief-text">State which architecture you're defending and open with all three tests applied. The panel will push on your weakest points — stay specific. Lab completes after 6 substantive exchanges.</div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="State your architecture choice and open argument…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='building-agentic-pipelines-v2';
+var MODULE_ID='m3';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_TYPE='debate';
+var ARTIFACT_DESC='A written architectural defense — chosen control model argued against its specific failure modes, with routing test, failure concentration point, and measurement criterion explicitly stated';
+var LAB_COMPLETE_THRESHOLD=6;
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a technical review panel for AESOP AI Academy — Building Agentic Pipelines (v2.0), Module 3: Orchestration vs. Chaining. Stay strictly on topic: evaluating pipeline architectural choices between sequential chaining and coordinator-based orchestration. Apply NIST AI RMF MAP function — probe how each architecture fails, not just how it succeeds. O*NET Complex Problem Solving (2.B.3.g) applies: push learners to name long-term architectural constraints, not just immediate benefits. Do not let the learner make vague tradeoffs — demand specifics.\n\n';
+
+var LAB_SYSTEM='You are a skeptical technical review panel evaluating an engineer\'s architectural proposal for an automated code review pipeline.\n\nThe three proposals are:\n- Architecture A: Sequential chain (diff normalization → security scan → logic review → style check → report assembly). Fixed path, lowest cost, cascading failures.\n- Architecture B: Orchestrated. Coordinator routes small PRs to fast-path, large PRs to parallel specialized reviewers. Arbitration step for conflicts. 40-60% higher token cost, better isolation.\n- Architecture C: Hybrid. Triage step classifies PR as simple or complex, routes to chain or orchestrated flow. Introduces triage failure mode (misclassification).\n\nThe engineer will state which architecture they are defending and why.\n\nYour job: pressure-test their reasoning. Ask about:\n1. Routing test — do they actually need routing? If they chose A, probe whether all PRs truly follow the same path. If they chose B, probe whether the routing complexity is justified.\n2. Failure concentration — where does their architecture concentrate failure risk? Did they name it? Do they have a recovery plan?\n3. Measurement criterion — what specific metric would tell them their architecture is underperforming?\n4. Cost justification — for B and C, is the overhead justified by actual input variance? For A, is the cascading failure risk acceptable?\n5. Maintenance burden — what does adding a new review type cost in each architecture? Who has to change what?\n\nDo not let them stay at the level of "it depends" or "tradeoffs exist." Push for specifics: specific failure scenarios, specific metrics, specific maintenance costs.\n\nTone: professionally skeptical. You have read all three proposals. You are not hostile — but you will not accept hand-waving.';
+
+var FALLBACKS=[
+  'You\'ve stated a preference but I haven\'t heard a routing test applied. Does any stage in your chosen architecture produce output that changes which stage runs next — or whether multiple stages run in parallel? Walk me through that specific decision point. If the answer is no, you\'re defending a chain. If yes, tell me exactly what the coordinator evaluates and what it does with the result.',
+  'Where does your architecture concentrate its failure risk? Every architecture has one. In a sequential chain, failures cascade — stage 2\'s bad output corrupts every stage downstream with no detection. In an orchestrated pipeline, failures concentrate in the coordinator — if it misroutes, every parallel stream is wrong. In the hybrid, the triage classifier is the single point of failure. Name yours. Then tell me what monitoring would detect it.',
+  'What\'s the one metric you\'d measure before declaring this architecture is working? Cost per review? Latency on large PRs? Security finding recall rate? I need a specific, observable number — not a principle. And I need to know what threshold would cause you to reconsider the architecture.',
+  'Three months from now, the team adds a performance profiling review type. In your architecture, what changes? Who touches what? Walk me through the actual modification — which files, which stages, which routing rules. This is the maintenance burden test. The architecture that minimizes coupling minimizes rework.',
+  'You\'ve described how your architecture succeeds. Tell me how it fails in the worst case. Not a generic failure — a specific one. A 1,800-line refactor PR that touches security-sensitive code. What does your architecture do with it? Where does it slow down, misroute, or produce a wrong output? And how would you know it happened?',
+  'Apply NIST MAP to your proposal: before this ships, what are the three highest-risk failure modes? Not the ones you\'ve already handled — the ones you haven\'t. Rank them by blast radius. Which failure, if it occurs at 3 AM with no one watching, causes the most downstream damage?'
+];
+
+var LAB_OPENING='The team has reviewed all three architectural proposals for the automated code review pipeline.\n\n**Architecture A** — Sequential chain. Fixed path, lowest cost, cascading failures.\n**Architecture B** — Orchestrated with coordinator. Parallel specialized reviewers, isolated failures, 40-60% higher cost.\n**Architecture C** — Hybrid with triage. Routes by PR complexity, introduces triage failure mode.\n\nYou have the floor. State which architecture you\'re defending and open with your argument. Apply the three tests from the Context tab: the routing test, your failure concentration point, and your measurement criterion.\n\nWe\'ll go from there.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+    },600);
+    return;
+  }
+
+  var thinking=addMsg('thinking','Thinking…');
+
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:520,
+          system:ACADEMY_GUARDRAIL+LAB_SYSTEM,
+          messages:chatHistory
+        })
+      });
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+      return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;
+      fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];
+      fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+    }
+  }
+  btn.disabled=false;
+  inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,160)+'px';
+});
+
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

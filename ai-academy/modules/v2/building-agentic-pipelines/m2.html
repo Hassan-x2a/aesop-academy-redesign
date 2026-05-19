@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-18 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Agentic Pipelines — Module 2 · AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#9a5fb0;--accent-rgb:154,95,176;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Crimson Pro',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-family:'Crimson Pro',Georgia,serif;font-size:1.08rem;line-height:1.92;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-family:'Crimson Pro',Georgia,serif;font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-family:'Crimson Pro',Georgia,serif;font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.continue-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0;}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">Building Agentic Pipelines</div>
+  <div class="topbar-badge">Module 2 of 8</div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Build</span>
+    <span class="tab-dur">~25 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">Specs That Agents Can Execute</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Agents don't fail because they're not smart enough. They fail because the specification they're operating from is ambiguous, incomplete, or built for a human reader instead of a machine executor.</p>
+          <p>There's a specific kind of spec that an agent can use: one that defines the working context at the pipeline level (what this agent knows, what it has access to, what it's responsible for), and the task scope at the stage level (what input it receives, what output it must produce, what quality bar it must meet). That's what a Context.md, a Claude.md, and an Architecture Record Document (ARD) are for — each one handles a different layer of the agent's working environment.</p>
+          <p>Most developers write specs after they build. This module teaches you to write the spec that makes the build possible — and to structure it so an agent can execute from it directly, not just understand it.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Your artifact — Build Lab</div>
+            <div class="portfolio-desc">A pipeline specification document — ARD, Context.md, and Claude.md written for a real pipeline, with each section justified and structured for agent execution</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Write a Context.md that gives an agent an accurate model of the project at the pipeline level</li>
+            <li>Write a Claude.md (or equivalent system config) that defines agent behavior, constraints, and escalation rules</li>
+            <li>Structure an ARD that captures architectural decisions with enough context for downstream agents to build from</li>
+            <li>Identify the difference between a spec written for humans and one written for agent execution</li>
+            <li>Apply NIST GOVERN principles to pipeline configuration: who owns the spec, who can change it, and what happens when agents conflict with it</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">Two Teams, Same Pipeline</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>Two teams both build the same thing: a pipeline that takes a product requirement and produces a tested, reviewed code change. Same AI models, same infrastructure, same task.</p>
+          <p>Team A has no shared specification. Each developer configures their agent sessions individually. The AI knows what the developer typing the prompt knows. It doesn't know the project's architectural conventions, the naming standards, the existing modules it shouldn't duplicate, or the test format the team has agreed on. Every agent session starts from scratch. The developers are good, so outputs are usually reasonable. But "usually reasonable" means rework on one in four PRs, and nobody can explain why that one looked different.</p>
+          <p>Team B writes a Context.md before they build. It describes the project structure, what exists, what the agent is responsible for, and what it should not touch. They write a Claude.md that defines how the agent should behave: when to ask for clarification, when to proceed, what to do when it encounters something ambiguous, and when to stop and escalate. They write an ARD for each architectural decision — not a changelog, but a document that captures the options considered, the decision made, and the tradeoffs accepted. When a new agent session starts, it loads all three.</p>
+          <p>Team B's outputs are consistent enough to be reviewable by automated gates. Team A's aren't. By the time both teams have ten pipelines running, Team B can add a new agent to any pipeline without a setup session. Team A can't hand anything off without a 30-minute briefing.</p>
+          <p>The difference isn't configuration management. It's that Team B treats the spec as the first thing they build — not documentation they write after the fact, but a working artifact that the pipeline depends on.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">Three Documents, Three Layers</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>A pipeline specification lives at three layers. Each document is responsible for a different scope of the agent's working environment. Miss any one layer and the agent will fill the gap with assumptions — usually reasonable ones, occasionally catastrophic.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Context.md — the project layer</div>
+          <p>Context.md answers one question: <em>what does this agent need to know about the project to do its job without asking?</em> It is not a README. It is a machine-readable model of the working environment: what exists, what the agent is responsible for, what it should not touch, and what external dependencies it needs to know about.</p>
+          <p>A good Context.md is specific enough that two different developers reading it would produce the same mental model of the project. If it's vague enough that reasonable people interpret it differently, agents will interpret it differently too.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Claude.md (system config) — the behavior layer</div>
+          <p>Claude.md defines how the agent behaves, not what it knows. It covers: when to proceed vs. ask for clarification, what output format to use, what the agent should never do, and when to escalate or stop. It's the agent's standing orders.</p>
+          <p>The most important section most developers omit: <strong>escalation rules</strong>. Under what conditions should the agent stop and wait? What constitutes an ambiguous instruction it should not resolve on its own? An agent without defined escalation rules will always proceed — because proceeding feels like progress. An agent with defined escalation rules will sometimes stop, and that stop is information.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">ARD — the decision layer</div>
+          <p>An Architecture Record Document captures a specific decision: what options were considered, what was chosen, why, and what tradeoffs were accepted. It's not a log of what was built — it's the reasoning behind a choice that downstream agents need to understand to build consistently with it.</p>
+          <p>An ARD that says "we use Postgres" is useless to an agent. An ARD that says "we chose Postgres over SQLite because we need concurrent writes from multiple pipeline stages, and we accepted the operational overhead of running a separate database process" gives the agent what it needs to make consistent choices in the spaces the ARD doesn't cover.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance Standards — The Regulatory Layer</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>NIST AI RMF — GOVERN Function</strong>
+              <p>GOVERN requires that organizational policies for AI systems are defined before deployment. For agentic pipelines, this means: who owns the Context.md? Who can change it? What happens when a developer modifies the Claude.md without team review? The spec documents are governance artifacts — they define what the AI system is authorized to do. Treating them as living documents with no ownership is a GOVERN failure.</p>
+            </div>
+            <div class="framework-item">
+              <strong>O*NET — Complex Problem Solving (2.B.3.g)</strong>
+              <p>Identifying complex problems and reviewing related information to develop and evaluate options and implement solutions. Writing an ARD is applied complex problem solving — you're not just recording a decision, you're forcing yourself to name the alternatives and articulate why you rejected them. An agent reading that ARD inherits the problem-solving work you did.</p>
+            </div>
+            <div class="framework-item">
+              <strong>EU AI Act — Article 17: Quality Management</strong>
+              <p>Article 17 requires documented quality management processes for AI systems used in consequential contexts. A Claude.md with defined escalation rules and a Context.md with defined scope boundaries are quality management artifacts. If your pipeline is used for anything consequential, these documents are not optional infrastructure — they're part of your quality record.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Before You Write the Spec</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Three tests for a spec before you write it. Each one catches a different class of failure.</p>
+          <div class="read-divider"></div>
+          <div class="fw-reminder" style="margin-bottom:0;">
+            <div class="framework-item">
+              <strong>1. The cold-start test</strong>
+              <p>Could an agent with no prior knowledge of this project read your spec and produce consistent output on the first try? If the answer depends on an agent having "seen this before," the spec is missing something. A good spec makes the first session and the tenth session produce equivalent quality. If it doesn't, the delta is context that belongs in the spec.</p>
+            </div>
+            <div class="framework-item">
+              <strong>2. The conflict test</strong>
+              <p>If two instructions in your spec pull in different directions, which one wins? Agents that receive conflicting instructions don't error — they choose. They choose based on what feels more salient to the model, which is not the same as what you intended. Spec conflicts are governance failures: they mean the agent has discretion you didn't mean to give it. Find every place in your spec where two instructions could produce different behavior and resolve them explicitly.</p>
+            </div>
+            <div class="framework-item">
+              <strong>3. The escalation test</strong>
+              <p>Name five situations where you want the agent to stop and wait rather than proceed. If you can't name five, your escalation rules aren't complete. The most common missing escalation: "when the agent encounters something that contradicts the ARD." An agent without that rule will silently build inconsistently with prior decisions.</p>
+            </div>
+          </div>
+          <div class="read-divider"></div>
+          <p>In the lab, you'll write all three spec documents for a real pipeline, then test them against all three checks. You'll apply all three in the lab.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+      <div class="lab-brief">
+        <div class="lab-type-badge">■ Build Lab</div>
+        <div class="lab-brief-title">Pipeline Specification</div>
+        <div class="lab-brief-dur">~25 minutes · 3 documents</div>
+
+        <div class="brief-section">
+          <div class="brief-label">What you're building</div>
+          <div class="brief-text">A full pipeline specification: Context.md (project layer), Claude.md (behavior layer), and an ARD (decision layer). Pick a real pipeline — yours or one you're designing. We'll build all three documents and test them against the cold-start, conflict, and escalation checks.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Roles</div>
+          <div class="role-card">
+            <div class="role-card-icon">📐</div>
+            <div><strong>You — Spec Author</strong>Describe the pipeline and draft each document. Be honest about what you don't know yet.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-icon">🔬</div>
+            <div><strong>AI — Spec Reviewer</strong>I'll test each document against the three checks and push until the spec passes all of them.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Three documents to produce</div>
+          <div class="fw-reminder">
+            <div class="fw-item">Context.md — project scope, what exists, what agent is responsible for</div>
+            <div class="fw-item">Claude.md — behavior rules, escalation conditions, output format</div>
+            <div class="fw-item">ARD — one key architectural decision with options, choice, and tradeoffs</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Three checks to pass</div>
+          <div class="fw-reminder">
+            <div class="fw-item">Cold-start test — consistent output without prior context</div>
+            <div class="fw-item">Conflict test — no two instructions that pull in different directions</div>
+            <div class="fw-item">Escalation test — five named situations where agent must stop</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div class="compose-row">
+            <textarea class="compose-ta" id="lab-inp" placeholder="Describe the pipeline you're writing a spec for…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"></textarea>
+            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          </div>
+          <div class="compose-hint">Shift + Enter for a new line</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='building-agentic-pipelines-v2';
+var MODULE_ID='m2';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_TYPE='build';
+var ARTIFACT_DESC='A pipeline specification document — Context.md, Claude.md, and ARD written for a real pipeline, with each section tested against cold-start, conflict, and escalation checks';
+var LAB_COMPLETE_THRESHOLD=4;
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a spec reviewer for AESOP AI Academy — Building Agentic Pipelines (v2.0), Module 2: Specs That Agents Can Execute. Stay strictly on topic: writing and testing Context.md, Claude.md, and ARD documents for agentic pipelines. Apply NIST AI RMF GOVERN function: who owns each document, who can change it, and what happens when agents conflict with it. Apply EU AI Act Art.17 quality management thinking: these docs are quality artifacts, not optional notes. Do not accept vague or incomplete specs. Test every document against three checks: cold-start, conflict, and escalation.\n\n';
+
+var LAB_SYSTEM='You are reviewing a developer\'s pipeline specification as they build it. Guide them through producing three documents for a real pipeline they own or are designing.\n\nStart by asking them to describe their pipeline and its purpose. Then work through the three documents in order:\n\n**Document 1: Context.md**\nAsk: What does an agent with zero prior knowledge need to know to work on this pipeline without asking? Push them to cover: project structure, what exists, what the agent is responsible for, what it must not touch, external dependencies. Test it: could the agent cold-start from this and produce consistent output?\n\n**Document 2: Claude.md**\nAsk: How should the agent behave? Push them to specify: when to proceed vs. clarify, what output format to use, what the agent must never do, and — critically — at least five specific escalation conditions (situations where the agent must stop, not proceed). If they cannot name five escalation conditions, push until they can.\n\n**Document 3: ARD**\nAsk: What is one architectural decision this pipeline depends on? Push them to write it properly: options considered, option chosen, reasoning, tradeoffs accepted. Test it: could an agent reading only this ARD make consistent downstream decisions?\n\nAfter all three documents are drafted, run the three checks:\n1. Cold-start test — passes if the spec enables consistent first-session output\n2. Conflict test — passes if no two instructions pull in different directions\n3. Escalation test — passes if five specific escalation conditions are named\n\nApply NIST GOVERN: who owns each document? Who can change it?\n\nTone: rigorous, specific. Don\'t accept "we document the project structure" — ask what specifically is documented, in what format, where it lives.';
+
+var FALLBACKS=[
+  'Your Context.md is a start. Let\'s test the cold-start check: read it as if you\'ve never seen the project before. What question would a first-session agent ask that this document doesn\'t answer? That gap belongs in the spec. Name one specific thing a cold-start agent would get wrong based on what\'s currently written.',
+  'Claude.md needs escalation rules. You\'ve described what the agent should do in the normal case. Now name the five situations where you want it to stop. Not "when something goes wrong" — five specific, named conditions. Start with: what should the agent do when it encounters a requirement that contradicts your ARD?',
+  'Let\'s check the ARD for the conflict test. You\'ve recorded the decision. But an agent reading only this ARD — with no other context — needs to make consistent choices in the spaces the ARD doesn\'t cover. What are the three adjacent decisions a developer might face where this ARD\'s reasoning applies? If you can\'t name them, the rationale section isn\'t specific enough.',
+  'NIST GOVERN applies here: who owns this spec? Specifically — if a developer needs to change the escalation rules in Claude.md, what\'s the process? Who reviews it? If the answer is "whoever feels like it," you have a GOVERN gap. An unowned spec is a spec that will drift. Name an owner for each of the three documents.'
+];
+
+var LAB_OPENING='Let\'s build your pipeline specification.\n\nDescribe the pipeline you\'re writing this for. Tell me:\n1. What does the pipeline do — what goes in, what comes out?\n2. How many stages does it have, roughly?\n3. Who runs it — one developer, a team, automated on every commit?\n\nWe\'ll build the Context.md, Claude.md, and ARD in order, then test them against the three checks.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){chatHistory.push({role:'assistant',content:fb});addMsg('ai',fb);chatExchanges++;checkComplete();btn.disabled=false;inp.focus();},600);
+    return;
+  }
+  var thinking=addMsg('thinking','Thinking…');
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:520,system:ACADEMY_GUARDRAIL+LAB_SYSTEM,messages:chatHistory})});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);chatExchanges++;checkComplete();btn.disabled=false;inp.focus();return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});addMsg('ai',fb);chatExchanges++;checkComplete();
+    }
+  }
+  btn.disabled=false;inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,160)+'px';});
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>
