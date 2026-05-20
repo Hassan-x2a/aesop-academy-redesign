@@ -288,6 +288,26 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
 .compose-send:disabled{opacity:0.3;cursor:not-allowed;}
 .compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
 
+.lab-complete{
+  display:none;padding:1.5rem;background:rgba(201,160,90,0.08);
+  border:1px solid rgba(201,160,90,0.25);border-radius:6px;
+  text-align:center;flex-direction:column;gap:1rem;align-items:center;
+}
+.lab-complete.show{display:flex;}
+.lab-complete-title{font-size:1.1rem;font-weight:600;color:var(--gold);}
+.lab-complete-text{font-size:0.9rem;color:var(--text-mid);line-height:1.6;max-width:320px;}
+.next-module-btn{
+  background:rgba(var(--accent-rgb),0.12);
+  border:1px solid rgba(var(--accent-rgb),0.3);
+  color:var(--accent);border-radius:6px;
+  padding:0.65rem 1.5rem;
+  font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  cursor:pointer;font-family:'Nunito Sans',sans-serif;
+  text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;
+  transition:all 0.15s;
+}
+.next-module-btn:hover{background:rgba(var(--accent-rgb),0.2);border-color:rgba(var(--accent-rgb),0.45);}
+
 /* ── LIGHT MODE ── */
 [data-theme="light"]{
   --bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;
@@ -533,16 +553,23 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
       <div class="lab-workspace">
         <div class="lab-msgs" id="lab-msgs"></div>
         <div class="lab-compose">
-          <div class="compose-row">
-            <textarea
-              class="compose-ta"
-              id="lab-inp"
-              placeholder="Identify the bias source and your recommendation…"
-              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
-            ></textarea>
-            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="State your position and reasoning…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
           </div>
-          <div class="compose-hint">Shift + Enter for a new line</div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Module Complete</div>
+            <div class="lab-complete-text">You've completed Module 2 of 8.</div>
+            <a href="/ai-academy/modules/v2/ai-ethics-decision-making/m3.html" class="next-module-btn">Next Module →</a>
+          </div>
         </div>
       </div>
 
@@ -674,6 +701,8 @@ async function labSend(){
 function checkComplete(){
   if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
     labSignaled=true;
+    document.getElementById('lab-compose-active').style.display='none';
+    document.getElementById('lab-complete').classList.add('show');
     window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges},'*');
   }
 }

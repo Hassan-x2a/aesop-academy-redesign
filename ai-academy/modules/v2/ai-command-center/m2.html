@@ -382,8 +382,23 @@ li{margin-bottom:6px;}
       <div class="lab-workspace">
         <div class="lab-msgs" id="lab-msgs"></div>
         <div class="lab-compose">
-          <textarea class="compose-ta" id="lab-inp" placeholder="Describe your command center's task types, or start with a draft routing rule… (Shift+Enter for new line)" onkeydown="labKeydown(event)"></textarea>
-          <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="State your position and reasoning…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
+          </div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Module Complete</div>
+            <div class="lab-complete-text">You've completed Module 2 of 8.</div>
+            <a href="/ai-academy/modules/v2/ai-command-center/m3.html" class="next-module-btn">Next Module →</a>
+          </div>
         </div>
         <div class="compose-hint">Shift + Enter for new line</div>
       </div>

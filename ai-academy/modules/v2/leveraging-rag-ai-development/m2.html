@@ -318,11 +318,23 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
       <div class="lab-workspace">
         <div class="lab-msgs" id="lab-msgs"></div>
         <div class="lab-compose">
-          <div class="compose-row">
-            <textarea class="compose-ta" id="lab-inp" placeholder="Describe your knowledge domain…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"></textarea>
-            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="State your position and reasoning…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
           </div>
-          <div class="compose-hint">Shift + Enter for a new line</div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Module Complete</div>
+            <div class="lab-complete-text">You've completed Module 2 of 8.</div>
+            <a href="/ai-academy/modules/v2/leveraging-rag-ai-development/m3.html" class="next-module-btn">Next Module →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -455,7 +467,9 @@ async function labSend(){
 function checkComplete(){
   if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
     labSignaled=true;
-    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+    document.getElementById('lab-compose-active').style.display='none';
+    document.getElementById('lab-complete').classList.add('show');
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges},'*');
   }
 }
 

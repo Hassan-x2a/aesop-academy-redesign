@@ -354,16 +354,23 @@ li{margin-bottom:6px;}
       <div class="lab-workspace">
         <div class="lab-msgs" id="lab-msgs"></div>
         <div class="lab-compose">
-          <div class="compose-row">
-            <textarea
-              class="compose-ta"
-              id="lab-inp"
-              placeholder="State your decision: build a custom command center, or stick with the vendor client. Give the one capability gap that drove it."
-              onkeydown="labKeydown(event)"
-            ></textarea>
-            <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="State your position and reasoning…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
           </div>
-          <div class="compose-hint">Shift + Enter for a new line</div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Module Complete</div>
+            <div class="lab-complete-text">You've completed Module 3 of 8.</div>
+            <a href="/ai-academy/modules/v2/ai-command-center/m4.html" class="next-module-btn">Next Module →</a>
+          </div>
         </div>
       </div>
 

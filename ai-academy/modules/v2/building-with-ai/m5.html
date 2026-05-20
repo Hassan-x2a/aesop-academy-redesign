@@ -26,7 +26,25 @@
 
 <div class="page" id="page-context"><div class="read-scroll"><div class="read-col"><div class="section-badge">Context</div><h1 class="read-title">Where Humans Must Stay</h1><div class="read-time">2 min read</div><div class="read-body"><p>AI is good at pulling information from sources. Humans are good at judgment. A research workflow divides the work accordingly.</p><div class="read-divider"></div><div class="fw-reminder" style="margin-bottom:0;"><div class="framework-item"><strong>Source verification</strong><p>AI can identify sources. AI can tell you what a source says. AI cannot tell you if a source is credible, if it's been retracted, if it's fraudulent, or if it's been selectively quoted elsewhere. Humans verify.</p></div><div class="framework-item"><strong>Contradiction resolution</strong><p>AI can flag that two sources contradict each other. AI cannot decide which one is right. Humans make the judgment call, often by digging into methodology, funding, or other context clues.</p></div><div class="framework-item"><strong>Novelty claims</strong><p>AI cannot tell you if a finding is actually new or if it's been reported before in a slightly different form. Humans recognize when they're seeing old information repackaged.</p></div></div><div class="read-divider"></div><p>Your workflow succeeds when you've automated everything AI is good at and kept humans in charge of judgment.</p></div><div class="continue-bar"><button class="continue-btn" onclick="gotoPage('lab')">Enter the Lab<svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div></div></div>
 
-<div class="page" id="page-lab"><div class="lab-split"><div class="lab-brief"><div class="lab-type-badge">🏗 Build Lab</div><div class="lab-brief-title">Research Workflow</div><div class="lab-brief-dur">~30 minutes · 5 stages</div><div class="brief-section"><div class="brief-label">What you're doing</div><div class="brief-text">You'll build a complete research workflow for a domain of your choice. Design each stage, write the prompts, specify where humans review, test against a real research question.</div></div><div class="brief-hr"></div><div class="brief-section"><div class="brief-label">Domains to choose from</div><div class="brief-text">Policy analysis · Market research · Scientific literature · Investigative journalism · Your own choice</div></div><div class="brief-hr"></div><div class="brief-section"><div class="brief-label">Five stages to design</div><div class="scenario-dots"><div class="sdot active" id="sdot-1"></div><div class="sdot" id="sdot-2"></div><div class="sdot" id="sdot-3"></div><div class="sdot" id="sdot-4"></div><div class="sdot" id="sdot-5"></div></div><div class="brief-text">Question framing · Source routing · Synthesis · Gap detection · Output</div></div><div class="brief-hr"></div><div class="brief-section"><div class="brief-label">For each stage, define</div><div class="fw-reminder"><div class="fw-item">The specific prompt</div><div class="fw-item">What the AI produces</div><div class="fw-item">Where humans review</div><div class="fw-item">What can go wrong</div></div></div><div class="brief-hr"></div><div class="brief-section"><div class="brief-label">Success criteria</div><div class="brief-text">Your workflow is complete when someone else could use it. You should have documented all five stages and identified the human review gates.</div></div></div><div class="lab-workspace"><div class="lab-msgs" id="lab-msgs"></div><div class="lab-compose"><div class="compose-row"><textarea class="compose-ta" id="lab-inp" placeholder="Describe your design…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"></textarea><button class="compose-send" id="lab-btn" onclick="labSend()">Send</button></div><div class="compose-hint">Shift + Enter for a new line</div></div></div></div></div>
+<div class="page" id="page-lab"><div class="lab-split"><div class="lab-brief"><div class="lab-type-badge">🏗 Build Lab</div><div class="lab-brief-title">Research Workflow</div><div class="lab-brief-dur">~30 minutes · 5 stages</div><div class="brief-section"><div class="brief-label">What you're doing</div><div class="brief-text">You'll build a complete research workflow for a domain of your choice. Design each stage, write the prompts, specify where humans review, test against a real research question.</div></div><div class="brief-hr"></div><div class="brief-section"><div class="brief-label">Domains to choose from</div><div class="brief-text">Policy analysis · Market research · Scientific literature · Investigative journalism · Your own choice</div></div><div class="brief-hr"></div><div class="brief-section"><div class="brief-label">Five stages to design</div><div class="scenario-dots"><div class="sdot active" id="sdot-1"></div><div class="sdot" id="sdot-2"></div><div class="sdot" id="sdot-3"></div><div class="sdot" id="sdot-4"></div><div class="sdot" id="sdot-5"></div></div><div class="brief-text">Question framing · Source routing · Synthesis · Gap detection · Output</div></div><div class="brief-hr"></div><div class="brief-section"><div class="brief-label">For each stage, define</div><div class="fw-reminder"><div class="fw-item">The specific prompt</div><div class="fw-item">What the AI produces</div><div class="fw-item">Where humans review</div><div class="fw-item">What can go wrong</div></div></div><div class="brief-hr"></div><div class="brief-section"><div class="brief-label">Success criteria</div><div class="brief-text">Your workflow is complete when someone else could use it. You should have documented all five stages and identified the human review gates.</div></div></div><div class="lab-workspace"><div class="lab-msgs" id="lab-msgs"></div><div class="lab-compose">
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="State your position and reasoning…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
+          </div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Module Complete</div>
+            <div class="lab-complete-text">You've completed Module 5 of 8.</div>
+            <a href="/ai-academy/modules/v2/building-with-ai/m6.html" class="next-module-btn">Next Module →</a>
+          </div>
+        </div></div></div></div>
 
 <script>
 var COURSE_ID='building-with-ai-v2';
@@ -80,7 +98,14 @@ async function labSend(){
   btn.disabled=false;inp.focus();
 }
 
-function checkComplete(){if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){labSignaled=true;window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges},'*');}}
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    document.getElementById('lab-compose-active').style.display='none';
+    document.getElementById('lab-complete').classList.add('show');
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges},'*');
+  }
+}
 
 document.getElementById('lab-inp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,160)+'px';});
 
