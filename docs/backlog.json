@@ -6,10 +6,11 @@
       "description": "Modify the course development engine so that it researches answers to the questions it's going to ask for the planning phase of course development. Have it make recommendations that can be approved, rejected, or altered by the human reviewer.",
       "category": "Update",
       "priority": 80,
-      "status": "ready",
+      "status": "build-started",
       "created_at": "2026-05-19",
       "completed_at": null,
       "dependencies": [],
+      "branch": "task/1-modify-course-development-engine-do-research",
       "plan": "## Overview\n\nWhen building courses directly (without AIP), the /aesop-course-builder skill enters a planning phase that asks questions. Today, you must answer from intuition/memory with no data backing. This feature adds research-backed recommendations upfront, presented for approval/modification before course generation.\n\n## Architecture\n\nResearch Module (Pinecone + web search + course registries) → Recommendation Generator (Claude/Sonnet synthesis with reasoning) → Planning Phase (present recommendations + collect approval) → Course Builder (use approved parameters).\n\n## Phases\n\n1. Infrastructure & Data Access Setup — Claude/Sonnet setup, registry parsing, Pinecone integration\n2. Research Module Implementation — Research engine querying all data sources\n3. Recommendation Generator — Claude synthesis layer with graceful degradation\n4. Planning Phase Integration — Modify /aesop-course-builder to present and collect approvals\n5. End-to-End Testing & Validation — Full test suite and manual E2E walkthrough\n\n## First Proof Unit\n\nClaude (Sonnet) API connection works: invoke skill and confirm it can make synchronous API calls without error (smoke-command: node test with Anthropic SDK).\n\n## Success Criteria\n\nUser invokes /aesop-course-builder → skill researches answers → presents recommendations with reasoning → user approves/modifies → course generated with approved parameters. No course builder logic changed. Graceful degradation if Pinecone unavailable.",
       "proofUnits": [
         {
