@@ -6,10 +6,113 @@
       "description": "Modify the course development engine so that it researches answers to the questions it's going to ask for the planning phase of course development. Have it make recommendations that can be approved, rejected, or altered by the human reviewer.",
       "category": "Update",
       "priority": 80,
-      "status": "backlog",
+      "status": "ready",
       "created_at": "2026-05-19",
       "completed_at": null,
-      "dependencies": []
+      "dependencies": [],
+      "plan": "## Overview\n\nWhen building courses directly (without AIP), the /aesop-course-builder skill enters a planning phase that asks questions. Today, you must answer from intuition/memory with no data backing. This feature adds research-backed recommendations upfront, presented for approval/modification before course generation.\n\n## Architecture\n\nResearch Module (Pinecone + web search + course registries) → Recommendation Generator (Claude/Sonnet synthesis with reasoning) → Planning Phase (present recommendations + collect approval) → Course Builder (use approved parameters).\n\n## Phases\n\n1. Infrastructure & Data Access Setup — Claude/Sonnet setup, registry parsing, Pinecone integration\n2. Research Module Implementation — Research engine querying all data sources\n3. Recommendation Generator — Claude synthesis layer with graceful degradation\n4. Planning Phase Integration — Modify /aesop-course-builder to present and collect approvals\n5. End-to-End Testing & Validation — Full test suite and manual E2E walkthrough\n\n## First Proof Unit\n\nClaude (Sonnet) API connection works: invoke skill and confirm it can make synchronous API calls without error (smoke-command: node test with Anthropic SDK).\n\n## Success Criteria\n\nUser invokes /aesop-course-builder → skill researches answers → presents recommendations with reasoning → user approves/modifies → course generated with approved parameters. No course builder logic changed. Graceful degradation if Pinecone unavailable.",
+      "proofUnits": [
+        {
+          "number": 1,
+          "title": "Claude (Sonnet) API Connection",
+          "expectedBehavior": "Skill can make a synchronous Claude (Sonnet) API call and receive a response without errors.",
+          "proofType": "smoke-command",
+          "exactCommand": "cd .claude/skills/aesop-course-builder && node -e \"const { Anthropic } = require('@anthropic-ai/sdk'); const client = new Anthropic({apiKey: process.env.ANTHROPIC_API_KEY}); client.messages.create({model: 'claude-sonnet-4-20250514', max_tokens: 100, messages: [{role: 'user', content: 'test'}]}).then(r => console.log('✓ Connection OK')).catch(e => console.error('✗ Failed:', e.message))\"",
+          "expectedInitialFailure": "✗ Failed: API key not configured or similar error",
+          "expectedPassingEvidence": "✓ Connection OK and no errors",
+          "waiverGuidance": "N/A"
+        },
+        {
+          "number": 2,
+          "title": "Course Registry Parsing",
+          "expectedBehavior": "Utility function successfully parses courses.html and courses-v2.html, extracts course metadata (at least 5 courses from each), and returns structured data (course ID, title, audience, topics).",
+          "proofType": "failing-test",
+          "exactCommand": "npm test -- aesop-api/tests/registry-parser.test.js",
+          "expectedInitialFailure": "Test files do not exist; or parsing function does not exist; or tests fail because metadata is not extracted.",
+          "expectedPassingEvidence": "All tests pass. Output includes: '5+ v1 courses parsed', '5+ v2 courses parsed', 'metadata fields present (id, title, audience, topics)'.",
+          "waiverGuidance": "If no test framework, manual verification with console.log output showing 10+ courses with all expected fields. Scott approves output."
+        },
+        {
+          "number": 3,
+          "title": "Pinecone Query Integration",
+          "expectedBehavior": "Pinecone query function executes successfully when credentials are available; fails gracefully with warning when unavailable.",
+          "proofType": "smoke-command",
+          "exactCommand": "node aesop-api/lib/pinecone-query.js --test --concept 'AI Ethics'",
+          "expectedInitialFailure": "Function does not exist; or Pinecone call fails with unclear error; or no graceful degradation message.",
+          "expectedPassingEvidence": "Either '✓ Pinecone query returned X results' OR '⚠ Pinecone unavailable, continuing with web search' (graceful degradation).",
+          "waiverGuidance": "N/A"
+        },
+        {
+          "number": 4,
+          "title": "Research Engine Output",
+          "expectedBehavior": "Research engine takes course concept as input and returns structured findings (identified gaps, existing topic coverage, structural patterns, prerequisite recommendations).",
+          "proofType": "failing-test",
+          "exactCommand": "npm test -- aesop-api/tests/research-engine.test.js",
+          "expectedInitialFailure": "Test does not exist; or research engine returns unstructured data; or fields are missing (gaps, coverage, patterns, prerequisites).",
+          "expectedPassingEvidence": "All tests pass. Output includes structured findings with keys: 'gaps' (array), 'existingCoverage' (array), 'structuralPatterns' (array), 'prerequisites' (array).",
+          "waiverGuidance": "If automated testing difficult, manual run with node aesop-api/research-engine.js --concept 'AI Ethics' and inspect output. Scott verifies output has all expected fields and is coherent."
+        },
+        {
+          "number": 5,
+          "title": "Recommendation Generator with Reasoning",
+          "expectedBehavior": "Recommendation generator takes research findings and produces prescriptive recommendations (one per planning question: audience, topics, structure, prerequisites, assessment) each with 1-2 sentence reasoning.",
+          "proofType": "failing-test",
+          "exactCommand": "npm test -- aesop-api/tests/recommendation-generator.test.js",
+          "expectedInitialFailure": "Function does not exist; or recommendations are empty; or reasoning is missing; or format is wrong.",
+          "expectedPassingEvidence": "All tests pass. Output includes 5+ recommendations, each with: 'question' (string), 'recommendation' (string), 'reasoning' (1-2 sentences).",
+          "waiverGuidance": "N/A"
+        },
+        {
+          "number": 6,
+          "title": "Graceful Degradation (Pinecone unavailable)",
+          "expectedBehavior": "When Pinecone is unavailable (simulated by removing credentials), research and recommendations still work using web search + course registry data. User sees clear warning message.",
+          "proofType": "manual-script",
+          "exactCommand": "1. Unset PINECONE_API_KEY or set to invalid value. 2. Run /aesop-course-builder with test course. 3. Verify warning appears. 4. Verify research/recommendations complete. 5. Restore credentials.",
+          "expectedInitialFailure": "No graceful degradation; error thrown; process hangs; or no warning message.",
+          "expectedPassingEvidence": "Warning message appears, process completes, recommendations generated, user can proceed.",
+          "waiverGuidance": "Manual verification by Scott. If Pinecone always unavailable in test environment, confirm design aligns and Scott approves."
+        },
+        {
+          "number": 7,
+          "title": "Planning Phase Question Audit",
+          "expectedBehavior": "Audit document lists all planning phase questions and confirms each maps to a recommendation.",
+          "proofType": "manual-script",
+          "exactCommand": "1. Open .claude/skills/aesop-course-builder and locate planning phase code. 2. Extract all questions. 3. Create docs/planning-questions-audit.md. 4. For each question, map to recommendation field (✓/⚠/✗). 5. Result: 100% of questions mapped.",
+          "expectedInitialFailure": "No audit exists; or planning questions don't map to recommendations; or audit incomplete.",
+          "expectedPassingEvidence": "Audit document exists, 100% of questions mapped, all statuses ✓.",
+          "waiverGuidance": "Audit is manual; Scott reviews and confirms mapping correct."
+        },
+        {
+          "number": 8,
+          "title": "Planning Phase Integration",
+          "expectedBehavior": "When /aesop-course-builder is invoked, it displays research-backed recommendations (with reasoning), then asks for approval/modification before proceeding to course generation.",
+          "proofType": "manual-script",
+          "exactCommand": "1. Invoke /aesop-course-builder 'AI Ethics Course'. 2. Verify recommendations appear first (not questions). 3. Verify reasoning present. 4. Verify approval/modification prompt. 5. Provide approval. 6. Verify course generation proceeds.",
+          "expectedInitialFailure": "Skill asks planning questions immediately (no research phase); or recommendations don't appear.",
+          "expectedPassingEvidence": "Full workflow: research → recommendations → approval → course generation. User can read, modify, and see recommendations used.",
+          "waiverGuidance": "Manual walkthrough by Scott. Screenshot/transcript confirms all steps."
+        },
+        {
+          "number": 9,
+          "title": "End-to-End Course Generation with Approved Recommendations",
+          "expectedBehavior": "Full flow from /aesop-course-builder invocation to completed course HTML. Course structure and metadata reflect approved recommendations.",
+          "proofType": "manual-script",
+          "exactCommand": "1. Invoke /aesop-course-builder 'Python Basics'. 2. Review and approve recommendations. 3. Course generates. 4. Verify files created and metadata matches approvals. 5. Spot-check course is readable and functional.",
+          "expectedInitialFailure": "Course generation fails after approval; or generated course doesn't match recommendations; or course not registered.",
+          "expectedPassingEvidence": "Course generated, files created, metadata matches, course accessible and functional.",
+          "waiverGuidance": "Full manual walkthrough by Scott. Course must match approved recommendations. Scott signs off on quality."
+        },
+        {
+          "number": 10,
+          "title": "Research Accuracy Validation",
+          "expectedBehavior": "Research findings (gaps, topic coverage, patterns, prerequisites) are accurate and relevant. Recommendations informed by research are credible and actionable.",
+          "proofType": "manual-script",
+          "exactCommand": "1. Run research on 3 test concepts (AI Ethics, Python Basics, Cybersecurity). 2. Manually review findings against known corpus. 3. Verify gaps are real, coverage accurate, patterns match, prerequisites reasonable. 4. Document: 80%+ findings accurate.",
+          "expectedInitialFailure": "Research is vague, inaccurate, or doesn't reference actual courses.",
+          "expectedPassingEvidence": "80%+ of findings verifiably accurate. Recommendations feel credible. Scott confirms findings would guide course development.",
+          "waiverGuidance": "Manual review by Scott. If some findings hallucinated, note for synthesis prompt refinement (future)."
+        }
+      ]
     }
   ]
 }
