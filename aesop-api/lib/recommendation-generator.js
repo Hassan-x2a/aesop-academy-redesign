@@ -7,9 +7,11 @@
 import { Anthropic } from '@anthropic-ai/sdk';
 import { sanitizeConcept } from './sanitize.js';
 
-const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+let _client = null;
+function getClient() {
+  if (!_client) _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  return _client;
+}
 
 /**
  * Generate recommendations from research findings
