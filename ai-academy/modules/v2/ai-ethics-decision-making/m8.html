@@ -292,6 +292,15 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
 }
 .next-module-btn:hover{background:rgba(var(--accent-rgb),0.2);border-color:rgba(var(--accent-rgb),0.45);}
 
+.topbar-nav{display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-nav-btn{
+  font-size:0.75rem;color:var(--text-dim);text-decoration:none;
+  padding:0.12rem 0.45rem;border-radius:3px;
+  border:1px solid var(--border);line-height:1.6;
+  transition:all 0.15s;
+}
+.topbar-nav-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+.topbar-nav-btn.disabled{opacity:0.2;pointer-events:none;cursor:default;}
 /* ── LIGHT MODE ── */
 [data-theme="light"]{
   --bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;
@@ -325,7 +334,7 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;heigh
   <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
   <div class="topbar-sep"></div>
   <div class="topbar-course">AI Ethics &amp; Decision Making</div>
-  <div class="topbar-badge">Module 8 of 8</div>
+  <div class="topbar-nav"><a class="topbar-nav-btn" href="/ai-academy/modules/v2/ai-ethics-decision-making/m7.html">&#8249;</a><div class="topbar-badge">Module 8 of 8</div><span class="topbar-nav-btn disabled">&#8250;</span></div>
   <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
 </div>
 

@@ -121,6 +121,15 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   .lab-split{flex-direction:column;}
   .lab-brief{width:100%;max-height:220px;border-right:none;border-bottom:1px solid var(--border);}
 }
+.topbar-nav{display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-nav-btn{
+  font-size:0.75rem;color:var(--text-dim);text-decoration:none;
+  padding:0.12rem 0.45rem;border-radius:3px;
+  border:1px solid var(--border);line-height:1.6;
+  transition:all 0.15s;
+}
+.topbar-nav-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+.topbar-nav-btn.disabled{opacity:0.2;pointer-events:none;cursor:default;}
 </style>
 </head>
 <body>
@@ -130,6 +139,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div class="topbar-sep"></div>
   <div class="topbar-course">Better Brainstorming with AI · Module 2: Divergent Thinking with AI</div>
   <div class="topbar-badge">SKILL LAB</div>
+  <div class="topbar-nav"><a class="topbar-nav-btn" href="/ai-academy/modules/v2/brainstorming-with-ai/m1.html">&#8249;</a><div class="topbar-badge">Module 2 of 8</div><a class="topbar-nav-btn" href="/ai-academy/modules/v2/brainstorming-with-ai/m3.html">&#8250;</a></div>
   <button class="topbar-theme" onclick="toggleTheme()">☀ / ☾</button>
 </div>
 
