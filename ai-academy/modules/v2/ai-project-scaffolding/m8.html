@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-21 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Scaffolding System — AI Project Scaffolding | AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#9a5fb0;--accent-rgb:154,95,176;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.topbar-nav{display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-nav-btn{font-size:0.75rem;color:var(--text-dim);text-decoration:none;padding:0.12rem 0.45rem;border-radius:3px;border:1px solid var(--border);line-height:1.6;transition:all 0.15s;}
+.topbar-nav-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Crimson Pro',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-family:'Crimson Pro',Georgia,serif;font-size:1.08rem;line-height:1.92;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-type{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-family:'Crimson Pro',Georgia,serif;font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-family:'Crimson Pro',Georgia,serif;font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+.lab-complete{display:none;padding:1.5rem;background:rgba(201,160,90,0.08);border:1px solid rgba(201,160,90,0.25);border-radius:6px;text-align:center;flex-direction:column;gap:1rem;align-items:center;}
+.lab-complete.show{display:flex;}
+.lab-complete-title{font-size:1.1rem;font-weight:600;color:var(--gold);}
+.lab-complete-text{font-size:0.9rem;color:var(--text-mid);line-height:1.6;max-width:320px;}
+.finish-btn{background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.3);color:var(--accent);border-radius:6px;padding:0.65rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.15s;}
+.finish-btn:hover{background:rgba(var(--accent-rgb),0.2);border-color:rgba(var(--accent-rgb),0.45);}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">AI Project Scaffolding</div>
+  <div class="topbar-nav">
+    <a class="topbar-nav-btn" href="/ai-academy/modules/v2/ai-project-scaffolding/m7.html">&#8249;</a>
+    <div class="topbar-badge">Module 8 of 8</div>
+    <span class="topbar-nav-btn" style="opacity:0.25;cursor:default;">&#8250;</span>
+  </div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Build</span>
+    <span class="tab-dur">~25 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">Your Scaffolding System</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>This is the synthesis module. Every concept from the previous seven modules comes together in one deliverable: a complete, working scaffolding system for a project of your choice — real or imagined.</p>
+          <p>A complete scaffolding system is not a collection of files. It's a coherent architecture where each piece has a defined role, the pieces relate to each other without contradiction, and the whole can be handed to any AI session and produce consistent, governed behavior. You know what's missing from a system when the AI misbehaves and you can't explain why by reading the files.</p>
+          <p>The final artifact integrates all four NIST AI RMF functions: GOVERN (accountability structure), MAP (context documentation), MEASURE (scope and consistency), and MANAGE (continuity and failure response). Your governance summary must name which function each component of your system addresses. That's what makes it a governed system rather than a folder of markdown files.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Portfolio artifact</div>
+            <div class="portfolio-type">Build</div>
+            <div class="portfolio-desc">A complete scaffolding system — CLAUDE.md with five required sections, ai-context.md with domain facts, rules file, HANDOFF.md template, and a governance summary mapping each component to NIST AI RMF GOVERN, MAP, MEASURE, and MANAGE functions.</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Assemble a complete scaffolding system from all previous module concepts</li>
+            <li>Map every component to its corresponding NIST AI RMF function</li>
+            <li>Verify completeness using the three scaffolding layer model from Module 1</li>
+            <li>Identify the gaps in your system before they produce AI misbehavior</li>
+            <li>Produce a governance summary that explains the system's accountability structure to a non-technical reviewer</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">The New Hire Test</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A senior developer is leaving a two-person startup. Before they go, they have two weeks to document everything the incoming developer will need — not the codebase, which is well-tested and readable, but the scaffolding: the constraints, the conventions, the decisions made and why, the patterns that work and the patterns that don't.</p>
+          <p>The new developer will be working with AI coding tools from day one. The scaffolding doesn't just need to inform a human — it needs to inform an AI that has no prior context about the project, no access to the departing developer, and no ability to ask follow-up questions about history. The files are all it has.</p>
+          <p>The departing developer starts writing. The first version of the CLAUDE.md takes two hours and covers the obvious: tech stack, deployment, branch conventions. They show it to a colleague who asks: "If an AI reads this tomorrow and something goes wrong, would you know which file was missing?" The developer stares at the screen. They don't know.</p>
+          <p>The problem isn't that the scaffolding is wrong. It's that there's no framework for evaluating whether it's complete. The developer knows the project well enough that they can feel the gaps — but they can't name them systematically. Without a systematic completeness check, the scaffolding will look finished while leaving the most important knowledge undocumented.</p>
+          <p>The framework for that completeness check is what this course has been building toward. The final module puts it to work.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">The Completeness Check</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>A scaffolding system is complete when every layer is covered and every component maps to a governance function. Use the three-layer model from Module 1 and the four NIST functions as the evaluation framework.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Layer 1 — Structural (GOVERN)</div>
+          <p>Does the CLAUDE.md answer: what are we building, what are the technical constraints, what architectural decisions are locked in, what is explicitly banned, and what are the workflow rules? If any of these five questions can't be answered by reading the CLAUDE.md, the structural layer is incomplete. The GOVERN function owns this layer: it establishes accountability by making the AI's constraints explicit.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Layer 2 — Context (MAP)</div>
+          <p>Does the ai-context.md answer: what domain facts are always true, what vocabulary is specific to this project, what invariants must never be violated? Does the rules file answer: what conventions are derived from incidents, what must always be done, what process is required? The MAP function owns this layer: it makes tacit knowledge explicit and documentable.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Layer 3 — Session (MANAGE + MEASURE)</div>
+          <p>Does the HANDOFF.md template cover all five required fields? Does the session start and end protocol exist and is it in the CLAUDE.md? Does the maintenance protocol define how to detect and respond to conflicts, drift, and gaps? MANAGE owns the continuity and recovery aspects. MEASURE owns the consistency and scoping aspects — making sure context stays accurate and focused.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">The Governance Summary</div>
+          <p>A governance summary is a one-page document that explains the scaffolding system to a non-technical reviewer. It lists every component, names the NIST function it addresses, and states what the component prevents. "CLAUDE.md — GOVERN — prevents the AI from making architectural decisions that violate project constraints." "HANDOFF.md protocol — MANAGE — prevents context loss across sessions, ensuring AI decisions remain auditable and recoverable." A reviewer reading the summary should understand how the system maintains accountability, completeness, consistency, and continuity without reading any of the actual files.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance — All Four NIST Functions</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>GOVERN — Accountability Structure</strong>
+              <p>Who is accountable for what the AI does? CLAUDE.md makes accountability explicit: the AI operates under these constraints, these workflow rules, and this autonomy boundary. If something goes wrong, the CLAUDE.md is the accountability document.</p>
+            </div>
+            <div class="framework-item">
+              <strong>MAP — Context Documentation</strong>
+              <p>What does the AI need to know about the problem space? ai-context.md and rules files make tacit knowledge explicit — the domain facts and team conventions that would otherwise exist only in developer memory.</p>
+            </div>
+            <div class="framework-item">
+              <strong>MEASURE — Scope and Consistency</strong>
+              <p>Is the context accurate and appropriately scoped? The layered architecture (root + package) prevents context noise. The consistency audit prevents contradictions. Staleness dating prevents drift from going undetected.</p>
+            </div>
+            <div class="framework-item">
+              <strong>MANAGE — Continuity and Recovery</strong>
+              <p>How does the system stay reliable over time? The HANDOFF.md protocol prevents context loss. The failure mode detection protocols (consistency audit, symbol grep, decision review) prevent conflicts, drift, and gaps from reaching production.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">What Makes a System Coherent</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>A scaffolding system is more than files. It's the relationships between the files — who overrides whom, what triggers what, which components depend on which. Coherence means those relationships are explicit and intentional.</p>
+          <div class="read-divider"></div>
+          <div class="fw-reminder" style="margin-bottom:0;">
+            <div class="framework-item">
+              <strong>Coherence Test 1 — No Contradictions</strong>
+              <p>Read all the files together. Is there any sentence in one file that contradicts a sentence in another? If yes, the system is not coherent — it's a collection of files with unresolved conflicts. Resolve every contradiction before calling the system complete.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Coherence Test 2 — Every Rule Has a Home</strong>
+              <p>Every rule in the system should be in exactly one file — the file that owns its type. A domain fact in the CLAUDE.md instead of ai-context.md isn't wrong, but it's in the wrong home. Misplaced rules become stale faster because they're not maintained by the process designed for their type.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Coherence Test 3 — The AI Can Fail Safely</strong>
+              <p>What happens when the AI encounters a situation not covered by any file? A coherent system has an explicit default: "When in doubt, ask before acting." That default should be in the CLAUDE.md. Without it, the AI will invent a default from training data — which may be reasonable, or may violate everything you've built.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Coherence Test 4 — Maintainable Under Pressure</strong>
+              <p>Will this system survive a month of rapid development when nobody has time to write documentation? The maintenance burden must be low enough that it actually happens. If updating the scaffolding takes thirty minutes, it won't happen. If it takes three, it will. Design for the reality of development pressure, not the ideal of perfect documentation.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+
+      <div class="lab-brief">
+        <div class="lab-type-badge">🔨 Build Lab</div>
+        <div class="lab-brief-title">Complete Scaffolding System</div>
+        <div class="lab-brief-dur">~25 minutes · final artifact</div>
+
+        <div class="brief-section">
+          <div class="brief-label">What you're doing</div>
+          <div class="brief-text">Build a complete scaffolding system for a project you choose — real or imagined. Every component must map to a NIST function. The AI runs the four coherence tests on your system before approving it.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Roles</div>
+          <div class="role-card">
+            <div class="role-card-icon">🏗</div>
+            <div><strong>You — System Architect</strong>Design the complete scaffolding system. Justify every component against the layer model and the four NIST functions.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-icon">✅</div>
+            <div><strong>AI — Completeness Reviewer</strong>I'll run the four coherence tests, check layer coverage, verify NIST mapping, and identify what's still missing before calling it complete.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Required components</div>
+          <div class="fw-reminder">
+            <div class="fw-item">CLAUDE.md — five sections (GOVERN)</div>
+            <div class="fw-item">ai-context.md — domain facts (MAP)</div>
+            <div class="fw-item">Rules file — conventions (MAP/MEASURE)</div>
+            <div class="fw-item">HANDOFF.md template — five fields (MANAGE)</div>
+            <div class="fw-item">Governance summary — NIST mapping</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="Describe your project and start with the CLAUDE.md outline…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
+          </div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Course Complete</div>
+            <div class="lab-complete-text">You've completed AI Project Scaffolding. Your complete scaffolding system is your eighth and final portfolio artifact. You now have a full portfolio of eight governed AI development artifacts.</div>
+            <a href="/ai-academy/courses-v2.html" class="finish-btn">Back to Courses →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='ai-project-scaffolding-v2';
+var MODULE_ID='m8';
+var MODULE_NUM=8;
+var LAB_TYPE='build';
+var ARTIFACT_DESC='A complete scaffolding system — CLAUDE.md with five sections, ai-context.md, rules file, HANDOFF.md template, and a governance summary mapping every component to NIST AI RMF GOVERN, MAP, MEASURE, and MANAGE functions';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD=4;
+
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a build coach for AESOP AI Academy — AI Project Scaffolding, Module 8: Your Scaffolding System. Stay strictly on topic: helping the learner build a complete, coherent scaffolding system and map it to all four NIST AI RMF functions (GOVERN, MAP, MEASURE, MANAGE). Run the four coherence tests: no contradictions, every rule has a home, AI can fail safely, maintainable under pressure.\n\n';
+
+var LAB_SYSTEM='You are reviewing a learner\'s complete scaffolding system. They choose their own project (real or imagined).\n\nGuide them through building all five components:\n1. CLAUDE.md — five sections: project identity, technical constraints, architectural decisions, banned patterns, workflow rules\n2. ai-context.md — domain facts with staleness dates\n3. Rules file — conventions derived from team practice or incidents\n4. HANDOFF.md template — five required fields\n5. Governance summary — every component mapped to a NIST function with a one-sentence statement of what it prevents\n\nFor each component, verify:\n- Does it cover its layer (structural, context, or session)?\n- Does it pass its coherence test?\n- Does it map cleanly to a NIST function, or is the mapping forced?\n\nFour coherence tests to run when they claim the system is complete:\n1. No contradictions: "I found a potential conflict — [identify a real or illustrative example based on what they\'ve written]. Which file is authoritative?"\n2. Every rule has a home: "I see [specific rule] in the CLAUDE.md. Is that structural context, domain context, or a convention? Is it in the right file?"\n3. AI can fail safely: "What happens when the AI encounters a situation not covered by any of these files? Where is the default behavior defined?"\n4. Maintainable under pressure: "If your team shipped every day for a month without updating any of these files, which would drift furthest from reality? How does your system catch that?"\n\nThe governance summary is the final gate. Approve only when every component has a NIST mapping and a one-sentence prevention statement, and all four coherence tests have been addressed.\n\nTone: Rigorous but celebratory at the end. This is the capstone. When the system is genuinely complete, acknowledge that the learner now has a reusable framework, not just artifacts for this course.';
+
+var FALLBACKS=[
+  'Good start. You\'ve named the project and begun the CLAUDE.md. I need to see the five sections explicitly: project identity, technical constraints, architectural decisions, banned patterns, workflow rules. Which sections are complete? And for each one: which NIST function does it address?',
+  'The CLAUDE.md is solid. Now the domain context: what domain facts must always be true for this project, regardless of what feature is being built? These go in ai-context.md, not the CLAUDE.md. Give me at least three assertions with staleness dates and a negative-space entry for something that is explicitly banned.',
+  'I\'m running Coherence Test 3 — AI can fail safely. Looking at your system: what happens when the AI encounters a feature request not covered by any of these files? Where does it find guidance? If the answer is "it guesses," that\'s a gap. What default behavior rule should be in your CLAUDE.md?',
+  'You\'re close to complete. The last component is the governance summary. One sentence per component: what it is, which NIST function it addresses, and what it prevents. Format: "[Component] — [NIST Function] — prevents [specific behavior]." When that\'s done, I\'ll run the final coherence check.'
+];
+
+var LAB_OPENING='This is the final build. You\'re designing a complete scaffolding system for a project you choose — it can be something you\'re working on, something you\'ve worked on before, or an imagined project.\n\n**Your system must include:**\n1. CLAUDE.md outline (five sections)\n2. ai-context.md (domain facts)\n3. Rules file (conventions)\n4. HANDOFF.md template (five fields)\n5. Governance summary (NIST mapping)\n\nBefore you build: tell me about the project. What is it? What\'s the tech stack? Who works on it? How long has it been in development? The more real the project, the more useful the artifact you\'ll leave this course with.\n\nThen start with the CLAUDE.md. Give me the section headers and a one-sentence description of what each section contains — don\'t fill them in yet, just define the structure. When the structure is right, we\'ll fill each section and map it to a NIST function.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){chatHistory.push({role:'assistant',content:fb});addMsg('ai',fb);chatExchanges++;checkComplete();btn.disabled=false;inp.focus();},600);
+    return;
+  }
+  var thinking=addMsg('thinking','Thinking…');
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:480,system:ACADEMY_GUARDRAIL+LAB_SYSTEM,messages:chatHistory})});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);chatExchanges++;checkComplete();btn.disabled=false;inp.focus();return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});addMsg('ai',fb);chatExchanges++;checkComplete();
+    }
+  }
+  btn.disabled=false;inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    document.getElementById('lab-compose-active').style.display='none';
+    document.getElementById('lab-complete').classList.add('show');
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,160)+'px';});
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

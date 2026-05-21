@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-21 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designing Your CLAUDE.md — AI Project Scaffolding | AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#9a5fb0;--accent-rgb:154,95,176;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.topbar-nav{display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-nav-btn{font-size:0.75rem;color:var(--text-dim);text-decoration:none;padding:0.12rem 0.45rem;border-radius:3px;border:1px solid var(--border);line-height:1.6;transition:all 0.15s;}
+.topbar-nav-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Crimson Pro',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-family:'Crimson Pro',Georgia,serif;font-size:1.08rem;line-height:1.92;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-type{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-family:'Crimson Pro',Georgia,serif;font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-family:'Crimson Pro',Georgia,serif;font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+.lab-complete{display:none;padding:1.5rem;background:rgba(201,160,90,0.08);border:1px solid rgba(201,160,90,0.25);border-radius:6px;text-align:center;flex-direction:column;gap:1rem;align-items:center;}
+.lab-complete.show{display:flex;}
+.lab-complete-title{font-size:1.1rem;font-weight:600;color:var(--gold);}
+.lab-complete-text{font-size:0.9rem;color:var(--text-mid);line-height:1.6;max-width:320px;}
+.next-module-btn{background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.3);color:var(--accent);border-radius:6px;padding:0.65rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.15s;}
+.next-module-btn:hover{background:rgba(var(--accent-rgb),0.2);border-color:rgba(var(--accent-rgb),0.45);}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">AI Project Scaffolding</div>
+  <div class="topbar-nav">
+    <a class="topbar-nav-btn" href="/ai-academy/modules/v2/ai-project-scaffolding/m1.html">&#8249;</a>
+    <div class="topbar-badge">Module 2 of 8</div>
+    <a class="topbar-nav-btn" href="/ai-academy/modules/v2/ai-project-scaffolding/m3.html">&#8250;</a>
+  </div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Build</span>
+    <span class="tab-dur">~25 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">Designing Your CLAUDE.md</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>CLAUDE.md is not a README. It's not documentation for humans. It's an instruction set for an AI system that will read it before every session and use it to decide what to do and what not to do.</p>
+          <p>Most developers write CLAUDE.md once, during setup, with whatever feels relevant in the moment. It starts accurate and becomes outdated. Within weeks, it's a list of generic principles that apply to every project and therefore help with none. The AI follows the file; the file no longer reflects the project. The gap widens silently.</p>
+          <p>A production-grade CLAUDE.md has a specific structure: project identity, technical constraints, architectural decisions, banned patterns, and workflow rules. It's written to be unambiguous. It's updated when decisions change. It's versioned and reviewed like code.</p>
+          <p>This module teaches you to build one from scratch — for a real project, with content that actually constrains AI behavior.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Portfolio artifact</div>
+            <div class="portfolio-type">Build</div>
+            <div class="portfolio-desc">A production CLAUDE.md — a complete, structured context file for a real or sample project including project identity, technical constraints, architectural decisions, banned patterns, and workflow rules.</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Identify the five sections every production CLAUDE.md must contain</li>
+            <li>Write entries that are specific enough to actually constrain AI behavior</li>
+            <li>Apply NIST AI RMF GOVERN requirements to your CLAUDE.md structure</li>
+            <li>Distinguish between useful entries and entries that are too generic to help</li>
+            <li>Build a complete CLAUDE.md for a real or sample project in a single session</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">The First Real Question</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A developer is three months into a solo SaaS project. TypeScript, Next.js, Supabase, deployed on Vercel. They've been using AI assistance from the start. It's been productive — fast prototyping, decent code generation, useful for debugging.</p>
+          <p>But they're noticing a pattern. Every time they start a new session with the AI, they spend five to ten minutes re-establishing project context. They paste in schema definitions. They remind the AI that they're using a service layer — the AI keeps trying to call Supabase directly from components. They clarify that state management goes through Zustand, not React context. They specify the naming conventions their linter enforces.</p>
+          <p>They have a CLAUDE.md. It says: "Use TypeScript. Prefer functional components. Write clean code. Follow the existing patterns in the codebase." The AI reads it and continues to make the same mistakes.</p>
+          <p>The developer starts to wonder: what would actually be in a CLAUDE.md that helps? Not principles — the AI already knows principles. What specific information, written in what specific way, would actually change what the AI does in a new session?</p>
+          <p>This is the right question. The answer is not about writing more. It's about writing precisely.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">Five Sections That Actually Work</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A CLAUDE.md that changes AI behavior has five sections. Each does a specific job. Generic entries in any section are wasted space.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Section 1 — Project Identity</div>
+          <p>One paragraph describing what the project does, who it's for, and what it's trying to achieve. Not tech stack — purpose. The AI uses this to make judgment calls about what good output looks like for this specific context. "A B2B SaaS product for small law firms to manage client intake" tells the AI more than "a web app."</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Section 2 — Technical Constraints</div>
+          <p>A precise list of what the AI must and must not do technically. Not "write clean code" — that's meaningless. Specific: "Never import directly from <em>@supabase/supabase-js</em> in components — use <em>lib/db.ts</em>." "All API routes must use the <em>withAuth</em> middleware." "State goes through Zustand — no React context for shared state." Each entry is a constraint the AI can apply or violate. Test every entry: if the AI could technically ignore it, rewrite it.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Section 3 — Architectural Decisions</div>
+          <p>The decisions that shaped the project structure — recorded so the AI doesn't re-litigate them. "We use a service layer between components and data access. This decision is final — do not suggest bypassing it for simplicity." The AI will frequently suggest "simpler" alternatives to your architectural choices. This section makes clear those choices were deliberate.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Section 4 — Banned Patterns</div>
+          <p>Explicit list of patterns that were tried and rejected, with reasons. This section is high-value because it covers the gap between "not in conventions" and "actively harmful here." "Do not use <em>useEffect</em> for data fetching — we use React Query everywhere. If you're reaching for <em>useEffect</em> for a data case, stop and ask." The reason matters: it prevents the AI from reasoning around the ban.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Section 5 — Workflow Rules</div>
+          <p>How this project handles AI work: commit conventions, branch naming, PR scope rules, what the AI is and isn't authorized to do. "Do not commit to main directly. Do not suggest force-pushing. When changing a shared utility, flag it before proceeding." This section implements NIST GOVERN requirements in practice.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance Standards — The Regulatory Layer</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>NIST AI RMF — GOVERN Function</strong>
+              <p>GOVERN requires that AI use is bounded by documented policies and that accountability is established. A CLAUDE.md that includes workflow rules (what AI can and cannot commit, what requires human review, when to escalate) directly implements GOVERN. A CLAUDE.md with only technical guidance and no workflow rules is incomplete from a governance standpoint — the AI is technically constrained but organizationally unchecked.</p>
+            </div>
+            <div class="framework-item">
+              <strong>EU AI Act — Article 4: AI Literacy</strong>
+              <p>Article 4 requires that organizations ensure personnel using AI systems have sufficient knowledge to operate them appropriately. Writing a CLAUDE.md is itself an act of AI literacy — it requires understanding what the AI will and won't infer, what ambiguity costs, and where explicit instruction is needed. Teams that have written careful CLAUDE.md files have, by necessity, developed the AI literacy that Article 4 requires.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">The Specificity Test</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Every entry in a CLAUDE.md should pass three tests before it stays in the file. You'll apply these in the lab when building your own.</p>
+          <div class="read-divider"></div>
+          <div class="fw-reminder" style="margin-bottom:0;">
+            <div class="framework-item">
+              <strong>The Violation Test</strong>
+              <p>Can you write a specific line of code that would violate this entry? If yes, the entry is specific enough. "Write clean code" fails — there's no specific violation. "Never call <em>fetch()</em> directly in a React component — use the <em>api/</em> module" passes — a developer could immediately show you code that violates it.</p>
+            </div>
+            <div class="framework-item">
+              <strong>The Redundancy Test</strong>
+              <p>Would a capable developer already know this without being told? If yes, the entry is probably too generic to help. "Handle errors" is redundant. "All API route errors must be logged with <em>logger.error()</em> before returning a 500 — never let errors silently return null" is specific and non-obvious.</p>
+            </div>
+            <div class="framework-item">
+              <strong>The Staleness Test</strong>
+              <p>When was this entry last reviewed? An entry that hasn't been touched since the project started is suspect. CLAUDE.md entries should be reviewed when the decision they describe changes — and the review date should be part of a comment in the file. Outdated entries are worse than absent ones: they actively misdirect the AI.</p>
+            </div>
+          </div>
+          <div class="read-divider"></div>
+          <p>In the lab, you'll build a complete CLAUDE.md for a sample project, applying all three tests to every entry you write. The AI will review each section and tell you where your entries are too generic to help.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+
+      <div class="lab-brief">
+        <div class="lab-type-badge">◈ Build Lab</div>
+        <div class="lab-brief-title">CLAUDE.md Construction</div>
+        <div class="lab-brief-dur">~25 minutes · 5 sections</div>
+
+        <div class="brief-section">
+          <div class="brief-label">What you're doing</div>
+          <div class="brief-text">You'll build a complete CLAUDE.md for a sample project — either one I describe or your own. Each section gets reviewed against the specificity tests before we move on.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Roles</div>
+          <div class="role-card">
+            <div class="role-card-icon">🏗</div>
+            <div><strong>You — Builder</strong>Write each section of the CLAUDE.md. I'll challenge any entry that's too generic to change AI behavior.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-icon">🔬</div>
+            <div><strong>AI — Reviewer</strong>I apply the three specificity tests to each entry you write and push you to make vague entries concrete.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Five sections to build</div>
+          <div class="fw-reminder">
+            <div class="fw-item">1. Project Identity — purpose, audience, goals</div>
+            <div class="fw-item">2. Technical Constraints — specific must/must-nots</div>
+            <div class="fw-item">3. Architectural Decisions — recorded and final</div>
+            <div class="fw-item">4. Banned Patterns — with reasons</div>
+            <div class="fw-item">5. Workflow Rules — GOVERN requirements in practice</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Specificity tests</div>
+          <div class="fw-reminder">
+            <div class="fw-item">Violation test — can you show code that violates this?</div>
+            <div class="fw-item">Redundancy test — would a pro already know this?</div>
+            <div class="fw-item">Staleness test — when was this last reviewed?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="Write your CLAUDE.md section content here…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
+          </div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Module Complete</div>
+            <div class="lab-complete-text">You've completed Module 2 of 8. Your CLAUDE.md is your second portfolio artifact.</div>
+            <a href="/ai-academy/modules/v2/ai-project-scaffolding/m3.html" class="next-module-btn">Next Module →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='ai-project-scaffolding-v2';
+var MODULE_ID='m2';
+var MODULE_NUM=2;
+var LAB_TYPE='build';
+var ARTIFACT_DESC='A production CLAUDE.md with five complete sections: project identity, technical constraints, architectural decisions, banned patterns, and workflow rules';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD=4;
+
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a CLAUDE.md construction coach for AESOP AI Academy — AI Project Scaffolding, Module 2: Designing Your CLAUDE.md. Stay strictly on topic: building a production-grade CLAUDE.md with five specific sections. Apply the three specificity tests (violation, redundancy, staleness) to every entry the learner writes. Apply NIST AI RMF GOVERN requirements to the workflow rules section. Do not accept generic entries — push for specificity.\n\n';
+
+var LAB_SYSTEM='You are coaching a learner through building a complete CLAUDE.md for a project. Your job is to review each section they write and apply the three specificity tests.\n\nThe three tests:\n1. Violation test: Can you write a specific line of code that violates this entry? If not, it\'s too generic.\n2. Redundancy test: Would a capable developer already know this? If yes, it\'s probably not useful.\n3. Staleness test: Is there a mechanism to review this entry when the underlying decision changes?\n\nThe five sections to build (in order):\n1. Project Identity — purpose, audience, business goals (not tech stack)\n2. Technical Constraints — specific must/must-nots with no ambiguity\n3. Architectural Decisions — recorded and marked final\n4. Banned Patterns — with explicit reasons\n5. Workflow Rules — what AI can/cannot do; what requires human review (NIST GOVERN)\n\nStart by asking: "Are you building a CLAUDE.md for your own project or do you want me to give you a sample project to work with?" Then guide them through section by section.\n\nFor each section: let them write content, then review it applying the specificity tests. Identify any entries that are too vague and ask them to rewrite. Move to the next section only when the current section passes the tests.\n\nAfter all five sections are drafted and reviewed, ask them to do a final pass — are there any decisions made in the last month that aren\'t captured here? Any banned patterns the team discussed in Slack but never wrote down?\n\nGovernance note: When reviewing the workflow rules section, explicitly check that it addresses (1) what AI is authorized to commit without human review, (2) what changes require human approval, and (3) what the escalation path is when AI is uncertain. These are NIST GOVERN requirements.';
+
+var FALLBACKS=[
+  'That entry doesn\'t pass the violation test yet. Can you show me a specific line of code that would violate it? If you can\'t, the entry is too abstract to constrain AI behavior. Try rewriting it with a concrete example of what\'s prohibited.',
+  'Good start on that section. Now let\'s apply the redundancy test: which of these entries would a skilled developer already know without being told? Those can be cut or made more specific to your project. What\'s unique to your project that a generic developer wouldn\'t know?',
+  'For the workflow rules section, I need to see three things: what AI is authorized to do without human review, what changes require human approval before proceeding, and what happens when the AI encounters something it\'s uncertain about. Which of these is missing from what you\'ve written?',
+  'You\'ve built four sections. One more: banned patterns with reasons. What patterns did you try and reject? What approaches keep appearing in AI output that are wrong for this project? The reason matters — without it, the AI might reason around the ban.'
+];
+
+var LAB_OPENING='Let\'s build a CLAUDE.md that actually changes AI behavior.\n\nBefore we start: are you working on a real project you\'d like to write this for? Or would you prefer I give you a sample project (a B2B invoicing tool, TypeScript/Next.js/Supabase) to work with?\n\nEither way, we\'ll go section by section, and I\'ll apply the three specificity tests to everything you write:\n\n1. **Violation test** — can you show code that violates this entry?\n2. **Redundancy test** — would a capable dev already know this?\n3. **Staleness test** — is there a way to know when this entry needs updating?\n\nWhat are we building for?';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+    },600);
+    return;
+  }
+
+  var thinking=addMsg('thinking','Thinking…');
+
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-haiku-4-5-20251001',
+          max_tokens:480,
+          system:ACADEMY_GUARDRAIL+LAB_SYSTEM,
+          messages:chatHistory
+        })
+      });
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);
+      chatExchanges++;
+      checkComplete();
+      btn.disabled=false;
+      inp.focus();
+      return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;
+      fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];
+      fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});
+      addMsg('ai',fb);
+      chatExchanges++;
+      checkComplete();
+    }
+  }
+  btn.disabled=false;
+  inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    document.getElementById('lab-compose-active').style.display='none';
+    document.getElementById('lab-complete').classList.add('show');
+    window.parent.postMessage({
+      type:'labComplete',
+      courseId:COURSE_ID,
+      moduleId:MODULE_ID,
+      labId:'lab',
+      exchangeCount:chatExchanges,
+      artifactType:LAB_TYPE,
+      artifactDesc:ARTIFACT_DESC
+    },'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){
+  this.style.height='auto';
+  this.style.height=Math.min(this.scrollHeight,160)+'px';
+});
+
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

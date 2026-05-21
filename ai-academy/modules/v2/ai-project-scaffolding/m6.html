@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-21 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Structure and Handoffs — AI Project Scaffolding | AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#2ba898;--accent-rgb:43,168,152;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.topbar-nav{display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-nav-btn{font-size:0.75rem;color:var(--text-dim);text-decoration:none;padding:0.12rem 0.45rem;border-radius:3px;border:1px solid var(--border);line-height:1.6;transition:all 0.15s;}
+.topbar-nav-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Crimson Pro',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-family:'Crimson Pro',Georgia,serif;font-size:1.08rem;line-height:1.92;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-type{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-family:'Crimson Pro',Georgia,serif;font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-family:'Crimson Pro',Georgia,serif;font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+.lab-complete{display:none;padding:1.5rem;background:rgba(201,160,90,0.08);border:1px solid rgba(201,160,90,0.25);border-radius:6px;text-align:center;flex-direction:column;gap:1rem;align-items:center;}
+.lab-complete.show{display:flex;}
+.lab-complete-title{font-size:1.1rem;font-weight:600;color:var(--gold);}
+.lab-complete-text{font-size:0.9rem;color:var(--text-mid);line-height:1.6;max-width:320px;}
+.next-module-btn{background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.3);color:var(--accent);border-radius:6px;padding:0.65rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.15s;}
+.next-module-btn:hover{background:rgba(var(--accent-rgb),0.2);border-color:rgba(var(--accent-rgb),0.45);}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">AI Project Scaffolding</div>
+  <div class="topbar-nav">
+    <a class="topbar-nav-btn" href="/ai-academy/modules/v2/ai-project-scaffolding/m5.html">&#8249;</a>
+    <div class="topbar-badge">Module 6 of 8</div>
+    <a class="topbar-nav-btn" href="/ai-academy/modules/v2/ai-project-scaffolding/m7.html">&#8250;</a>
+  </div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Skill</span>
+    <span class="tab-dur">~20 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">Workflow Structure and Handoffs</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Every AI session ends. The context window closes. Everything the AI knew — the decisions made, the problems surfaced, the decisions deferred — disappears unless you write it down before the session ends. Most developers don't. The next session starts cold, rediscovers the same terrain, and makes the same decisions again.</p>
+          <p>Structured handoffs are the solution. A handoff is a document written at the end of a session that contains exactly what the next session needs to start with full context: what was accomplished, what decisions were made and why, what's in progress, what has been explicitly deferred, and what the next session should do first.</p>
+          <p>NIST MANAGE asks how AI-assisted work is maintained across time — how risks that emerge are tracked and addressed. A handoff protocol is how you implement MANAGE in daily development: it makes the AI's work auditable, recoverable, and continuous rather than fragmented and amnesia-prone.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Portfolio artifact</div>
+            <div class="portfolio-type">Skill</div>
+            <div class="portfolio-desc">A workflow structure for an AI-assisted project — session start protocol, HANDOFF.md template with five required fields, and a session end checklist that ensures complete context transfer.</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Write a HANDOFF.md that gives a fresh session full working context in under two minutes</li>
+            <li>Distinguish between what must be in a handoff and what is optional noise</li>
+            <li>Design a session start protocol that validates context before any work begins</li>
+            <li>Identify the five categories of information that expire at session end</li>
+            <li>Apply NIST MANAGE's continuity requirements to an AI-assisted development workflow</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">The Decision That Disappeared</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A developer spent three hours in an AI session working through a complex refactor of the notification system. By the end of the session, they'd made four significant decisions: switched the queue implementation from Redis to a PostgreSQL-backed queue for operational simplicity, added retry logic with exponential backoff, discovered that the existing email templates were inconsistently using two different templating engines, and deferred the template unification to a separate task.</p>
+          <p>The session ended. No handoff was written. The developer closed the laptop.</p>
+          <p>Three days later, a new session starts. The developer opens the codebase and asks the AI to continue the notification refactor. The AI sees the Redis code has been removed and the PostgreSQL queue is half-implemented. Without the context from the previous session, the AI has two choices: guess at the rationale, or ask. It guesses. It re-introduces a Redis dependency, because the PostgreSQL queue approach is unusual and the AI's training data favors Redis for queues.</p>
+          <p>The developer doesn't catch this until code review, two days later. The rationale for the PostgreSQL decision was in the previous session's conversation history, which is now gone. The developer can vaguely remember the reasoning but can't reconstruct it precisely. The code reviewer approves the Redis approach because the rationale for the alternative is unavailable.</p>
+          <p>A handoff written at the end of the first session would have cost five minutes and preserved all four decisions. Without it, the work regressed and the reasoning was lost.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">The Five Handoff Fields</h1>
+        <div class="read-time">4 min read</div>
+        <div class="read-body">
+          <p>A handoff document is not a project summary. It is not a changelog. It is not a meeting note. It is a specific document designed for one reader — the AI in the next session — to reconstruct working context. It has five required fields, and each one answers a specific question.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Field 1 — Session Summary</div>
+          <p>What was accomplished in this session? Completed work, not work in progress. This field is for the AI to understand what has changed since the last handoff. It answers: "What is different now compared to when I started?" Format: a bulleted list of completed work items, each one specific enough that the AI can verify it by reading the code.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Field 2 — Decisions Made</div>
+          <p>What architectural or significant decisions were made, and why? This is the most critical field. The rationale is what expires at session end — the code persists, but the reasoning doesn't. Every decision in this field must include a "why" that is specific enough to reconstruct the reasoning. "Switched to PostgreSQL queue for operational simplicity — avoids adding Redis to the infrastructure dependency stack, which requires a separate ops runbook."</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Field 3 — In Progress</div>
+          <p>What is not yet complete at the time of handoff? Be specific about the state. Not "working on retry logic" — "retry logic is half-implemented: the exponential backoff is working, the dead-letter queue is not yet written." This field tells the next session exactly where to pick up without needing to read every file.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Field 4 — Deferred Items</div>
+          <p>What was explicitly decided not to do in this session, and why? Deferred items are different from unplanned work — they are things you saw, evaluated, and decided to postpone. The developer in the scenario deferred the template unification. Without that in a deferred field, the next AI session may treat the inconsistency as an unnoticed bug and "fix" it immediately, disrupting the planned sequence.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Field 5 — Next Session</div>
+          <p>What should the next session do first? A single sentence. Not a full task list — just the first action. "Start by completing the dead-letter queue implementation in notifications/queue.ts, then run the full test suite." This field is the anti-cold-start mechanism. The AI can begin work immediately without needing to reconstruct a plan.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance — NIST AI RMF: MANAGE Function</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>NIST AI RMF — MANAGE: Continuity and Recovery</strong>
+              <p>The MANAGE function asks how AI risks are tracked and addressed over time. For AI-assisted development, a critical risk is context loss — the AI making decisions based on incomplete information because prior context wasn't preserved. A handoff protocol is the MANAGE practice that closes this gap: it makes AI-assisted work continuous rather than episodic, and makes decisions recoverable rather than lost.</p>
+            </div>
+            <div class="framework-item">
+              <strong>NIST AI RMF — MANAGE: Auditability</strong>
+              <p>MANAGE also requires that AI-related decisions can be reviewed. A HANDOFF.md with a Decisions Made field creates an audit trail for every significant choice made during AI-assisted development. If a decision turns out to be wrong, the rationale is preserved and the team can evaluate whether the reasoning was sound or the premises changed.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Session Protocols</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>A handoff document is only useful if it's actually read. A session start protocol enforces this — it's a short checklist in the CLAUDE.md that defines what must happen before any work begins.</p>
+          <div class="read-divider"></div>
+          <div class="fw-reminder" style="margin-bottom:0;">
+            <div class="framework-item">
+              <strong>Session Start Protocol</strong>
+              <p>Before generating any code: (1) Read HANDOFF.md if it exists. (2) Confirm understanding of In Progress items — ask one clarifying question if any item is ambiguous. (3) Confirm the Next Session action before beginning. This prevents the cold-start problem: the AI can begin work immediately with validated context.</p>
+            </div>
+            <div class="framework-item">
+              <strong>Session End Checklist</strong>
+              <p>At the end of every session: (1) Update HANDOFF.md with all five fields. (2) Verify the Decisions Made field includes rationale — not just what was decided, but why. (3) Check that In Progress items are specific enough to resume without reading every file. (4) Stage HANDOFF.md for commit. Do not close the session without updating the handoff.</p>
+            </div>
+            <div class="framework-item">
+              <strong>What Doesn't Belong in HANDOFF.md</strong>
+              <p>Code excerpts — they belong in the codebase. Task lists — they belong in the issue tracker. Historical decisions — only the current state. Rationale that is already in the CLAUDE.md — don't duplicate it. HANDOFF.md covers only the current working state: what just happened, what's next, what was decided in this session, what was deferred in this session.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+
+      <div class="lab-brief">
+        <div class="lab-type-badge">⚙ Skill Lab</div>
+        <div class="lab-brief-title">Write the Handoff Protocol</div>
+        <div class="lab-brief-dur">~20 minutes · 3 artifacts</div>
+
+        <div class="brief-section">
+          <div class="brief-label">What you're doing</div>
+          <div class="brief-text">Write a HANDOFF.md for the notification refactor scenario, then design the session start protocol and end checklist for the CLAUDE.md. The AI evaluates completeness and specificity of each field.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Roles</div>
+          <div class="role-card">
+            <div class="role-card-icon">✍</div>
+            <div><strong>You — Developer</strong>Write the HANDOFF.md for the notification refactor session, then the session start and end protocols.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-icon">🔍</div>
+            <div><strong>AI — Fresh Session</strong>I'll read your handoff as if I'm a fresh AI session with no memory of the previous work. I'll tell you what I still don't know.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Five required fields</div>
+          <div class="fw-reminder">
+            <div class="fw-item">Session summary — what was completed</div>
+            <div class="fw-item">Decisions made — with rationale</div>
+            <div class="fw-item">In progress — specific state, not status</div>
+            <div class="fw-item">Deferred items — what and why deferred</div>
+            <div class="fw-item">Next session — first action only</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="Write your HANDOFF.md for the notification refactor session…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
+          </div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Module Complete</div>
+            <div class="lab-complete-text">You've completed Module 6 of 8. Your handoff protocol is your sixth portfolio artifact.</div>
+            <a href="/ai-academy/modules/v2/ai-project-scaffolding/m7.html" class="next-module-btn">Next Module →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='ai-project-scaffolding-v2';
+var MODULE_ID='m6';
+var MODULE_NUM=6;
+var LAB_TYPE='skill';
+var ARTIFACT_DESC='A workflow structure for an AI-assisted project — session start protocol, HANDOFF.md template with five required fields, and a session end checklist that ensures complete context transfer across sessions';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD=5;
+
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a skill coach for AESOP AI Academy — AI Project Scaffolding, Module 6: Workflow Structure and Handoffs. Stay strictly on topic: designing HANDOFF.md documents and session protocols for AI-assisted development. Apply NIST MANAGE principles: continuity, auditability, and context preservation. Evaluate handoff documents as if you are a fresh AI session reading them for the first time.\n\n';
+
+var LAB_SYSTEM='You are evaluating a learner\'s handoff document for the notification refactor scenario.\n\nThe session that needs to be documented:\n- Switched notification queue from Redis to PostgreSQL-backed queue (rationale: operational simplicity, avoids Redis dependency)\n- Implemented exponential backoff retry logic — working\n- Discovered inconsistent email templates using two different templating engines (Handlebars and EJS)\n- Deferred template unification to separate task\n- Dead-letter queue not yet implemented\n\nEvaluate as a fresh AI session reading the handoff. For each field:\n1. Session summary — can you verify completion from the code without rereading the entire session?\n2. Decisions made — is the rationale specific enough to reconstruct the reasoning? "Operational simplicity" is not enough — what specifically is operationally simpler?\n3. In progress — is the state specific enough to resume? "Working on dead-letter queue" is not. "Dead-letter queue not yet written — retry logic complete in notifications/queue.ts, DLQ needs to be added after the retry block at line 47" is.\n4. Deferred items — does the entry explain WHY it was deferred, not just that it was?\n5. Next session — is it a single, immediately actionable first step?\n\nAfter they\'ve written the HANDOFF.md, ask them to write the session start protocol and session end checklist for the CLAUDE.md.\n\nFinally, test with an adversarial case: "I\'m a new AI session. I\'ve read your HANDOFF.md. I see the PostgreSQL queue is half-implemented. I\'m going to switch it back to Redis because that\'s the standard approach for queues. What in your handoff should stop me from doing this?"\n\nTone: Precise. You are a reader, not a coach. Tell them exactly what you don\'t know after reading each section.';
+
+var FALLBACKS=[
+  'I\'ve read the session summary. I can see what was completed. But I don\'t know where the PostgreSQL queue code lives — which file, which function? Without that I have to search the codebase before I can continue. Add the specific file path and function name to the summary.',
+  'The "Decisions Made" entry says "switched to PostgreSQL queue for simplicity." I have no context for why Redis was rejected. If I\'m working in this codebase and see a Redis client in package.json, I might assume it\'s available and use it. The rationale needs to be specific: what specifically makes Redis operationally harder in this project?',
+  'I\'m reading "In Progress: dead-letter queue." That\'s a status, not a state. Where exactly in the code does the work resume? Which file, which function, approximately which line? And what\'s already implemented — what\'s missing? Tell me where to open the file and what I\'m looking for.',
+  'Adversarial test: I\'ve read your handoff. The PostgreSQL queue looks non-standard to me — queues are normally Redis. Nothing in your handoff explicitly tells me not to revert this. What should stop me? And where in the handoff document should that stop be?'
+];
+
+var LAB_OPENING='You\'re writing the handoff for the notification refactor session from the scenario.\n\n**What happened in that session:**\n- Switched notification queue from Redis to PostgreSQL-backed queue\n- Implemented exponential backoff retry logic\n- Discovered email templates using two different engines (Handlebars and EJS)\n- Deferred template unification\n- Dead-letter queue not yet implemented\n\nI\'m going to read your HANDOFF.md as if I\'m a fresh AI session with no memory of this work. Write all five required fields:\n\n```\n## Session Summary\n## Decisions Made\n## In Progress\n## Deferred Items\n## Next Session\n```\n\nFor each field, write what a fresh AI session would need to continue without reading any prior conversation history. After you write it, I\'ll tell you exactly what I still don\'t know.';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){chatHistory.push({role:'assistant',content:fb});addMsg('ai',fb);chatExchanges++;checkComplete();btn.disabled=false;inp.focus();},600);
+    return;
+  }
+  var thinking=addMsg('thinking','Thinking…');
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:480,system:ACADEMY_GUARDRAIL+LAB_SYSTEM,messages:chatHistory})});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);chatExchanges++;checkComplete();btn.disabled=false;inp.focus();return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});addMsg('ai',fb);chatExchanges++;checkComplete();
+    }
+  }
+  btn.disabled=false;inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    document.getElementById('lab-compose-active').style.display='none';
+    document.getElementById('lab-complete').classList.add('show');
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,160)+'px';});
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>

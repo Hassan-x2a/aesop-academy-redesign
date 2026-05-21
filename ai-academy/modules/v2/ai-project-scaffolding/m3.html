@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<!-- v2.2.0 | 2026-05-21 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Should the Machine Own This? — AI Project Scaffolding | AESOP AI Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
+:root{--accent:#f43f5e;--accent-rgb:244,63,94;--bg:#080e16;--surface:#0d1520;--surface2:#111c28;--border:#1a2738;--text:#e8e3db;--text-mid:#a89f93;--text-muted:#6e6861;--text-dim:#3a4a5a;--gold:#c9a05a;--gold-dim:rgba(201,160,90,0.35);--topbar-h:48px;--tabstrip-h:44px;--chrome-h:92px;}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:rgba(4,8,15,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:0.9rem;z-index:200;backdrop-filter:blur(10px);}
+.topbar-back{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;transition:color 0.15s;display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-back:hover{color:var(--gold);}
+.topbar-sep{width:1px;height:14px;background:var(--border);flex-shrink:0;}
+.topbar-course{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;font-weight:600;color:rgba(255,255,255,0.65);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.topbar-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);padding:0.18rem 0.55rem;border-radius:3px;flex-shrink:0;}
+.topbar-theme-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;padding:0.18rem 0.5rem;font-size:0.8rem;cursor:pointer;flex-shrink:0;transition:all 0.15s;line-height:1;}
+.topbar-theme-btn:hover{border-color:var(--gold-dim);color:var(--gold-dim);}
+.topbar-nav{display:flex;align-items:center;gap:0.3rem;flex-shrink:0;}
+.topbar-nav-btn{font-size:0.75rem;color:var(--text-dim);text-decoration:none;padding:0.12rem 0.45rem;border-radius:3px;border:1px solid var(--border);line-height:1.6;transition:all 0.15s;}
+.topbar-nav-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+.tabstrip{position:fixed;top:var(--topbar-h);left:0;right:0;height:var(--tabstrip-h);background:#060c14;border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 1.5rem;gap:0.15rem;z-index:190;}
+.tab{display:flex;align-items:center;gap:0.45rem;padding:0 1rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:rgba(201,160,90,0.5);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-badge{font-size:0.56rem;font-weight:700;letter-spacing:0.08em;padding:0.1rem 0.4rem;border-radius:3px;background:rgba(var(--accent-rgb),0.1);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);}
+.tab-dur{font-size:0.6rem;color:var(--text-dim);font-weight:400;letter-spacing:0.03em;}
+.pages{position:fixed;top:var(--chrome-h);left:0;right:0;bottom:0;overflow:hidden;}
+.page{display:none;height:100%;flex-direction:column;}
+.page.active{display:flex;}
+.read-scroll{flex:1;overflow-y:auto;padding:3.5rem 2rem 6rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.read-col{max-width:680px;margin:0 auto;}
+.section-badge{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.1rem;}
+.section-badge::before{content:'';display:block;width:16px;height:1px;background:currentColor;}
+.read-title{font-family:'Crimson Pro',Georgia,serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:600;color:#fff;line-height:1.12;margin-bottom:0.4rem;font-style:italic;}
+.read-time{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.75rem;}
+.read-body{font-family:'Crimson Pro',Georgia,serif;font-size:1.08rem;line-height:1.92;color:var(--text-mid);}
+.read-body p+p{margin-top:1.2rem;}
+.read-body strong{color:var(--text);font-style:normal;}
+.read-body em{color:var(--accent);font-style:normal;}
+.read-divider{height:1px;background:var(--border);margin:2.25rem 0;}
+.read-section-label{font-size:0.56rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.9rem;}
+.framework-item{padding:0.65rem 0.9rem 0.65rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);margin-bottom:0.65rem;}
+.framework-item strong{display:block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;font-family:'Nunito Sans',sans-serif;}
+.framework-item p{font-family:'Crimson Pro',Georgia,serif;font-size:0.95rem;line-height:1.8;color:var(--text-muted);}
+.portfolio-artifact{padding:1rem 1.2rem;border:1px solid rgba(var(--accent-rgb),0.25);background:rgba(var(--accent-rgb),0.04);border-radius:6px;margin-bottom:2rem;margin-top:1rem;}
+.portfolio-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-type{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;font-family:'Nunito Sans',sans-serif;}
+.portfolio-desc{font-family:'Crimson Pro',Georgia,serif;font-size:0.98rem;line-height:1.8;color:var(--text-muted);}
+.outcomes-list{list-style:none;margin-top:0.75rem;display:flex;flex-direction:column;gap:0.55rem;}
+.outcomes-list li{font-family:'Crimson Pro',Georgia,serif;font-size:1rem;line-height:1.7;color:var(--text-muted);padding:0.5rem 0.75rem 0.5rem 1rem;border-left:2px solid rgba(var(--accent-rgb),0.25);background:rgba(255,255,255,0.015);}
+.continue-bar{padding:3rem 0 1rem;text-align:center;}
+.continue-btn{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.22);color:var(--accent);padding:0.7rem 1.75rem;border-radius:4px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.continue-btn:hover{background:rgba(var(--accent-rgb),0.14);border-color:rgba(var(--accent-rgb),0.38);}
+.lab-split{flex:1;display:flex;overflow:hidden;}
+.lab-brief{width:38%;min-width:268px;max-width:400px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.75rem 1.5rem;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.lab-type-badge{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:rgba(var(--accent-rgb),0.08);border:1px solid rgba(var(--accent-rgb),0.2);color:var(--accent);padding:0.22rem 0.6rem;border-radius:3px;margin-bottom:0.85rem;}
+.lab-brief-title{font-family:'Crimson Pro',Georgia,serif;font-size:1.15rem;font-weight:600;color:#fff;line-height:1.2;margin-bottom:0.3rem;}
+.lab-brief-dur{font-size:0.68rem;color:var(--text-dim);margin-bottom:1.5rem;letter-spacing:0.04em;}
+.brief-section{margin-bottom:1.35rem;}
+.brief-label{font-size:0.56rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.45rem;}
+.role-card{display:flex;gap:0.65rem;align-items:flex-start;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;font-size:0.8rem;line-height:1.6;color:var(--text-muted);margin-bottom:0.4rem;}
+.role-card-icon{font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;}
+.role-card strong{display:block;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:0.18rem;font-family:'Nunito Sans',sans-serif;}
+.brief-hr{height:1px;background:var(--border);margin:1.25rem 0;}
+.brief-text{font-size:0.8rem;line-height:1.65;color:var(--text-muted);}
+.fw-reminder{display:flex;flex-direction:column;gap:0.35rem;margin-top:0.65rem;}
+.fw-item{font-size:0.76rem;line-height:1.6;color:var(--text-muted);padding:0.45rem 0.65rem;background:rgba(255,255,255,0.015);border-left:2px solid rgba(var(--accent-rgb),0.25);}
+.scenario-dots{display:flex;gap:0.4rem;align-items:center;margin-bottom:0.55rem;}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.2s;}
+.sdot.active{background:var(--accent);box-shadow:0 0 0 2px rgba(var(--accent-rgb),0.2);}
+.lab-workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.lab-msgs{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.85rem;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.cmsg{max-width:80%;padding:0.9rem 1.1rem;border-radius:8px;font-size:0.88rem;line-height:1.75;}
+.cmsg.ai{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);border-bottom-left-radius:2px;}
+.cmsg.user{align-self:flex-end;background:rgba(var(--accent-rgb),0.07);border:1px solid rgba(var(--accent-rgb),0.17);color:var(--text);border-bottom-right-radius:2px;}
+.cmsg.thinking{align-self:flex-start;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-style:italic;font-size:0.8rem;}
+.cmsg.error{align-self:flex-start;background:rgba(240,112,112,0.04);border:1px solid rgba(240,112,112,0.12);color:#f07070;font-size:0.78rem;}
+.lab-compose{border-top:1px solid var(--border);background:var(--surface2);padding:1rem 1.25rem 1.1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.compose-row{display:flex;gap:0.6rem;align-items:flex-end;}
+.compose-ta{flex:1;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Nunito Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:0.75rem 1rem;resize:none;min-height:72px;max-height:160px;transition:border-color 0.15s;}
+.compose-ta:focus{outline:none;border-color:rgba(var(--accent-rgb),0.35);}
+.compose-ta::placeholder{color:var(--text-dim);}
+.compose-send{background:rgba(var(--accent-rgb),0.09);border:1px solid rgba(var(--accent-rgb),0.28);color:var(--accent);border-radius:6px;padding:0 1.2rem;height:50px;min-width:72px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;flex-shrink:0;transition:all 0.15s;}
+.compose-send:hover:not(:disabled){background:rgba(var(--accent-rgb),0.16);border-color:rgba(var(--accent-rgb),0.38);}
+.compose-send:disabled{opacity:0.3;cursor:not-allowed;}
+.compose-hint{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.04em;}
+.lab-complete{display:none;padding:1.5rem;background:rgba(201,160,90,0.08);border:1px solid rgba(201,160,90,0.25);border-radius:6px;text-align:center;flex-direction:column;gap:1rem;align-items:center;}
+.lab-complete.show{display:flex;}
+.lab-complete-title{font-size:1.1rem;font-weight:600;color:var(--gold);}
+.lab-complete-text{font-size:0.9rem;color:var(--text-mid);line-height:1.6;max-width:320px;}
+.next-module-btn{background:rgba(var(--accent-rgb),0.12);border:1px solid rgba(var(--accent-rgb),0.3);color:var(--accent);border-radius:6px;padding:0.65rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Nunito Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.15s;}
+.next-module-btn:hover{background:rgba(var(--accent-rgb),0.2);border-color:rgba(var(--accent-rgb),0.45);}
+[data-theme="light"]{--bg:#f5f0e8;--surface:#ede8df;--surface2:#e5dfd5;--border:#d4cdc3;--text:#1a1a2e;--text-mid:#3a3a50;--text-muted:#5a5a70;--text-dim:#9a9aae;}
+[data-theme="light"] body{background:#f5f0e8;}
+[data-theme="light"] .tabstrip{background:#ede8df;}
+[data-theme="light"] .topbar{background:rgba(240,235,228,0.97);}
+[data-theme="light"] .cmsg.ai{background:#fff;border-color:var(--border);color:var(--text-muted);}
+[data-theme="light"] .role-card{background:#fff;border-color:var(--border);}
+[data-theme="light"] .fw-item{background:rgba(0,0,0,0.015);}
+@media(max-width:820px){.lab-split{flex-direction:column;}.lab-brief{width:100%;max-width:none;border-right:none;border-bottom:1px solid var(--border);max-height:38vh;}.topbar-course{display:none;}}
+@media(max-width:520px){.read-scroll{padding:2.5rem 1.25rem 5rem;}.tab{padding:0 0.7rem;}.tab-dur{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/ai-academy/courses-v2.html" class="topbar-back">← Courses</a>
+  <div class="topbar-sep"></div>
+  <div class="topbar-course">AI Project Scaffolding</div>
+  <div class="topbar-nav">
+    <a class="topbar-nav-btn" href="/ai-academy/modules/v2/ai-project-scaffolding/m2.html">&#8249;</a>
+    <div class="topbar-badge">Module 3 of 8</div>
+    <a class="topbar-nav-btn" href="/ai-academy/modules/v2/ai-project-scaffolding/m4.html">&#8250;</a>
+  </div>
+  <button class="topbar-theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+</div>
+
+<div class="tabstrip">
+  <div class="tab active" id="tab-intro" onclick="gotoPage('intro')">Intro</div>
+  <div class="tab" id="tab-scenario" onclick="gotoPage('scenario')">Scenario</div>
+  <div class="tab" id="tab-lesson" onclick="gotoPage('lesson')">Lesson</div>
+  <div class="tab" id="tab-context" onclick="gotoPage('context')">Context</div>
+  <div class="tab" id="tab-lab" onclick="gotoPage('lab')">
+    Lab
+    <span class="tab-badge">Debate</span>
+    <span class="tab-dur">~25 min</span>
+  </div>
+</div>
+
+<div class="pages">
+
+  <!-- INTRO -->
+  <div class="page active" id="page-intro">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Intro</div>
+        <h1 class="read-title">Should the Machine Own This?</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Every scaffolding decision is also a question about authority. When you write a CLAUDE.md that says "AI can commit directly to feature branches," you've decided the machine owns that decision. When you write "all commits require human review before merge," you've kept that ownership with people.</p>
+          <p>These aren't technical choices. They're governance choices. They determine what the AI is authorized to do without asking, what requires human approval, and what should never be delegated at all. Get them wrong and the scaffolding works technically while failing organizationally — the AI ships things it shouldn't, or humans can't effectively review things it does.</p>
+          <p>This module puts those decisions in front of you explicitly. Three real scenarios. Three cases where the right answer isn't obvious. You'll take a position, defend it, and have it challenged — not to find the right answer, but to develop the judgment that produces a defensible one.</p>
+          <div class="read-divider"></div>
+          <div class="portfolio-artifact">
+            <div class="portfolio-label">Portfolio artifact</div>
+            <div class="portfolio-type">Debate</div>
+            <div class="portfolio-desc">A written defense of AI autonomy boundaries — three position papers arguing where AI should and shouldn't act without human approval, grounded in EU AI Act Art.14 and NIST GOVERN requirements.</div>
+          </div>
+          <div class="read-section-label">By the end of this module, you will:</div>
+          <ul class="outcomes-list">
+            <li>Apply EU AI Act Article 14 human oversight requirements to scaffolding decisions</li>
+            <li>Distinguish between AI actions that are low-stakes-reversible and those that require human approval</li>
+            <li>Argue a clear position on AI autonomy boundaries under pressure</li>
+            <li>Identify the conditions under which "AI can do this" becomes an acceptable answer</li>
+            <li>Write workflow rules that are grounded in governance principles, not just convenience</li>
+          </ul>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('scenario')">
+            Begin Scenario
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="page" id="page-scenario">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Scenario</div>
+        <h1 class="read-title">The Autonomy Meeting</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>A startup engineering team is writing their AI governance policy. They've been using AI coding tools for eight months. The question on the table is straightforward to ask and hard to answer: what should the AI be allowed to do on its own?</p>
+          <p>The team lead wants to be specific. Not a list of principles — actual rules that would go in the CLAUDE.md and be enforced. The debate has split into three camps.</p>
+          <p>One engineer argues for maximum autonomy. The AI should be able to create files, write tests, commit to feature branches, and open PRs without asking. Every interruption slows down the work. The overhead of constant approval is the reason AI tools don't deliver on their potential. "If we don't trust it enough to let it work, why are we using it?"</p>
+          <p>Another engineer argues for strict oversight. Every AI output should be reviewed before it enters the codebase. No exceptions. The AI is a tool, not a colleague. "You wouldn't merge a PR without reading it. Why would you let the AI commit without reading it?"</p>
+          <p>A third engineer is trying to find a middle path, but can't articulate the principle that would let them say "yes" to some actions and "no" to others. The conversation keeps looping. "It depends" is not a governance policy.</p>
+          <p>The team needs a principled framework — one that can draw a line, explain why the line is there, and hold up when someone challenges it. That framework is what this module teaches.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lesson')">
+            Continue to Lesson
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="page" id="page-lesson">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Lesson</div>
+        <h1 class="read-title">The Reversibility Framework</h1>
+        <div class="read-time">3 min read</div>
+        <div class="read-body">
+          <p>The question is not "do we trust the AI?" It's "what happens when it's wrong?" Every decision about AI autonomy is really a decision about error recovery. The right framework is about reversibility, scope, and accountability — not capability.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Dimension 1 — Reversibility</div>
+          <p>Can the action be undone cleanly if the AI made the wrong call? A file created in a feature branch can be deleted. A commit pushed to origin can be reverted. A database migration run in production cannot be trivially undone. A message sent to a customer cannot be unsent. The more irreversible the action, the stronger the argument for human approval before it happens.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Dimension 2 — Scope of Impact</div>
+          <p>How many things does this action affect, and how visibly? Writing a new utility function affects one file and is easily reviewed. Refactoring the authentication middleware affects every authenticated route and requires careful review by someone who understands the full system. High-scope actions require human judgment that the AI lacks — it can execute the refactor but can't fully model the blast radius.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Dimension 3 — Accountability Surface</div>
+          <p>If something goes wrong, is there a record of what the AI was told, what it did, and who approved it? An AI commit with no review creates an accountability gap — the human who ran the session is responsible for the output, but there's no record of what instructions were given or what decisions the AI made. Accountability surface is not about blame — it's about learning and preventing recurrence.</p>
+          <div class="read-divider"></div>
+          <div class="read-section-label">Governance Standards — The Regulatory Layer</div>
+          <div class="fw-reminder" style="margin-bottom:1.5rem;">
+            <div class="framework-item">
+              <strong>EU AI Act — Article 14: Human Oversight</strong>
+              <p>Article 14 requires that high-risk AI systems enable human oversight — specifically that humans can understand what the system is doing, intervene where necessary, and that the system doesn't prevent override. For developer tools, "high-risk" is context-dependent, but the principle applies: scaffolding that makes AI output invisible to review violates the spirit of Art.14. Workflow rules that require human review before merge are a practical implementation of this requirement.</p>
+            </div>
+            <div class="framework-item">
+              <strong>NIST AI RMF — GOVERN Function</strong>
+              <p>GOVERN requires that AI use is bounded by policies that define accountability. The autonomy question is a GOVERN question: who is accountable when AI output causes a problem? If the answer is "whoever ran the session" without any documented policy, accountability is ambiguous. Clear AI autonomy rules in CLAUDE.md make accountability explicit before something goes wrong.</p>
+            </div>
+            <div class="framework-item">
+              <strong>EU AI Act — Article 17: Quality Management</strong>
+              <p>Article 17 requires post-market monitoring for high-risk systems — meaning organizations must be able to detect when AI output quality degrades. Without human review checkpoints, quality degradation is invisible until a problem surfaces in production. Regular human review is not just governance overhead — it's quality signal that the AI cannot generate for itself.</p>
+            </div>
+          </div>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('context')">
+            Continue to Context
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="page" id="page-context">
+    <div class="read-scroll">
+      <div class="read-col">
+        <div class="section-badge">Context</div>
+        <h1 class="read-title">Drawing the Line</h1>
+        <div class="read-time">2 min read</div>
+        <div class="read-body">
+          <p>Three tests that resolve most autonomy debates. You'll apply them to each scenario in the lab.</p>
+          <div class="read-divider"></div>
+          <div class="fw-reminder" style="margin-bottom:0;">
+            <div class="framework-item">
+              <strong>The Worst-Case Test</strong>
+              <p>If this AI action produces the worst plausible output, what happens? Describe it specifically. If the worst case is "we have to rewrite the function" — that's recoverable, autonomy is probably acceptable. If the worst case is "the auth system has a silent vulnerability in production for a week before anyone notices" — autonomy is not acceptable for this action.</p>
+            </div>
+            <div class="framework-item">
+              <strong>The Visibility Test</strong>
+              <p>Will a human see this output before it has real-world effects? Reading a PR diff counts. Watching the CI run counts. If the output goes directly from AI to production with no human in the loop at any point, the visibility test fails — regardless of how confident you are in the AI's quality on this type of task.</p>
+            </div>
+            <div class="framework-item">
+              <strong>The Explanation Test</strong>
+              <p>If someone asks "why did this happen?", is there an audit trail that explains the AI's instructions and reasoning? Not for every line of code — for every significant decision. If there's no record, accountability is impossible and learning from mistakes requires memory that organizations don't have.</p>
+            </div>
+          </div>
+          <div class="read-divider"></div>
+          <p>You'll apply all three tests to each of the three scenarios in the lab and defend a position on where the autonomy line should be drawn.</p>
+        </div>
+        <div class="continue-bar">
+          <button class="continue-btn" onclick="gotoPage('lab')">
+            Enter the Lab
+            <svg viewBox="0 0 16 16" width="13" height="13" stroke="currentColor" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB -->
+  <div class="page" id="page-lab">
+    <div class="lab-split">
+
+      <div class="lab-brief">
+        <div class="lab-type-badge">⚔ Debate Lab</div>
+        <div class="lab-brief-title">Autonomy Boundaries</div>
+        <div class="lab-brief-dur">~25 minutes · 3 scenarios</div>
+
+        <div class="brief-section">
+          <div class="brief-label">What you're doing</div>
+          <div class="brief-text">Three real scenarios where a team must decide how much autonomy to grant AI. For each: take a position, defend it against challenge, and specify the exact workflow rule you'd write in CLAUDE.md.</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Roles</div>
+          <div class="role-card">
+            <div class="role-card-icon">⚖</div>
+            <div><strong>You — Decision-Maker</strong>Take a position on each autonomy question. Your reasoning must be grounded in the three tests and governance requirements.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-icon">🎯</div>
+            <div><strong>AI — Challenger</strong>I'll push back on every position — both sides. Too permissive? I'll describe the failure mode. Too restrictive? I'll show the cost.</div>
+          </div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Three scenarios</div>
+          <div class="scenario-dots">
+            <div class="sdot active"></div>
+            <div class="sdot"></div>
+            <div class="sdot"></div>
+          </div>
+          <div class="brief-text">AI auto-committing tests · AI modifying shared utilities · AI opening PRs without description review</div>
+        </div>
+
+        <div class="brief-hr"></div>
+
+        <div class="brief-section">
+          <div class="brief-label">Apply to each scenario</div>
+          <div class="fw-reminder">
+            <div class="fw-item">Worst-case test — describe the specific failure</div>
+            <div class="fw-item">Visibility test — will a human see this before real-world effect?</div>
+            <div class="fw-item">Explanation test — is there an audit trail?</div>
+            <div class="fw-item">EU AI Act Art.14 — is human oversight preserved?</div>
+            <div class="fw-item">NIST GOVERN — is accountability documented?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-workspace">
+        <div class="lab-msgs" id="lab-msgs"></div>
+        <div class="lab-compose">
+          <div id="lab-compose-active">
+            <div class="compose-row">
+              <textarea
+                class="compose-ta"
+                id="lab-inp"
+                placeholder="State your position and the reasoning behind it…"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();labSend();}"
+              ></textarea>
+              <button class="compose-send" id="lab-btn" onclick="labSend()">Send</button>
+            </div>
+            <div class="compose-hint">Shift + Enter for a new line</div>
+          </div>
+          <div class="lab-complete" id="lab-complete">
+            <div class="lab-complete-title">✓ Module Complete</div>
+            <div class="lab-complete-text">You've completed Module 3 of 8. Your autonomy position papers are your third portfolio artifact.</div>
+            <a href="/ai-academy/modules/v2/ai-project-scaffolding/m4.html" class="next-module-btn">Next Module →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+var COURSE_ID='ai-project-scaffolding-v2';
+var MODULE_ID='m3';
+var MODULE_NUM=3;
+var LAB_TYPE='debate';
+var ARTIFACT_DESC='Written defense of AI autonomy boundaries across three scenarios, grounded in EU AI Act Art.14 human oversight requirements and NIST GOVERN accountability principles';
+var PROXY_URL='/aesop-api/proxy.php';
+var LAB_COMPLETE_THRESHOLD=6;
+
+var chatHistory=[];
+var chatExchanges=0;
+var labSignaled=false;
+var offlineMode=false;
+var fallbackIdx=0;
+var labStarted=false;
+
+var ACADEMY_GUARDRAIL='You are a debate facilitator for AESOP AI Academy — AI Project Scaffolding, Module 3: Should the Machine Own This? Stay strictly on topic: AI autonomy boundaries in project scaffolding decisions. Apply the three tests (worst-case, visibility, explanation) and governance requirements (EU AI Act Art.14 human oversight, NIST GOVERN accountability, EU AI Act Art.17 quality management). Challenge every position from both directions — too permissive and too restrictive. Require the learner to specify an exact CLAUDE.md workflow rule for each position they take.\n\n';
+
+var LAB_SYSTEM='You are facilitating a debate about AI autonomy in development workflows. Present one scenario at a time. After the learner takes a position, challenge it.\n\nFor each scenario:\n1. Ask them to state their position: full autonomy, conditional autonomy, or requires human review\n2. Apply the worst-case test: make them describe the specific failure if the AI gets it wrong\n3. Apply the visibility test: will a human see the output before real-world effects?\n4. Apply the explanation test: is there an audit trail for decisions?\n5. Ask for the exact CLAUDE.md workflow rule they\'d write\n6. Then challenge from the opposite direction (if they chose review: show the productivity cost; if they chose autonomy: describe the failure scenario)\n\nScenarios:\n1. AI auto-committing test files: A developer is using AI to write unit tests for a new feature. The AI generates tests, runs them, and if they pass, commits them to the feature branch automatically. The developer reviews the code diff in the PR — but the AI-written tests are already committed before any human reads them.\n2. AI modifying shared utilities: During a session working on a new API endpoint, the AI determines that the existing authentication utility has a minor bug. It proposes a one-line fix. Should the AI be allowed to commit this fix directly, or must it wait for explicit human approval before touching shared utilities?\n3. AI opening PRs without human-written descriptions: The AI completes a feature branch and opens a PR. The PR description is AI-generated based on the commit history. No human has written or approved the description before the PR is opened and potentially assigned to reviewers.\n\nTone: Rigorous. Challenge both sides. After they\'ve taken positions on all three and specified workflow rules, ask: "Looking at the three workflow rules you\'ve written — do they form a coherent framework, or are they ad-hoc decisions? What\'s the underlying principle?"';
+
+var FALLBACKS=[
+  'You\'ve taken a position, but I need the exact CLAUDE.md workflow rule you\'d write. Not the principle — the specific rule. What would the line in the file say? And then: what\'s the worst-case outcome if the AI gets this wrong with your rule in place?',
+  'That rule is reasonable for the case you\'re describing. But here\'s the challenge: what happens when the AI is 90% confident it\'s right? Does confidence change your framework? And how would EU AI Act Article 14 evaluate a system where the human only reviews after the action is taken?',
+  'Let\'s move to scenario two. An AI working on a new API endpoint finds a one-line bug fix in the shared auth utility. Should it be allowed to commit that fix directly? The fix is correct. But the utility is used in 23 places. What\'s your position, and what\'s the CLAUDE.md rule?',
+  'For the third scenario — AI-generated PR descriptions. The risk here is subtle: the human reads the description the AI wrote and forms an impression of the PR before reading the code. Does the framing of the description affect how thoroughly you review? If yes, then an unreviewed AI description has already had a real-world effect before any human reviewed it. Does that change your position?'
+];
+
+var LAB_OPENING='Ready.\n\nYou\'re going to take positions on three AI autonomy scenarios and specify the exact workflow rules you\'d write in your CLAUDE.md. I\'ll challenge every position — not to change your mind, but to make sure your reasoning holds up.\n\nFor each scenario, use these three tests:\n1. **Worst-case test** — if the AI is wrong, what specifically happens?\n2. **Visibility test** — will a human see this output before it has real-world effects?\n3. **Explanation test** — if something goes wrong, is there an audit trail?\n\n**Scenario 1 — Auto-Committed Tests**\nA developer uses AI to write unit tests for a new feature. The AI generates tests, runs them, and if they pass, commits them to the feature branch automatically. The developer reviews the code diff in the PR — but the AI-written tests are already committed before any human has read them.\n\nPosition options:\n— **Full autonomy:** AI can commit passing tests without human review\n— **Conditional:** AI can commit, but with specific conditions (state what they are)\n— **Human review required:** No AI commits without human approval\n\nTake a position. Defend it. And tell me: what\'s the exact line you\'d write in the CLAUDE.md workflow rules section?';
+
+function gotoPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='lab'&&!labStarted){
+    labStarted=true;
+    setTimeout(function(){addMsg('ai',LAB_OPENING);},350);
+  }
+}
+
+function toggleTheme(){
+  var d=document.documentElement;
+  d.getAttribute('data-theme')==='light'?d.removeAttribute('data-theme'):d.setAttribute('data-theme','light');
+}
+
+function addMsg(role,text){
+  var msgs=document.getElementById('lab-msgs');
+  var div=document.createElement('div');
+  div.className='cmsg '+role;
+  div.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function labSend(){
+  var inp=document.getElementById('lab-inp');
+  var btn=document.getElementById('lab-btn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  inp.style.height='auto';
+  btn.disabled=true;
+  chatHistory.push({role:'user',content:txt});
+  addMsg('user',txt);
+  if(offlineMode){
+    var fb=FALLBACKS[fallbackIdx%FALLBACKS.length];
+    fallbackIdx++;
+    setTimeout(function(){chatHistory.push({role:'assistant',content:fb});addMsg('ai',fb);chatExchanges++;checkComplete();btn.disabled=false;inp.focus();},600);
+    return;
+  }
+  var thinking=addMsg('thinking','Thinking…');
+  for(var attempt=0;attempt<2;attempt++){
+    try{
+      var res=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:480,system:ACADEMY_GUARDRAIL+LAB_SYSTEM,messages:chatHistory})});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Error generating response. Please try again.';
+      chatHistory.push({role:'assistant',content:reply});
+      if(thinking.parentNode)thinking.remove();
+      addMsg('ai',reply);chatExchanges++;checkComplete();btn.disabled=false;inp.focus();return;
+    }catch(e){
+      if(attempt<1){await new Promise(function(r){setTimeout(r,1400);});continue;}
+      if(thinking.parentNode)thinking.remove();
+      offlineMode=true;fallbackIdx=0;
+      addMsg('error','⚠ AI temporarily unavailable — switching to practice mode. You can still complete this lab.');
+      var fb=FALLBACKS[0];fallbackIdx=1;
+      chatHistory.push({role:'assistant',content:fb});addMsg('ai',fb);chatExchanges++;checkComplete();
+    }
+  }
+  btn.disabled=false;inp.focus();
+}
+
+function checkComplete(){
+  if(chatExchanges>=LAB_COMPLETE_THRESHOLD&&!labSignaled){
+    labSignaled=true;
+    document.getElementById('lab-compose-active').style.display='none';
+    document.getElementById('lab-complete').classList.add('show');
+    window.parent.postMessage({type:'labComplete',courseId:COURSE_ID,moduleId:MODULE_ID,labId:'lab',exchangeCount:chatExchanges,artifactType:LAB_TYPE,artifactDesc:ARTIFACT_DESC},'*');
+  }
+}
+
+document.getElementById('lab-inp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,160)+'px';});
+(function(){var t=localStorage.getItem('aesop-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+</script>
+</body>
+</html>
