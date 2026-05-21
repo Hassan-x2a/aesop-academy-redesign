@@ -16,8 +16,7 @@ if (!concept) {
 }
 
 if (!process.env.ANTHROPIC_API_KEY) {
-  console.error('✗ ANTHROPIC_API_KEY not set. Research requires the Anthropic API.');
-  process.exit(1);
+  console.warn('⚠ Note: Some recommendations are based on fallback logic (ANTHROPIC_API_KEY not set — using course registry only)');
 }
 
 (async () => {
