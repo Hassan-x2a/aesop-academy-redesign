@@ -3,11 +3,11 @@
     {
       "number": 2,
       "title": "Build the student assessment.",
-      "description": "The student assessment should be able to gather the students' interests in AI and aptitude in AI and map them across the skills and courses that we offer at Aesop Academy and make a recommendation for an education pathway for the student dynamically.",
+      "description": "The student assessment should be able to gather the students' interests in AI and aptitude in AI and map them across the skills and courses that we offer at Aesop Academy and make a recommendation for an education pathway for the student dynamically.\n\n## DECOMPOSED INTO SUBTASKS:\nThis task has been broken into 6 sequential subtasks for parallel development:\n- Task #6: Assessment Foundation (Phase 1) — Infrastructure & schema\n- Task #7: Assessment Chat Interface & QR System (Phase 2) — Frontend UI\n- Task #8: Assessment AI Engine (Phase 3) — AI conversation logic\n- Task #9: Taxonomy Mapper (Phase 4) — Recommendation engine\n- Task #10: Integration & UX (Phases 5-6) — Homepage + Student page\n- Task #11: Testing & Validation (Phase 7) — E2E testing\n\n## IMPLEMENTATION ORDER:\n1. Start with Task #6 (Foundation) — prerequisite for all others\n2. Run Tasks #7 and #8 in parallel (Chat UI and AI Engine don't depend on each other)\n3. Task #9 (Taxonomy Mapper) depends on Task #8\n4. Task #10 (Integration) depends on #6, #7, #9\n5. Task #11 (Testing) depends on all previous tasks\n\n## Total Effort: ~9 days solo, or ~5-6 days with parallel work on #7 + #8\n\n## DESIGN & PLANNING COMPLETE:\n✅ Design Discussion locked (2026-05-21)\n✅ Outline Plan locked (2026-05-21)\n✅ Detailed Plan with proof units ready (2026-05-21)\n✅ All 6 subtasks created with dependencies and detailed notes",
       "category": "feature",
       "priority": 75,
       "impact": "standard",
-      "status": "backlog",
+      "status": "in-planning",
       "created_at": "2026-05-20",
       "completed_at": null,
       "dependencies": []
@@ -47,6 +47,78 @@
       "created_at": "2026-05-21",
       "completed_at": null,
       "dependencies": []
+    },
+    {
+      "number": 6,
+      "title": "Task #2a: Assessment Foundation (Phase 1)",
+      "description": "Build the infrastructure foundation for student assessment. This task establishes the data schema, QR code system, and Firebase utilities needed by all downstream components.\n\n## What's Included:\n- Extend Firebase Firestore learner record schema: add assessment_results, recommended_pathway, qr_recovery_token fields with TypeScript/JS interfaces\n- Build QR code generator utility (qr-generator.js): creates QR codes encoding learner ID + optional recovery token; returns SVG/canvas element\n- Build Firestore query/update helpers: read/write assessment data, pathway, QR tokens with error handling and offline fallback\n\n## Files Modified:\n- ai-academy/js/firebase-schema.js (new or extend existing)\n- ai-academy/js/learner.js (extend)\n- ai-academy/js/qr-generator.js (new)\n- ai-academy/js/firebase-helpers.js (new or extend existing)\n\n## Effort: ~1.5 days\n## Blocker: None (START HERE)\n## Dependencies: None\n\n## Success Criteria:\n✅ Firestore schema updated with assessment fields\n✅ QR generator creates valid QR codes\n✅ Firebase helpers read/write assessment data reliably\n✅ Offline fallback queues writes for later sync",
+      "category": "feature",
+      "priority": 75,
+      "impact": "standard",
+      "status": "ready",
+      "created_at": "2026-05-21",
+      "completed_at": null,
+      "dependencies": []
+    },
+    {
+      "number": 7,
+      "title": "Task #2b: Assessment Chat Interface & QR System (Phase 2)",
+      "description": "Build the student-facing assessment page and QR recovery system. This includes the chat interface where students answer assessment questions, completion screen with QR display, and recovery flows.\n\n## What's Included:\n- Assessment page HTML (assessment.html): chat message area, user input field, submit button, QR display placeholder, navigation\n- Assessment CSS (assessment.css): styling matching Aesop design, responsive layout\n- Chat message rendering & input handling (assessment-chat.js): render alternating student/AI messages, clear input after submission, reuse lab chat patterns\n- QR code display on completion: after assessment ends, generate QR code, display with recovery instructions, show \"Start Courses\" or \"View Dashboard\" buttons\n- QR recovery UI: add \"Recover Learner ID\" section on homepage + student page, scan QR or enter recovery token, restore learner ID to localStorage\n\n## Files Modified:\n- ai-academy/assessment.html (new)\n- ai-academy/css/assessment.css (new)\n- ai-academy/js/assessment-chat.js (new)\n- ai-academy/index.html (add recovery UI)\n- ai-academy/students.html (add recovery UI)\n- ai-academy/js/qr-recovery.js (new)\n\n## Effort: ~2 days\n## Blocker: Task #6 (Assessment Foundation)\n## Dependencies: Task #6; can run in parallel with Task #8 (AI Engine)\n\n## Success Criteria:\n✅ Assessment page loads and displays correctly\n✅ Chat messages render and flow naturally\n✅ QR code displays on completion with clear instructions\n✅ QR recovery flow restores learner ID correctly",
+      "category": "feature",
+      "priority": 75,
+      "impact": "standard",
+      "status": "ready",
+      "created_at": "2026-05-21",
+      "completed_at": null,
+      "dependencies": [6]
+    },
+    {
+      "number": 8,
+      "title": "Task #2c: Assessment AI Engine (Phase 3)",
+      "description": "Build the AI-driven assessment conversation engine. This generates dynamic assessment questions, extracts student aptitude and interest signals, and determines conversation flow.\n\n## What's Included:\n- Assessment prompt/guardrail design (assessment-prompts.js): system prompt that asks aptitude/interest questions, dynamically determines next question, extracts structured signals (aptitude score 0-100, interest tags), includes assessment-specific guardrail (distinct from lab guardrail)\n- Assessment conversation logic (assessment-chat.js + assessment-proxy.php): wire chat to proxy.php endpoint, call Anthropic API with assessment prompt + conversation history, extract structured output (next question, aptitude/interest signals, completion flag)\n- Signal extraction parser (assessment-parser.js): extract aptitude score, interest tags, completion flag from AI responses for Phase 4 consumption\n\n## Files Modified:\n- ai-academy/js/assessment-prompts.js (new)\n- aesop-api/assessment-guardrail.txt (new, or config file)\n- aesop-api/assessment-proxy.php (new or modify proxy.php)\n- aesop-api/assessment-api.js (new)\n- ai-academy/js/assessment-chat.js (extend from #7)\n- ai-academy/js/assessment-parser.js (new)\n\n## Effort: ~2.5 days\n## Blocker: Task #6 (Foundation); can start in parallel with Task #7 (Chat UI)\n## Dependencies: Task #7 recommended (to understand chat structure), but Task #6 required\n\n## Success Criteria:\n✅ Assessment AI asks meaningful questions about aptitude/interest\n✅ AI dynamically adapts based on student responses\n✅ Structured signals (aptitude score, interest tags) extracted reliably\n✅ Guardrail prevents off-topic responses\n✅ Assessment ends gracefully with clear completion signal",
+      "category": "feature",
+      "priority": 75,
+      "impact": "standard",
+      "status": "ready",
+      "created_at": "2026-05-21",
+      "completed_at": null,
+      "dependencies": [6]
+    },
+    {
+      "number": 9,
+      "title": "Task #2d: Taxonomy Mapper (Phase 4)",
+      "description": "Build the course recommendation engine that maps student aptitude/interest signals to personalized learning pathways. Converts AI signals into a curated list of courses.\n\n## What's Included:\n- Load skill taxonomy from courses-v2.html (taxonomy-parser.js): parse courses-v2.html, extract skill taxonomy (COVERAGE/EVIDENCE matrices), build in-memory map of skills → courses\n- Taxonomy mapper function (taxonomy-mapper.js): takes aptitude score + interest tags, queries taxonomy, recommends primary course + 2-3 follow-up courses based on skill overlap, returns structured pathway object\n- Integrate mapper into assessment completion (assessment-chat.js): after AI completes and signals extracted (Phase 3), call mapper, store pathway for Phase 2.3 (QR display) and Phase 6 (persistence)\n\n## Files Modified:\n- ai-academy/js/taxonomy-parser.js (new)\n- ai-academy/js/taxonomy-mapper.js (new)\n- ai-academy/js/assessment-chat.js (extend)\n\n## Effort: ~2 days\n## Blocker: Task #8 (AI Engine output required)\n## Dependencies: Task #8 (needs aptitude/interest signals)\n\n## Success Criteria:\n✅ Taxonomy parses from courses-v2.html correctly\n✅ Mapper generates relevant course pathways\n✅ Aptitude/interest signals align with recommended courses\n✅ Pathway includes primary + follow-up courses with skill progression\n✅ Pathway is available to Phase 6 and stored in learner record",
+      "category": "feature",
+      "priority": 75,
+      "impact": "standard",
+      "status": "ready",
+      "created_at": "2026-05-21",
+      "completed_at": null,
+      "dependencies": [8]
+    },
+    {
+      "number": 10,
+      "title": "Task #2e: Integration & UX (Phases 5-6)",
+      "description": "Wire assessment into the homepage and student dashboard. Makes assessment discoverable and displays personalized pathways to students after completion.\n\n## What's Included:\n- Homepage integration (Phase 5): add \"Take Assessment\" button/link to homepage (visible before login, alongside \"Explore Courses\"); route to assessment.html\n- Conditional logic on homepage: check if learner has taken assessment (Firestore assessment_results exists); show \"View Pathway\" instead of \"Take Assessment\" if true; offer \"Re-take Assessment\" option\n- Student page pathway section (Phase 6): add new \"Recommended Pathway\" section on students.html displaying course list from learner record\n- Pathway display & navigation: render pathway courses as clickable cards (title, description, difficulty); clicking routes to course page; show \"Start Next Course\" CTA\n- QR recovery UI on student page: add \"Lost your learner ID?\" section with link to QR recovery flow; warn that recovery requires saved QR code or recovery token\n\n## Files Modified:\n- ai-academy/index.html (add assessment button + conditional logic)\n- ai-academy/js/homepage.js (new or extend)\n- ai-academy/students.html (add pathway section + QR recovery UI)\n- ai-academy/css/homepage.css (extend or new)\n- ai-academy/css/students.css (extend or new)\n- ai-academy/js/pathway-display.js (new)\n- ai-academy/js/qr-recovery.js (extend from #7)\n\n## Effort: ~1.5 days\n## Blocker: Tasks #6, #7, #9\n## Dependencies: #6 (Foundation), #7 (Chat UI), #9 (Mapper with pathway data)\n\n## Success Criteria:\n✅ \"Take Assessment\" button visible on homepage\n✅ Homepage shows \"View Pathway\" if assessment already taken\n✅ Student page displays recommended pathway with courses\n✅ Courses are clickable and route to course pages\n✅ QR recovery option is visible and functional",
+      "category": "feature",
+      "priority": 75,
+      "impact": "standard",
+      "status": "ready",
+      "created_at": "2026-05-21",
+      "completed_at": null,
+      "dependencies": [6, 7, 9]
+    },
+    {
+      "number": 11,
+      "title": "Task #2f: Testing & Validation (Phase 7)",
+      "description": "Complete end-to-end testing and validation of the assessment system. Confirms all components work together, AI quality is acceptable, and user experience is smooth.\n\n## What's Included:\n- Manual end-to-end walkthrough: new student lands on homepage → clicks \"Take Assessment\" → answers questions → receives pathway → pathway persists on learner record → pathway visible on student page → can click to start courses\n- AI recommendation quality validation: run assessment 5-10 times with varied student profiles (high aptitude/low interest, low aptitude/high interest, etc.); verify recommendations vary appropriately, courses are relevant to signals, no hallucinations\n- QR recovery testing: verify QR displays correctly on completion, QR scans/recovers correctly, recovery restores learner ID to localStorage, student can access record via recovered ID\n- Firebase persistence testing: verify assessment results and pathway persist to Firestore, QR recovery tokens stored and retrievable, offline mode queues writes for sync\n\n## Files Modified:\nNone (manual/observational testing)\n\n## Effort: ~2 days\n## Blocker: All previous tasks (6-10)\n## Dependencies: Tasks #6, #7, #8, #9, #10 (all must be complete)\n\n## Success Criteria:\n✅ E2E flow works: assessment → pathway → display → courses\n✅ AI generates appropriate recommendations (80%+ accuracy in spot-checks)\n✅ QR code generates, displays, and recovers correctly\n✅ Firebase persistence works online and offline\n✅ No obvious bugs or UX issues\n✅ Student can complete full journey without getting lost",
+      "category": "testing",
+      "priority": 75,
+      "impact": "standard",
+      "status": "ready",
+      "created_at": "2026-05-21",
+      "completed_at": null,
+      "dependencies": [6, 7, 8, 9, 10]
     }
   ]
 }
