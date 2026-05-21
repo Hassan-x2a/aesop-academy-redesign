@@ -1,0 +1,38 @@
+{
+  "id": "2026-05-21-google-gemini-3-5-flash-release",
+  "title": "Google Ships Gemini 3.5 Flash as Default in Gemini App and AI Search",
+  "subtitle": "Google's new speed-tier model outperforms its previous Pro tier on coding and agent benchmarks at roughly a third of the price.",
+  "date": "2026-05-21",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": [
+    "google",
+    "gemini",
+    "model-release",
+    "benchmarks",
+    "google-io"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "⚡",
+  "body": [
+    "At Google I/O on May 19, Sundar Pichai unveiled Gemini 3.5 Flash, a low-latency model that shipped generally available the same day and became the default for the Gemini app and Google's AI Mode in Search worldwide. According to Google's published numbers, the model outperforms its older Gemini 3.1 Pro across most internal benchmarks — 76.2% on Terminal-Bench 2.1, 1656 Elo on GDPval-AA, and 83.6% on MCP Atlas — while running at roughly four times the output token speed of competing frontier models.",
+    "The headline is not the benchmark score, it is the position on the price-performance curve. Pichai told developers that Gemini 3.5 Flash hits frontier-level coding and agentic numbers at \"half, or in some cases close to one-third\" the cost of competing models in the same tier. That kind of margin pressure is harder for rivals to match than a single benchmark win, because it changes the unit economics of every product built on top.",
+    "Alongside Gemini 3.5 Flash, Google announced Gemini Omni Flash — a native multimodal architecture that handles text, audio, and video together — and disclosed that Google now processes more than 3.2 quadrillion tokens per month across its products, up from 480 trillion a year ago. The combined message at I/O was that Google's strategy is to live at the frontier on capabilities while undercutting on cost, rather than chasing benchmark supremacy alone.",
+    "For learners: price-performance matters more than the leaderboard. A model that is 95% as capable at one-third the cost will quietly displace a more expensive rival across most real applications, because the cheaper option lets you call it more often, run agents longer, and serve more users. Watch what gets deployed, not what wins the demo."
+  ],
+  "sources": [
+    {
+      "title": "Gemini 3.5: frontier intelligence with action — Google Blog",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/"
+    },
+    {
+      "title": "Google I/O 2026: Gemini 3.5 Flash Debuts, AI Search Era Begins — HotHardware",
+      "url": "https://hothardware.com/news/google-io-2026-gemini-35-flash-ai-search-and-more"
+    },
+    {
+      "title": "Gemini 3.5 Flash is here: Google's smartest speed model — Android Authority",
+      "url": "https://www.androidauthority.com/google-gemini-3-5-flash-3668559/"
+    }
+  ],
+  "status": "published"
+}

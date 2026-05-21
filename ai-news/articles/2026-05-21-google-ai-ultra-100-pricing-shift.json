@@ -1,0 +1,38 @@
+{
+  "id": "2026-05-21-google-ai-ultra-100-pricing-shift",
+  "title": "Google Launches $100 AI Ultra Tier, Cuts Premium Plan to $200",
+  "subtitle": "Google restructured its consumer AI subscriptions at I/O, directly aligning prices with ChatGPT Pro and Claude Max.",
+  "date": "2026-05-21",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": [
+    "google",
+    "pricing",
+    "ai-subscriptions",
+    "openai",
+    "anthropic"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "💵",
+  "body": [
+    "Google announced a restructured AI subscription lineup at I/O 2026 on May 19. The previous $250-per-month AI Ultra plan is replaced by a new $100 entry-level Ultra tier — offering five times the limits of the $20 AI Pro plan and beta access to Gemini Spark — and a $200 Ultra Premium tier with twenty times the Pro limits. Cloud storage for the entry Ultra plan drops to 20 TB from 30 TB, and Google is replacing daily prompt caps with a compute-based system plus paid top-up credits for heavier workloads.",
+    "The new pricing maps almost exactly onto the rest of the market: ChatGPT Pro is $100 a month, Claude Max is $200. Google is no longer competing on price-as-discount; it is competing on price-as-parity, which is a tell that the major labs have converged on what a serious AI subscription costs and what features it should include. The compute-based metering replacing flat prompt caps is the more interesting structural change — it means heavy users now face variable bills rather than degraded service.",
+    "Subscription pricing for consumer AI has settled into clear tiers — a $20 entry plan, a $100 power-user plan, and a $200 premium tier — across all three major Western labs in roughly twelve months. That convergence makes price comparisons easier for buyers but harder for any single lab to differentiate. The product battle now shifts to what you get for the money: agent access, model availability, rate limits, and integrations.",
+    "For learners: pricing tiers tell you who a product is actually for. The $20 tier is for individuals doing personal tasks; the $100 tier is for professionals who use the tool every working hour; the $200 tier is for people building or selling on top of it. If you are picking a tool to learn on, the $20 tier is almost always enough — and switching costs between labs are still low."
+  ],
+  "sources": [
+    {
+      "title": "The Google AI Ultra plan now starts at $100 a month — Engadget",
+      "url": "https://www.engadget.com/2176060/the-google-ai-ultra-plan-now-starts-at-100-a-month/"
+    },
+    {
+      "title": "Google Cuts AI Ultra Price From $250 To $100 A Month — Dataconomy",
+      "url": "https://dataconomy.com/2026/05/20/google-ai-ultra-plan-price-cut-100-usd-subscription-revamp/"
+    },
+    {
+      "title": "Everything new in our Google AI subscriptions, fresh from I/O 2026 — Google Blog",
+      "url": "https://blog.google/products-and-platforms/products/google-one/google-ai-subscriptions/"
+    }
+  ],
+  "status": "published"
+}

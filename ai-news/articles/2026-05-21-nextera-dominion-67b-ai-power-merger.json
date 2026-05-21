@@ -1,0 +1,42 @@
+{
+  "id": "2026-05-21-nextera-dominion-67b-ai-power-merger",
+  "title": "NextEra to Acquire Dominion in $67B Deal Driven by AI Data Center Demand",
+  "subtitle": "The largest US utility acquisition in history is being framed explicitly as a play to serve hyperscaler power needs in Northern Virginia.",
+  "date": "2026-05-21",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": [
+    "infrastructure",
+    "data-centers",
+    "energy",
+    "ai-compute",
+    "mergers"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "⚡",
+  "body": [
+    "NextEra Energy announced on May 18 an all-stock acquisition of Dominion Energy valued at approximately $67 billion — the largest US utility deal on record. Dominion shareholders receive a 23% premium and would own roughly 25.5% of the combined company. The strategic rationale offered to investors is direct: Dominion's territory includes Northern Virginia, home to the world's largest concentration of data centers, and the combined utility would carry more than 130 gigawatts of large-load opportunities in its development pipeline.",
+    "AI training and inference workloads have driven electricity demand in that region to levels US grid operators were not planning for five years ago. Hyperscalers — Microsoft, Google, Amazon, Meta — need 24/7 baseload power, not just renewable capacity that varies with weather. NextEra has accordingly shifted from a renewables-first identity to what CEO John Ketchum called an \"all forms of energy\" strategy, layering natural gas and nuclear into a portfolio that was once a clean-energy showcase.",
+    "The deal is one of the clearest signals so far that the AI build-out is reshaping sectors well outside the technology industry. Utilities, transmission firms, nuclear operators, and natural gas suppliers are now valued partly on their ability to feed AI compute, and policy debates over grid reliability and ratepayer cost are increasingly downstream of decisions made in Mountain View, Redmond, and San Francisco. The acquisition will require approval from federal regulators and state public utility commissions in at least eight states.",
+    "For learners: the most consequential AI story is not always the model release. The physical layer — chips, fiber, transformers, cooling, water rights, transmission lines — is where AI ambitions either become real or hit a wall. Following the energy and infrastructure beat alongside the model beat will give you a much sharper picture of which AI deployments are actually feasible at scale."
+  ],
+  "sources": [
+    {
+      "title": "NextEra to Buy Dominion for $67 Billion to Form Power Giant — Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-05-18/nextera-to-buy-dominion-for-67-billion-to-form-utility-colossus"
+    },
+    {
+      "title": "NextEra's $67 billion Dominion takeover creates world's largest utility — Fortune",
+      "url": "https://fortune.com/2026/05/18/nextera-dominion-67-billion-acquisition-ai-data-centers-largest-utility/"
+    },
+    {
+      "title": "NextEra Energy to buy Dominion in deal that unites two key players in race to power AI data centers — CNBC",
+      "url": "https://www.cnbc.com/2026/05/18/nextera-nee-dominion-energy-d-data-center-ai.html"
+    },
+    {
+      "title": "Dominion-NextEra merger, fueled by AI data center demand — The Washington Post",
+      "url": "https://www.washingtonpost.com/business/2026/05/18/dominion-nextera-merger-fueled-by-ai-data-center-demand-would-create-huge-utility/"
+    }
+  ],
+  "status": "published"
+}

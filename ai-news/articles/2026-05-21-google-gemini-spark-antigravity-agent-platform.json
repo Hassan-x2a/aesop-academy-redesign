@@ -1,0 +1,42 @@
+{
+  "id": "2026-05-21-google-gemini-spark-antigravity-agent-platform",
+  "title": "Google Unveils Gemini Spark Personal Agent and Antigravity 2.0 Developer Platform",
+  "subtitle": "Google's I/O keynote pushed past chat into always-on agents that run on cloud VMs and a rebuilt developer suite for orchestrating them.",
+  "date": "2026-05-21",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": [
+    "google",
+    "ai-agents",
+    "antigravity",
+    "gemini-spark",
+    "developer-tools"
+  ],
+  "readTime": "4 min read",
+  "heroEmoji": "🤖",
+  "body": [
+    "Google introduced Gemini Spark at I/O 2026 — a personal AI agent that runs 24/7 on Google Cloud virtual machines, even when the user's laptop is closed. Spark is powered by Gemini 3.5 Flash and the Antigravity harness, and Google demonstrated it organizing schedules, drafting emails, and pulling files from Drive, with planned third-party integrations for Uber, OpenTable, and Zillow. It enters beta for US Google AI Ultra subscribers starting next week.",
+    "Alongside Spark, Google relaunched its developer agent stack as Antigravity 2.0 — a standalone desktop application built around agent orchestration, plus an Antigravity CLI, an Antigravity SDK, a Managed Agents feature in the Gemini API that spins up isolated Linux environments per agent, and enterprise distribution through the Gemini Enterprise Agent Platform. The previous Gemini CLI has been folded into Antigravity, indicating Google is consolidating its developer-facing AI tools under a single agent-first framing.",
+    "These announcements land in the middle of an industry-wide pivot from chat assistants to agents that take action over time. OpenAI, Anthropic, and Microsoft have each shipped agent products in the past six months, and the differentiator now is less the underlying model than the surrounding infrastructure — sandboxing, scheduling, tool integration, and recovery when something goes wrong. Google's choice to run agents on cloud VMs that persist while the user is offline is a concrete bet about where that infrastructure lives.",
+    "For learners and early-career engineers: the most interesting questions in AI right now are not \"is the model smart?\" but \"what is it allowed to do, on whose behalf, with what trust, and when things go wrong who pays?\" Agent platforms are where those questions get answered in code, and the conventions being set now — by Google, Anthropic, and others — will define the security and accountability model for years."
+  ],
+  "sources": [
+    {
+      "title": "Google introduces Gemini Spark, a 24/7 agentic assistant with Gmail integration — TechCrunch",
+      "url": "https://techcrunch.com/2026/05/19/google-introduces-gemini-spark-a-24-7-agentic-assistant-with-gmail-integration/"
+    },
+    {
+      "title": "Google Launches Antigravity 2.0 at I/O 2026 — MarkTechPost",
+      "url": "https://www.marktechpost.com/2026/05/19/google-launches-antigravity-2-0-at-i-o-2026-a-standalone-agent-first-platform-with-cli-sdk-managed-execution-and-enterprise-support/"
+    },
+    {
+      "title": "Google I/O, Gemini Spark, Antigravity — Simon Willison",
+      "url": "https://simonwillison.net/2026/May/20/google-io/"
+    },
+    {
+      "title": "All the news from the Google I/O 2026 Developer keynote — Google Developers Blog",
+      "url": "https://developers.googleblog.com/all-the-news-from-the-google-io-2026-developer-keynote/"
+    }
+  ],
+  "status": "published"
+}
