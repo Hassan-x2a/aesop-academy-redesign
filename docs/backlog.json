@@ -62,7 +62,7 @@
       "category": "feature",
       "priority": 75,
       "impact": "standard",
-      "status": "planned",
+      "status": "build-started",
       "created_at": "2026-05-21",
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
