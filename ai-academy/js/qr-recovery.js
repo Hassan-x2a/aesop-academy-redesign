@@ -72,7 +72,7 @@ export function renderRecoveryWidget(containerId, onRecovered) {
           id="recovery-token-input"
           type="text"
           placeholder="e.g. a1b2c3d4-XYZ789"
-          maxlength="40"
+          maxlength="120"
           style="
             flex:1;min-width:180px;
             padding:0.5rem 0.9rem;border-radius:2rem;

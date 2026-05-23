@@ -197,8 +197,9 @@ curl_close($ch);
 
 // ── HANDLE ERRORS ───────────────────────────────────────────────────────
 if ($curlErr) {
+    error_log('assessment-proxy curl error: ' . $curlErr);
     http_response_code(502);
-    echo json_encode(['error' => 'Connection failed: ' . $curlErr]);
+    echo json_encode(['error' => 'Assessment service temporarily unavailable. Please try again.']);
     exit;
 }
 

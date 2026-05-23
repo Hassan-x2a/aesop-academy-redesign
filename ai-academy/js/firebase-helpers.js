@@ -25,6 +25,9 @@ const OFFLINE_QUEUE_KEY = 'aesop_firebase_offline_queue';
 const OFFLINE_QUEUE_MAX = 100;
 const LEARNER_ID_KEY = 'aesop-learner-id';  // matches students.html LS_ID
 
+// Suppresses re-queuing inside helpers called during processOfflineQueue replay
+let _replayActive = false;
+
 /**
  * Initialize learner record in Firestore
  * Creates new record if doesn't exist
@@ -263,7 +266,9 @@ export async function addAssessmentMessage(learnerId, role, content) {
     }
 
     const learnerRef = doc(db, 'learners', learnerId);
-    const newMessage = { role, content, timestamp: new Date().toISOString() };
+    // seq is ms-since-epoch — allows deterministic ordering on read even if arrayUnion
+    // delivers concurrent writes out of arrival order (offline replay + live session)
+    const newMessage = { role, content, timestamp: new Date().toISOString(), seq: Date.now() };
 
     await updateDoc(learnerRef, {
       'assessmentResults.conversationHistory': arrayUnion(newMessage),
@@ -288,6 +293,7 @@ export async function addAssessmentMessage(learnerId, role, content) {
  * @private
  */
 function queueOfflineWrite(operation, data) {
+  if (_replayActive) return;
   try {
     const queue = JSON.parse(localStorage.getItem(OFFLINE_QUEUE_KEY) || '[]');
     queue.push({ operation, data, timestamp: new Date().toISOString() });
@@ -315,30 +321,43 @@ export async function processOfflineQueue() {
     const failedItems = [];
     let processed = 0;
 
+    _replayActive = true;
+    try {
     for (const item of snapshot) {
       try {
+        let result;
         switch (item.operation) {
           case 'initializeLearnerRecord':
-            await initializeLearnerRecord(item.data.learnerId, item.data.initialData);
+            result = await initializeLearnerRecord(item.data.learnerId, item.data.initialData);
             break;
           case 'updateAssessmentResults':
-            await updateAssessmentResults(item.data.learnerId, item.data.assessmentData);
+            result = await updateAssessmentResults(item.data.learnerId, item.data.assessmentData);
             break;
           case 'updateRecommendedPathway':
-            await updateRecommendedPathway(item.data.learnerId, item.data.pathwayData);
+            result = await updateRecommendedPathway(item.data.learnerId, item.data.pathwayData);
             break;
           case 'updateQRRecoveryToken':
-            await updateQRRecoveryToken(item.data.learnerId, item.data.qrTokenData);
+            result = await updateQRRecoveryToken(item.data.learnerId, item.data.qrTokenData);
             break;
           case 'addAssessmentMessage':
-            await addAssessmentMessage(item.data.learnerId, item.data.role, item.data.content);
+            result = await addAssessmentMessage(item.data.learnerId, item.data.role, item.data.content);
             break;
+          default:
+            result = { success: false, error: `Unknown operation: ${item.operation}` };
         }
-        processed++;
+        if (result && !result.success) {
+          failedItems.push(item);
+          errors.push({ operation: item.operation, error: result.error || 'Write failed' });
+        } else {
+          processed++;
+        }
       } catch (error) {
         failedItems.push(item);
         errors.push({ operation: item.operation, error: error.message });
       }
+    }
+    } finally {
+      _replayActive = false;
     }
 
     // Merge failed retries with any items queued during replay, then persist
