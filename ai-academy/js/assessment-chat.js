@@ -181,6 +181,20 @@ async function handleAssessmentComplete(signals) {
   // Mark assessment complete in localStorage (drives homepage CTA)
   markAssessmentComplete();
 
+  // Save pathway to localStorage in the format courses-v2.html expects
+  try {
+    const band = pathway.aptitudeBand || aptitudeBand;
+    const trackName = band.charAt(0).toUpperCase() + band.slice(1) + ' AI Track';
+    localStorage.setItem('aesop_learner_pathway', JSON.stringify({
+      trackName,
+      meta: pathway.reasoningBrief,
+      courses: [
+        pathway.primaryCourse.courseId,
+        ...(pathway.followUpCourses || []).map(c => c.courseId),
+      ],
+    }));
+  } catch (_) {}
+
   // Show completion UI
   showCompletionCard(qrResult, recoveryToken, { aptitudeScore, interestTags, pathway });
 }
@@ -192,27 +206,38 @@ function showCompletionCard(qrResult, recoveryToken, signals) {
   const card = document.getElementById('assessment-complete');
   if (!card) return;
 
-  // Populate pathway hint with actual recommendation
+  // Populate pathway hint with full course sequence
   const pathwayEl = document.getElementById('completion-pathway-hint');
   if (pathwayEl) {
     const { pathway, interestTags } = signals;
     if (pathway && pathway.primaryCourse) {
-      const strong = document.createElement('strong');
-      strong.textContent = pathway.primaryCourse.title;
-      pathwayEl.textContent = 'Your recommended starting course: ';
-      pathwayEl.appendChild(strong);
-      pathwayEl.appendChild(document.createTextNode('. ' + pathway.reasoningBrief));
+      const allCourses = [pathway.primaryCourse, ...(pathway.followUpCourses || [])];
+      pathwayEl.textContent = '';
+
+      const summary = document.createElement('span');
+      summary.textContent = pathway.reasoningBrief;
+      pathwayEl.appendChild(summary);
+
+      const ol = document.createElement('ol');
+      ol.style.cssText = 'text-align:left;margin:1.1rem 0 0;padding-left:1.4rem;display:flex;flex-direction:column;gap:0.4rem;';
+      allCourses.forEach((c, i) => {
+        const li = document.createElement('li');
+        li.style.cssText = `font-size:0.88rem;line-height:1.4;color:${i === 0 ? 'var(--teal)' : 'var(--text-mid)'};font-weight:${i === 0 ? '700' : '400'};`;
+        li.textContent = c.title;
+        ol.appendChild(li);
+      });
+      pathwayEl.appendChild(ol);
     } else if (interestTags && interestTags.length > 0) {
       pathwayEl.textContent =
         `Based on your interests in ${interestTags.slice(0, 2).join(' and ')}, we've built your learning path.`;
     }
   }
 
-  // Populate the "View My Pathway" link with real course URL if available
+  // CTA → courses-v2.html so learner sees their unlocked pathway tab
   const ctaLink = card.querySelector('a.btn-primary');
-  if (ctaLink && signals.pathway && signals.pathway.primaryCourse) {
-    ctaLink.href = signals.pathway.primaryCourse.path;
-    ctaLink.textContent = `Start ${signals.pathway.primaryCourse.title} →`;
+  if (ctaLink) {
+    ctaLink.href = '/ai-academy/courses-v2.html';
+    ctaLink.textContent = 'View My Pathway →';
   }
 
   // Show QR code

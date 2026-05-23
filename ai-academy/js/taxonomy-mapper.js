@@ -40,7 +40,7 @@ export function generatePathway(aptitudeScore, interestTags) {
 
   const primaryEntry = ranked[0];
   const followUps = ranked
-    .slice(1, 4)
+    .slice(1)
     .map(({ course, score }) => buildFollowUpEntry(course, score, interestTags));
 
   const primaryCourse = buildPrimaryCourseEntry(primaryEntry.course, interestTags, aptitudeBand);
