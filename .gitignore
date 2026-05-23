@@ -13,6 +13,9 @@ scheduling/.claude/
 **/TEMP/
 .fonts/
 
+# Polaris MCP session config — session-local, changes every run
+.mcp.json
+
 # Python byte-code caches
 __pycache__/
 *.pyc

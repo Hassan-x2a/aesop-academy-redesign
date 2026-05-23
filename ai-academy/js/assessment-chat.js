@@ -141,8 +141,6 @@ async function handleAssessmentComplete(signals) {
 
   const { aptitudeScore = 0, interestTags = [], completionFlag = true, reasoning = '', aptitudeBand = 'beginner' } = signals;
 
-  console.info('Assessment complete:', buildProfileSummary(signals));
-
   // Disable input
   const input = document.getElementById('assessment-input');
   const sendBtn = document.getElementById('assessment-send');
@@ -197,9 +195,11 @@ function showCompletionCard(qrResult, recoveryToken, signals) {
   if (pathwayEl) {
     const { pathway, interestTags } = signals;
     if (pathway && pathway.primaryCourse) {
-      pathwayEl.innerHTML =
-        `Your recommended starting course: <strong>${pathway.primaryCourse.title}</strong>. ` +
-        `${pathway.reasoningBrief}`;
+      const strong = document.createElement('strong');
+      strong.textContent = pathway.primaryCourse.title;
+      pathwayEl.textContent = 'Your recommended starting course: ';
+      pathwayEl.appendChild(strong);
+      pathwayEl.appendChild(document.createTextNode('. ' + pathway.reasoningBrief));
     } else if (interestTags && interestTags.length > 0) {
       pathwayEl.textContent =
         `Based on your interests in ${interestTags.slice(0, 2).join(' and ')}, we've built your learning path.`;
