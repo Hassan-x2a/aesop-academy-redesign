@@ -324,6 +324,7 @@ export async function processOfflineQueue() {
     }
 
     const errors = [];
+    const failedItems = [];
     let processed = 0;
 
     for (const item of queue) {
@@ -347,6 +348,7 @@ export async function processOfflineQueue() {
         }
         processed++;
       } catch (error) {
+        failedItems.push(item);
         errors.push({
           operation: item.operation,
           error: error.message
@@ -354,10 +356,8 @@ export async function processOfflineQueue() {
       }
     }
 
-    // Clear queue
-    if (processed > 0) {
-      localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify([]));
-    }
+    // Preserve failed items so they can be retried on the next reconnect
+    localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(failedItems));
 
     return { success: true, processed, errors };
 

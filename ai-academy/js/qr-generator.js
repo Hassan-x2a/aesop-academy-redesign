@@ -205,26 +205,3 @@ export function displayQRCode(elementId, qrDataUrl, options = {}) {
     return false;
   }
 }
-
-/**
- * Generate recovery instructions HTML
- * @param {string} learnerId - Learner ID
- * @returns {string} HTML string
- */
-export function getRecoveryInstructionsHTML(learnerId) {
-  return `
-    <div style="padding: 16px; background: #f5f5f5; border-radius: 8px; margin: 16px 0;">
-      <h3 style="margin-top: 0; color: #333;">Save Your Recovery QR Code</h3>
-      <p style="color: #666; font-size: 14px;">
-        If you lose your Learner ID, you can use this QR code to recover it.
-        <strong>Take a screenshot or save this page for future reference.</strong>
-      </p>
-      <p style="color: #666; font-size: 14px; margin-bottom: 0;">
-        <strong>Learner ID (backup):</strong> <code style="background: white; padding: 2px 6px; border-radius: 4px;">${learnerId}</code>
-      </p>
-      <p style="color: #999; font-size: 12px; margin: 8px 0 0 0;">
-        ⚠️ This page is temporary. The QR code will be saved in your assessment results.
-      </p>
-    </div>
-  `;
-}

@@ -15,9 +15,10 @@
 require_once dirname(__DIR__) . '/secrets.php';
 
 // ── CONFIG ──────────────────────────────────────────────────────────────
-$API_KEY       = aesop_secret('AESOP_ANTHROPIC_API_KEY', '');
-$MODEL         = 'claude-sonnet-4-6';
-$MAX_TOKENS_CAP = 800;   // Higher than lab proxy (1024 hard cap, labs use 400)
+$API_KEY        = aesop_secret('AESOP_ANTHROPIC_API_KEY', '');
+$MODEL          = 'claude-sonnet-4-6';
+$MAX_TOKENS_CAP = 800;   // Assessment needs structured JSON payload; lab proxy caps at 400
+$RATE_LIMIT_RPM = 10;    // Max requests per minute per IP
 
 // ── HEADERS ─────────────────────────────────────────────────────────────
 header('Content-Type: application/json');
@@ -37,6 +38,25 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if ($API_KEY === '') {
     http_response_code(500);
     echo json_encode(['error' => 'Server is missing AESOP_ANTHROPIC_API_KEY']);
+    exit;
+}
+
+// ── RATE LIMITING ───────────────────────────────────────────────────────
+$ip       = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$rlFile   = sys_get_temp_dir() . '/aesop_rl_' . md5($ip) . '.json';
+$now      = time();
+$rl       = @json_decode(@file_get_contents($rlFile), true) ?: ['ts' => $now, 'count' => 0];
+
+if ($now - $rl['ts'] >= 60) {
+    $rl = ['ts' => $now, 'count' => 0];
+}
+
+$rl['count']++;
+@file_put_contents($rlFile, json_encode($rl), LOCK_EX);
+
+if ($rl['count'] > $RATE_LIMIT_RPM) {
+    http_response_code(429);
+    echo json_encode(['error' => 'Too many requests. Please wait a moment and try again.']);
     exit;
 }
 
