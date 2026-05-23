@@ -181,6 +181,9 @@ async function handleAssessmentComplete(signals) {
   // Mark assessment complete in localStorage (drives homepage CTA)
   markAssessmentComplete();
 
+  // Save full pathway record to localStorage (fallback for students.html)
+  try { localStorage.setItem('aesop_pathway_record', JSON.stringify(pathway)); } catch (_) {}
+
   // Save pathway to localStorage in the format courses-v2.html expects
   try {
     const band = pathway.aptitudeBand || aptitudeBand;
