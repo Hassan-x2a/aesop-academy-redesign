@@ -1,0 +1,24 @@
+{
+  "id": "2026-05-23-trump-postpones-ai-executive-order",
+  "title": "Trump postpones AI executive order signing hours before scheduled ceremony",
+  "subtitle": "The order would have invited labs to give the federal government early access to test new model releases — a voluntary version of the pre-deployment review Anthropic, OpenAI, and Google already do.",
+  "date": "2026-05-23",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["trump", "white-house", "ai-policy", "regulation", "executive-order"],
+  "readTime": "3 min read",
+  "heroEmoji": "🏛️",
+  "body": [
+    "President Donald Trump cancelled the Oval Office signing of a long-prepared AI executive order on May 21, hours before the ceremony was scheduled. Trump told reporters the delay was 'because I didn't like certain aspects of it,' adding that he thought the order 'gets in the way of — we're leading China, we're leading everybody, and I didn't want to do anything to get in the way of that lead.' Reporting from Axios, CNBC, and the Washington Post indicates the order would have invited AI companies to voluntarily share anticipated releases with federal agencies for security review, with a framework allowing up to 90 days for evaluation.",
+    "The postponement reflects a real split inside the administration. White House AI and crypto adviser David Sacks reportedly opposed the order, and Meta CEO Mark Zuckerberg, xAI CEO Elon Musk, and Sacks all spoke with Trump between Wednesday night and Thursday morning. The same administration that spent its first months dismantling Biden-era AI rules has spent the past quarter quietly assembling a version of pre-deployment testing — driven in part by Anthropic's 'Mythos' model, which can autonomously identify and chain software vulnerabilities at a scale that prompted formal national-security alarm in late April.",
+    "Whether or not the order gets signed in revised form, the underlying dynamic is now visible. The frontier labs already submit their most capable models to government testing in practice, and a 90-day voluntary review window is close to what they already do informally with the U.S. AI Safety Institute and U.K. AISI. Industry's preference is to keep that arrangement informal; the security and intelligence community's preference is to codify it. The executive order was the compromise text — and it stalled on the politics rather than the substance.",
+    "Takeaway for learners: AI policy in the U.S. is now mostly negotiated between three groups — the labs, the national-security agencies, and a handful of senior White House advisers with conflicting instincts about regulation. State legislatures and the EU still shape rules at the edges, but the consequential decisions for frontier models are made in this small room. If you are trying to follow AI policy seriously, track those three groups by name; the headline 'executive order' or 'AI bill' usually obscures the actual fight."
+  ],
+  "sources": [
+    { "title": "Trump postpones AI executive order signing: 'I didn't like certain aspects' — CNBC", "url": "https://www.cnbc.com/2026/05/21/trump-ai-executive-order-postponed.html" },
+    { "title": "Why Trump's AI executive order was pulled — Axios", "url": "https://www.axios.com/2026/05/21/trump-ai-executive-order-postponed-why" },
+    { "title": "Trump delays executive order on AI oversight hours before planned signing — Washington Post", "url": "https://www.washingtonpost.com/technology/2026/05/21/white-house-tore-down-ai-rules-now-its-building-new-defenses/" },
+    { "title": "Here's what Trump's postponed AI executive order would have done — Washington Times", "url": "https://www.washingtontimes.com/news/2026/may/22/heres-donald-trumps-postponed-ai-executive-order-would-done/" }
+  ],
+  "status": "published"
+}

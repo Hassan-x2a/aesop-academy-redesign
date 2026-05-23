@@ -1,0 +1,24 @@
+{
+  "id": "2026-05-23-anthropic-mythos-japan-megabanks",
+  "title": "Japan's three megabanks to get access to Anthropic's Mythos within two weeks",
+  "subtitle": "MUFG, SMBC, and Mizuho will join the restricted preview of the vulnerability-finding model — the first Japanese entities admitted to the Glasswing program.",
+  "date": "2026-05-23",
+  "author": "AESOP AI Engine",
+  "category": "Safety",
+  "tags": ["anthropic", "claude-mythos", "cybersecurity", "japan", "financial-services"],
+  "readTime": "3 min read",
+  "heroEmoji": "🛡️",
+  "body": [
+    "Japanese Finance Minister Satsuki Katayama announced on May 22 that the country's three megabanks — Mitsubishi UFJ, Sumitomo Mitsui, and Mizuho — will gain access to Anthropic's Claude Mythos within two weeks. The banks were informed during meetings in Tokyo this week with U.S. Treasury Secretary Scott Bessent. Mythos is a model positioned above the Opus tier and built specifically for autonomous discovery of deep software vulnerabilities; until now its restricted preview has been limited to American and a handful of European partners under Anthropic's 'Glasswing' program.",
+    "Katayama also announced a 36-entity public-private working group on Mythos-class risks. It includes the megabanks, the Bank of Japan, and the Japanese units of Anthropic and OpenAI, and is chaired by Mizuho's chief information security officer. The group's mandate is to identify exposures, coordinate defensive patching, and draft contingency plans for the Japanese financial system — essentially treating Mythos-class capability as a sector-wide infrastructure problem rather than a per-bank procurement decision.",
+    "The timeline matters. Mythos was the model that prompted the U.S. White House in late April to consider blocking commercial release entirely on national-security grounds, and it is the same capability driving the AI executive order that Trump postponed on May 21. Anthropic ships Mythos with hard restrictions: customers use it to find vulnerabilities in their own systems and to draft remediation, not to publish exploits. Japan becoming the first Asian jurisdiction to clear that bar is also a strong signal about how U.S. AI export policy is being negotiated — through Treasury, bilaterally, and faster than any formal regulation.",
+    "Takeaway for learners: AI security is now a foreign-policy file, not a product file. The same model that the White House considered classifying is being delivered to Japanese banks two weeks later because a Treasury Secretary said so in a meeting. If you work in security, finance, or infrastructure, the question to track is not 'when can we buy this model' but 'who gets to use it under what conditions.' That decision is increasingly made government-to-government, with the lab in the room but not at the head of the table."
+  ],
+  "sources": [
+    { "title": "Japan megabanks to gain access to Anthropic's powerful AI model Mythos — Nikkei Asia", "url": "https://asia.nikkei.com/business/finance/japan-megabanks-to-gain-access-to-anthropic-s-powerful-ai-model-mythos" },
+    { "title": "Mythos goes to Tokyo: Japanese banks to get Anthropic's vulnerability-hunting AI — The Next Web", "url": "https://thenextweb.com/news/anthropic-mythos-japan-megabanks-access" },
+    { "title": "Japanese Banks Prepare to Deploy Mythos AI for Cyber Defense — WiseToast", "url": "https://wisetoast.com/japan-megabanks-deploy-mythos-protect-money/" },
+    { "title": "Japan Megabanks to Gain Access to Anthropic's Mythos in About Two Weeks, Source Says — Ground News", "url": "https://ground.news/article/breaking-news-japans-3-megabanks-set-to-use-anthropics-claude-mythos-sources" }
+  ],
+  "status": "published"
+}

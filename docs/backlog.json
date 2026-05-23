@@ -10,14 +10,7 @@
       "status": "in-progress",
       "created_at": "2026-05-20",
       "completed_at": null,
-      "dependencies": [
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ]
+      "dependencies": [6, 7, 8, 9, 10, 11]
     },
     {
       "number": 3,
@@ -62,12 +55,83 @@
       "category": "feature",
       "priority": 75,
       "impact": "standard",
-      "status": "build-finished",
+      "status": "review-blocked",
       "created_at": "2026-05-21",
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": []
+      "dependencies": [],
+      "objective": {
+        "statement": "Deliver a complete AI-driven student assessment system: Firebase schema, QR recovery, Firestore helpers, chat UI, AI engine, taxonomy mapper, and full UX integration so students can take a 5-minute conversation and receive a personalized course pathway.",
+        "successCriteria": [
+          "Firestore learners schema updated with assessmentResults, recommendedPathway, qrRecoveryToken, progressData sub-objects",
+          "QR generator creates valid scannable codes encoding learner ID + recovery token",
+          "Firebase helpers read/write assessment data reliably with error envelopes",
+          "Offline fallback queues writes and replays on reconnect",
+          "Assessment chat page loads and conversation flows end-to-end",
+          "AI emits structured completion signal; parser extracts aptitude score and interest tags",
+          "Taxonomy mapper returns a primary course and up to 3 follow-ups from the catalogue",
+          "Homepage CTA flips from Take Assessment to View Pathway after completion",
+          "Student hub displays recommended pathway card"
+        ],
+        "nonGoals": [
+          "Course content changes",
+          "Teacher or guardian dashboard changes",
+          "Certification system changes",
+          "Automated test suite (client-side JS, no test infrastructure — manual verification documented)"
+        ],
+        "proofMap": [
+          { "criterion": "Firestore schema", "unit": "firebase-schema-manual" },
+          { "criterion": "QR generator", "unit": "qr-generator-manual" },
+          { "criterion": "Firebase helpers", "unit": "firebase-helpers-manual" },
+          { "criterion": "Offline fallback", "unit": "offline-fallback-manual" },
+          { "criterion": "Assessment chat flow", "unit": "assessment-e2e-manual" },
+          { "criterion": "AI completion signal + parser", "unit": "parser-manual" },
+          { "criterion": "Taxonomy mapper", "unit": "mapper-manual" },
+          { "criterion": "Homepage CTA flip", "unit": "assessment-e2e-manual" },
+          { "criterion": "Student hub pathway card", "unit": "assessment-e2e-manual" }
+        ],
+        "stopConditions": []
+      },
+      "plan": {
+        "proof_units": [
+          {
+            "name": "firebase-schema-manual",
+            "description": "firebase-schema.js createNewLearnerRecord() emits full schema with all 4 sub-objects",
+            "waiver": "No test infrastructure. Manual: inspect Firestore console after initializeLearnerRecord() call; verify all sub-fields present."
+          },
+          {
+            "name": "qr-generator-manual",
+            "description": "generateQRCode() returns {svg, dataUrl}; displayQRCode() renders visible QR in DOM",
+            "waiver": "No test infrastructure. Manual: complete assessment, verify QR renders on completion card and is scannable."
+          },
+          {
+            "name": "firebase-helpers-manual",
+            "description": "5 updateDoc helpers write correct sub-fields without overwriting siblings",
+            "waiver": "No test infrastructure. Manual: complete assessment, inspect Firestore doc in console for correct field population."
+          },
+          {
+            "name": "offline-fallback-manual",
+            "description": "Disconnect network mid-assessment; messages still flow via fallbackReply(); reconnect triggers processOfflineQueue()",
+            "waiver": "No test infrastructure. Manual: toggle DevTools offline, send message, toggle online, verify queue replay in console."
+          },
+          {
+            "name": "assessment-e2e-manual",
+            "description": "Full happy path: homepage → assessment → completion card → student hub pathway card",
+            "waiver": "No test infrastructure. Manual: walk PR test plan steps 1–7 in test plan section of PR #8."
+          },
+          {
+            "name": "parser-manual",
+            "description": "parseAssessmentResponse() strips <!--ASSESSMENT_COMPLETE:{...}--> from visible text and returns validated signals",
+            "waiver": "No test infrastructure. Manual: verify completion card shows correct course after 5+ exchanges."
+          },
+          {
+            "name": "mapper-manual",
+            "description": "generatePathway() returns primaryCourse + followUpCourses matching the student's aptitude band and interest tags",
+            "waiver": "No test infrastructure. Manual: run assessment with varied profiles; confirm course recommendations vary appropriately."
+          }
+        ]
+      }
     },
     {
       "number": 7,
@@ -81,9 +145,7 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [
-        6
-      ]
+      "dependencies": [6]
     },
     {
       "number": 8,
@@ -97,9 +159,7 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [
-        6
-      ]
+      "dependencies": [6]
     },
     {
       "number": 9,
@@ -113,9 +173,7 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [
-        8
-      ]
+      "dependencies": [8]
     },
     {
       "number": 10,
@@ -129,11 +187,19 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [
-        6,
-        7,
-        9
-      ]
+      "dependencies": [6, 7, 9]
+    },
+    {
+      "number": 12,
+      "title": "Consolidate Firebase client config into shared module",
+      "description": "firebase-helpers.js (introduced in Task #6) hardcodes the Firebase client config block (apiKey, projectId, appId, etc.), duplicating what is already present in students.html, transcript.html, and dashboard.html. Firebase client config is not a secret, but duplication creates a maintenance sync burden — a project change requires updating all copies.\n\nExtract the config into a shared module (e.g. ai-academy/js/firebase-config.js) and import it from all consumers. Verify all pages still initialize Firebase correctly after the change.",
+      "category": "refactor",
+      "priority": 40,
+      "impact": "minor",
+      "status": "backlog",
+      "created_at": "2026-05-23",
+      "completed_at": null,
+      "dependencies": [6]
     },
     {
       "number": 11,
@@ -147,13 +213,7 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [
-        6,
-        7,
-        8,
-        9,
-        10
-      ]
+      "dependencies": [6, 7, 8, 9, 10]
     }
   ]
 }

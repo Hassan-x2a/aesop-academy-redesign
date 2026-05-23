@@ -1,0 +1,24 @@
+{
+  "id": "2026-05-23-bloom-energy-nebius-26b-ai-power-deal",
+  "title": "Bloom Energy lands $2.6B fuel-cell deal with Nebius to power AI data centers",
+  "subtitle": "The 10-year, 250 MW agreement bypasses grid bottlenecks entirely — on-site fuel cells generating behind-the-meter power for European AI capacity.",
+  "date": "2026-05-23",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["bloom-energy", "nebius", "data-centers", "ai-infrastructure", "energy"],
+  "readTime": "3 min read",
+  "heroEmoji": "⚡",
+  "body": [
+    "Bloom Energy disclosed a master fuel-cell capacity agreement with AI cloud provider Nebius on May 20, valued at up to $2.6 billion over the life of the contract. The deal covers approximately 250 MW of guaranteed behind-the-meter generation across a 10-year term, with initial deployment of 328 MW of capacity scheduled for later this year. Under the agreement, Bloom installs, operates, and maintains the systems on Nebius sites and sells the electricity directly — a structure that bypasses utility interconnection queues entirely. Bloom Energy shares rose 12 percent on the announcement; Nebius gained 8 percent.",
+    "The structure of the deal is the story. The single biggest constraint on new AI data-center capacity in 2026 is no longer chip supply — NVIDIA's Q1 FY27 guidance showed it could ship more — it is grid interconnection. Wait times for new connections at the scale of a hyperscale data center now run three to seven years in much of the U.S. and Europe. Behind-the-meter generation, where the power source sits inside the data-center fence and never touches the grid, eliminates that wait. Bloom's solid-oxide fuel cells run on natural gas today, with a roadmap toward hydrogen, and can be deployed in months rather than years.",
+    "Read alongside NextEra–Dominion's $67 billion AI-power merger announcement on May 21 and Anthropic's $245 billion in disclosed cloud commitments, the picture is consistent: every layer of the AI stack is being re-architected around the energy constraint. Hyperscalers are signing 10- and 20-year power purchase agreements directly with nuclear, solar, and now fuel-cell providers. The 'AI capex' line in 2026 earnings reports increasingly means electricity-generation infrastructure, not GPUs.",
+    "Takeaway for learners: when you hear that an AI model 'costs millions to train,' a growing share of that cost is now electricity, not compute. If you want to understand which AI companies survive the next five years, look at their power contracts as carefully as their model benchmarks. A lab with cheap, long-dated, behind-the-meter electricity has a structural advantage that no amount of algorithmic improvement can close."
+  ],
+  "sources": [
+    { "title": "Bloom Energy Shares Gain on Landmark $2.6 Billion Fuel Cell Partnership with Nebius to Power AI Infrastructure — SSBCrack News", "url": "https://news.ssbcrack.com/bloom-energy-shares-gain-on-landmark-2-6-billion-fuel-cell-partnership-with-nebius-to-power-ai-infrastructure/" },
+    { "title": "Nebius Stock Soars 8% on Massive $2.6B Bloom Energy Partnership for AI Infrastructure — Blockonomi", "url": "https://blockonomi.com/nebius-nbis-stock-soars-8-on-massive-2-6b-bloom-energy-partnership-for-ai-infrastructure/" },
+    { "title": "Bloom Energy stock soars on AI deal: can the rally continue? — Invezz", "url": "https://invezz.com/news/2026/05/21/bloom-energy-stock-soars-on-ai-deal-can-the-rally-continue/" },
+    { "title": "Bloom Energy rises on $2.6 billion Nebius partnership deal — Rolling Out", "url": "https://rollingout.com/2026/05/21/bloom-energy-rises-on-2-6-billion-nebius/" }
+  ],
+  "status": "published"
+}
