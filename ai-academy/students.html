@@ -17,6 +17,8 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getFirestore, doc, getDoc, setDoc }
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { renderPathway } from './js/pathway-display.js';
+    import { renderRecoveryWidget } from './js/qr-recovery.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0-J6BVarJ0_lnSBkdtBDCbCHVoABUTrU",
@@ -142,6 +144,25 @@
       const ch = CHALLENGES[dayOfYear % CHALLENGES.length];
       document.getElementById('challengeQ').textContent = ch.q;
       document.getElementById('challengeA').textContent = ch.a;
+
+      // Recommended pathway from Firestore
+      try {
+        const pathSnap = await getDoc(doc(db, 'learners', id));
+        if (pathSnap.exists()) {
+          const record = pathSnap.data();
+          const pathway = record.recommendedPathway;
+          if (pathway && pathway.primaryCourse) {
+            document.getElementById('pathwayCard').style.display = '';
+            renderPathway('pathway-display-area', pathway);
+          }
+        }
+      } catch(e) { console.warn('Pathway load error:', e); }
+
+      // Recovery widget
+      renderRecoveryWidget('qr-recovery-widget', (recoveredId) => {
+        localStorage.setItem('aesop-learner-id', recoveredId);
+        location.reload();
+      });
 
       // Progress — Firestore first, localStorage fill-in for anything missing.
       let modProgress = {};
@@ -531,10 +552,23 @@
       <button class="sh-reveal-btn" id="revealBtn" onclick="_toggleAnswer()">Reveal answer</button>
     </div>
 
+    <!-- Recommended Pathway -->
+    <div class="sh-card sh-progress-card" id="pathwayCard" style="display:none">
+      <div class="sh-card-label">🧭 Recommended Pathway</div>
+      <div id="pathway-display-area">
+        <p class="sh-empty">Loading pathway…</p>
+      </div>
+    </div>
+
     <!-- Progress -->
     <div class="sh-card sh-progress-card">
       <div class="sh-card-label">📊 My Progress</div>
       <div id="progressList"><p class="sh-empty">Loading…</p></div>
+    </div>
+
+    <!-- QR Recovery -->
+    <div class="sh-card sh-progress-card">
+      <div id="qr-recovery-widget"></div>
     </div>
 
   </div>

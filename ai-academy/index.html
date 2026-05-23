@@ -1359,6 +1359,8 @@ function renderWelcome() {
         </div>
       </div>
 
+      <div id="assessment-cta" style="text-align:center;margin-bottom:1.5rem"></div>
+
       <div style="font-family: var(--font-display);font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-muted);text-align:center;margin-bottom:0.85rem;">Select a Course to Begin</div>
 
       <div class="welcome-grid">
@@ -3127,6 +3129,40 @@ function discardQAResult() {
 })();
 
 renderWelcome();
+
+// Assessment CTA — show "Take Assessment" or "View Pathway" based on localStorage flag
+(function() {
+  const el = document.getElementById('assessment-cta');
+  if (!el) return;
+  const done = localStorage.getItem('aesop-assessment-complete') === '1';
+  if (done) {
+    el.innerHTML = `
+      <a href="/ai-academy/students.html"
+         style="display:inline-flex;align-items:center;gap:0.5rem;
+                background:var(--teal-dark,#2ba898);color:white;
+                font-weight:700;font-size:0.95rem;padding:0.65rem 1.5rem;
+                border-radius:2rem;text-decoration:none;transition:opacity 0.15s;"
+         onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        View My Pathway &rarr;
+      </a>
+      <div style="margin-top:0.5rem;font-size:0.78rem;color:var(--ink-muted);">
+        <a href="/ai-academy/assessment.html" style="color:var(--ink-muted);text-decoration:underline;text-underline-offset:2px;opacity:0.7;">Retake assessment</a>
+      </div>`;
+  } else {
+    el.innerHTML = `
+      <a href="/ai-academy/assessment.html"
+         style="display:inline-flex;align-items:center;gap:0.5rem;
+                background:var(--teal-dark,#2ba898);color:white;
+                font-weight:700;font-size:0.95rem;padding:0.65rem 1.5rem;
+                border-radius:2rem;text-decoration:none;transition:opacity 0.15s;"
+         onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        Not sure where to start? Take the Assessment &rarr;
+      </a>
+      <div style="margin-top:0.4rem;font-size:0.75rem;color:var(--ink-muted,#718096);">
+        5 minutes &middot; personalized course recommendation
+      </div>`;
+  }
+})();
 
 // ?qaexam=1 → auto-select Intro tier and open exam immediately
 if (state.qaExam) {

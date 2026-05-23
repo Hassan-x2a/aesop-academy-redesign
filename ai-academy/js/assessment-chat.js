@@ -1,12 +1,12 @@
 // Assessment Chat — AESOP AI Academy
 // Drives the student assessment conversation and completion flow
 
-import { getOrCreateLearnerId, initializeLearnerRecord, addAssessmentMessage, updateAssessmentResults, updateQRRecoveryToken, setupOfflineSync } from './firebase-helpers.js';
+import { getOrCreateLearnerId, initializeLearnerRecord, addAssessmentMessage, updateAssessmentResults, updateQRRecoveryToken, updateRecommendedPathway, setupOfflineSync } from './firebase-helpers.js';
 import { generateQRCode, displayQRCode } from './qr-generator.js';
 import { ASSESSMENT_SYSTEM_PROMPT, FALLBACK_REPLIES } from './assessment-prompts.js';
 import { parseAssessmentResponse, buildProfileSummary } from './assessment-parser.js';
 import { generatePathway } from './taxonomy-mapper.js';
-import { updateRecommendedPathway } from './firebase-helpers.js';
+import { markAssessmentComplete } from './pathway-display.js';
 
 const PROXY_URL = '/aesop-api/assessment-proxy.php';
 
@@ -177,6 +177,9 @@ async function handleAssessmentComplete(signals) {
       expiresAt: null,
     });
   }
+
+  // Mark assessment complete in localStorage (drives homepage CTA)
+  markAssessmentComplete();
 
   // Show completion UI
   showCompletionCard(qrResult, recoveryToken, { aptitudeScore, interestTags, pathway });
