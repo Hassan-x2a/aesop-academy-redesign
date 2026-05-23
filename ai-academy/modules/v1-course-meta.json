@@ -1,0 +1,579 @@
+{
+  "ai-governance": {
+    "title": "AI Governance",
+    "desc": "Understand how AI is regulated, who makes the rules, and why it matters. Explore international policy frameworks, corporate accountability, and what responsible AI deployment looks like in practice.",
+    "modules": 8
+  },
+  "ai-in-society": {
+    "title": "AI in Society",
+    "desc": "Explore how AI shapes jobs, laws, communities, and culture. Examine real-world case studies on bias, fairness, and the future of human-AI collaboration.",
+    "modules": 8
+  },
+  "ai-and-creativity": {
+    "title": "AI & Creativity",
+    "desc": "Dive deep into generative AI for writing, art, music, and storytelling. Learn to collaborate with AI as a creative partner while protecting your original voice.",
+    "modules": 8
+  },
+  "ai-ethics": {
+    "title": "AI Ethics & Decision-Making",
+    "desc": "Tackle the hard questions. Privacy, consent, algorithmic fairness, surveillance capitalism, and what it means to build AI responsibly.",
+    "modules": 8
+  },
+  "building-with-ai": {
+    "title": "Building with AI",
+    "desc": "Go from user to builder. Learn prompt engineering, AI tool integration, and how to design your own AI-powered projects — no coding required to start.",
+    "modules": 8
+  },
+  "ai-careers-and-research": {
+    "title": "AI Careers & Research",
+    "desc": "Explore career paths in AI research, policy, design, and engineering. Real profiles, skill roadmaps, and a capstone project to launch your future.",
+    "modules": 6
+  },
+  "ai-in-healthcare": {
+    "title": "AI in Healthcare",
+    "desc": "Explore how AI is transforming medicine — from diagnostics to drug discovery — and the safety, equity, and privacy stakes involved.",
+    "modules": 6
+  },
+  "ai-and-education": {
+    "title": "AI & Education",
+    "desc": "Examine how AI is reshaping teaching, learning, and academic integrity — and what it means for the future of schools.",
+    "modules": 6
+  },
+  "ai-and-finance": {
+    "title": "AI & Finance",
+    "desc": "Understand how AI is transforming banking, investing, lending, and financial risk — and the systemic risks it introduces.",
+    "modules": 6
+  },
+  "ai-psychology-and-behavior": {
+    "title": "AI Psychology & Behavior",
+    "desc": "Examine the psychological dimensions of AI — how it shapes human behavior, cognition, trust, and mental wellbeing.",
+    "modules": 6
+  },
+  "applied-ai-development": {
+    "title": "Applied AI Development",
+    "desc": "For learners ready to build real AI systems. From fine-tuning to deployment — hands-on, project-based, no fluff.",
+    "modules": 8
+  },
+  "ai-leadership": {
+    "title": "AI Leadership",
+    "desc": "For managers, executives, and decision-makers. How to lead organizations through AI adoption responsibly and effectively.",
+    "modules": 6
+  },
+  "ai-and-media": {
+    "title": "AI & Media",
+    "desc": "Explore how AI is transforming journalism, content creation, misinformation, and the information ecosystem.",
+    "modules": 6
+  },
+  "ai-and-national-security": {
+    "title": "AI & National Security",
+    "desc": "Examine AI's role in defense, intelligence, cyber operations, and geopolitical competition — and what it means for global stability.",
+    "modules": 6
+  },
+  "ai-consciousness-and-philosophy": {
+    "title": "AI Consciousness & Philosophy",
+    "desc": "Grapple with the deepest questions about intelligence, consciousness, moral status, and what AI reveals about what it means to be human.",
+    "modules": 6
+  },
+  "the-future-of-intelligence": {
+    "title": "The Future of Intelligence",
+    "desc": "A capstone exploration of where AI is headed — technically, socially, and philosophically — and how to think about it clearly.",
+    "modules": 6
+  },
+  "ai-social-media": {
+    "title": "AI in Social Media",
+    "desc": "Understand how AI shapes your social media experience through content filtering and targeted advertising. Learn about algorithmic content moderation and social influence.",
+    "modules": 4
+  },
+  "ai-misinformation": {
+    "title": "AI and Misinformation",
+    "desc": "Learn to recognize, evaluate, and counter AI-generated misinformation. Covers detection methods, information verification techniques, and the infrastructure that amplifies false narratives.",
+    "modules": 4
+  },
+  "gpt-vs-claude-vs-gemini": {
+    "title": "GPT vs. Claude vs. Gemini",
+    "desc": "Compare the leading AI models — their strengths, limitations, design philosophies, and real-world performance. Learn to choose the right model for the right job.",
+    "modules": 8
+  },
+  "running-models-locally": {
+    "title": "Running Models Locally",
+    "desc": "Learn to run open-source and quantized models on your own hardware. From setup to inference, understand the practical reality of local AI — privacy, cost, and control.",
+    "modules": 8
+  },
+  "how-large-language-models-work": {
+    "title": "How Large Language Models Work",
+    "desc": "Demystify the technology behind ChatGPT, Claude, and Gemini. Understand transformers, training, and why these systems behave the way they do — without needing a PhD.",
+    "modules": 8
+  },
+  "image-generation-models": {
+    "title": "Image Generation Models",
+    "desc": "Go deep on diffusion models, LoRA, and the technology behind Midjourney, DALL·E, and Stable Diffusion. Learn to generate, control, and understand AI imagery.",
+    "modules": 8
+  },
+  "model-evaluation-and-benchmarks": {
+    "title": "Model Evaluation and Benchmarks",
+    "desc": "Learn to read, run, and design AI evaluations. Understand what benchmarks actually measure, how to evaluate models for your specific use case, and where standard evals fall short.",
+    "modules": 8
+  },
+  "the-alignment-problem": {
+    "title": "The Alignment Problem",
+    "desc": "Understand what AI alignment means, why it's hard, and why the field's best researchers consider it one of the most important problems in technology.",
+    "modules": 8
+  },
+  "conversational-ai-chatbots": {
+    "title": "Conversational AI and Chatbots",
+    "desc": "Understand how AI systems communicate with humans through text and speech. Learn principles for designing effective conversational interfaces and evaluate chatbot capabilities and limitations.",
+    "modules": 4
+  },
+  "voice-and-real-time-ai": {
+    "title": "Voice and Real-Time AI",
+    "desc": "Explore the rapidly evolving world of real-time AI — voice interfaces, speech recognition, synthesis, and the systems powering always-on AI assistants.",
+    "modules": 8
+  },
+  "the-hardware-race": {
+    "title": "The Hardware Race",
+    "desc": "Understand the chip competition powering the AI era — GPUs, TPUs, custom silicon, and why hardware has become the defining constraint in AI development.",
+    "modules": 8
+  },
+  "synthetic-data-and-self-improvement": {
+    "title": "Synthetic Data and Self-Improvement",
+    "desc": "Explore how AI systems use generated data to train themselves — and what that means for capability growth, quality control, and the future of AI development.",
+    "modules": 8
+  },
+  "the-context-window-race": {
+    "title": "The Context Window Race",
+    "desc": "Understand why context length matters, how it's grown from 2K to 1M+ tokens, and what expanding context windows make possible — and what problems they create.",
+    "modules": 8
+  },
+  "the-reasoning-revolution": {
+    "title": "The Reasoning Revolution",
+    "desc": "Explore how AI reasoning has evolved — chain-of-thought, reasoning models like o1 and o3, and what it means for AI to 'think before it answers.'",
+    "modules": 8
+  },
+  "ai-in-science": {
+    "title": "AI in Science",
+    "desc": "Discover how AI is accelerating scientific discovery — from protein folding to drug discovery, climate modeling, and materials science.",
+    "modules": 8
+  },
+  "ai-agents-in-the-wild": {
+    "title": "AI Agents in the Wild",
+    "desc": "Survey real-world AI agent deployments — what works, what fails, and what the current frontier of autonomous AI systems looks like in practice.",
+    "modules": 8
+  },
+  "what-s-coming-next": {
+    "title": "What's Coming Next",
+    "desc": "A living course tracking the AI frontier — emerging capabilities, upcoming model releases, and how to read the signals that matter in a fast-moving field.",
+    "modules": 8
+  },
+  "ai-autonomous-systems": {
+    "title": "Autonomous AI Systems",
+    "desc": "Explore AI systems that operate independently in the physical world. Understand the technology behind self-driving cars, drones, and robots, including perception systems and decision-making algorithms.",
+    "modules": 4
+  },
+  "ai-in-game-design-i": {
+    "title": "AI in Game Design I",
+    "desc": "Explore how AI is transforming game design — procedural generation, NPC behavior, and the tools reshaping how games are made. Part one of three.",
+    "modules": 8
+  },
+  "ai-and-architecture": {
+    "title": "AI and Architecture",
+    "desc": "Explore how AI is reshaping architectural design — from generative floor plans to parametric facades, structural optimization, and AI-assisted urban planning.",
+    "modules": 8
+  },
+  "ai-for-graphic-design": {
+    "title": "AI for Graphic Design",
+    "desc": "Learn to use AI in professional graphic design workflows — logo generation, layout, typography, brand systems, and the tools reshaping visual communication.",
+    "modules": 8
+  },
+  "ai-and-the-writer-s-voice": {
+    "title": "AI and the Writer's Voice",
+    "desc": "Explore how writers can work with AI without losing what makes their writing theirs. Covers voice preservation, AI-assisted drafting, editing, and the ethics of AI authorship.",
+    "modules": 8
+  },
+  "photography-and-ai": {
+    "title": "Photography and AI",
+    "desc": "Explore how AI is transforming photography — from intelligent cameras to AI editing, image upscaling, generative fill, and the ethics of synthetic photography.",
+    "modules": 8
+  },
+  "performing-arts-and-ai": {
+    "title": "Performing Arts and AI",
+    "desc": "Discover how AI is entering theater, dance, and live performance — as a creative collaborator, a generative tool, and a disruptive force in the performing arts.",
+    "modules": 8
+  },
+  "storytelling-with-ai": {
+    "title": "Storytelling with AI",
+    "desc": "Learn to use AI as a storytelling tool — for interactive narrative, character development, world-building, and the emerging forms of AI-native story.",
+    "modules": 8
+  },
+  "ai-tools-for-solo-founders": {
+    "title": "AI Tools for Solo Founders",
+    "desc": "A practical guide to running a solo business with AI. From operations to marketing to product development, learn to use AI as your unfair advantage.",
+    "modules": 8
+  },
+  "ai-for-marketing-and-growth": {
+    "title": "AI for Marketing and Growth",
+    "desc": "Learn how AI is transforming marketing — from campaign creation to audience targeting, content personalization, and growth analytics.",
+    "modules": 8
+  },
+  "ai-risk-for-business-leaders": {
+    "title": "AI Risk for Business Leaders",
+    "desc": "Understand the AI risks that matter for business — operational, reputational, legal, and strategic. Learn to govern AI use without stifling it.",
+    "modules": 7
+  },
+  "funding-and-pitching-ai-ventures": {
+    "title": "Funding and Pitching AI Ventures",
+    "desc": "Learn how investors evaluate AI companies, what makes an AI pitch compelling, and how to navigate the specific dynamics of raising for an AI-driven business.",
+    "modules": 8
+  },
+  "ai-and-the-future-of-work": {
+    "title": "AI and the Future of Work",
+    "desc": "Examine how AI is reshaping employment — which jobs are changing, which are disappearing, and how workers and organizations can adapt.",
+    "modules": 8
+  },
+  "ai-for-product-development": {
+    "title": "AI for Product Development",
+    "desc": "Learn how product teams are integrating AI into discovery, design, development, and delivery — and how to build AI-native products that actually work.",
+    "modules": 8
+  },
+  "building-an-ai-first-business": {
+    "title": "Building an AI-First Business",
+    "desc": "A strategic and operational guide to building a business where AI is central — not bolted on. Covers architecture, culture, competitive advantage, and execution.",
+    "modules": 8
+  },
+  "ai-for-small-business-managers": {
+    "title": "AI for Small Business Managers",
+    "desc": "A hands-on course for managers running teams of 5–50. Learn to introduce AI into daily operations, make smarter decisions with data, and lead your team through adoption — without needing a technical background.",
+    "modules": 8
+  },
+  "ai-job-market-impact": {
+    "title": "AI's Impact on Jobs",
+    "desc": "Examine how AI automation affects different industries and job roles. Learn strategies for adapting to technological change and developing AI-resilient skills.",
+    "modules": 4
+  },
+  "ai-work-and-automation-realities": {
+    "title": "AI, Work, and Your Career",
+    "desc": "This course moves beyond fear and hype to give workers, students, and managers a realistic picture of how automation affects careers, industries, and daily work.",
+    "modules": 8
+  },
+  "building-ai-agents-i-use-cases": {
+    "title": "Building AI Agents I — Use Cases",
+    "desc": "Survey the landscape of AI agent use cases — understand when agents add value, what architectures they use, and how to evaluate whether agency is the right solution.",
+    "modules": 8
+  },
+  "building-ai-agents-ii-skills": {
+    "title": "Building AI Agents II — Skills",
+    "desc": "Equip your agents with memory, knowledge, and reasoning capabilities. Learn how agents store context, access information, and plan across multi-step tasks.",
+    "modules": 8
+  },
+  "building-ai-agents-iii-tools": {
+    "title": "Building AI Agents III — Tools",
+    "desc": "Give your agents real capabilities through tool use — web browsing, code execution, API calls, and MCP integration. Build agents that act in the real world.",
+    "modules": 8
+  },
+  "building-ai-agents-iv-openclaw": {
+    "title": "Building AI Agents IV — OpenClaw",
+    "desc": "Build and deploy OpenClaw — a production-grade AI agent framework. Full implementation, testing, and real-world deployment patterns from architecture to launch.",
+    "modules": 8
+  },
+  "building-ai-agents-v-optimization": {
+    "title": "Building AI Agents V — Optimization",
+    "desc": "Optimize your agent systems for performance, cost, and reliability. Profiling, latency reduction, token efficiency, and graceful failure design.",
+    "modules": 8
+  },
+  "prompt-engineering-for-developers": {
+    "title": "Prompt Engineering for Developers",
+    "desc": "Master prompt engineering as a technical discipline — system prompts, few-shot examples, chain-of-thought, structured outputs, and the full toolkit for production AI.",
+    "modules": 8
+  },
+  "deploying-and-monitoring-ai": {
+    "title": "Deploying and Monitoring AI",
+    "desc": "Learn to operate AI systems in production — observability, logging, alerting, cost tracking, and the practices that keep models performing after launch.",
+    "modules": 8
+  },
+  "rag-systems-from-scratch": {
+    "title": "RAG Systems from Scratch",
+    "desc": "Build retrieval-augmented generation systems from the ground up — embeddings, vector databases, chunking strategies, hybrid search, and production RAG architecture.",
+    "modules": 8
+  },
+  "working-with-the-anthropic-api": {
+    "title": "Working with the Anthropic API",
+    "desc": "Build production applications on Claude — Messages API, tool use, vision, streaming, and the patterns that make Anthropic API integration reliable and efficient.",
+    "modules": 8
+  },
+  "ai-security-and-red-teaming": {
+    "title": "AI Security and Red-Teaming",
+    "desc": "Learn to build AI systems that hold up under adversarial pressure — prompt injection, jailbreaks, data leakage, and the security practices that matter for production AI.",
+    "modules": 8
+  },
+  "evaluation-and-testing-for-ai": {
+    "title": "Evaluation and Testing for AI",
+    "desc": "Build the testing infrastructure that lets you ship AI confidently — evals, benchmarks, red-teaming, and regression testing for real AI systems.",
+    "modules": 8
+  },
+  "ai-code-review-fundamentals": {
+    "title": "AI Code Review Fundamentals",
+    "desc": "Learn to read, understand, and validate AI-generated code. Spot hallucinated APIs, phantom dependencies, logic errors, and silent failures before they reach production.",
+    "modules": 8
+  },
+  "security-auditing-ai-generated-code": {
+    "title": "Security Auditing for AI-Generated Code",
+    "desc": "Find the vulnerabilities AI code introduces — injection flaws, authentication gaps, insecure data handling, and supply chain risks. Learn to catch them before they ship.",
+    "modules": 8
+  },
+  "code-audit-workflows-team-standards": {
+    "title": "Code Audit Workflows and Team Standards",
+    "desc": "Build systematic review processes for AI-assisted development teams. Set quality gates, define acceptance criteria, and maintain code standards at scale.",
+    "modules": 8
+  },
+  "building-agents-vertex-ai": {
+    "title": "Building Production Agents with Vertex AI",
+    "desc": "Build real agents on Google's Gemini Enterprise Agent Platform from scratch. Hands-on work with Agent Designer, Skills, function calling, multi-turn conversations, and the Agent2Agent protocol — everything you need to deploy an agent that does something useful.",
+    "modules": 8
+  },
+  "vertex-ai-data-agents": {
+    "title": "Agentic Data Workflows on Google Cloud",
+    "desc": "The model isn't the bottleneck — your data is. Learn to connect Vertex AI agents to BigQuery, Cloud Storage, Knowledge Catalog, and cross-cloud data sources. Build agents that can read your warehouse, answer from your documents, and act on real enterprise data."
+  },
+  "ai-and-climate": {
+    "title": "AI &amp; Climate",
+    "desc": "The same technology that's straining the grid may also be the best tool we have for understanding what to do about it."
+  },
+  "ai-and-fake-information": {
+    "title": "Don't Get Fooled: AI and Lies",
+    "desc": "Understanding the long history of fabricated reality — and why this moment is genuinely different.",
+    "modules": 6
+  },
+  "ai-bias-and-fairness": {
+    "title": "Understanding AI Bias and Fairness",
+    "desc": "Algorithms already shape who gets hired, who gets a loan, and who gets flagged as a threat — this course asks whether they do so fairly.",
+    "modules": 4
+  },
+  "coded-unfair-ai-bias-exposed": {
+    "title": "Coded Unfair: AI Bias Exposed",
+    "desc": "Every powerful technology arrives promising neutrality — and delivers the prejudices of its makers."
+  },
+  "make-it-yours-creating-with-ai": {
+    "title": "Make It Yours: Create With AI",
+    "desc": "Why this course exists — and what you'll actually be able to do when it's done."
+  },
+  "whats-really-inside-ai": {
+    "title": "What's Really Inside AI?",
+    "desc": "This course exists because almost everyone using AI has no idea what it actually does."
+  },
+  "creating-with-ai-tools": {
+    "title": "Make Something Real with AI",
+    "desc": "This course exists because the question isn't whether AI belongs in your creative process — it's how to use it without losing what makes the work yours."
+  },
+  "talking-to-ai-prompt-writing": {
+    "title": "Say It Right: Talk to AI",
+    "desc": "Every transformative tool arrives with a learning curve nobody warned you about",
+    "modules": 6
+  },
+  "future-of-work-ai": {
+    "title": "AI's Impact on Future Work",
+    "desc": "Discover which jobs AI will automate, augment, or create in the coming decades across different industries. Learn essential skills and strategies to thrive in an AI-enhanced workplace and adapt your career for the future.",
+    "modules": 4
+  },
+  "computer-vision-in-daily-life": {
+    "title": "How AI Sees Your World",
+    "desc": "From unlocking your phone with your face to helping doctors spot tumors, computer vision is quietly embedded in dozens of everyday technologies most people never think twice about. This course demystifies how machines interpret images and video, and what that means for your privacy, safety, and rights.",
+    "modules": 8
+  },
+  "explainable-ai": {
+    "title": "Making AI Explainable",
+    "desc": "Understand why many AI systems are \"black boxes\" and how to make them more transparent. Learn techniques for explaining AI decisions to humans.",
+    "modules": 4
+  },
+  "ai-and-your-creative-work": {
+    "title": "AI as Your Creative Partner",
+    "desc": "AI isn't going to replace your creativity â but creators who know how to work with it are producing more, faster, and on their own terms. This course teaches you how to use AI as a genuine collaborator on your actual projects without losing what makes your work yours."
+  },
+  "ai-for-job-hunting": {
+    "title": "Get Hired Using AI",
+    "desc": "You're competing against hundreds of applicants â many of whom are already using AI to get ahead. This course teaches you exactly how to use AI tools at every stage of your job search so you stand out, not just keep up.",
+    "modules": 8
+  },
+  "ai-side-hustle-money": {
+    "title": "Make Real Money With AI",
+    "desc": "The AI side hustle space is full of hype â but buried in that hype are real opportunities that people your age are already monetizing. This course cuts through the noise and shows you which approaches actually generate income, and how to start one this week."
+  },
+  "what-ai-knows-about-you": {
+    "title": "AI Knows More Than You Think",
+    "desc": "You've grown up online, which means AI systems have been learning from you â your clicks, your searches, your posts â for years. This course shows you what's actually been collected, how it's used to influence you, and what you can do about it."
+  },
+  "ai-alignment-for-everyone": {
+    "title": "Teaching AI to Want Good Things",
+    "desc": "AI safety and alignment asks one of the most important questions of our time: how do we build powerful AI systems that reliably pursue goals humans actually care about? This course demystifies the technical and philosophical challenges of alignment for a general audience, explaining real risks and real solutions without requiring a computer science degree."
+  },
+  "ai-for-small-business-owners": {
+    "title": "AI Tools Every Small Business Needs",
+    "desc": "Small business owners do not need a tech team to start benefiting from AI — they just need the right roadmap. This hands-on course walks entrepreneurs through the most practical, affordable AI tools available today, with real examples from retail, hospitality, services, and more.",
+    "modules": 8
+  },
+  "ai-work-and-automation-deep-dive": {
+    "title": "AI, Automation, and Your Career",
+    "desc": "This course moves beyond headlines to give learners a clear-eyed, evidence-based look at which jobs AI is realistically automating, which it is augmenting, and what workers and policymakers can do about it. Whether you are a student, a professional, or a lifelong learner, you will leave with a practical framework for navigating the changing world of work."
+  },
+  "ai-augmented-reconnaissance": {
+    "title": "AI-Augmented Reconnaissance & OSINT",
+    "desc": "Modern penetration testers use LLMs and AI tooling to accelerate reconnaissance — OSINT, attack-surface mapping, target enumeration — without losing analyst judgment. This course teaches the workflow end-to-end with hands-on labs.",
+    "modules": 8
+  },
+  "ai-network-pentesting": {
+    "title": "AI for Network Penetration Testing",
+    "desc": "Modern network and infrastructure pentesting workflows that use AI for service identification, attack-path analysis, and lateral-movement planning across on-prem and hybrid environments.",
+    "modules": 8
+  },
+  "pentesting-ai-agents": {
+    "title": "Pen Testing AI Agents and Tool Use",
+    "desc": "Agentic AI systems — autonomous LLMs with tool access, memory, and goals — present a new attack surface that classic pentests do not cover. Learn how to scope, run, and report tests against real agent stacks.",
+    "modules": 8
+  },
+  "pentesting-llm-applications": {
+    "title": "Pen Testing LLM Applications (OWASP LLM Top 10)",
+    "desc": "Hands-on penetration testing of LLM-powered applications — chatbots, RAG pipelines, agents, and plugins — using the OWASP LLM Top 10 as the playbook. Build a complete test plan and produce findings that engineering teams can act on.",
+    "modules": 8
+  },
+  "ai-agent-risk-and-oversight": {
+    "title": "AI Agent Risk, Oversight, and Failure",
+    "desc": "Deploying AI agents without a structured risk and oversight model is how organizations create expensive, embarrassing, or dangerous failures â often without seeing them coming. This course equips managers, architects, and domain experts with the frameworks to evaluate agent risk, design meaningful oversight checkpoints, and build accountable AI systems."
+  },
+  "agile-ai-side-projects": {
+    "title": "Launch Your AI Side Project",
+    "desc": "You've got an idea and a handful of AI tools â but most side projects stall before they get anywhere real. This course teaches you a lightweight agile workflow designed specifically for solo builders and small teams using AI, so you can stop planning and start shipping."
+  },
+  "ai-agent-safety-when-things-go-wrong": {
+    "title": "AI Agents: What Could Go Wrong",
+    "desc": "AI agents are being handed more and more real-world tasks â browsing the web, sending emails, managing files â and most people using them have no idea what happens when they go wrong. This course gives you the mental models and practical instincts to use agents confidently without getting burned."
+  },
+  "ai-hype-critical-thinking": {
+    "title": "Is the AI Hype Even Real?",
+    "desc": "Every week there's a new headline saying AI will either save the world or end it â and most of those headlines are selling you something. This course gives you the thinking tools to evaluate AI claims on your own so you're never the person repeating nonsense at dinner."
+  },
+  "ai-in-gaming-and-interactive-media": {
+    "title": "Build Smarter Games with AI",
+    "desc": "AI is reshaping every layer of game design â from how worlds are built to how characters talk back to you. In this course, you'll learn how to use generative AI tools to prototype, design, and pitch interactive experiences, whether you're aiming for a career in gaming or just want to build something people actually play."
+  },
+  "deep-learning-for-builders": {
+    "title": "Deep Learning: Build Real Things",
+    "desc": "Deep learning is what powers the AI tools everyone is talking about â and you can start building with it without a PhD or expensive hardware. This course gives you the conceptual foundation and hands-on experience to go from curious to capable."
+  },
+  "gemini-for-college-life": {
+    "title": "Gemini: AI for School and Life",
+    "desc": "If you already live in Google Docs, Gmail, and Drive, Gemini is already in your corner â you just haven't turned it on yet. This course shows you how to use it across your whole Google ecosystem to study smarter, communicate better, and actually get things done."
+  },
+  "wispr-flow": {
+    "title": "Wispr Flow: Voice Dictation Mastery",
+    "desc": "Master every default shortcut, feature, and workflow in Wispr Flow. Go from slow typing to fluid voice dictation across any app — in a single hands-on module."
+  },
+  "prompt-engineering-that-works": {
+    "title": "Prompt Engineering: Get More Out",
+    "desc": "The difference between AI giving you something usable and AI wasting your time is almost always the prompt â and it's a learnable skill, not a talent. This course gives you a practical system for writing prompts that get real results across every major AI tool you'll use."
+  },
+  "how-ai-actually-works": {
+    "title": "Inside the Machine: AI Unpacked",
+    "desc": "Follow Nadia, a student who discovers her school's new AI recommendation system is giving everyone the same suggestions â and sets out to understand why by pulling apart how AI actually thinks. This course uses hands-on experiments and story choices to demystify machine learning from the inside out."
+  },
+  "robot-speak-talk-to-ai": {
+    "title": "Robot Speak: Talk to AI!",
+    "desc": "Something funny is going on â your AI helper keeps misunderstanding you, and only you can figure out the magic words to fix it. Through playful story puzzles, you'll discover how AI understands language and learn the art of writing prompts that actually work."
+  },
+  "truth-detectives-ai-and-fake-info": {
+    "title": "Truth Detectives: AI vs. Fake News",
+    "desc": "Step into a breaking news crisis where AI-generated stories are spreading fast â and you're the only one who can figure out what's real. Through choices that have real consequences inside the story, you'll learn exactly how AI creates and spreads misinformation, and build the skills to stop it."
+  },
+  "build-ai-workflows-no-code": {
+    "title": "Build Powerful AI Without Coding",
+    "desc": "You're a startup founder with a real problem and zero engineers â so you must build an AI-powered workflow using no-code tools to solve it before your pitch meeting. Each module adds a new layer of complexity, and you'll defend every automation decision in a final board-room scenario."
+  },
+  "digital-citizenship-and-ai": {
+    "title": "Who Are You Online With AI?",
+    "desc": "One post. One algorithm. One chain of consequences you didn't expect â this course drops you into the middle of a social media spiral powered by AI recommendation systems and asks you to make the calls that shape what happens next. You'll leave having written your own digital citizenship code for the AI age."
+  },
+  "how-ai-tutors-work": {
+    "title": "The AI That Teaches You",
+    "desc": "You're a student tester hired to audit AI tutors â including Khanmigo and others â by actually using them, breaking them, and judging whether they help or mislead learners like you. Each module puts you in a scenario where you must decide how much to trust the AI's guidance and why."
+  },
+  "spot-the-fake-ai-content": {
+    "title": "Real or Generated: You Decide",
+    "desc": "A viral image has caused chaos at your school â but was it real? Work through a mystery where you examine photos, articles, and video clips, learning to spot the telltale signs of AI generation before the truth gets buried. The final challenge asks you to create a piece of AI content and then write the guide that helps others detect it."
+  },
+  "ai-lens-on-the-world": {
+    "title": "See the World Through AI Eyes",
+    "desc": "Investigative journalists, civil rights advocates, and skeptical teenagers all need the same skill: the ability to look at an AI-powered system and ask hard questions about who it serves and who it harms. This course puts you in the role of an AI investigator working through four real-world scenarios where the stakes are high and the answers are not obvious."
+  },
+  "ai-tools-for-real-teaching": {
+    "title": "AI in Class: Use It or Lose It",
+    "desc": "You are a student adviser helping a school board decide which AI tools belong in classrooms and which ones should be banned — and why. This course builds the critical vocabulary and evaluative skills to assess AI tools the way educators, ethicists, and students all need to."
+  },
+  "ai-tutor-under-the-hood": {
+    "title": "What Is Your AI Tutor Doing?",
+    "desc": "You step inside the fictional AI tutoring platform MIRA and play both student and designer — experiencing how an AI tutor decides what to say, what to skip, and when to encourage you. By reverse-engineering its choices, you learn what real systems like Khanmigo are actually doing beneath the surface."
+  },
+  "how-machines-learn": {
+    "title": "How Machines Actually Learn",
+    "desc": "You're an AI auditor called in after three different machine learning systems — a hiring tool, a medical screener, and a content filter — have made decisions that hurt real people. You have to dig into the data and training choices to find out exactly why."
+  },
+  "is-ai-telling-you-the-truth": {
+    "title": "Can You Trust the Machine?",
+    "desc": "Step inside a newsroom where an AI assistant keeps feeding your team information — some true, some dangerously wrong — and every choice you make affects the story that gets published. By the end, you'll have built a personal checklist for deciding when to believe what AI tells you."
+  },
+  "is-the-robot-being-fair": {
+    "title": "Is the Robot Being Fair?",
+    "desc": "In the village of Pebbletown, an AI called SORTR decides who gets the good library books, the best lunch table, and the starring role in the school play — and something feels wrong. You play a kid detective who must figure out why SORTR keeps making unfair choices and then redesign its rules so everyone gets a fair chance."
+  },
+  "pick-the-right-ai-tool": {
+    "title": "Pick the Right AI for the Job",
+    "desc": "You are a consultant hired to choose the best AI model for five very different clients — a novelist, a coder, a journalist, a student, and a small business owner. Every choice you make has real consequences inside the story, and by the end you will have built a reusable decision framework you can apply outside it."
+  },
+  "real-or-rendered": {
+    "title": "Real or Rendered: Spot the Fake",
+    "desc": "You're a junior investigator at a news agency where AI-generated images, voices, and text keep slipping through — and it's your job to catch them before they go public. Every choice you make changes what gets published and who gets hurt."
+  },
+  "ai-ethics-foundations": {
+    "title": "AI Ethics: Right and Wrong",
+    "desc": "This course introduces everyday people to the moral questions shaping AI development, from bias and privacy to accountability and human rights. No technical background needed — just curiosity about the world AI is building around us.",
+    "modules": 8
+  },
+  "ai-governance-regulation": {
+    "title": "AI Governance and Regulation",
+    "desc": "Explore how governments and organizations are regulating AI development and deployment. Understand current policies and emerging governance frameworks worldwide.",
+    "modules": 4
+  },
+  "ai-safety-for-everyone": {
+    "title": "Keeping AI Under Control",
+    "desc": "AI safety is one of the most debated topics in tech, yet most people have never encountered a clear, jargon-free explanation of what it means. This course demystifies alignment, risk, and the global effort to keep powerful AI beneficial.",
+    "modules": 8
+  },
+  "ai-safety-and-alignment-basics": {
+    "title": "Keeping AI Safe for Everyone",
+    "desc": "AI safety is one of the most debated topics in technology, yet most people have never heard a clear explanation of what it actually means. This course demystifies alignment, risk, and oversight so that informed citizens can participate in the conversation.",
+    "modules": 8
+  },
+  "ai-safety-and-alignment": {
+    "title": "Teaching AI to Do Good",
+    "desc": "As AI systems grow more capable, ensuring they reliably do what we actually want — and not something subtly or dangerously different — has become one of the most urgent challenges in technology. This course demystifies AI safety and alignment research so curious learners can understand the stakes and join an informed global conversation."
+  },
+  "deepfakes-and-synthetic-media": {
+    "title": "Deepfakes and Synthetic Media",
+    "desc": "Learn how AI creates realistic fake videos, audio, and images. Develop skills to identify synthetic media and understand its implications for society.",
+    "modules": 4
+  },
+  "human-ai-interaction": {
+    "title": "Human-AI Interaction Design",
+    "desc": "Learn principles for designing effective interactions between humans and AI systems. Explore how to build trust and create intuitive AI-powered experiences.",
+    "modules": 4
+  },
+  "claude-ai-chat": {
+    "title": "Using Claude AI Chat",
+    "desc": "A hands-on workshop for professionals who want to stop dabbling with Claude and start using it as a serious productivity tool. You'll learn how to craft prompts that get real results, manage complex multi-turn conversations, and build a personal library of prompts that save you hours every week."
+  },
+  "claude-cowork": {
+    "title": "Claude Cowork",
+    "desc": "Stop using Claude like a search engine and start using it like a thinking partner. This course teaches you how to structure open-ended collaboration sessions, delegate tasks across Claude conversations, and bring AI into your actual team workflows — not just your personal ones.",
+    "modules": 4
+  },
+  "claude-code": {
+    "title": "Claude Code",
+    "desc": "Claude Code is Anthropic's terminal-based AI coding agent — and it changes how serious developers work. This course takes you from installation through advanced workflows: hooks, MCP servers, multi-agent pipelines, and production-grade PR review. Built for developers who want the real thing, not the toy version."
+  }
+}
