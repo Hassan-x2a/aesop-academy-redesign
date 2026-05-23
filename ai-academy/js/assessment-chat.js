@@ -4,7 +4,7 @@
 import { getOrCreateLearnerId, initializeLearnerRecord, addAssessmentMessage, updateAssessmentResults, updateQRRecoveryToken, updateRecommendedPathway, setupOfflineSync } from './firebase-helpers.js';
 import { generateQRCode, displayQRCode } from './qr-generator.js';
 import { FALLBACK_REPLIES } from './assessment-prompts.js';
-import { parseAssessmentResponse, buildProfileSummary } from './assessment-parser.js';
+import { parseAssessmentResponse } from './assessment-parser.js';
 import { generatePathway } from './taxonomy-mapper.js';
 import { markAssessmentComplete } from './pathway-display.js';
 
@@ -81,7 +81,6 @@ export async function assessmentSend() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system: ASSESSMENT_SYSTEM_PROMPT,
           max_tokens: 500,
           messages: conversationHistory,
         }),
