@@ -10,7 +10,14 @@
       "status": "in-progress",
       "created_at": "2026-05-20",
       "completed_at": null,
-      "dependencies": [6, 7, 8, 9, 10, 11]
+      "dependencies": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
     },
     {
       "number": 3,
@@ -49,91 +56,6 @@
       "dependencies": []
     },
     {
-      "number": 6,
-      "title": "Task #2a: Assessment Foundation (Phase 1)",
-      "description": "Build the infrastructure foundation for student assessment. This task establishes the data schema, QR code system, and Firebase utilities needed by all downstream components.\n\n## What's Included:\n- Extend Firebase Firestore learner record schema: add assessment_results, recommended_pathway, qr_recovery_token fields with TypeScript/JS interfaces\n- Build QR code generator utility (qr-generator.js): creates QR codes encoding learner ID + optional recovery token; returns SVG/canvas element\n- Build Firestore query/update helpers: read/write assessment data, pathway, QR tokens with error handling and offline fallback\n\n## Files Modified:\n- ai-academy/js/firebase-schema.js (new or extend existing)\n- ai-academy/js/learner.js (extend)\n- ai-academy/js/qr-generator.js (new)\n- ai-academy/js/firebase-helpers.js (new or extend existing)\n\n## Effort: ~1.5 days\n## Blocker: None (START HERE)\n## Dependencies: None\n\n## Success Criteria:\n✅ Firestore schema updated with assessment fields\n✅ QR generator creates valid QR codes\n✅ Firebase helpers read/write assessment data reliably\n✅ Offline fallback queues writes for later sync",
-      "category": "feature",
-      "priority": 75,
-      "impact": "standard",
-      "status": "production",
-      "created_at": "2026-05-21",
-      "completed_at": "2026-05-23",
-      "branch": "task/6-assessment-foundation-phase-1",
-      "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [],
-      "objective": {
-        "statement": "Deliver a complete AI-driven student assessment system: Firebase schema, QR recovery, Firestore helpers, chat UI, AI engine, taxonomy mapper, and full UX integration so students can take a 5-minute conversation and receive a personalized course pathway.",
-        "successCriteria": [
-          "Firestore learners schema updated with assessmentResults, recommendedPathway, qrRecoveryToken, progressData sub-objects",
-          "QR generator creates valid scannable codes encoding learner ID + recovery token",
-          "Firebase helpers read/write assessment data reliably with error envelopes",
-          "Offline fallback queues writes and replays on reconnect",
-          "Assessment chat page loads and conversation flows end-to-end",
-          "AI emits structured completion signal; parser extracts aptitude score and interest tags",
-          "Taxonomy mapper returns a primary course and up to 3 follow-ups from the catalogue",
-          "Homepage CTA flips from Take Assessment to View Pathway after completion",
-          "Student hub displays recommended pathway card"
-        ],
-        "nonGoals": [
-          "Course content changes",
-          "Teacher or guardian dashboard changes",
-          "Certification system changes",
-          "Automated test suite (client-side JS, no test infrastructure — manual verification documented)"
-        ],
-        "proofMap": [
-          { "criterion": "Firestore schema", "unit": "firebase-schema-manual" },
-          { "criterion": "QR generator", "unit": "qr-generator-manual" },
-          { "criterion": "Firebase helpers", "unit": "firebase-helpers-manual" },
-          { "criterion": "Offline fallback", "unit": "offline-fallback-manual" },
-          { "criterion": "Assessment chat flow", "unit": "assessment-e2e-manual" },
-          { "criterion": "AI completion signal + parser", "unit": "parser-manual" },
-          { "criterion": "Taxonomy mapper", "unit": "mapper-manual" },
-          { "criterion": "Homepage CTA flip", "unit": "assessment-e2e-manual" },
-          { "criterion": "Student hub pathway card", "unit": "assessment-e2e-manual" }
-        ],
-        "stopConditions": []
-      },
-      "plan": {
-        "proof_units": [
-          {
-            "name": "firebase-schema-manual",
-            "description": "firebase-schema.js createNewLearnerRecord() emits full schema with all 4 sub-objects",
-            "waiver": "No test infrastructure. Manual: inspect Firestore console after initializeLearnerRecord() call; verify all sub-fields present."
-          },
-          {
-            "name": "qr-generator-manual",
-            "description": "generateQRCode() returns {svg, dataUrl}; displayQRCode() renders visible QR in DOM",
-            "waiver": "No test infrastructure. Manual: complete assessment, verify QR renders on completion card and is scannable."
-          },
-          {
-            "name": "firebase-helpers-manual",
-            "description": "5 updateDoc helpers write correct sub-fields without overwriting siblings",
-            "waiver": "No test infrastructure. Manual: complete assessment, inspect Firestore doc in console for correct field population."
-          },
-          {
-            "name": "offline-fallback-manual",
-            "description": "Disconnect network mid-assessment; messages still flow via fallbackReply(); reconnect triggers processOfflineQueue()",
-            "waiver": "No test infrastructure. Manual: toggle DevTools offline, send message, toggle online, verify queue replay in console."
-          },
-          {
-            "name": "assessment-e2e-manual",
-            "description": "Full happy path: homepage → assessment → completion card → student hub pathway card",
-            "waiver": "No test infrastructure. Manual: walk PR test plan steps 1–7 in test plan section of PR #8."
-          },
-          {
-            "name": "parser-manual",
-            "description": "parseAssessmentResponse() strips <!--ASSESSMENT_COMPLETE:{...}--> from visible text and returns validated signals",
-            "waiver": "No test infrastructure. Manual: verify completion card shows correct course after 5+ exchanges."
-          },
-          {
-            "name": "mapper-manual",
-            "description": "generatePathway() returns primaryCourse + followUpCourses matching the student's aptitude band and interest tags",
-            "waiver": "No test infrastructure. Manual: run assessment with varied profiles; confirm course recommendations vary appropriately."
-          }
-        ]
-      }
-    },
-    {
       "number": 7,
       "title": "Task #2b: Assessment Chat Interface & QR System (Phase 2)",
       "description": "Build the student-facing assessment page and QR recovery system. This includes the chat interface where students answer assessment questions, completion screen with QR display, and recovery flows.\n\n## What's Included:\n- Assessment page HTML (assessment.html): chat message area, user input field, submit button, QR display placeholder, navigation\n- Assessment CSS (assessment.css): styling matching Aesop design, responsive layout\n- Chat message rendering & input handling (assessment-chat.js): render alternating student/AI messages, clear input after submission, reuse lab chat patterns\n- QR code display on completion: after assessment ends, generate QR code, display with recovery instructions, show \"Start Courses\" or \"View Dashboard\" buttons\n- QR recovery UI: add \"Recover Learner ID\" section on homepage + student page, scan QR or enter recovery token, restore learner ID to localStorage\n\n## Files Modified:\n- ai-academy/assessment.html (new)\n- ai-academy/css/assessment.css (new)\n- ai-academy/js/assessment-chat.js (new)\n- ai-academy/index.html (add recovery UI)\n- ai-academy/students.html (add recovery UI)\n- ai-academy/js/qr-recovery.js (new)\n\n## Effort: ~2 days\n## Blocker: Task #6 (Assessment Foundation)\n## Dependencies: Task #6; can run in parallel with Task #8 (AI Engine)\n\n## Success Criteria:\n✅ Assessment page loads and displays correctly\n✅ Chat messages render and flow naturally\n✅ QR code displays on completion with clear instructions\n✅ QR recovery flow restores learner ID correctly",
@@ -145,7 +67,9 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [6]
+      "dependencies": [
+        6
+      ]
     },
     {
       "number": 8,
@@ -159,7 +83,9 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [6]
+      "dependencies": [
+        6
+      ]
     },
     {
       "number": 9,
@@ -173,7 +99,9 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [8]
+      "dependencies": [
+        8
+      ]
     },
     {
       "number": 10,
@@ -187,7 +115,11 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [6, 7, 9]
+      "dependencies": [
+        6,
+        7,
+        9
+      ]
     },
     {
       "number": 12,
@@ -199,7 +131,9 @@
       "status": "backlog",
       "created_at": "2026-05-23",
       "completed_at": null,
-      "dependencies": [6]
+      "dependencies": [
+        6
+      ]
     },
     {
       "number": 11,
@@ -213,7 +147,13 @@
       "completed_at": null,
       "branch": "task/6-assessment-foundation-phase-1",
       "pr_url": "https://github.com/AesopScott/Aesop/pull/8",
-      "dependencies": [6, 7, 8, 9, 10]
+      "dependencies": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
     }
   ]
 }
