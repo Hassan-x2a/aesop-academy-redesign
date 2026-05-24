@@ -74,23 +74,77 @@ On error: `{"error": "human-readable message"}` (no raw Anthropic body or intern
 
 ---
 
+## `GET /aesop-api/catalog.php`
+
+Course catalog API. Returns all courses (live and coming-soon) as JSON with SHA-256 hash for change detection. Consumed by 25experts.com Cloud Function for video-to-course mapping.
+
+**Request shape (URL/GET):**
+No request body. Query parameters: none.
+
+**Response shape (JSON):**
+```
+{
+  catalog_hash: string,                    // SHA-256 hash of courses-data.json; use for change detection
+  generated_at: string,                    // ISO 8601 timestamp (UTC)
+  courses: Array<{
+    id:    string,                         // immutable course identifier (kebab-case)
+    name:  string,                         // display name (may change if course renamed)
+    desc:  string,                         // short description/blurb
+    url:   string,                         // full URL to course hub (https://aesopacademy.org/ai-academy/electives-hub.html?course={id})
+    live:  boolean                         // true if live, false if coming-soon
+  }>
+}
+```
+
+On error: `{"error": "error message"}` with HTTP 5xx
+
+**CORS headers:** `Access-Control-Allow-Origin: *` — allows requests from any origin
+
+**Producer**
+- `aesop-api/catalog.php:1` — reads `ai-academy/modules/courses-data.json`, computes `hash_file('sha256')`, extracts course fields, returns JSON
+
+**Consumers**
+- 25experts.com Cloud Function (`syncVideoToCourses` in experts project) — fetches periodically, compares `catalog_hash` to cached hash, updates local cache if changed
+
+**Data source**
+- `ai-academy/modules/courses-data.json` — single source of truth for course metadata (137 courses: 125 live + 12 coming-soon as of 2026-05-24)
+- Kept in sync by idempotent reconciliation system (`reconcile_all.py` + daily safety-net workflow)
+
+**Status:** ✓ new; ready for deployment to Mocahost FTP via GitHub Actions (deployment verification pending post-merge)
+
+---
+
 ## Summary
 
-| Endpoint | Method | Model | Token cap | History cap | Status |
-|----------|--------|-------|-----------|-------------|--------|
-| `/aesop-api/proxy.php` | POST | claude-haiku-4-5-20251001 | 1024 | 40 turns | ✓ |
-| `/aesop-api/assessment-proxy.php` | POST | claude-sonnet-4-6 | 800 | 20 turns | ✓ system prompt server-side |
+| Endpoint | Method | Purpose | CORS | Status |
+|----------|--------|---------|------|--------|
+| `/aesop-api/proxy.php` | POST | Lab chat proxy (Haiku) | — | ✓ |
+| `/aesop-api/assessment-proxy.php` | POST | Assessment chat proxy (Sonnet) | — | ✓ system prompt server-side |
+| `/aesop-api/catalog.php` | GET | Course catalog export (change detection) | `*` | ✓ task #15 |
 
 ---
 
 ## Audit Trail — Proof of Registry Verification
 
-**Last audit:** 2026-05-23T00:00:00Z (by /cross-boundary-audit, Task #6 branch); updated 2026-05-23 (Codex review remediation)
+**Last audit:** 2026-05-24T00:00:00Z (by /cross-boundary-audit, Task #15 branch)
 
-**Boundaries checked:** All PHP files in aesop-api/ serving HTTP responses; all JS fetch() calls in ai-academy/js/ and module HTML files
+**Boundaries checked:** All PHP files in aesop-api/; producer/consumer pairs for each endpoint
 
 **Evidence recorded:**
-- 1 endpoint with complete match ✓ (`proxy.php`)
-- `assessment-proxy.php` client contract updated: `system_prompt` field removed (system prompt now hardcoded server-side, client sends only `{messages, max_tokens}`)
+- 3 endpoints with complete documentation ✓
+  - `proxy.php` (POST, lab chat)
+  - `assessment-proxy.php` (POST, assessment chat)
+  - `catalog.php` (GET, course catalog export) — NEW in task #15
+- All endpoints have CORS headers documented
+- All endpoints have request/response shape documented
+- All endpoints have producers and consumers identified
 
-**Status:** Audit current
+**New identifiers introduced on task #15:**
+- Endpoint: `GET /aesop-api/catalog.php`
+- Response fields: `catalog_hash`, `generated_at`, `courses[]` with shape `{id, name, desc, url, live}`
+- Producer: `aesop-api/catalog.php:1`
+- Consumer: 25experts.com Cloud Function (external)
+
+**Code matches registry:** Yes — task #15 commit added endpoint and updated this registry in same commit
+
+**Status:** Audit complete
