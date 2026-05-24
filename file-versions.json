@@ -1,5 +1,5 @@
 {
-  "projectVersion": "1.0.1",
+  "projectVersion": "1.0.5",
   "files": {
     ".github/routines/aesop-git-sync/README.md": "1.0.1",
     ".github/scripts/predeploy_check.py": "1.0.1",

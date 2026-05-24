@@ -57,11 +57,21 @@ try {
     // Extract minimal course fields and build course array
     $courses = [];
     foreach ($coursesData['courses'] as $course) {
+        $courseId = $course['id'] ?? '';
+        // V2 courses live at /ai-academy/modules/v2/{slug}/m1.html, not the
+        // retired electives hub. Their id is `{slug}-v2`; strip the suffix
+        // to recover the path slug.
+        if (($course['format'] ?? '') === 'v2') {
+            $slug = preg_replace('/-v2$/', '', $courseId);
+            $url = 'https://aesopacademy.org/ai-academy/modules/v2/' . rawurlencode($slug) . '/m1.html';
+        } else {
+            $url = 'https://aesopacademy.org/ai-academy/electives-hub.html?course=' . urlencode($courseId);
+        }
         $courses[] = [
-            'id' => $course['id'] ?? '',
+            'id' => $courseId,
             'name' => $course['name'] ?? '',
             'desc' => $course['desc'] ?? '',
-            'url' => 'https://aesopacademy.org/ai-academy/electives-hub.html?course=' . urlencode($course['id'] ?? ''),
+            'url' => $url,
             'live' => $course['live'] ?? false
         ];
     }
