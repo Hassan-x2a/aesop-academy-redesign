@@ -8072,6 +8072,398 @@
       "_description": "Single-module benchmark course used only for model evaluation runs. Never goes live.",
       "generation_complete": true,
       "icon": "📊"
+    },
+    {
+      "id": "ai-command-center-v2",
+      "name": "Build a Command Center",
+      "desc": "Vendor clients have limits. This course teaches you to replace them — building your own command center with multi-model routing, prompt management, control files, session logging, and automated skill pipelines with human oversight.",
+      "live": true,
+      "format": "v2",
+      "modules": [
+        {
+          "n": 1,
+          "title": "The Command Center Shell",
+          "sub": ""
+        },
+        {
+          "n": 2,
+          "title": "Multi-Model Configuration",
+          "sub": ""
+        },
+        {
+          "n": 3,
+          "title": "Build vs. Buy",
+          "sub": ""
+        },
+        {
+          "n": 4,
+          "title": "Prompt Engineering and Management",
+          "sub": ""
+        },
+        {
+          "n": 5,
+          "title": "Control Files: CLAUDE.md and agents.md",
+          "sub": ""
+        },
+        {
+          "n": 6,
+          "title": "Session Logging and Archival",
+          "sub": ""
+        },
+        {
+          "n": 7,
+          "title": "Skill Routing and Human Oversight",
+          "sub": ""
+        },
+        {
+          "n": 8,
+          "title": "Code Checks, Debug Logging, and Skill Development",
+          "sub": ""
+        }
+      ]
+    },
+    {
+      "id": "ai-ethics-decision-making-v2",
+      "name": "AI Ethics & Decision Making",
+      "desc": "The decisions being made about AI aren't technical — they're political, ethical, and institutional. This course teaches you to evaluate, challenge, and govern them.",
+      "live": true,
+      "format": "v2",
+      "modules": [
+        {
+          "n": 1,
+          "title": "The Deployment Review",
+          "sub": ""
+        },
+        {
+          "n": 2,
+          "title": "Reading the Room",
+          "sub": ""
+        },
+        {
+          "n": 3,
+          "title": "The Paper Trail",
+          "sub": ""
+        },
+        {
+          "n": 4,
+          "title": "Who Has the Power?",
+          "sub": ""
+        },
+        {
+          "n": 5,
+          "title": "Making the Black Box Speak",
+          "sub": ""
+        },
+        {
+          "n": 6,
+          "title": "The AI Policy",
+          "sub": ""
+        },
+        {
+          "n": 7,
+          "title": "The Incident Report",
+          "sub": ""
+        },
+        {
+          "n": 8,
+          "title": "The Governance Proposal",
+          "sub": ""
+        }
+      ]
+    },
+    {
+      "id": "ai-project-scaffolding-v2",
+      "name": "AI Project Scaffolding",
+      "desc": "The layer between you and your AI assistant that determines whether it helps or drifts. This course teaches you to design CLAUDE.md, context file systems, and handoff protocols that make AI coding assistants reliable across sessions, contributors, and time.",
+      "live": true,
+      "format": "v2",
+      "modules": [
+        {
+          "n": 1,
+          "title": "What Scaffolding Actually Is",
+          "sub": ""
+        },
+        {
+          "n": 2,
+          "title": "Designing Your CLAUDE.md",
+          "sub": ""
+        },
+        {
+          "n": 3,
+          "title": "Should the Machine Own This?",
+          "sub": ""
+        },
+        {
+          "n": 4,
+          "title": "Context File Patterns",
+          "sub": ""
+        },
+        {
+          "n": 5,
+          "title": "Multi-File and Monorepo Context",
+          "sub": ""
+        },
+        {
+          "n": 6,
+          "title": "Workflow Structure and Handoffs",
+          "sub": ""
+        },
+        {
+          "n": 7,
+          "title": "When Scaffolding Breaks",
+          "sub": ""
+        },
+        {
+          "n": 8,
+          "title": "Your Scaffolding System",
+          "sub": ""
+        }
+      ]
+    },
+    {
+      "id": "brainstorming-with-ai-v2",
+      "name": "Better Brainstorming with AI",
+      "desc": "AI improves individual brainstorming — but anchors your thinking if you let it go first. This course teaches structured techniques: SCAMPER, Six Thinking Hats, red teaming, cross-domain pollination, and convergence — so you lead the process and AI serves it.",
+      "live": true,
+      "format": "v2",
+      "modules": [
+        {
+          "n": 1,
+          "title": "The Anchoring Trap",
+          "sub": ""
+        },
+        {
+          "n": 2,
+          "title": "Divergent Thinking with AI",
+          "sub": ""
+        },
+        {
+          "n": 3,
+          "title": "Red Teaming Your Own Ideas",
+          "sub": ""
+        },
+        {
+          "n": 4,
+          "title": "Six Thinking Hats with AI",
+          "sub": ""
+        },
+        {
+          "n": 5,
+          "title": "Convergent Thinking — From 80 Ideas to One Direction",
+          "sub": ""
+        },
+        {
+          "n": 6,
+          "title": "Cross-Domain Pollination",
+          "sub": ""
+        },
+        {
+          "n": 7,
+          "title": "The Homogenization Problem",
+          "sub": ""
+        },
+        {
+          "n": 8,
+          "title": "Your Brainstorming System",
+          "sub": ""
+        }
+      ]
+    },
+    {
+      "id": "building-agentic-pipelines-v2",
+      "name": "Building Agentic Pipelines",
+      "desc": "Pipelines are how AI ships. This course teaches you to design, build, and govern agentic pipelines — from specs and gates to TDD, cross-model review, and backlog-driven execution.",
+      "live": true,
+      "format": "v2",
+      "modules": [
+        {
+          "n": 1,
+          "title": "The Pipeline Mindset",
+          "sub": ""
+        },
+        {
+          "n": 2,
+          "title": "Specs That Agents Can Execute",
+          "sub": ""
+        },
+        {
+          "n": 3,
+          "title": "Orchestration vs. Chaining",
+          "sub": ""
+        },
+        {
+          "n": 4,
+          "title": "TDD Gating",
+          "sub": ""
+        },
+        {
+          "n": 5,
+          "title": "Cross-Model Review",
+          "sub": ""
+        },
+        {
+          "n": 6,
+          "title": "Staging, Linting, and Quality Gates",
+          "sub": ""
+        },
+        {
+          "n": 7,
+          "title": "Failure, Recovery, and Human Escalation",
+          "sub": ""
+        },
+        {
+          "n": 8,
+          "title": "Backlog-Driven Pipelines",
+          "sub": ""
+        }
+      ]
+    },
+    {
+      "id": "building-ai-agents-use-cases-v2",
+      "name": "Building AI Agents: Use Cases",
+      "desc": "Agents are AI that thinks, acts, and loops. This course teaches you how they work, how they fail, and how to design ones worth deploying — with three agent specs in your portfolio.",
+      "live": true,
+      "format": "v2",
+      "modules": [
+        {
+          "n": 1,
+          "title": "What Is an Agent?",
+          "sub": ""
+        },
+        {
+          "n": 2,
+          "title": "Writing Agent Instructions",
+          "sub": ""
+        },
+        {
+          "n": 3,
+          "title": "When Agents Go Wrong",
+          "sub": ""
+        },
+        {
+          "n": 4,
+          "title": "Tools and Actions",
+          "sub": ""
+        },
+        {
+          "n": 5,
+          "title": "Build a Research Agent",
+          "sub": ""
+        },
+        {
+          "n": 6,
+          "title": "Build a Content Agent",
+          "sub": ""
+        },
+        {
+          "n": 7,
+          "title": "The Oversight Question",
+          "sub": ""
+        },
+        {
+          "n": 8,
+          "title": "Your Agent Portfolio",
+          "sub": ""
+        }
+      ]
+    },
+    {
+      "id": "building-with-ai-v2",
+      "name": "Building with AI",
+      "desc": "From your first prompt to a complete AI product spec. This course builds the practical skills that make AI useful at work — and gives you a portfolio to prove it.",
+      "live": true,
+      "format": "v2",
+      "modules": [
+        {
+          "n": 1,
+          "title": "The Prompt is the Program",
+          "sub": ""
+        },
+        {
+          "n": 2,
+          "title": "Context and Memory",
+          "sub": ""
+        },
+        {
+          "n": 3,
+          "title": "Should AI Do This?",
+          "sub": ""
+        },
+        {
+          "n": 4,
+          "title": "Patterns That Work",
+          "sub": ""
+        },
+        {
+          "n": 5,
+          "title": "Build a Research Assistant",
+          "sub": ""
+        },
+        {
+          "n": 6,
+          "title": "Build a Writing Workflow",
+          "sub": ""
+        },
+        {
+          "n": 7,
+          "title": "The Human Handoff",
+          "sub": ""
+        },
+        {
+          "n": 8,
+          "title": "Ship Something Real",
+          "sub": ""
+        }
+      ]
+    },
+    {
+      "id": "leveraging-rag-ai-development-v2",
+      "name": "Leveraging RAG for AI Development",
+      "desc": "RAG is how AI remembers. This course teaches you to design, build, and govern retrieval systems that give AI persistent, auditable, accurate memory — using Obsidian as your knowledge store.",
+      "live": true,
+      "format": "v2",
+      "modules": [
+        {
+          "n": 1,
+          "title": "What RAG Actually Is",
+          "sub": ""
+        },
+        {
+          "n": 2,
+          "title": "Designing Your Knowledge Base",
+          "sub": ""
+        },
+        {
+          "n": 3,
+          "title": "RAG vs. Fine-Tuning vs. Context",
+          "sub": ""
+        },
+        {
+          "n": 4,
+          "title": "Chunking, Embedding, and Retrieval Quality",
+          "sub": ""
+        },
+        {
+          "n": 5,
+          "title": "Building the Retrieval Pipeline",
+          "sub": ""
+        },
+        {
+          "n": 6,
+          "title": "Automating Memory Capture",
+          "sub": ""
+        },
+        {
+          "n": 7,
+          "title": "Governing What Gets Retrieved",
+          "sub": ""
+        },
+        {
+          "n": 8,
+          "title": "Production Persistent Memory",
+          "sub": ""
+        }
+      ]
     }
   ],
   "registryMeta": {

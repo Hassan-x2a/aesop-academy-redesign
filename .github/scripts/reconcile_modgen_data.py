@@ -275,6 +275,12 @@ def main() -> int:
     stale_slugs = [s for s in cdata_by_id if s not in truth]
     for slug in stale_slugs:
         e = cdata_by_id[slug]
+        # V2 courses (format="v2") are owned by reconcile_v2_to_modgen.py,
+        # which keys them `{slug}-v2` and syncs them from courses-v2.html.
+        # They are never v1-disk-built, so they always look stale here —
+        # skip them so the two reconcilers don't fight over the live flag.
+        if e.get("format") == "v2":
+            continue
         if e.get("live") is True and not args.keep_stale:
             e["live"] = False
             n_demoted += 1

@@ -71,6 +71,12 @@ STEPS = [
     # fills missing subtitles, and demotes stale legacy entries to
     # live=false so they stop polluting ModGen's course picker.
     ("reconcile modgen",  "reconcile_modgen_data.py", ["--apply"], False),
+    # reconcile_v2_to_modgen syncs V2 courses (modules/v2/{slug}/,
+    # registered in courses-v2.html) into courses-data.json keyed
+    # `{slug}-v2`, so the catalog API (/aesop-api/catalog.php, consumed
+    # by 25experts.com) includes them. The v1 reconciler above is blind
+    # to the v2/ folder convention, so V2 courses need their own pass.
+    ("reconcile v2 modgen", "reconcile_v2_to_modgen.py", ["--apply"], False),
     ("sync i18n",         "sync_i18n_to_registry.py", ["--apply"], False),
     # build_stats has no dry-run mode — it always writes. Skip on dry-run.
     ("build stats",       "build_stats.py",           [],          True),
