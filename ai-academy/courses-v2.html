@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.15.2 | 2026-05-24 -->
+<!-- v1.15.3 | 2026-05-24 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1194,14 +1194,14 @@ body{font-family:'Nunito Sans',sans-serif;background:#080e16;color:#e8e3db;min-h
 (function(){
 
 const VCOURSES = [
-  { id:'ethics',      name:'AI Ethics &amp; Decision Making',     desc:'Practical governance frameworks for real-world AI deployments.',  url:'/ai-academy/modules/v2/ai-ethics-decision-making/m1.html' },
-  { id:'building',    name:'Building with AI',                     desc:'Hands-on construction of AI-powered tools and apps.',             url:'/ai-academy/modules/v2/building-with-ai/m1.html' },
-  { id:'rag',         name:'Leveraging RAG for AI Development',    desc:'Retrieval-augmented generation for production systems.',           url:'/ai-academy/modules/v2/leveraging-rag-ai-development/m1.html' },
-  { id:'command',     name:'Build a Command Center',               desc:'Operational AI command and infrastructure.',                      url:'/ai-academy/modules/v2/ai-command-center/m1.html' },
-  { id:'pipelines',   name:'Building Agentic Pipelines',           desc:'Multi-agent orchestration and flow design at scale.',             url:'/ai-academy/modules/v2/building-agentic-pipelines/m1.html' },
-  { id:'brainstorm',  name:'Better Brainstorming with AI',         desc:'AI-amplified ideation and creative thinking.',                    url:'/ai-academy/modules/v2/brainstorming-with-ai/m1.html' },
-  { id:'agents',      name:'Building AI Agents: Use Cases',        desc:'Design and deploy autonomous AI agents.',                         url:'/ai-academy/modules/v2/building-ai-agents-use-cases/m1.html' },
-  { id:'scaffolding', name:'AI Project Scaffolding',               desc:'Run AI-enabled projects from brief to delivery.',                 url:'/ai-academy/modules/v2/ai-project-scaffolding/m1.html' },
+  { id:'ethics',                     name:'AI Ethics &amp; Decision Making',     desc:'Practical governance frameworks for real-world AI deployments.',  url:'/ai-academy/modules/v2/ai-ethics-decision-making/m1.html' },
+  { id:'building-with-ai',           name:'Building with AI',                     desc:'Hands-on construction of AI-powered tools and apps.',             url:'/ai-academy/modules/v2/building-with-ai/m1.html' },
+  { id:'leveraging-rag',             name:'Leveraging RAG for AI Development',    desc:'Retrieval-augmented generation for production systems.',           url:'/ai-academy/modules/v2/leveraging-rag-ai-development/m1.html' },
+  { id:'ai-command-center',          name:'Build a Command Center',               desc:'Operational AI command and infrastructure.',                      url:'/ai-academy/modules/v2/ai-command-center/m1.html' },
+  { id:'building-agentic-pipelines', name:'Building Agentic Pipelines',           desc:'Multi-agent orchestration and flow design at scale.',             url:'/ai-academy/modules/v2/building-agentic-pipelines/m1.html' },
+  { id:'brainstorming-with-ai',      name:'Better Brainstorming with AI',         desc:'AI-amplified ideation and creative thinking.',                    url:'/ai-academy/modules/v2/brainstorming-with-ai/m1.html' },
+  { id:'agents',                     name:'Building AI Agents: Use Cases',        desc:'Design and deploy autonomous AI agents.',                         url:'/ai-academy/modules/v2/building-ai-agents-use-cases/m1.html' },
+  { id:'ai-project-scaffolding',     name:'AI Project Scaffolding',               desc:'Run AI-enabled projects from brief to delivery.',                 url:'/ai-academy/modules/v2/ai-project-scaffolding/m1.html' },
 ];
 
 const ROLE_DATA = {
@@ -1268,17 +1268,24 @@ function renderRoleGrid(roleKey){
   }).join('');
 }
 
-function switchView(viewId, tabEl){
+/* Exposed to window so inline onclick attributes can call them from outside the IIFE */
+window.switchView = function(viewId, tabEl){
   document.querySelectorAll('.view-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.vtab').forEach(t=>t.classList.remove('active'));
   document.getElementById('view-'+viewId).classList.add('active');
   if(tabEl) tabEl.classList.add('active');
-}
+};
 
-function setRole(roleKey, btn){
+window.setRole = function(roleKey, btn){
   document.querySelectorAll('.vrole-pill').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderRoleGrid(roleKey);
+};
+
+function escHtml(s){
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 function renderPathwayContent(pathway){
@@ -1289,14 +1296,14 @@ function renderPathwayContent(pathway){
   content.innerHTML = `
     <div class="vpathway-hdr">
       <div class="vpathway-hdr-left">
-        <h2>Your Pathway — <span>${pathway.trackName||'Personalized Track'}</span></h2>
-        <p>Based on your assessment &nbsp;·&nbsp; ${pathway.meta||'Recommended sequence for your goals'}</p>
+        <h2>Your Pathway — <span>${escHtml(pathway.trackName||'Personalized Track')}</span></h2>
+        <p>Based on your assessment &nbsp;·&nbsp; ${escHtml(pathway.meta||'Recommended sequence for your goals')}</p>
       </div>
       <a class="vpathway-retake" href="/ai-academy/assessment.html">Retake assessment</a>
     </div>
     <div class="vp-timeline">
       ${steps.map((courseId,i)=>{
-        const c = courseMap[courseId]||{name:courseId,url:'#',desc:''};
+        const c = courseMap[courseId]||{name:escHtml(courseId),url:'#',desc:''};
         const isFirst = i===0, isElective = pathway.electiveStart && i>=pathway.electiveStart;
         const nodeClass = colors[Math.min(i,colors.length-1)];
         const badge = isFirst?'<span class="vp-badge first">Start here</span>':isElective?'<span class="vp-badge elec">Elective</span>':'';
@@ -1332,6 +1339,10 @@ function initPathwayView(){
 // initialise
 renderRoleGrid('Developer');
 initPathwayView();
+
+// expose handlers referenced by inline onclick attributes
+window.switchView = switchView;
+window.setRole = setRole;
 
 })();
 </script>
