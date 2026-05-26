@@ -99,7 +99,7 @@
 .mt-result-msg{font-size:0.9rem;color:var(--ink-light);margin-bottom:1.25rem;}
 /* Page nav */
 .page-nav{display:flex;gap:0.65rem;padding:1.5rem 0 0.5rem;margin-top:auto;}
-.pnav-btn{background:transparent;border:1px solid var(--border);color:var(--ink-light);border-radius:5px;padding:0.5rem 1.1rem;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.pnav-btn{flex:1;min-width:0;background:transparent;border:1px solid var(--border);color:var(--ink-light);border-radius:5px;padding:0.5rem 1.1rem;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;}
 .pnav-btn:hover{border-color:var(--gold);color:var(--gold);}
 .pnav-btn.primary{background:rgba(61,214,192,0.08);border-color:rgba(61,214,192,0.35);color:var(--teal);}
 .pnav-btn.primary:hover{background:rgba(61,214,192,0.15);}
