@@ -1,0 +1,24 @@
+{
+  "id": "2026-05-27-anthropic-30b-round-most-valuable-ai-startup",
+  "title": "Anthropic's $30B round closes, lifting it past OpenAI in value",
+  "subtitle": "A second $30 billion raise in three months puts Anthropic near a $930 billion post-money valuation — ahead of OpenAI's $852 billion mark.",
+  "date": "2026-05-27",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["anthropic", "funding", "valuation", "openai", "venture-capital"],
+  "readTime": "3 min read",
+  "heroEmoji": "💰",
+  "body": [
+    "Anthropic is closing a funding round of more than $30 billion this week at a pre-money valuation above $900 billion, according to Bloomberg reporting first published May 22. The round is co-led by Sequoia Capital, Dragoneer Investment Group, Altimeter Capital, and Greenoaks Capital Partners — each investing roughly $2 billion — with existing backers including Founders Fund and General Catalyst also participating. At a post-money valuation near $930 billion, Anthropic edges past OpenAI's $852 billion mark from March to become the world's most valuable AI startup.",
+    "The number is striking less for its size than its speed. This is Anthropic's second $30 billion raise of 2026, following a February Series G that valued the company at $380 billion post-money. Doubling the valuation in about three months tracks a revenue trajectory that has moved just as fast: Anthropic recently projected $10.9 billion in Q2 revenue and its first-ever operating profit, driven by enterprise Claude deployments inside banks, law firms, and consultancies. Investors are pricing the contracts, not just the narrative.",
+    "The raise sharpens a two-horse framing of the frontier. OpenAI filed confidentially for an IPO this month, and both labs are now valued like infrastructure providers rather than research bets — heavy capex, multi-year compute commitments, and the kind of revenue that draws crossover and late-stage capital ahead of public listings. Anthropic's own obligations underline the point: it has committed roughly $200 billion to Google Cloud and $45 billion to SpaceX for compute, so the fresh capital is as much fuel for those bills as it is a trophy.",
+    "Takeaway for learners: a private valuation is a price, not a fact about a company's worth. The useful move when you see a headline number is to ask what it's anchored to — here, it's enterprise revenue and signed compute contracts you can actually check. Anthropic surpassing OpenAI on paper matters less than the shared signal underneath both: the AI frontier is consolidating into a small number of capital-intensive players whose economics now look like utilities."
+  ],
+  "sources": [
+    { "title": "Anthropic to Close Over $30 Billion Round as Soon as Next Week — Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-05-22/anthropic-to-close-over-30-billion-round-as-soon-as-next-week" },
+    { "title": "Anthropic Funding Round to Top $30B: $900B Valuation Would Surpass OpenAI — TechTimes", "url": "https://www.techtimes.com/articles/317066/20260523/anthropic-funding-round-top-30b-900b-valuation-would-surpass-openai-most-valuable-ai-startup.htm" },
+    { "title": "Anthropic In Talks to Raise $30 Billion at $900 Billion Valuation — Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-05-12/anthropic-in-talks-to-raise-30-billion-at-900-billion-valuation" },
+    { "title": "Anthropic closing in on $30B raise that would top OpenAI's valuation — Yahoo Finance", "url": "https://ca.finance.yahoo.com/news/anthropic-closing-30b-raise-top-152000305.html" }
+  ],
+  "status": "published"
+}

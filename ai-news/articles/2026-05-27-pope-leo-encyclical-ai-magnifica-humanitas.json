@@ -1,0 +1,24 @@
+{
+  "id": "2026-05-27-pope-leo-encyclical-ai-magnifica-humanitas",
+  "title": "Pope Leo XIV makes AI the subject of his first encyclical",
+  "subtitle": "Magnifica Humanitas, released May 25, calls for robust regulation of artificial intelligence and warns that technology is never neutral.",
+  "date": "2026-05-27",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["policy", "ethics", "regulation", "vatican", "ai-governance"],
+  "readTime": "3 min read",
+  "heroEmoji": "✝️",
+  "body": [
+    "Pope Leo XIV released his first encyclical on May 25, titled Magnifica Humanitas — \"Magnificent Humanity\" — and subtitled \"On Safeguarding the Human Person in the Time of Artificial Intelligence.\" The roughly 42,000-word document was signed on May 15, the 135th anniversary of Leo XIII's Rerum Novarum, the 1891 encyclical that defined Catholic teaching on workers' rights during industrialization. The new text catalogs concerns about AI that are familiar to anyone tracking the field: job displacement, information manipulation, privacy erosion, ideological bias, autonomous weapons, and the transhumanist idea of an \"enhanced human being.\"",
+    "The central argument is captured in one line: technology is \"never neutral, because it takes on the characteristics of those who devise, finance, regulate, and use it.\" The Pope rejects both technophobia and techno-optimism — AI is neither inherently evil nor a force antagonistic to humanity — and instead frames it as a matter of responsibility for the people who build and deploy it. He calls for AI built \"for the common good\" and explicitly endorses robust regulation, placing the Vatican on the side of governance rather than laissez-faire development.",
+    "An encyclical is the most authoritative form of papal teaching, and choosing AI as the subject of his first one is a deliberate signal about where Leo XIV sees the moral stakes of the next decade. The Rerum Novarum parallel is pointed: that document responded to industrial capitalism reshaping labor, and Magnifica Humanitas positions AI as the comparable upheaval of this era. It lands amid a wave of institutional reckoning with AI — from the postponed U.S. executive order to the EU AI Act rollout — but carries different weight, reaching more than a billion Catholics as religious instruction rather than policy.",
+    "Takeaway for learners: the AI conversation is no longer confined to labs, regulators, and tech press. When the Catholic Church devotes a foundational doctrinal text to artificial intelligence, it tells you the questions have moved from \"what can the model do\" to \"what kind of society do we want it to produce.\" If you build or study AI, the durable skill is learning to argue about values — human dignity, fair work, truth — not just benchmarks. Those are the terms the rest of the world is increasingly using to judge your work."
+  ],
+  "sources": [
+    { "title": "Encyclical Letter Magnifica Humanitas (full text) — The Holy See", "url": "https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html" },
+    { "title": "Pope Leo's 'Magnifica humanitas': AI must serve humanity — Vatican News", "url": "https://www.vaticannews.va/en/pope/news/2026-05/pope-leo-xiv-encyclical-magnifica-humanitas-ai.html" },
+    { "title": "Pope Leo Uses First Major Papal Text to Warn About Dangers of AI — TIME", "url": "https://time.com/article/2026/05/25/pope-leo-encyclical-ai-magnifica-humanitas/" },
+    { "title": "Pope calls for robust regulation of AI in manifesto that ponders the future of humanity — ABC7", "url": "https://abc7news.com/post/pope-calls-robust-regulation-ai-manifesto-ponders-future-humanity/19168494/" }
+  ],
+  "status": "published"
+}

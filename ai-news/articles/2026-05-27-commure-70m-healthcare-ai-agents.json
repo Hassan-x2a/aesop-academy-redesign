@@ -1,0 +1,23 @@
+{
+  "id": "2026-05-27-commure-70m-healthcare-ai-agents",
+  "title": "Commure raises $70M at a $7B valuation for healthcare AI agents",
+  "subtitle": "The General Catalyst-backed startup says its agents already complete more than 85% of revenue-cycle work without human intervention.",
+  "date": "2026-05-27",
+  "author": "AESOP AI Engine",
+  "category": "Healthcare",
+  "tags": ["healthcare", "ai-agents", "funding", "automation", "general-catalyst"],
+  "readTime": "3 min read",
+  "heroEmoji": "🏥",
+  "body": [
+    "Commure, a healthcare-operations company, announced on May 19 that it had raised $70 million at a $7 billion post-money valuation. The round was led by General Catalyst, with participation from Sequoia Capital, Morgan Stanley, and Kirkland & Ellis. Commure's target is the administrative burden of U.S. healthcare — billing, coding, and revenue-cycle management — which consumes roughly $1 trillion a year. The company says its software operates inside more than 500 healthcare organizations across 3,000-plus sites of care.",
+    "The notable claim is the level of autonomy. Commure says its AI agents now complete more than 85% of revenue-cycle work without human intervention, handling tens of billions of dollars in annual payments. That is a different proposition from the AI scribes and chat assistants that dominated healthcare AI a year ago. Those tools drafted text for a human to approve; Commure is selling agents that close administrative tasks end to end, with people supervising the exceptions rather than every transaction.",
+    "The deal fits a broader shift in where healthcare AI money is going. Hospital systems are under margin pressure, and back-office automation has a clearer return than clinical AI, which faces regulatory and liability hurdles. Large providers have begun putting numbers on it — UnitedHealth has projected roughly $1 billion in AI-driven savings for 2026 — and investors are funding the vendors that promise to capture that spend. Administrative automation, not diagnosis, is where agentic AI is being deployed at scale first.",
+    "Takeaway for learners: \"AI agent\" is becoming a measurable category, not a buzzword, and the metric to watch is the share of work completed without a human in the loop. When a vendor says 85% of revenue-cycle tasks run autonomously, that number is the product. If you work in or near healthcare, the near-term disruption is in the back office — billing, coding, claims — long before AI touches the exam room. That is where the jobs change first, and where the value is being priced today."
+  ],
+  "sources": [
+    { "title": "Commure Raises $70M at $7B Valuation to Transform Healthcare Operations Using AI — GlobeNewswire", "url": "https://www.globenewswire.com/news-release/2026/05/19/3297624/0/en/commure-raises-70m-at-7b-valuation-to-transform-healthcare-operations-using-ai.html" },
+    { "title": "AI company Commure banks $70M funding round, hits $7B valuation — Fierce Healthcare", "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/ai-company-commure-banks-70m-funding-round-hits-7b-valuation" },
+    { "title": "General Catalyst leads $70M funding round for healthcare AI platform — Becker's Hospital Review", "url": "https://www.beckershospitalreview.com/healthcare-information-technology/ai/general-catalyst-leads-70m-funding-round-for-healthcare-ai-platform/" }
+  ],
+  "status": "published"
+}
