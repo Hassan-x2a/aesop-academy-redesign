@@ -84,14 +84,14 @@
     '  70% { box-shadow: 0 0 0 8px rgba(43,168,152,0); }' +
     '  100% { box-shadow: 0 0 0 0 rgba(43,168,152,0); }' +
     '}' +
-    '.tb-stat-row { display: flex; gap: 1.5rem; align-items: baseline;' +
+    '.tb-stat-row { display: flex; gap: 1rem; align-items: baseline;' +
     '  flex-wrap: nowrap; flex: 0 1 auto; }' +
-    '.tb-stat { display: inline-flex; align-items: baseline; gap: 0.35rem; white-space: nowrap; flex-shrink: 0; }' +
+    '.tb-stat { display: inline-flex; align-items: baseline; gap: 0.25rem; white-space: nowrap; flex-shrink: 0; }' +
     '.tb-stat-num { font-family: var(--font-display), Georgia, serif;' +
-    '  font-weight: 700; font-size: 1.25rem; color: var(--gold, #c9a05a);' +
-    '  letter-spacing: -0.02em; line-height: 1; }' +
-    '.tb-stat-lbl { font-size: 0.7rem; text-transform: uppercase;' +
-    '  letter-spacing: 0.1em; color: rgba(255,255,255,0.62); }' +
+    '  font-weight: 700; font-size: 0.78rem; color: var(--gold, #c9a05a);' +
+    '  letter-spacing: -0.01em; line-height: 1; }' +
+    '.tb-stat-lbl { font-size: 0.62rem; text-transform: uppercase;' +
+    '  letter-spacing: 0.08em; color: rgba(255,255,255,0.62); }' +
     '.tb-utilities { display: inline-flex; align-items: center; gap: 0.55rem;' +
     '  flex-shrink: 0; margin-left: auto; }' +
     '.tb-lang { display: inline-flex; align-items: stretch;' +
@@ -144,7 +144,7 @@
     '  .tb-pills a { font-size: 0.84rem; padding: 0 0.75rem; }' +
     '  .tb-brand { font-size: 0.95rem; }' +
     '  .tb-stats { gap: 0.75rem; padding: 0.4rem 1rem; }' +
-    '  .tb-stat-num { font-size: 1.05rem; }' +
+    '  .tb-stat-num { font-size: 0.72rem; }' +
     '  .tb-lang .lang-btn { padding: 0.2rem 0.32rem; font-size: 0.6rem; }' +
     '}' +
     '@media (max-width: 760px) {' +
@@ -153,7 +153,7 @@
     '  .tb-pills { padding: 0 1.25rem; }' +
     '  .tb-stats { gap: 0.6rem; padding: 0.5rem 1.25rem; }' +
     '  .tb-stat-row { gap: 0.75rem; }' +
-    '  .tb-stat-num { font-size: 1rem; }' +
+    '  .tb-stat-num { font-size: 0.72rem; }' +
     '}' +
     '@media (max-width: 520px) {' +
     '  html { scroll-padding-top: 184px; }' +
