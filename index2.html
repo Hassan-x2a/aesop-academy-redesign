@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<!-- v1.0.0 | 2026-05-28 — Concept 4: Assessment Gateway -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AESOP AI Academy — Find Your Course | AI Literacy for Ages 8+</title>
+<meta name="description" content="Not sure where to start? Take AESOP's 5-minute placement assessment and get a personalized AI literacy course path matched to your age and goals. Free, no account required.">
+<meta name="keywords" content="AI literacy, AI curriculum, kids AI education, AI safety for children, story-based learning, AESOP Academy, AI for students, AesopAcademy.org">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://aesopacademy.org/index2.html">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon_16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/favicon_512.png">
+
+<!-- Open Graph -->
+<meta property="og:title" content="AESOP AI Academy — Find Your Course">
+<meta property="og:description" content="Take our 5-minute assessment and get a personalized AI literacy path. Free, story-driven, no account required.">
+<meta property="og:url" content="https://aesopacademy.org/">
+<meta property="og:site_name" content="AESOP AI Academy">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://aesopacademy.org/og-image2.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@aesopacademy">
+<meta name="twitter:title" content="AESOP AI Academy — Find Your Course">
+<meta name="twitter:description" content="5-minute assessment. Personalized path. Start learning AI — free.">
+<meta name="twitter:image" content="https://aesopacademy.org/og-image2.jpg">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "AESOP AI Academy",
+  "url": "https://aesopacademy.org",
+  "description": "Story-driven AI literacy curriculum for ages 8 and up.",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://aesopacademy.org/favicon_512.png"
+  },
+  "founder": { "@type": "Person", "name": "Scott Schindler" },
+  "sameAs": [
+    "https://twitter.com/aesopacademy",
+    "https://discord.gg/pKDa5ryX"
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
+<link rel="stylesheet" href="/academy-theme.css">
+<link rel="stylesheet" href="/academy-dark-mode.css">
+
+<style>
+/* ─── BODY ───────────────────────────────────────────────── */
+body { overflow-x: hidden; padding-top: 118px; }
+body.banner-dismissed { padding-top: 0; }
+
+/* ─── HERO ───────────────────────────────────────────────── */
+.hero {
+  background:
+    radial-gradient(ellipse 75% 55% at 50% 0%, rgba(30,58,82,0.9) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 70% at 10% 85%, rgba(61,214,192,0.06) 0%, transparent 55%),
+    linear-gradient(180deg, #090f18 0%, #0d1b2a 60%, #121e2d 100%);
+  color: var(--white);
+  padding: 6rem 12.5% 5.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: min(1600px, 95vw);
+  margin: 0 auto;
+}
+
+/* Eyebrow */
+.hero-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.hero-eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  animation: pulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(1.5); }
+}
+
+/* Headline */
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6.5vw, 6.4rem);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold-light);
+  display: block;
+}
+
+/* Subtext */
+.hero-sub {
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 1.1rem auto 2.75rem;
+}
+
+/* Primary CTA */
+.hero-cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+.btn-assess {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  font-weight: 700;
+  padding: 1rem 2.75rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow-gold), 0 8px 32px rgba(201,160,90,0.2);
+  letter-spacing: 0.01em;
+}
+.btn-assess:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold), 0 12px 40px rgba(201,160,90,0.3);
+}
+.hero-bypass {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.4);
+}
+.hero-bypass a {
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  transition: color 0.15s, border-color 0.15s;
+}
+.hero-bypass a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ─── AGE CARDS ──────────────────────────────────────────── */
+.age-section {
+  background: var(--cream);
+  padding: 3.5rem 12.5%;
+  border-bottom: 1px solid var(--border);
+}
+.age-section-head {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.age-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.age-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.age-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 1.25rem;
+  max-width: min(1600px, 95vw);
+  margin: 0 auto;
+}
+.age-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.age-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: transparent;
+  transition: background 0.2s;
+}
+.age-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 6px 24px rgba(201,160,90,0.18);
+  transform: translateY(-3px);
+}
+.age-card:hover::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+.age-card .emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 0.85rem;
+  display: block;
+}
+.age-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+}
+.age-card .range {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+.age-card p {
+  font-size: 0.83rem;
+  color: var(--ink-light);
+  line-height: 1.5;
+  margin-bottom: 1.1rem;
+  flex: 1;
+}
+.age-cta {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 1.1rem;
+  background: var(--gold-pale);
+  border-radius: var(--radius-sm);
+  transition: background 0.18s;
+}
+.age-card:hover .age-cta { background: var(--gold); color: var(--navy); }
+
+/* Dark mode age cards */
+[data-theme="dark"] .age-section { background: var(--navy-mid); border-bottom-color: rgba(255,255,255,0.08); }
+[data-theme="dark"] .age-section-title { color: var(--white); }
+[data-theme="dark"] .age-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); }
+[data-theme="dark"] .age-card:hover { border-color: var(--gold); }
+[data-theme="dark"] .age-card h3 { color: var(--white); }
+[data-theme="dark"] .age-card p { color: rgba(255,255,255,0.55); }
+[data-theme="dark"] .age-cta { background: rgba(201,160,90,0.12); color: var(--gold); }
+[data-theme="dark"] .age-card:hover .age-cta { background: var(--gold); color: var(--navy); }
+
+/* ─── LINKS SECTION ──────────────────────────────────────── */
+.links-section {
+  background: var(--white);
+  padding: 3.5rem 12.5%;
+}
+.links-section-head {
+  margin-bottom: 2rem;
+}
+.links-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.links-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 3rem;
+  max-width: min(1600px, 95vw);
+}
+.links-col { display: flex; flex-direction: column; gap: 2rem; }
+.links-group-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.links-list { list-style: none; }
+.links-list li { border-bottom: 1px solid var(--border-light); }
+.links-list li:last-child { border-bottom: none; }
+.links-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0;
+  color: var(--ink-mid);
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: color 0.15s;
+  line-height: 1.35;
+}
+.links-list a:hover { color: var(--navy); }
+.links-list a::after {
+  content: '→';
+  color: var(--gold);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.links-list a:hover::after { opacity: 1; transform: translateX(2px); }
+.links-list a .lbl-new {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(61,214,192,0.15);
+  color: var(--teal-dark);
+  padding: 0.1rem 0.45rem;
+  border-radius: 99px;
+  margin-left: 0.35rem;
+  flex-shrink: 0;
+}
+
+/* Dark mode links section */
+[data-theme="dark"] .links-section { background: var(--navy); }
+[data-theme="dark"] .links-section-title { color: var(--white); }
+[data-theme="dark"] .links-group-label { border-bottom-color: rgba(255,255,255,0.1); }
+[data-theme="dark"] .links-list li { border-bottom-color: rgba(255,255,255,0.07); }
+[data-theme="dark"] .links-list a { color: rgba(255,255,255,0.65); }
+[data-theme="dark"] .links-list a:hover { color: #fff; }
+
+/* ─── PEDAGOGY STRIP ─────────────────────────────────────── */
+.pedagogy-strip {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a3a6b 100%);
+  border-top: 3px solid var(--gold);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 1.5rem 12.5%;
+}
+.pedagogy-strip-inner {
+  max-width: min(1600px, 95vw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+.pedagogy-strip-text { flex: 1; min-width: 260px; }
+.pedagogy-strip-label {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  display: block; margin-bottom: 0.5rem;
+}
+.pedagogy-strip-q {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 700; color: #fff;
+  margin: 0 0 0.6rem; line-height: 1.3;
+}
+.pedagogy-strip-a {
+  font-size: 0.88rem; line-height: 1.6;
+  color: rgba(255,255,255,0.7); margin: 0;
+}
+.pedagogy-strip-link {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: var(--gold); color: #0F1A40;
+  font-size: 0.85rem; font-weight: 700;
+  padding: 0.65rem 1.4rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: filter 0.2s, transform 0.2s;
+}
+.pedagogy-strip-link:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+.footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.5);
+  padding: 3rem 2rem 2rem;
+  font-size: 0.82rem;
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.footer-tagline { font-style: italic; line-height: 1.5; }
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+.footer-link {
+  color: rgba(255,255,255,0.5);
+  transition: color var(--transition);
+  font-size: 0.82rem;
+}
+.footer-link:hover { color: var(--gold-light); }
+.footer-bottom {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+.footer-tm  { color: rgba(255,255,255,0.3); }
+.footer-patent { color: var(--gold); opacity: 0.6; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero        { padding: 5rem 8% 4.5rem; }
+  .age-section { padding: 3rem 8%; }
+  .links-section { padding: 3rem 8%; }
+  .pedagogy-strip { padding: 1.5rem 8%; }
+}
+@media (max-width: 820px) {
+  .age-grid  { grid-template-columns: repeat(2,1fr); }
+  .links-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .hero        { padding: 4rem 6% 3.5rem; }
+  .age-section { padding: 2.75rem 6%; }
+  .links-section { padding: 2.75rem 6%; }
+  .pedagogy-strip { padding: 1.5rem 6%; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-nav { align-items: flex-start; }
+}
+@media (max-width: 520px) {
+  .hero          { padding: 3rem 1.25rem 2.75rem; }
+  .age-section   { padding: 2.25rem 1.25rem; }
+  .links-section { padding: 2.25rem 1.25rem; }
+  .pedagogy-strip { padding: 1.25rem 1.25rem; }
+  .age-grid      { grid-template-columns: 1fr 1fr; }
+  .btn-assess    { width: 100%; justify-content: center; }
+  .footer        { padding: 2.5rem 1.25rem 1.5rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+}
+
+/* ─── ENTRY ANIMATION ────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-inner  { animation: fadeUp 0.55s ease both; }
+.age-grid    { animation: fadeUp 0.55s 0.1s ease both; }
+.links-grid  { animation: fadeUp 0.5s 0.05s ease both; }
+</style>
+</head>
+
+<body>
+
+<script src="/assets/top-banner-v2.js?v=2"></script>
+
+<!-- ─── HERO ──────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+      Free &nbsp;·&nbsp; No account required &nbsp;·&nbsp; Ages 8 to adult
+    </div>
+
+    <h1>
+      Ready to become
+      <em>AI literate?</em>
+    </h1>
+
+    <p class="hero-sub">
+      Take our 5-minute assessment. Get your personalized learning path.
+      Start your first course — completely free.
+    </p>
+
+    <div class="hero-cta-wrap">
+      <a class="btn-assess" href="/ai-academy/assessment.html">
+        Begin Assessment →
+      </a>
+      <p class="hero-bypass">
+        Already know what you want? <a href="/ai-academy/courses-v2.html">Browse V2 courses</a> or <a href="/ai-academy/courses.html">browse all 126 courses</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── AGE-GROUP PICKER ───────────────────────────────────── -->
+<section class="age-section">
+  <div class="age-section-head">
+    <span class="age-section-label">Browse by audience</span>
+    <h2 class="age-section-title">Or jump straight to your level</h2>
+  </div>
+  <div class="age-grid">
+    <a class="age-card" href="/ai-academy/assessment.html?age=8-12">
+      <span class="emoji" aria-hidden="true">🧒</span>
+      <div class="range">Ages 8–12</div>
+      <h3>Young Learners</h3>
+      <p>Story-based introduction to how AI thinks, creates, and makes decisions.</p>
+      <span class="age-cta">Explore courses →</span>
+    </a>
+    <a class="age-card" href="/ai-academy/assessment.html?age=13-17">
+      <span class="emoji" aria-hidden="true">🎒</span>
+      <div class="range">Ages 13–17</div>
+      <h3>Teens</h3>
+      <p>Critical thinking, ethics, bias, and building real things with AI.</p>
+      <span class="age-cta">Explore courses →</span>
+    </a>
+    <a class="age-card" href="/ai-academy/assessment.html?age=adult">
+      <span class="emoji" aria-hidden="true">🎓</span>
+      <div class="range">Adult &amp; Professional</div>
+      <h3>Adults</h3>
+      <p>Career-relevant AI literacy, governance, and workplace strategy.</p>
+      <span class="age-cta">Explore courses →</span>
+    </a>
+    <a class="age-card" href="/ai-academy/dashboard.html">
+      <span class="emoji" aria-hidden="true">🏫</span>
+      <div class="range">Classroom Ready</div>
+      <h3>Educators &amp; Parents</h3>
+      <p>Standards-aligned curriculum for any classroom or home environment.</p>
+      <span class="age-cta">Educator dashboard →</span>
+    </a>
+  </div>
+</section>
+
+<!-- ─── LINKS SECTION ─────────────────────────────────────── -->
+<section class="links-section" aria-label="Site directory">
+  <div class="links-section-head">
+    <div class="links-section-label">Everything on this site</div>
+    <div class="links-section-title">Full site directory</div>
+  </div>
+  <div class="links-grid">
+
+    <!-- COLUMN 1: Courses & Learning -->
+    <div class="links-col">
+      <div>
+        <div class="links-group-label">Courses &amp; Learning</div>
+        <ul class="links-list">
+          <li><a href="/ai-academy/courses-v2.html">V2 Courses <span class="lbl-new">Latest</span></a></li>
+          <li><a href="/ai-academy/courses.html">V1 Course Catalog (126 courses)</a></li>
+          <li><a href="/ai-academy/assessment.html">Take Placement Assessment</a></li>
+          <li><a href="/ai-academy/students.html">Student Portal</a></li>
+          <li><a href="/ai-academy/dashboard.html">Teacher / Parent Dashboard</a></li>
+          <li><a href="/ai-academy/certifications.html">Certifications</a></li>
+          <li><a href="/student-transcript.html">Learning Transcript</a></li>
+          <li><a href="/ai-academy/how-we-teach.html">How We Teach</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COLUMN 2: Policies & Standards -->
+    <div class="links-col">
+      <div>
+        <div class="links-group-label">Policies &amp; Compliance</div>
+        <ul class="links-list">
+          <li><a href="/policies/ferpa-coppa.html">FERPA &amp; COPPA Compliance</a></li>
+          <li><a href="/policies/data-retention.html">Data Retention &amp; Disposal</a></li>
+          <li><a href="/privacy-v1.0.html">Privacy Notice</a></li>
+          <li><a href="/policies/ada-policy.html">ADA / WCAG Accessibility</a></li>
+          <li><a href="/policies/ai-policy.html">AI Governance Policy</a></li>
+          <li><a href="/policies/engine-transparency.html">AESOP Engine Transparency</a></li>
+          <li><a href="/policies/bias-audit.html">Bias Audit Documentation</a></li>
+          <li><a href="/policies/terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="links-group-label">Standards Alignment</div>
+        <ul class="links-list">
+          <li><a href="/standards/ai4k12-alignment.html">AI4K12 Alignment Report</a></li>
+          <li><a href="/standards/csta-alignment.html">CSTA K-12 Alignment</a></li>
+          <li><a href="/standards/iste-alignment.html">ISTE Standards Alignment</a></li>
+          <li><a href="/standards/unesco-alignment.html">UNESCO Framework Review</a></li>
+          <li><a href="/standards/eu-ai-act-alignment.html">EU AI Act Review</a></li>
+          <li><a href="/standards/nist-ai-rmf-alignment.html">NIST AI RMF Alignment</a></li>
+          <li><a href="/review/AESOP-Panel-Scoring-Dashboard.html">AESOP Training Scores</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COLUMN 3: About, Schools & Community -->
+    <div class="links-col">
+      <div>
+        <div class="links-group-label">About AESOP</div>
+        <ul class="links-list">
+          <li><a href="/pedagogy.html">Our Pedagogy</a></li>
+          <li><a href="/education-advisory-board.html">Education Advisory Board</a></li>
+          <li><a href="/technical-advisory-board.html">Technical Advisory Board</a></li>
+          <li><a href="/ai-evaluating-ai-education.html">AI Evaluating AI Education</a></li>
+          <li><a href="/democratizing-education.html">Democratizing Education</a></li>
+          <li><a href="/aesop-academy-report-v1.2.html">AESOP Report v1.2</a></li>
+          <li><a href="/about/mission.html">Our Mission</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="links-group-label">For Schools &amp; Institutions</div>
+        <ul class="links-list">
+          <li><a href="/institutional-procurement.html">Institutional Procurement</a></li>
+          <li><a href="/scheduling/" target="_blank" rel="noopener">Book a Meeting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="links-group-label">Community</div>
+        <ul class="links-list">
+          <li><a href="https://discord.gg/pKDa5ryX" target="_blank" rel="noopener">Forums · Discord</a></li>
+          <li><a href="/report.html">Report an Issue</a></li>
+          <li><a href="/review/aesop-sitemap.html">Site Map</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PEDAGOGY INSIGHT STRIP ──────────────────────────────── -->
+<div class="pedagogy-strip">
+  <div class="pedagogy-strip-inner">
+    <div class="pedagogy-strip-text">
+      <span class="pedagogy-strip-label">AESOP Pedagogy</span>
+      <p class="pedagogy-strip-q">How do we ensure children move beyond interaction into critical thinking and creation?</p>
+      <p class="pedagogy-strip-a">Interaction is consumption. The gap most platforms never close is the distance between a learner who <em>watched</em> AI and one who can evaluate, judge, and build with it. Three design levers close that gap in every AESOP lesson.</p>
+    </div>
+    <a href="/pedagogy.html" class="pedagogy-strip-link">Read the answer →</a>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">AESOP AI Academy</div>
+      <p class="footer-tagline">
+        Story-driven AI literacy for every age.<br>
+        Built by educators. Powered by AESOP.
+      </p>
+    </div>
+    <nav class="footer-nav">
+      <a href="/about/mission.html" class="footer-link">Our Mission</a>
+      <a href="/ai-academy/" onclick="invokeCoursesSkill('/ai-academy/'); return false;" class="footer-link">AI Academy</a>
+      <a href="https://discord.gg/pKDa5ryX" target="_blank" rel="noopener" class="footer-link">Forums - Discord</a>
+      <a href="/policies/terms-of-service.html" class="footer-link">Terms</a>
+      <a href="/privacy-v1.0.html" class="footer-link">Privacy</a>
+      <a href="/policies/ada-policy.html" class="footer-link">Accessibility</a>
+      <a href="/policies/copyright.html" class="footer-link">Copyright</a>
+      <a href="/review/aesop-sitemap.html" class="footer-link">Site Map</a>
+      <a href="/institutional-procurement.html" class="footer-link">Institutional Procurement</a>
+      <a href="/scheduling/" class="footer-link" target="_blank" rel="noopener">Book a Meeting</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-tm">© 2026 AESOP AI Academy — All Rights Reserved</span>
+    <span class="footer-patent">AESOP Engine — Patent Pending · App #64/018,565</span>
+  </div>
+</footer>
+
+<!-- ─── SKILL INVOCATION ────────────────────────────────────── -->
+<script>
+function invokeCoursesSkill(fallbackUrl) {
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ type: 'invoke-skill', skill: 'aesop-course-builder' }, '*');
+  } else if (fallbackUrl) {
+    window.location.href = fallbackUrl;
+  }
+}
+</script>
+
+<!-- ─── DARK MODE ─────────────────────────────────────────── -->
+<script>
+(function() {
+  var KEY = 'aesop-theme';
+  var html = document.documentElement;
+  if (localStorage.getItem(KEY) === 'dark') html.setAttribute('data-theme', 'dark');
+  function isDark() { return html.getAttribute('data-theme') === 'dark'; }
+  window.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('darkToggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      if (isDark()) { html.removeAttribute('data-theme'); localStorage.setItem(KEY, 'light'); }
+      else          { html.setAttribute('data-theme', 'dark'); localStorage.setItem(KEY, 'dark'); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
