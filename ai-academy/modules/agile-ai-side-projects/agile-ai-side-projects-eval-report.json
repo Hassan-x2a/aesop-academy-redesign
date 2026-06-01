@@ -1,0 +1,624 @@
+{
+  "course": "Launch Your AI Side Project",
+  "courseId": "agile-ai-side-projects",
+  "date": "2026-06-01T09:00:00.000Z",
+  "reviewers": ["Claude", "Gemini", "Perplexity"],
+  "modules": [
+    {
+      "module": "M1: Why Side Projects Fail and How Agile Fixes That",
+      "panelAverage": 78.3,
+      "panelVerdict": {
+        "min": 70,
+        "label": "PASS W/ NOTES",
+        "color": "#eab308"
+      },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Marcus's internship-scanner story creates the exact 'premature scaling' problem the concept section answers; the LIRA stack and Weekly Sprint Minimum are well-paced for an Advanced cohort. The protagonist is largely told the insight rather than landing it, and Marcus reappears across modules with shifting biographical details, which weakens character consistency.",
+          "topIssue": "Labs are AI-chat conversations rather than producing a real working sprint artifact, so the capability delta is partly aspirational.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 79,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Agile Manifesto attribution (Feb 2001), Waterfall framing, and Scrum/Kanban distinctions are technically accurate. Lean Startup cited correctly to Eric Ries (2011). 'Premature scaling' is used in the broader pop-product-management sense rather than the precise Startup Genome 2011 definition, which is fine for this level but slightly loose.",
+          "topIssue": "Implementation-intentions research is invoked without citation; learners may absorb it as folk wisdom rather than as Gollwitzer's specific paradigm.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 77,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Tool references (Cursor, Lovable, Bolt.new, Replit Agent, Claude) are accurate to the 2024-2025 AI builder landscape and still current in mid-2026. The 'AI compresses build-to-test time' framing reflects the actual shift learners are living through right now.",
+          "topIssue": "By 2026 the Lovable/Bolt.new generation has matured into agentic IDEs (Cursor Agent, Replit Agent v2); the lesson treats these as 2024-era one-shot generators and could feel slightly behind the current frontier.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 79,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        }
+      }
+    },
+    {
+      "module": "M2: Scoping Your Idea",
+      "panelAverage": 77.0,
+      "panelVerdict": {
+        "min": 70,
+        "label": "PASS W/ NOTES",
+        "color": "#eab308"
+      },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Priya vs. Devon side-by-side directly creates the 'everyone trap' the concept section answers; the Customer Specificity Ladder gives learners a usable five-rung mental model. Three Flavors of Vague is a clean schema, and the 'Could I Call Them' test is the kind of behavioral check this audience actually needs.",
+          "topIssue": "Marcus is reintroduced with a different university (UC San Diego, cognitive science) than M1's Georgia Tech profile — the character is functioning as a recurring archetype rather than a consistent protagonist.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 79,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 3 }
+          },
+          "notes": "The Customer Specificity Ladder is a novel framework presented as if standard; the five rungs are coherent but the lesson should flag that this is a course-specific scaffold rather than a discipline-standard tool. User-story and acceptance-criteria definitions match conventional Agile usage.",
+          "topIssue": "The 'Could I Call Them' test is a strong behavioral heuristic but is asserted as a universal rule; for some B2C consumer audiences (e.g., children, anonymized health users), 'call ten of them this week' isn't a reasonable proxy and the lesson doesn't acknowledge this.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 13, "max": 20 }
+          ],
+          "total": 76,
+          "d5Score": 13,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 3 }
+          },
+          "notes": "Examples (NIL deals, financial-aid appeals, dining-hall budgets) feel grounded in the actual lived environment of US college students in 2025-2026, not borrowed from a generic startup-school template.",
+          "topIssue": "The AI-to-stress-test-customers workflow assumes a chat-style LLM, but by mid-2026 most learners are doing this work inside deep-research agents (Perplexity Deep Research, ChatGPT agents, Claude Projects with web search) — the lesson's tooling framing is one generation behind.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 13, "max": 20 }
+          ],
+          "total": 76,
+          "d5Score": 13,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        }
+      }
+    },
+    {
+      "module": "M3: Sprint Cycles for Solo Builders",
+      "panelAverage": 78.0,
+      "panelVerdict": {
+        "min": 70,
+        "label": "PASS W/ NOTES",
+        "color": "#eab308"
+      },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 5, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "The 'infinite-horizon trap' framing is a sharp diagnostic that emerges directly from Marcus's 80-hours-no-demo story. The Minimum Viable Sprint Setup (sprint doc, Sunday ritual, daily micro-check, parking lot) is concrete and immediately actionable. Strong pacing: each lesson advances a distinct mechanic without redundancy.",
+          "topIssue": "The 'parking lot' rule is presented as discipline; the harder skill — distinguishing a true mid-sprint pivot signal from ordinary scope creep — is hinted at but not given its own framework.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 13, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 80,
+          "d5Score": 14,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Sprint, Sprint Backlog, Sprint Review, Velocity definitions all align with the Scrum Guide, with the appropriate solo-builder reframing called out explicitly. The one-week-vs-two-week trade-off is honest about why solo motivation management drives the choice.",
+          "topIssue": "'Implementation intentions' (Gollwitzer) and 'habit formation research' are invoked as established findings to justify calendar-blocking; the lesson would be stronger with even a single named source rather than 'research consistently shows'.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 77,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Three-validated-sprints heuristic from Lean Startup is still load-bearing for early indie builders in 2026; the 'most people don't pivot, they abandon' observation reads accurately against current indie-hacker churn.",
+          "topIssue": "Pivot-vs-persist signals (return usage, referrals, payment) are correct but light on 2024-2026 mechanics: free-tier waitlists, generative-AI demo virality, and TikTok-driven spike-then-crash patterns that distort early-signal reading aren't addressed.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 77,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        }
+      }
+    },
+    {
+      "module": "M4: AI Tools for Every Stage",
+      "panelAverage": 76.7,
+      "panelVerdict": {
+        "min": 70,
+        "label": "PASS W/ NOTES",
+        "color": "#eab308"
+      },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 2 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "The Four Research Jobs (landscape mapping, problem synthesis, interview design, assumption mapping) is the most curriculum-load-bearing taxonomy in the course — it gives learners a permanent mental tool. Priya's NIL-tracker story directly creates the 'scope inflation under AI assistance' problem the build-stack section answers.",
+          "topIssue": "Marcus is reintroduced for a third time (now back at Georgia Tech building a Chrome study-hours tracker) with details that conflict with both M1 and M2. By M4 he reads as a generic 'student who failed' rather than a tracked protagonist.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 18, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 76,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 2 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Tool capability claims are technically accurate at the strength-level described: Perplexity for landscape mapping, Claude/ChatGPT for interview-question critique, Copilot/Cursor/Claude Artifacts for code generation. The 'AI hallucinates competitor details — especially funding rounds, product features, or pricing' caveat is exactly the right misconception to counter.",
+          "topIssue": "The lesson treats Copilot, Cursor, and Claude Artifacts as roughly interchangeable code-generation tools; in fact they have meaningfully different scopes (autocomplete vs. agentic-IDE vs. preview-environment) and the differences matter when learners pick a stack.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 18, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 76,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 2 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Tool roster (Perplexity, Claude with web access, You.com, GitHub Copilot, Cursor, Replit Agent, Claude Artifacts) is current and the labs are immediately runnable today — a learner could open Perplexity right now and execute the research sprint as written.",
+          "topIssue": "G2/Trustpilot synthesis as a problem-mining channel is dated framing for a 2026 college-aged builder; the same audience is now mining Reddit, X/Twitter, Discord, and YouTube comment threads more than enterprise-review sites.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 18, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 78,
+          "d5Score": 16,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        }
+      }
+    },
+    {
+      "module": "M5: Handling Scope Creep",
+      "panelAverage": 76.7,
+      "panelVerdict": {
+        "min": 70,
+        "label": "PASS W/ NOTES",
+        "color": "#eab308"
+      },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Maya's 'three hours, six-week project became a two-year startup' is one of the strongest story-creates-problem openings in the course — the 'Yes Machine' concept is essentially earned by the narrative before it's named. Four-flavors-of-creep taxonomy (Feature/Audience/Platform/Quality) is clean and immediately usable.",
+          "topIssue": "Practical Takeaway tells learners to literally start the next AI session by prompting 'help me cut, not add' — this is good advice but treats the LLM as if it will reliably honor the framing; in practice models drift back toward additive suggestions, and the lesson doesn't teach how to detect and re-prompt against that drift.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 79,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 3, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Definition of Done is presented as a single binary sentence with three parts (user, action, test). In standard Scrum, DoD is a team-agreed checklist of quality criteria that applies across stories — different concept entirely. The course's reframing is pedagogically useful for solo builders but borrows an established term and quietly redefines it, which can mislead learners who later encounter DoD in a team context.",
+          "topIssue": "'Approach goals vs. completion' is loosely invoked as motivation research without attribution; this leans on Higgins/Elliot regulatory-focus theory but the framing in the lesson doesn't match those technical definitions and could confuse a learner who looks it up.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 14, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 75,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 3 }
+          },
+          "notes": "Jordan's nonprofit-donation-page story is grounded in a problem real college freelancers actually take on in 2025-2026; the 'scope container' card-on-the-monitor tactic is the kind of low-tech ritual that survives changes in tooling.",
+          "topIssue": "The scope-creep examples are framed around feature lists in chat-style LLMs; the live 2026 trap is more agentic — Claude Code, Cursor Agent, and Replit Agent can spin up entire subsystems unprompted in a single turn, and that failure mode isn't named.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 13, "max": 20 }
+          ],
+          "total": 76,
+          "d5Score": 13,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        }
+      }
+    },
+    {
+      "module": "M6: Getting Real Feedback Fast",
+      "panelAverage": 79.0,
+      "panelVerdict": {
+        "min": 70,
+        "label": "PASS W/ NOTES",
+        "color": "#eab308"
+      },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 5 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Marcus's 340 sign-ups / 11 returners is a near-perfect story-creates-problem opening — the gap between vanity metric and behavioral signal is felt before it's defined. The 'Three Types of Positive Feedback That Should Worry You' is a genuinely useful inversion of the usual 'how to read feedback' lesson, and it directly attacks the most common misconception this audience holds.",
+          "topIssue": "Quizzes lean toward strong-signal recognition; an exercise that asks learners to misclassify their own past feedback (and then defend the reclassification) would push the capability delta from 'recognize' to 'recover'.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 17, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 80,
+          "d5Score": 14,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 3 }
+          },
+          "notes": "Rob Fitzpatrick attribution is correct (The Mom Test, 2013) and the 'compliment-shaped noise' phrasing is faithful to his framing. Past-behavior-vs-hypothetical interview-question contrast is a clean and accurate rendering of the Mom Test method.",
+          "topIssue": "'Even $1 changes the psychology entirely' invokes loss aversion (Kahneman & Tversky) as if it's the operative mechanism; the literature on small-payment commitment effects is mixed and the lesson presents it as settled.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 13, "max": 20 }
+          ],
+          "total": 78,
+          "d5Score": 13,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Distribution channels named (college subreddits, Discord servers, university Facebook groups) match where current college builders actually launch in 2025-2026. The vanity-metric trap is, if anything, more severe in the current AI-launch climate than the lesson concedes.",
+          "topIssue": "TikTok and Instagram Reels as both a feedback-distortion source AND a launch channel are not discussed; for a 2026 18-24 audience this is now the dominant early-distribution mechanic and its specific feedback-skew patterns differ from Reddit/Discord.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 79,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        }
+      }
+    },
+    {
+      "module": "M7: Turning a Side Project into a Portfolio Piece or Income Stream",
+      "panelAverage": 78.3,
+      "panelVerdict": {
+        "min": 70,
+        "label": "PASS W/ NOTES",
+        "color": "#eab308"
+      },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Priya's lost-internship moment ('It sounds like the AI did most of the work') is one of the most powerful problem-creating stories in the course — it lands a stake about intellectual ownership that the rest of the module then resolves. The Decision Log + AI Contribution Statement combination is genuinely novel curriculum content for this stage of an AI builder's career.",
+          "topIssue": "The capability delta — 'can defend an AI-assisted project under interview pressure' — is the strongest in the course, but the lab is still a chat conversation; a recorded mock-interview-with-playback exercise would convert this from rehearsal to performance.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 79,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "The decoupling of 'intellectual ownership' from 'wrote every line of code' is technically the correct framing for 2025-2026 engineering hiring norms. The five-component documentation package (problem, architecture, decision log, limitations, AI contribution) matches what mature engineering teams now request in code-portfolio reviews.",
+          "topIssue": "'AI contribution statement' is presented as 'increasingly expected in technical interviews' — true at top tech firms with formal AI-disclosure policies, but the lesson generalizes that norm to all interviews; many small companies and freelance clients have no such expectation and a learner could over-disclose unhelpfully.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 77,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Hiring-manager attitudes about AI-assisted portfolio work in 2025-2026 match the lesson's framing: candidates are expected to articulate decisions and tradeoffs, and 'the AI did most of the work' is now a recognized red-flag phrase in engineering interviews. The lab artifact (a written decision log) is something a learner can produce now and use this week.",
+          "topIssue": "Income-stream framing is largely portfolio-and-interview oriented; the actual 2026 income paths for AI-side-project builders (Gumroad/Lemon Squeezy micro-SaaS, GPT/Claude assistant marketplaces, Vercel template sales) get less specific treatment than they warrant for a 'portfolio piece OR income stream' module title.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 79,
+          "d5Score": 16,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        }
+      }
+    },
+    {
+      "module": "M8: Your First Sprint",
+      "panelAverage": 78.0,
+      "panelVerdict": {
+        "min": 70,
+        "label": "PASS W/ NOTES",
+        "color": "#eab308"
+      },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 5 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Strongest capstone integration of the course. Maya's eleven-ideas-at-midnight and Dev's lost-five-days set up both 'option paralysis' and 'recoverable sprint structure' cleanly. The Week-1-through-Week-4 rhythm (Foundation → First User → Hardening → Launch Prep) gives learners a defensible structure rather than a vibe.",
+          "topIssue": "MLP (Minimum Launchable Product) is introduced as if a recognized industry term; it's effectively course-specific terminology and learners taking it into external conversations will be misunderstood by people who only know MVP.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 13, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 80,
+          "d5Score": 14,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 3, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Week-by-week phasing is technically sound and the 'sprint plan must include explicit if-I-fall-behind cuts' is real project-management wisdom. The four-gate viability filter is internally consistent.",
+          "topIssue": "MVP vs. MLP distinction is presented as a definitional fact, but MVP in Eric Ries's original usage already included the quality threshold the lesson assigns exclusively to MLP. The reframe is pedagogically defensible but technically conflates a redefinition with a correction.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 14, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 75,
+          "d5Score": 14,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "A 30-day sprint with current AI tooling (Cursor/Claude Code/Lovable for build, Perplexity for research, Reddit/Discord for distribution) is genuinely executable today by an 18-22 builder — the lab produces a usable plan, not a theoretical artifact. Indie-hacker $4k/month framing matches actual 2025-2026 micro-SaaS distributions.",
+          "topIssue": "Launch venues named (Product Hunt) are still alive but no longer the dominant 2026 launch surface for AI side projects; X/Twitter threads, TikTok demos, and AI-tool-specific directories (e.g., Theresanaiforthat) drive more early traffic for this audience.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 19, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 79,
+          "d5Score": 16,
+          "verdict": { "min": 70, "label": "PASS W/ NOTES", "color": "#eab308" }
+        }
+      }
+    }
+  ]
+}
