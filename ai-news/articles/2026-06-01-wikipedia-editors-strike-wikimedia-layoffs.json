@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-01-wikipedia-editors-strike-wikimedia-layoffs",
+  "title": "Wikipedia editors plan a strike after Wikimedia disbands its community tools team",
+  "subtitle": "Over 800 editors have signed a solidarity petition after the Foundation cut the team that built editor-requested moderation tools, with banner-sabotage and editing strikes on the table.",
+  "date": "2026-06-01",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["wikipedia", "wikimedia", "labor", "ai-and-work", "moderation"],
+  "readTime": "3 min read",
+  "heroEmoji": "✊",
+  "body": [
+    "The Wikimedia Foundation announced on May 20 that it had disbanded the Community Tech team — five engineers and one manager — that maintained editor-requested moderation tools and the Community Wishlist process. By May 30, The Register reported that more than 800 Wikipedia editors had signed a petition launched by volunteer editor Tamzin Hadasa Kelly, with proposed responses ranging from refusing vandalism cleanup to replacing the Foundation's fundraising banners with messages criticizing the layoffs. A nascent staff group, Wiki Workers United, began forming earlier in 2026, and most of the affected engineers were union organizers — though the Foundation denies the layoffs were connected to the organizing.",
+    "The dispute sits at the intersection of Wikipedia's two roles in the AI era: it is the single most important source of high-quality training data for every major language model, and it is one of the only large content repositories still produced by unpaid volunteers under explicit anti-commercial norms. Wikimedia Enterprise — the team that sells high-volume API access to AI labs — turned profitable on $8.3 million in revenue, a 148% year-over-year jump. The editors arguing that the Foundation is monetizing their labor while cutting the tools that support it are not making a rhetorical point.",
+    "If editors do strike, the downstream effect lands on AI labs first. Every model trained on a fresh Wikipedia dump in the second half of 2026 inherits whatever moderation, vandalism, and quality issues the strike produces. The encyclopedia has weathered editor revolts before, but none have happened while it was simultaneously the de facto training corpus for the most economically important software in the world. The Foundation's choice of which side to align with — paid AI customers or volunteer editors — has consequences far beyond its own balance sheet.",
+    "Takeaway for learners: the data layer of AI is not a natural resource. It is made by people, most of whom are not paid, under norms that are now under stress because of the economic value AI extracts from their work. If you are studying AI, pay attention to who maintains the data your models depend on — and what happens when they stop."
+  ],
+  "sources": [
+    { "title": "Wikipedia editors plot strike and banner sabotage after Wikimedia layoffs — The Register", "url": "https://www.theregister.com/software/2026/05/30/wikipedia-editors-plot-strike-and-banner-sabotage-after-wikimedia-layoffs/" },
+    { "title": "Wikipedia editors threaten strike after Wikimedia layoffs — Cybernews", "url": "https://cybernews.com/news/wikipedia-editors-threaten-strike-action/" },
+    { "title": "Unionization at Wikimedia: Community protest after layoffs — heise online", "url": "https://www.heise.de/en/news/Unionization-at-Wikimedia-Community-protest-after-layoffs-11309504.html" }
+  ],
+  "status": "published"
+}

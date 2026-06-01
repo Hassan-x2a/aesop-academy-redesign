@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-01-vast-china-3d-asset-ai-unicorn",
+  "title": "Vast hits $1B as China's 3D-asset AI startup turns a gamer's bet into a unicorn",
+  "subtitle": "Beijing-based Vast raised nearly $200 million from Ince Capital and a China Life-backed fund to scale Tripo Studio, its text- and image-to-3D model platform.",
+  "date": "2026-06-01",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["vast", "china", "3d-generation", "unicorn", "funding", "tripo-studio"],
+  "readTime": "3 min read",
+  "heroEmoji": "🦄",
+  "body": [
+    "Bloomberg reported on June 1 that Vast — a Beijing-based startup founded in 2023 by 29-year-old former gamer Simon Song — raised nearly $200 million at a $1 billion valuation, becoming China's newest AI unicorn. Ince Capital and a venture fund backed by China Life Insurance led the round, joined by Genesis Capital and existing investors Eminence Ventures and Primavera Venture Partners. Vast's product, Tripo Studio, generates 3D models from text and image prompts and now claims 20 million users, the bulk of them in the United States, followed by Europe, Japan, and South Korea.",
+    "The valuation matters because 3D generation has been the slowest of the major generative-AI modalities to commercialize. Text, images, audio, and video all reached usable quality before 3D meshes did — the geometry is harder, the training data is thinner, and the downstream tools (game engines, CAD, 3D printers) demand clean topology rather than pixels. A $1 billion mark on a 3D-native company says investors now believe that bottleneck is breaking, and that game studios, e-commerce, and AR pipelines will pay for high-throughput asset generation.",
+    "The geography matters too. Most of Vast's users are outside China, which is the inverse of the typical Chinese-AI-company customer profile. That suggests the export-control regime on frontier compute has not yet closed off Chinese AI companies from Western consumer and indie-developer markets, particularly in modalities like 3D where the underlying models are smaller than frontier LLMs and the differentiation is in data and pipeline rather than raw compute.",
+    "Takeaway for learners: when a new modality goes from research demo to billion-dollar valuation, the interesting question is which adjacent industries get reorganized. If Tripo Studio works as advertised, the cost of producing a usable 3D asset drops from hours of artist time to seconds of inference — which changes who can ship a game, an AR experience, or a product listing. Watch the downstream tools, not just the model."
+  ],
+  "sources": [
+    { "title": "Gen-Z Gamer's 3D-Model Startup Vast Becomes China's Latest AI Unicorn — Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-06-01/gen-z-gamer-s-3d-model-startup-becomes-china-s-latest-ai-unicorn" },
+    { "title": "Gen-Z gamer's 3D-model startup raises $200 mn, becomes China's AI unicorn — Business Standard", "url": "https://www.business-standard.com/technology/tech-news/gen-z-gamer-s-3d-model-startup-raises-200-mn-becomes-china-s-ai-unicorn-126060100111_1.html" },
+    { "title": "Vast Raises Nearly $200M to Become China's Latest AI Unicorn — KuCoin News", "url": "https://www.kucoin.com/news/flash/vast-raises-nearly-200m-to-become-china-s-latest-ai-unicorn" }
+  ],
+  "status": "published"
+}

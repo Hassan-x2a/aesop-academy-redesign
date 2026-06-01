@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-01-github-copilot-usage-based-billing-live",
+  "title": "GitHub Copilot's usage-based billing goes live, and developers brace for the meter",
+  "subtitle": "Every Copilot plan now consumes monthly AI Credits at API-rate tokens — base prices are unchanged, but heavy agent users say their effective cost is climbing sharply.",
+  "date": "2026-06-01",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": ["github-copilot", "billing", "ai-credits", "developer-tools", "microsoft"],
+  "readTime": "3 min read",
+  "heroEmoji": "💳",
+  "body": [
+    "GitHub Copilot moved to usage-based billing today, June 1, 2026. Every plan — Pro at $10/month, Pro+ at $39, Business at $19/user, Enterprise at $39/user — now includes a monthly allotment of GitHub AI Credits equal to the subscription price, with token consumption metered against listed model API rates at $0.01 per credit. Code completions and Next Edit suggestions remain unmetered and are included in every plan. Anything that calls a model in agent or chat mode, including Codex, Claude, and Gemini routes, draws from the credit pool.",
+    "The change matters because Copilot's previous flat-rate pricing hid the marginal cost of large agentic workloads. With the new system, a single long agent session that re-reads a repository, runs tests, and iterates can burn through a Pro user's monthly allotment in one sitting — multiple developers writing on community forums report $30 to $40 of usage in single sessions during the preview period. Microsoft has defended the move as the only honest way to price model use that varies by orders of magnitude across users.",
+    "This is the first time a major AI coding tool has shifted its mass-market plan from flat-rate to metered, and the response will set expectations for the rest of the category. Cursor, Windsurf, JetBrains AI, and Amazon Q already price tokens or sessions in various ways, but Copilot's scale — tens of millions of developers — makes this the reference event for how the broader market reacts. Expect comparable shifts at competitors over the second half of 2026, especially as agentic features become the default rather than the exception.",
+    "Takeaway for learners: this is the moment to learn what a token is, what your model actually costs per million tokens, and how to read a usage dashboard. The skill of running agents efficiently — picking the right model, scoping the context, knowing when to stop a loop — just became a financial skill, not only a technical one. Build the habit of reading your usage page the way you read your AWS bill."
+  ],
+  "sources": [
+    { "title": "GitHub Copilot is moving to usage-based billing — The GitHub Blog", "url": "https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/" },
+    { "title": "Usage-based billing for individuals — GitHub Docs", "url": "https://docs.github.com/en/copilot/how-tos/manage-and-track-spending/prepare-for-your-move-to-usage-based-billing" },
+    { "title": "Microsoft Switches GitHub Copilot To Usage-based AI Token Billing — Dataconomy", "url": "https://dataconomy.com/2026/06/01/github-copilot-token-pricing-backlash/" },
+    { "title": "Devs Sound Off on Usage-Based Copilot Pricing Change — Visual Studio Magazine", "url": "https://visualstudiomagazine.com/articles/2026/04/27/devs-sound-off-on-usage-based-copilot-pricing-change-you-will-get-less-but-pay-the-same-price.aspx" }
+  ],
+  "status": "published"
+}
