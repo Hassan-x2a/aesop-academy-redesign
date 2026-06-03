@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <defs>
+    <linearGradient id="bg10" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#100c06"/>
+      <stop offset="100%" stop-color="#1e160a"/>
+    </linearGradient>
+    <linearGradient id="gold10" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a05a"/>
+      <stop offset="100%" stop-color="#e8c47a"/>
+    </linearGradient>
+    <filter id="glow10">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="160" height="160" rx="20" fill="url(#bg10)"/>
+  <!-- Scale vertical post -->
+  <rect x="78" y="38" width="4" height="88" rx="2" fill="url(#gold10)"/>
+  <!-- Scale base -->
+  <rect x="55" y="122" width="50" height="7" rx="3.5" fill="url(#gold10)" filter="url(#glow10)"/>
+  <rect x="74" y="129" width="12" height="10" rx="2" fill="#c9a05a"/>
+  <!-- Scale horizontal beam with slight tilt (left heavy) -->
+  <g transform="rotate(-5, 80, 50)">
+    <rect x="18" y="48" width="124" height="4" rx="2" fill="url(#gold10)" filter="url(#glow10)"/>
+    <!-- Left pan strings -->
+    <line x1="28" y1="52" x2="22" y2="78" stroke="#c9a05a" stroke-width="1.5" opacity="0.8"/>
+    <line x1="52" y1="52" x2="56" y2="78" stroke="#c9a05a" stroke-width="1.5" opacity="0.8"/>
+    <!-- Left pan -->
+    <ellipse cx="39" cy="78" rx="20" ry="7" fill="rgba(201,160,90,0.12)" stroke="url(#gold10)" stroke-width="2" filter="url(#glow10)"/>
+    <!-- Left pan items: AI symbols (circuit nodes) -->
+    <circle cx="31" cy="76" r="3.5" fill="#388bfd" opacity="0.9" filter="url(#glow10)"/>
+    <circle cx="39" cy="74" r="3.5" fill="#bc8cff" opacity="0.9" filter="url(#glow10)"/>
+    <circle cx="47" cy="76" r="3.5" fill="#3dd6c0" opacity="0.9" filter="url(#glow10)"/>
+    <!-- Right pan strings -->
+    <line x1="108" y1="52" x2="104" y2="75" stroke="#c9a05a" stroke-width="1.5" opacity="0.8"/>
+    <line x1="132" y1="52" x2="138" y2="75" stroke="#c9a05a" stroke-width="1.5" opacity="0.8"/>
+    <!-- Right pan -->
+    <ellipse cx="121" cy="75" rx="20" ry="7" fill="rgba(201,160,90,0.12)" stroke="url(#gold10)" stroke-width="2" filter="url(#glow10)"/>
+    <!-- Right pan items: human/society symbols -->
+    <circle cx="113" cy="73" r="3.5" fill="#3fb950" opacity="0.9" filter="url(#glow10)"/>
+    <circle cx="121" cy="71" r="3.5" fill="#febc2e" opacity="0.9" filter="url(#glow10)"/>
+    <circle cx="129" cy="73" r="3.5" fill="#ff8c60" opacity="0.9" filter="url(#glow10)"/>
+    <!-- Center pivot dot -->
+    <circle cx="80" cy="50" r="5" fill="#c9a05a" filter="url(#glow10)"/>
+  </g>
+  <!-- Balance label -->
+  <text x="80" y="152" font-family="system-ui,sans-serif" font-size="7" fill="rgba(201,160,90,0.5)" text-anchor="middle" letter-spacing="0.12em" font-weight="700">AI · ETHICS</text>
+  <!-- Circuit traces emanating from post -->
+  <line x1="80" y1="38" x2="68" y2="28" stroke="rgba(201,160,90,0.2)" stroke-width="1"/>
+  <line x1="80" y1="38" x2="92" y2="28" stroke="rgba(201,160,90,0.2)" stroke-width="1"/>
+  <circle cx="68" cy="27" r="2" fill="#c9a05a" opacity="0.3"/>
+  <circle cx="92" cy="27" r="2" fill="#c9a05a" opacity="0.3"/>
+</svg>

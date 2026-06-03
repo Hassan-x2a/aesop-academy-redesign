@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v2.2.0 | 2026-05-28 -->
+<!-- v2.3.0 | 2026-06-03 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -374,6 +374,150 @@ body.banner-dismissed { padding-top: 0; }
 .footer-tm  { color: rgba(255,255,255,0.3); }
 .footer-patent { color: var(--gold); opacity: 0.6; }
 
+/* ─── MOJO AI STUDIO PROMO ───────────────────────────────── */
+.mojo-promo {
+  background: linear-gradient(160deg, #050c1a 0%, #091426 50%, #060e1e 100%);
+  border-top: 1px solid rgba(61,214,192,0.18);
+  border-bottom: 1px solid rgba(201,160,90,0.14);
+  padding: 3.25rem 12.5%;
+  position: relative;
+  overflow: hidden;
+}
+.mojo-promo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 90% at 5% 50%, rgba(61,214,192,0.055) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 70% at 95% 30%, rgba(188,140,255,0.045) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 50% 100%, rgba(201,160,90,0.04) 0%, transparent 55%);
+  pointer-events: none;
+}
+.mojo-promo-inner {
+  max-width: min(1100px, 95vw);
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.mojo-promo-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #3dd6c0;
+  margin-bottom: 1.1rem;
+  padding: 0.28rem 1rem;
+  border: 1px solid rgba(61,214,192,0.32);
+  border-radius: 99px;
+  background: rgba(61,214,192,0.06);
+}
+.mojo-promo-eyebrow-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #3dd6c0;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.mojo-promo-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 0.7rem;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+.mojo-promo-headline .grad {
+  background: linear-gradient(90deg, #c9a05a 0%, #3dd6c0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.mojo-promo-sub {
+  font-size: clamp(0.88rem, 1.15vw, 1rem);
+  color: rgba(255,255,255,0.5);
+  max-width: 520px;
+  margin: 0 auto 2.25rem;
+  line-height: 1.7;
+}
+.mojo-topics {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.9rem;
+  margin: 0 auto 2.5rem;
+}
+.mojo-topic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 0.4rem 0.9rem;
+  background: rgba(255,255,255,0.034);
+  border: 1px solid rgba(255,255,255,0.075);
+  border-radius: 14px;
+  transition: background 0.22s, border-color 0.22s, transform 0.22s, box-shadow 0.22s;
+  cursor: default;
+}
+.mojo-topic:hover {
+  background: rgba(255,255,255,0.075);
+  border-color: rgba(61,214,192,0.32);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(61,214,192,0.1);
+}
+.mojo-topic img {
+  width: 60px;
+  height: 60px;
+}
+.mojo-topic-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.62);
+  letter-spacing: 0.03em;
+  text-align: center;
+  line-height: 1.35;
+}
+.mojo-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.mojo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #c9a05a 0%, #d9b46a 100%);
+  color: #08100e;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 0.85rem 2rem;
+  border-radius: 0.6rem;
+  text-decoration: none;
+  transition: filter 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 22px rgba(201,160,90,0.32);
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+}
+.mojo-cta:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(201,160,90,0.48);
+}
+.mojo-cta-arrow { transition: transform 0.18s; }
+.mojo-cta:hover .mojo-cta-arrow { transform: translateX(4px); }
+.mojo-cta-note {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.02em;
+}
+.mojo-cta-note strong { color: rgba(255,255,255,0.5); }
+/* Dark mode adjustments */
+[data-theme="dark"] .mojo-promo { background: linear-gradient(160deg, #030810 0%, #060f1e 50%, #040910 100%); }
+
 /* ─── DARK MODE ──────────────────────────────────────────── */
 [data-theme="dark"] .links-section { background: var(--navy-mid); border-top-color: rgba(255,255,255,0.08); }
 [data-theme="dark"] .links-group-label { border-bottom-color: rgba(255,255,255,0.1); }
@@ -385,6 +529,7 @@ body.banner-dismissed { padding-top: 0; }
 @media (max-width: 1024px) {
   .hero { padding: 3rem 8% 2.5rem; }
   .links-section { padding: 2.5rem 8%; }
+  .mojo-promo { padding: 3rem 8%; }
   .pedagogy-strip { padding: 1.5rem 8%; }
   .footer { padding: 2.5rem 8% 2rem; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
@@ -395,13 +540,24 @@ body.banner-dismissed { padding-top: 0; }
   .links-grid { grid-template-columns: 1fr; gap: 2rem; }
   .hero { padding: 3.5rem 6% 3rem; }
   .links-section { padding: 3rem 6%; }
+  .mojo-promo { padding: 2.75rem 6%; }
+  .mojo-topics { gap: 0.6rem; }
+  .mojo-topic img { width: 48px; height: 48px; }
+  .mojo-topic-label { font-size: 0.64rem; }
   .pedagogy-strip { padding: 1.5rem 6%; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .footer-brand-col { grid-column: 1 / -1; }
 }
+@media (max-width: 600px) {
+  .mojo-topics { grid-template-columns: repeat(5, 1fr); gap: 0.4rem; }
+  .mojo-topic { padding: 0.8rem 0.2rem 0.7rem; border-radius: 10px; }
+  .mojo-topic img { width: 38px; height: 38px; }
+  .mojo-topic-label { font-size: 0.58rem; }
+}
 @media (max-width: 520px) {
   .hero { padding: 2.75rem 1.25rem 2.5rem; }
   .links-section { padding: 2.5rem 1.25rem; }
+  .mojo-promo { padding: 2.5rem 1.25rem; }
   .pedagogy-strip { padding: 1.25rem 1.25rem; }
   .path { padding: 1.25rem 1.25rem; }
   .footer { padding: 2rem 1.25rem 1.5rem; }
@@ -464,6 +620,77 @@ body.banner-dismissed { padding-top: 0; }
       <a href="/institutional-procurement.html">For Schools</a><span class="sep">·</span>
       <a href="/standards/">Standards &amp; Compliance</a>
     </p>
+  </div>
+</section>
+
+<!-- ─── MOJO AI STUDIO PROMO ─────────────────────────────── -->
+<section class="mojo-promo" aria-label="Free weekly advanced AI training at Mojo AI Studio">
+  <div class="mojo-promo-inner">
+
+    <div class="mojo-promo-eyebrow">
+      <span class="mojo-promo-eyebrow-dot" aria-hidden="true"></span>
+      Free &nbsp;·&nbsp; No signup &nbsp;·&nbsp; New every week
+    </div>
+
+    <h2 class="mojo-promo-headline">
+      <span class="grad">Advanced AI Concepts</span> — delivered weekly
+    </h2>
+    <p class="mojo-promo-sub">
+      Go beyond the basics. Every week Mojo AI Studio publishes a free deep-dive into the AI techniques professionals actually use — prompt engineering, agents, RAG, fine-tuning, and more.
+    </p>
+
+    <div class="mojo-topics" role="list">
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/prompt-engineering.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">Prompt Engineering</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/ai-agents.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">AI Agents</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/rag-retrieval.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">RAG &amp; Retrieval</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/fine-tuning.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">Fine-Tuning</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/computer-vision.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">Computer Vision</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/nlp-language.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">NLP &amp; Language</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/model-architecture.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">Model Architecture</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/embeddings.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">Embeddings</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/ai-safety.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">AI Safety</span>
+      </div>
+      <div class="mojo-topic" role="listitem">
+        <img src="/assets/mojo-promo/ai-ethics.svg" alt="" aria-hidden="true" width="60" height="60">
+        <span class="mojo-topic-label">AI Ethics</span>
+      </div>
+    </div>
+
+    <div class="mojo-cta-row">
+      <a href="https://mojoaistudio.com/learn" class="mojo-cta" target="_blank" rel="noopener noreferrer">
+        Start Learning Free <span class="mojo-cta-arrow" aria-hidden="true">→</span>
+      </a>
+      <span class="mojo-cta-note">
+        <strong>mojoaistudio.com/learn</strong> &nbsp;·&nbsp; No account required
+      </span>
+    </div>
+
   </div>
 </section>
 
