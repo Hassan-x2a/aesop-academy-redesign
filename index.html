@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v2.3.4 | 2026-06-03 -->
+<!-- v2.3.5 | 2026-06-03 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -375,23 +375,29 @@ body.banner-dismissed { padding-top: 0; }
 .footer-patent { color: var(--gold); opacity: 0.6; }
 
 /* ─── HERO FLOATING CV ICON ─────────────────────────────── */
+.hero-h1-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
 .hero-cv-float {
   position: absolute;
-  top: 5.5rem;
+  top: 50%;
   left: calc(50% + 2.5in);
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.55rem;
   width: 110px;
   opacity: 0.8;
-  transition: opacity 0.22s, transform 0.22s, box-shadow 0.22s;
+  transition: opacity 0.22s, transform 0.22s;
   z-index: 2;
   text-decoration: none;
 }
 .hero-cv-float:hover {
   opacity: 1;
-  transform: translateY(-4px);
+  transform: translateY(calc(-50% - 4px));
 }
 .hero-cv-float img {
   width: 88px;
@@ -400,9 +406,7 @@ body.banner-dismissed { padding-top: 0; }
   border-radius: 14px;
   transition: box-shadow 0.22s;
 }
-.hero-cv-float:hover img {
-  box-shadow: 0 14px 40px rgba(56,139,253,0.35);
-}
+.hero-cv-float:hover img { box-shadow: 0 14px 40px rgba(56,139,253,0.35); }
 .hero-cv-float-label {
   font-size: 0.68rem;
   font-weight: 700;
@@ -637,7 +641,19 @@ body.banner-dismissed { padding-top: 0; }
       Free &nbsp;·&nbsp; No account required &nbsp;·&nbsp; Ages 8+
     </div>
 
-    <h1>Where does your<br><em>AI journey begin?</em></h1>
+    <div class="hero-h1-wrap">
+      <h1>Where does your<br><em>AI journey begin?</em></h1>
+      <a href="https://mojoaistudio.com/learn"
+         target="_blank" rel="noopener noreferrer"
+         class="hero-cv-float"
+         aria-label="Mojo AI Studio — Advanced AI Concepts Training, free weekly">
+        <img src="/assets/mojo-promo/computer-vision.svg" alt="" aria-hidden="true" width="88" height="88">
+        <span class="hero-cv-float-label">
+          <span>Mojo AI Studio</span>
+          Advanced AI Concepts Training
+        </span>
+      </a>
+    </div>
     <p class="hero-sub">Story-driven AI literacy for every age. You leave with a portfolio — not a completion badge.</p>
 
     <div class="paths" role="list">
@@ -668,18 +684,6 @@ body.banner-dismissed { padding-top: 0; }
       <a href="/institutional-procurement.html">For Schools</a><span class="sep">·</span>
       <a href="/standards/">Standards &amp; Compliance</a>
     </p>
-
-    <!-- Floating CV icon — positioned 2.5in right of h1, does not affect flow -->
-    <a href="https://mojoaistudio.com/learn"
-       target="_blank" rel="noopener noreferrer"
-       class="hero-cv-float"
-       aria-label="Mojo AI Studio — Advanced AI Concepts Training, free weekly">
-      <img src="/assets/mojo-promo/computer-vision.svg" alt="" aria-hidden="true" width="88" height="88">
-      <span class="hero-cv-float-label">
-        <span>Mojo AI Studio</span>
-        Advanced AI Concepts Training
-      </span>
-    </a>
 
   </div>
 </section>
