@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mojo AI Studio — SVG Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #060c18;
+    color: #fff;
+    font-family: system-ui, -apple-system, sans-serif;
+    padding: 3rem 2rem;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    background: linear-gradient(90deg, #c9a05a, #3dd6c0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .sub {
+    text-align: center;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 3rem;
+    letter-spacing: 0.06em;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.75rem 1rem 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    transition: background 0.22s, border-color 0.22s, transform 0.22s;
+    cursor: default;
+  }
+  .card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(61,214,192,0.35);
+    transform: translateY(-5px);
+  }
+  .card img {
+    width: 120px;
+    height: 120px;
+  }
+  .label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+  .filename {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.22);
+    font-family: monospace;
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 750px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<h1>Mojo AI Studio — Weekly Training Icons</h1>
+<p class="sub">10 SVG GRAPHICS &nbsp;·&nbsp; AESOPACADEMY.ORG PROMO SECTION</p>
+
+<div class="grid">
+
+  <div class="card">
+    <img src="prompt-engineering.svg" alt="Prompt Engineering">
+    <span class="label">Prompt Engineering</span>
+    <span class="filename">prompt-engineering.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="ai-agents.svg" alt="AI Agents">
+    <span class="label">AI Agents</span>
+    <span class="filename">ai-agents.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="rag-retrieval.svg" alt="RAG & Retrieval">
+    <span class="label">RAG &amp; Retrieval</span>
+    <span class="filename">rag-retrieval.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="fine-tuning.svg" alt="Fine-Tuning">
+    <span class="label">Fine-Tuning</span>
+    <span class="filename">fine-tuning.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="computer-vision.svg" alt="Computer Vision">
+    <span class="label">Computer Vision</span>
+    <span class="filename">computer-vision.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="nlp-language.svg" alt="NLP & Language">
+    <span class="label">NLP &amp; Language</span>
+    <span class="filename">nlp-language.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="model-architecture.svg" alt="Model Architecture">
+    <span class="label">Model Architecture</span>
+    <span class="filename">model-architecture.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="embeddings.svg" alt="Embeddings">
+    <span class="label">Embeddings</span>
+    <span class="filename">embeddings.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="ai-safety.svg" alt="AI Safety">
+    <span class="label">AI Safety</span>
+    <span class="filename">ai-safety.svg</span>
+  </div>
+
+  <div class="card">
+    <img src="ai-ethics.svg" alt="AI Ethics">
+    <span class="label">AI Ethics</span>
+    <span class="filename">ai-ethics.svg</span>
+  </div>
+
+</div>
+
+</body>
+</html>
