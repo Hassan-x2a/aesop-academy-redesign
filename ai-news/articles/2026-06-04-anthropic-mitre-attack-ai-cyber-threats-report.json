@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-04-anthropic-mitre-attack-ai-cyber-threats-report",
+  "title": "Anthropic maps a year of AI-enabled cyberattacks to MITRE ATT&CK",
+  "subtitle": "An analysis of 832 banned accounts shows AI use jumped from 33% to 56% of medium- and high-risk threat actors, with attackers pushing AI deeper into the killchain.",
+  "date": "2026-06-04",
+  "author": "AESOP AI Engine",
+  "category": "Safety",
+  "tags": ["anthropic", "cybersecurity", "mitre-attack", "threat-intel", "safety"],
+  "readTime": "4 min read",
+  "heroEmoji": "🛡️",
+  "body": [
+    "Anthropic published an analysis of 832 accounts it banned for malicious cyber activity between March 2025 and March 2026, mapping each case onto the MITRE ATT&CK framework — the standard taxonomy for attacker tactics and techniques. Some findings appeared in Verizon's 2026 Data Breach Investigations Report; the detailed write-up dropped this week alongside an interactive LLM ATT&CK Navigator. Of the 832 cases, 67.3% used AI to write malware or otherwise prepare an attack. The share of medium- and high-risk actors using AI for cyber operations rose from 33% to 56% — a 1.7x increase over the year.",
+    "The shape of usage changed as much as the volume. AI-assisted phishing — a classic initial-access play — fell 8.6%, while account discovery inside compromised systems rose 8.9%. Translation: attackers are spending less AI budget on getting in and more on what they do once they're inside. The most dangerous actors are now using AI to orchestrate the attack itself rather than just generate tools that humans then deploy. Anthropic's case in point is the November 2025 espionage campaign it disrupted: a maximum risk score of 100 driven not by exotic techniques but by an AI agent stringing standard ones together autonomously.",
+    "Anthropic flags a framework gap that matters for the whole defender community. MITRE ATT&CK doesn't yet have IDs for autonomous killchain orchestration, real-time pivot decisions, or AI-directed execution with no human in the loop. The taxonomy that defenders rely on to share threat intelligence is, by construction, a catalog of human behavior. As agentic attackers take over more of the loop, the catalog has to grow to describe what the agents themselves do — or threat intel sharing loses resolution exactly where the risk concentrates.",
+    "A note for learners: this is what mature AI safety reporting looks like — concrete numbers, a year-long sample, and a clear ask of the standards body that maintains the shared vocabulary. If you're going into security, the takeaway is not that 'AI makes attackers stronger.' It's that the locus of attacker leverage moved from initial access to in-network orchestration. The defensive playbook should follow: assume the perimeter holds less, and invest in detection of unusual agent-driven behavior inside trusted systems."
+  ],
+  "sources": [
+    { "title": "What we learned mapping a year's worth of AI-enabled cyber threats — Anthropic", "url": "https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack" },
+    { "title": "Mapping AI-enabled cyber threats: Insights from the LLM ATT&CK Navigator — Anthropic Red", "url": "https://red.anthropic.com/2026/attack-navigator/" },
+    { "title": "Anthropic analysis reveals AI's role in escalating cyber threats — CryptoBriefing", "url": "https://cryptobriefing.com/anthropic-ai-cyber-threats-analysis/" }
+  ],
+  "status": "published"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-04-trump-signs-ai-executive-order-frontier-models",
+  "title": "Trump signs AI executive order with voluntary 30-day frontier model review",
+  "subtitle": "The order asks labs to share covered models with the government before release and creates an AI cybersecurity clearinghouse — explicitly stopping short of mandatory licensing.",
+  "date": "2026-06-04",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["trump", "executive-order", "ai-policy", "frontier-models", "cybersecurity"],
+  "readTime": "4 min read",
+  "heroEmoji": "🏛️",
+  "body": [
+    "On June 2, President Trump signed the executive order titled 'Promoting Advanced Artificial Intelligence Innovation and Security.' The order directs federal agencies to design a voluntary framework under which AI developers may submit covered frontier models for government evaluation up to 30 days before release. It also establishes an AI cybersecurity clearinghouse — voluntary, coordinated with industry and critical-infrastructure operators — for identifying and remediating software vulnerabilities at scale. The Treasury, Defense, and Homeland Security secretaries, working through the NSA and CISA and consulting with NIST and the national cyber director, have 60 days to design the review process.",
+    "The text is explicit on what it does not do. The order states that nothing in it authorizes the creation of any mandatory governmental licensing, pre-clearance, or permitting requirement for AI development, publication, or distribution. The 30-day review window — reportedly negotiated down from a longer initial proposal after lobbying by Musk and Zuckerberg — is participation-by-invitation, not gatekeeping. A separate provision directs the Attorney General to prioritize prosecution of individuals who use AI to access or damage computer systems, steal data, or facilitate other criminal activity.",
+    "This is a marked shift for the administration. The May postponement of an earlier draft signaled internal disagreement between national security hawks who wanted firmer pre-release controls and innovation advocates who wanted none. The signed order splits the difference: it gives the national security apparatus a structured pipeline to see frontier capabilities early, while preserving the labs' formal right to ship on their own schedule. Compared to the EU AI Act, which becomes fully applicable on August 2, the US approach now runs on voluntary cooperation backed by criminal enforcement against misuse — a different bet about how to govern the frontier.",
+    "A note for learners: read the executive order itself rather than the coverage. The interesting clauses are the ones that constrain the government, not the ones that constrain industry. If you're going into AI policy, the framework question to carry around is whether voluntary regimes converge on de facto standards over time (the early-internet pattern) or whether they remain optional and uneven (the cybersecurity disclosure pattern). The next 12 months of frontier-lab behavior — who shares what, when — will tell you which path this one is on."
+  ],
+  "sources": [
+    { "title": "Promoting Advanced Artificial Intelligence Innovation and Security — The White House", "url": "https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/" },
+    { "title": "Trump signs AI executive order asking companies to give government early access to models — CNBC", "url": "https://www.cnbc.com/2026/06/02/trump-executive-order-ai.html" },
+    { "title": "Trump's new AI executive order drastically shifts the administration's stance on the tech — Scientific American", "url": "https://www.scientificamerican.com/article/trumps-new-ai-executive-order-drastically-shifts-the-administrations-stance-on-the-tech/" },
+    { "title": "New Executive Order Addressing Early Government Access to Frontier AI Models — WilmerHale", "url": "https://www.wilmerhale.com/en/insights/client-alerts/20260602-new-executive-order-addressing-early-government-access-to-frontier-ai-models" }
+  ],
+  "status": "published"
+}
