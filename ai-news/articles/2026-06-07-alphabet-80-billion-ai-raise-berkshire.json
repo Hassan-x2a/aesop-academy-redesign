@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-07-alphabet-80-billion-ai-raise-berkshire",
+  "title": "Alphabet raises $80 billion for AI buildout, anchored by Berkshire's $10 billion bet",
+  "subtitle": "Even the most cash-rich tech company on earth is raising outside equity to keep up with AI capex — and Berkshire Hathaway is writing the anchor check.",
+  "date": "2026-06-07",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["alphabet", "google", "berkshire-hathaway", "ai-capex", "funding"],
+  "readTime": "4 min read",
+  "heroEmoji": "💸",
+  "body": [
+    "On June 1, Alphabet disclosed a plan to raise $80 billion in new equity to fund AI compute infrastructure. The structure has three parts: $30 billion in underwritten public offerings, $40 billion through an at-the-market program starting in Q3 2026, and a $10 billion private placement with Berkshire Hathaway. Berkshire is taking $5 billion in Class A shares at $351.81 and $5 billion in Class C shares at $348.20. Alphabet said the proceeds will fund 'world-class AI compute infrastructure to meet its unprecedented customer demand.'",
+    "The fact that Alphabet is raising equity at all is the story. Google's parent generated more than $100 billion in operating cash flow over the trailing twelve months and sits on roughly $90 billion of cash and marketable securities. Companies with that profile do not raise $80 billion of new equity unless they expect their internally-generated cash to be inadequate for the capex they have committed to. That is now the case across the hyperscaler tier — Microsoft, Amazon, Meta, and Alphabet are all in the same position, projecting AI infrastructure spend above what operating cash can fund without taking on leverage or issuing stock.",
+    "Berkshire's role is the second signal. Warren Buffett has spent decades publicly dismissing technology investing, and Berkshire's only durable tech holding has been Apple. A $10 billion anchor check into Alphabet specifically tied to AI buildout is a directional bet that the infrastructure layer of AI — chips, data centers, power contracts, fiber — will produce returns on the same scale as railroads or oil pipelines did in earlier eras. Whether or not that turns out to be true, it changes the political economy of AI funding: capital is no longer flowing only from VCs and tech-native LPs, but from the most conservative balance sheets in American finance.",
+    "A note for learners: the cap-ex side of AI is now the more interesting investment story than the model side. Model labs raise large rounds, but the durable cash flows accrue to whoever owns the compute, the power, and the land it sits on. If you are studying finance, infrastructure, or energy and trying to position yourself for the next decade, the AI-adjacent skill that compounds fastest is not prompt engineering — it is understanding how multi-decade infrastructure assets are financed, sited, and powered. The $80 billion raise is a clue about what the next ten years of capital allocation will look like."
+  ],
+  "sources": [
+    { "title": "Alphabet's $80 Billion AI Raise Gets $10 Billion Berkshire Bet — Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-06-01/alphabet-to-raise-80-billion-in-equity-capital-for-ai-spending" },
+    { "title": "Alphabet plans to raise $80 billion from stock sales to fund AI build-out — CNBC", "url": "https://www.cnbc.com/2026/06/01/alphabet-to-raise-80-billion-from-stock-sales-to-fund-ai-buildout.html" },
+    { "title": "Berkshire Hathaway invests extra $10 billion in Alphabet, deepening bet on AI — CNBC", "url": "https://www.cnbc.com/2026/06/01/berkshire-hathaway-alphabet-investment.html" },
+    { "title": "FWP Filing — SEC", "url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526251733/d160205dfwp.htm" }
+  ],
+  "status": "published"
+}

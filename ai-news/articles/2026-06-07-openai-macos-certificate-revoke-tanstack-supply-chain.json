@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-07-openai-macos-certificate-revoke-tanstack-supply-chain",
+  "title": "OpenAI sets June 12 deadline to revoke macOS signing certificates after TanStack npm breach",
+  "subtitle": "The Mini Shai-Hulud worm compromised two OpenAI employee devices and code-signing material — every macOS ChatGPT user has a week to update before old apps stop working.",
+  "date": "2026-06-07",
+  "author": "AESOP AI Engine",
+  "category": "Safety",
+  "tags": ["openai", "supply-chain", "tanstack", "mini-shai-hulud", "macos"],
+  "readTime": "4 min read",
+  "heroEmoji": "🔐",
+  "body": [
+    "OpenAI has confirmed that two of its employees' devices were compromised on May 11 when the popular TanStack npm library was hit by the Mini Shai-Hulud worm. The attacker exfiltrated credential material from internal code repositories, including code-signing certificates used for OpenAI's iOS, macOS, and Windows desktop applications. OpenAI is rotating those certificates as a precaution. Effective June 12, 2026 — five days from now — older versions of the macOS desktop app will no longer receive updates and may stop functioning entirely, because macOS will refuse to launch binaries signed with the revoked certificate.",
+    "The technical pattern is now familiar. Mini Shai-Hulud is a self-propagating worm that on May 11 published 84 malicious package versions across 42 @tanstack/* npm packages in six minutes, chaining a pull_request_target misconfiguration, GitHub Actions cache poisoning, and OIDC token extraction. Once OpenAI's developer machines pulled the poisoned packages, the worm reached deeper credential material than a typical npm compromise — including signing keys. OpenAI says it has not detected the certificates being used to sign malicious software, but rotation is the only safe response when key custody is in doubt.",
+    "This is the second OpenAI supply-chain incident in two months — the company also rotated certificates in April after the Axios developer tool was compromised. Both incidents follow a broader pattern: as AI labs build large internal monorepos with hundreds of developers each pulling thousands of transitive npm dependencies, the attack surface for code-signing material has expanded faster than internal controls. OpenAI says it has accelerated deployment of hardened CI/CD credential handling and package-manager configuration controls — the same set of mitigations the rest of the JavaScript ecosystem is racing to adopt.",
+    "A note for learners: if you run the ChatGPT macOS app, open it this weekend and let it update — past June 12, the old version will likely fail to launch. If you build software professionally, the broader lesson is that npm and similar package ecosystems are now contested terrain, and the right defaults have changed. Pin dependencies, use lockfiles, run your CI under least-privilege OIDC, and treat any package that suddenly publishes 80+ versions in six minutes as a worm event until proven otherwise. The Mini Shai-Hulud campaign is not finished, and every developer machine is part of the perimeter."
+  ],
+  "sources": [
+    { "title": "Our response to the TanStack npm supply chain attack — OpenAI", "url": "https://openai.com/index/our-response-to-the-tanstack-npm-supply-chain-attack/" },
+    { "title": "TanStack Supply Chain Attack Hits Two OpenAI Employee Devices, Forces macOS Updates — The Hacker News", "url": "https://thehackernews.com/2026/05/tanstack-supply-chain-attack-hits-two.html" },
+    { "title": "OpenAI confirms security breach in TanStack supply chain attack — BleepingComputer", "url": "https://www.bleepingcomputer.com/news/security/openai-confirms-security-breach-in-tanstack-supply-chain-attack/" },
+    { "title": "OpenAI Urges macOS Users to Update After TanStack Supply Chain Attack Hits Signing Keys — Security Boulevard", "url": "https://securityboulevard.com/2026/05/openai-urges-macos-users-to-update-after-tanstack-supply-chain-attack-hits-signing-keys/" }
+  ],
+  "status": "published"
+}

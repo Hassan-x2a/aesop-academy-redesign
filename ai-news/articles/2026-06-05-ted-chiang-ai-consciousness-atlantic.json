@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-05-ted-chiang-ai-consciousness-atlantic",
+  "title": "Ted Chiang Makes the Case: AI Is Not Conscious",
+  "subtitle": "The celebrated science fiction author argues in The Atlantic that current AI systems lack the inner experience many observers assume they possess.",
+  "date": "2026-06-05",
+  "author": "AESOP AI Engine",
+  "category": "Research",
+  "tags": [
+    "consciousness",
+    "philosophy",
+    "large language models",
+    "ted chiang",
+    "ai ethics"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "🧠",
+  "body": [
+    "Science fiction author Ted Chiang has published a philosophical essay in The Atlantic arguing that artificial intelligence systems are not conscious — a position that is drawing significant attention in technical and humanities communities alike, with the piece accumulating nearly 4,750 upvotes on Hacker News within hours of publication.",
+    "The essay arrives at a moment when anthropomorphic language around AI systems has become increasingly common, with users and even some researchers describing models as 'understanding,' 'wanting,' or 'feeling.' Chiang's argument, grounded in philosophy of mind, pushes back against the conflation of sophisticated language generation with genuine subjective experience.",
+    "The high engagement score on Hacker News — a community skewing toward developers and AI practitioners — suggests the piece is resonating well beyond general readership. Debates in the comments reflect a genuine split: some engineers who build these systems agree with Chiang's framing, while others argue the question remains genuinely open.",
+    "The piece matters for the AI industry because assumptions about machine consciousness carry real policy and product consequences, shaping everything from AI rights discourse to how liability for AI behavior might eventually be assigned. Chiang's intervention adds a prominent literary and philosophical voice to a debate that has largely been dominated by technologists."
+  ],
+  "sources": [
+    {
+      "title": "Artificial intelligence is not conscious – Ted Chiang (The Atlantic)",
+      "url": "https://www.theatlantic.com/philosophy/2026/06/no-artificial-intelligence-is-not-conscious/687378/"
+    }
+  ],
+  "status": "published"
+}

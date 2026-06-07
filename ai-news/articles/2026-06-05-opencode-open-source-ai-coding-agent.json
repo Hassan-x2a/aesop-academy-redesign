@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-05-opencode-open-source-ai-coding-agent",
+  "title": "OpenCode Launches as a Fully Open-Source AI Coding Agent",
+  "subtitle": "A new entrant in the AI coding agent space is drawing developer interest by offering an open-source alternative to proprietary tools.",
+  "date": "2026-06-05",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": [
+    "coding agents",
+    "open source",
+    "developer tools",
+    "ai agents",
+    "software engineering"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "💻",
+  "body": [
+    "OpenCode, an open-source AI coding agent available at opencode.ai, has surfaced prominently in developer communities, accumulating over 3,100 upvotes on Hacker News. The project positions itself as a transparent, community-auditable alternative to closed AI coding assistants that have proliferated across the software development landscape in 2025 and 2026.",
+    "The timing is notable. The AI coding agent market has grown crowded, with major proprietary players offering deep IDE integrations and enterprise subscriptions. An open-source option addresses developer concerns about vendor lock-in, data privacy, and the inability to inspect or modify agent behavior — concerns that have grown louder following high-profile AI agent incidents earlier this year.",
+    "Open-source coding agents face a genuine challenge: keeping pace with the rapid capability improvements of well-funded proprietary competitors who can invest heavily in frontier model access and product polish. How OpenCode navigates model access, community contribution, and monetization will determine whether it can sustain momentum beyond initial launch enthusiasm.",
+    "The developer community's appetite for open alternatives remains strong, as evidenced by the engagement levels. For engineering teams operating under strict data governance policies or in regulated industries, an auditable open-source agent may represent a more viable path to AI-assisted development than any closed commercial product."
+  ],
+  "sources": [
+    {
+      "title": "OpenCode – Open source AI coding agent",
+      "url": "https://opencode.ai/"
+    }
+  ],
+  "status": "published"
+}
