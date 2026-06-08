@@ -172,9 +172,6 @@ button.secondary {
 }
 
 .ladder-hero h1 {
-  background: linear-gradient(180deg, #fff5cf 0%, #dbb87a 58%, #f8dd9a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
   color: #ffe7a8;
   font-family: var(--font-display);
   font-size: clamp(3rem, 5.2vw, 4.8rem);
@@ -220,7 +217,7 @@ button.secondary {
 
 .hero-text {
   background: #102235;
-  border-left: 5px solid #dbb87a;
+  border: 1px solid rgba(219, 184, 122, 0.42);
   color: #e8f1f7;
   font-size: clamp(0.96rem, 1.6vw, 1.12rem);
   line-height: 1.5;
@@ -865,7 +862,7 @@ button.secondary {
 
 .tier-button.placed-out {
   background: rgba(115, 95, 158, 0.18);
-  border-left: 5px solid var(--ladder-good);
+  border: 1px solid rgba(115, 95, 158, 0.42);
   color: var(--ladder-ink);
 }
 
@@ -1197,7 +1194,7 @@ button.secondary {
 }
 
 .transcript-event {
-  border-left: 4px solid var(--gold);
+  border: 1px solid rgba(201, 160, 90, 0.42);
   background: #fbfaf6;
   padding: 0.55rem 0.7rem;
 }
@@ -1329,9 +1326,7 @@ button.secondary {
 }
 
 [data-theme="dark"] .ladder-hero h1 {
-  background: linear-gradient(180deg, #fff5cf 0%, #dbb87a 58%, #f8dd9a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
+  background: none;
 }
 
 [data-theme="dark"] .ladder-hero .eyebrow,
@@ -1607,9 +1602,7 @@ button.secondary {
 }
 
 [data-theme="dark"] .ladder-hero h1 {
-  background: linear-gradient(180deg, #fff5cf 0%, #dbb87a 58%, #f8dd9a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
+  background: none;
 }
 
 [data-theme="dark"] .ladder-hero .eyebrow,
