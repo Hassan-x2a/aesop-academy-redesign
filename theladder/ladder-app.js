@@ -164,6 +164,7 @@ const el = {
   assessmentSend: document.getElementById('assessmentSend'),
   progressBar: document.getElementById('progressBar'),
   progressText: document.getElementById('progressText'),
+  tierCompletionStatus: document.getElementById('tierCompletionStatus'),
   tierList: document.getElementById('tierList'),
   activeTierLabel: document.getElementById('activeTierLabel'),
   activeTopicTitle: document.getElementById('activeTopicTitle'),
@@ -882,12 +883,21 @@ function completedCount() {
   return Object.keys(state.progress.completedTopics || {}).length;
 }
 
+function completedTierCount() {
+  const granted = new Set(state.progress.placement?.grantedTierIds || []);
+  return LADDER_TIERS.filter((tier) => (
+    granted.has(tier.id)
+    || tier.topics.every((topic) => state.progress.completedTopics[topicKey(topic.id)])
+  )).length;
+}
+
 function renderProgress() {
   const count = completedCount();
   const total = allTopics().length;
   const pct = total ? Math.round((count / total) * 100) : 0;
   el.progressBar.style.width = `${pct}%`;
   el.progressText.textContent = `${count} of ${total} rungs completed`;
+  el.tierCompletionStatus.textContent = `${completedTierCount()} / ${LADDER_TIERS.length} tiers complete`;
 }
 
 function renderTiers() {
