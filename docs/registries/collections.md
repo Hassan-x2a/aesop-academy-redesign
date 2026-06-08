@@ -88,10 +88,9 @@ Per-student record. Stores learner ID, course progress, assessment results, reco
 - `ai-academy/js/firebase-helpers.js:287` — `updateDoc` from `addAssessmentMessage()` (appends to conversationHistory)
 - `ai-academy/index.html:3285` — `setDoc` from exam result (progress write on exam completion)
 
-- `theladder/ladder-app.js:199` - `setDoc` with `{merge:true}` from `saveRemote()`; writes `ladderProgress`
-- `theladder/ladder-app.js:230` - `setDoc` when an existing learner ID does not exist; initializes slim learner record plus `ladderProgress`
-- `theladder/ladder-app.js:349` - `setDoc` when placement assessment creates a learner ID; initializes slim learner record
-- `theladder/ladder-app.js:849` - `setDoc` when creating a new Ladder learner ID; initializes slim learner record
+- `theladder/ladder-app.js:214` - `setDoc` with `{merge:true}` from `saveRemote()`; writes `ladderProgress`
+- `theladder/ladder-app.js:245` - `setDoc` when an existing learner ID does not exist; initializes slim learner record plus `ladderProgress`
+- `theladder/ladder-app.js:365` - `setDoc` when placement assessment creates a learner ID; initializes slim learner record
 
 **Consumers**
 - `ai-academy/students.html:120` — `getDoc` on ID lookup
@@ -108,7 +107,7 @@ Per-student record. Stores learner ID, course progress, assessment results, reco
 - `ai-academy/js/firebase-helpers.js:275` — `getDoc` in `addAssessmentMessage()` (to read current history)
 - `ai-academy/js/qr-recovery.js:38` — `collection` + `query` by `qrRecoveryToken.token`
 
-- `theladder/ladder-app.js:228` - `getDoc` in `loadRemote()` to load `ladderProgress`
+- `theladder/ladder-app.js:243` - `getDoc` in `loadRemote()` to load `ladderProgress`
 
 **Shape mismatch note:** `students.html`, `transcript.html`, and `dashboard.html` create records with only `{learnerId, createdAt, courseProgress:{}}`. `initializeLearnerRecord()` returns early when the document already exists (line 51) and does not backfill the assessment sub-objects. Existing students who enrolled before taking the assessment will have `assessmentResults`, `recommendedPathway`, `qrRecoveryToken`, and `progressData` absent until `updateDoc` calls create them. `updateDoc` will succeed (Firestore creates missing nested fields), but reads of missing paths will return `undefined`.
 

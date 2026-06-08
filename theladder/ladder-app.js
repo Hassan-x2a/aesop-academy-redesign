@@ -40,7 +40,6 @@ const el = {
   learnerIdLabel: document.getElementById('learnerIdLabel'),
   learnerLookup: document.getElementById('learnerLookup'),
   lookupBtn: document.getElementById('lookupBtn'),
-  newLearnerBtn: document.getElementById('newLearnerBtn'),
   placementStatus: document.getElementById('placementStatus'),
   placementSummary: document.getElementById('placementSummary'),
   placementMetrics: document.getElementById('placementMetrics'),
@@ -866,22 +865,6 @@ function bindEvents() {
     state.learnerId = id;
     localStorage.setItem(LS_ID, id);
     await loadRemote(id);
-    await persist();
-    render();
-  });
-
-  el.newLearnerBtn.addEventListener('click', async () => {
-    state.learnerId = generateLearnerId();
-    localStorage.setItem(LS_ID, state.learnerId);
-    try {
-      await setDoc(doc(db, 'learners', state.learnerId), {
-        learnerId: state.learnerId,
-        createdAt: new Date().toISOString(),
-        courseProgress: {}
-      }, { merge: true });
-    } catch (error) {
-      console.warn('Could not create learner record immediately:', error);
-    }
     await persist();
     render();
   });
