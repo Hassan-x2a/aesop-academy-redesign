@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-08-eu-ai-act-august-enforcement-countdown",
+  "title": "EU AI Act high-risk enforcement is 55 days out — and most of the rules survived the Omnibus",
+  "subtitle": "Annex III high-risk obligations, Article 50 transparency duties, and GPAI penalty powers all stay on the August 2, 2026 schedule despite May's compromise.",
+  "date": "2026-06-08",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["eu-ai-act", "regulation", "compliance", "high-risk-ai", "gpai"],
+  "readTime": "4 min read",
+  "heroEmoji": "🇪🇺",
+  "body": [
+    "August 2, 2026 is now 55 days away, and a clearer picture has emerged of which parts of the EU AI Act will actually be enforced and which were softened by the Omnibus compromise the Council and Parliament reached on May 7. The headline: the structural pieces held. Annex III high-risk obligations — covering AI used in employment, credit, education, biometrics, and law enforcement — become enforceable in August. Article 50 transparency obligations apply to all covered systems, including the requirement that chatbots disclose they are AI, that emotion-recognition systems notify users, and that deepfake content carry machine-readable watermarks. The general-purpose AI (GPAI) penalty powers and the prohibited-practices regime were both kept on the original timeline.",
+    "What did move: some high-risk operator deadlines for legacy systems already in service got pushed out, and a new sub-regime for AI-generated intimate content was folded into the Act as part of the Omnibus package. The Council's framing was 'streamline and simplify,' but in practice the August enforcement date for the headline obligations did not slip, which is what enterprises with EU exposure were watching for. Penalties scale fast: up to €35 million or 7% of global turnover for prohibited-practice violations, €15 million or 3% for high-risk non-compliance, and €7.5 million or 1.5% for misleading information to regulators.",
+    "For US-headquartered AI labs and platform companies, August is the moment when the EU Act stops being a theoretical compliance project and starts generating live enforcement actions. The Commission's AI Office has been hiring rapidly through the spring and has signalled that GPAI enforcement against frontier providers — Anthropic, OpenAI, Google, Mistral, Meta — is a priority for Q3. Compliance teams that started in May are racing; teams that haven't started should not be calibrating to the political rhetoric of 'delay,' because the operative deadline did not delay.",
+    "A note for learners: regulation lags technology, then it catches up unevenly. The AI Act is the first comprehensive frontier-model regime to reach enforcement, and the patterns it sets — risk tiers, transparency obligations, fines as a percentage of global turnover — are already being copied in California, the UK, Brazil, and Japan. If you work on AI in any capacity, reading the actual Annex III list of high-risk use cases is a 30-minute exercise that will tell you more about the legal landscape of the next decade than any think-piece will."
+  ],
+  "sources": [
+    { "title": "60 Days to EU AI Act Enforcement: What the Last Two Months of Regulatory Turbulence Actually Means for August 2 — ComplianceHub.Wiki", "url": "https://compliancehub.wiki/eu-ai-act-august-2-2026-60-day-countdown-synthesis/" },
+    { "title": "AI Act Update: EU Resolves to Change Rules and Extend Deadlines — Latham & Watkins", "url": "https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines" },
+    { "title": "Artificial Intelligence: Council and Parliament agree to simplify and streamline rules — Council of the EU", "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/" },
+    { "title": "Timeline for the Implementation of the EU AI Act — AI Act Service Desk", "url": "https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act" }
+  ],
+  "status": "published"
+}

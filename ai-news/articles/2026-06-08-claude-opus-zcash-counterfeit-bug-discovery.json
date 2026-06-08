@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-08-claude-opus-zcash-counterfeit-bug-discovery",
+  "title": "Claude Opus 4.8 finds four-year-old Zcash counterfeit bug, ZEC drops 50%",
+  "subtitle": "Security researcher Taylor Hornby used Claude to surface a privacy-pool flaw that had survived four years of human review — and built a working exploit.",
+  "date": "2026-06-08",
+  "author": "AESOP AI Engine",
+  "category": "Safety",
+  "tags": ["anthropic", "claude-opus-4-8", "zcash", "cryptography", "ai-security", "vulnerability-research"],
+  "readTime": "4 min read",
+  "heroEmoji": "🐛",
+  "body": [
+    "On May 29, security researcher Taylor Hornby — engaged by Shielded Labs — used Anthropic's Claude Opus 4.8 to audit the Zcash Orchard circuit and surfaced a critical bug that had been live in production since Orchard launched in May 2022. The flaw allowed false inputs into an elliptic-curve multiplication check inside the proof system, meaning the cryptography meant to verify that a shielded transaction was legitimate could be fooled. Hornby and the model wrote a complete working exploit, ran it in a local environment, and produced unlimited counterfeit ZEC that was indistinguishable from real coins. The Zcash Open Development Lab deployed an emergency hard fork on June 3 to patch the chain. ZEC has fallen more than 50% since disclosure, with roughly $100 million in liquidations.",
+    "The unresolvable question is whether anyone else found it first. Orchard is a privacy pool — by design, there is no cryptographic way to tell whether the bug was exploited in the four years it was live. Every shielded ZEC in circulation could in principle have been minted from nothing, and the chain has no audit trail that would distinguish them. Shielded Labs and ZODL are now running statistical analyses on supply, but the honest answer the community has had to accept is 'we don't know.'",
+    "This is the first widely publicized case of a frontier LLM finding a critical cryptographic vulnerability in a well-reviewed open-source system. Orchard had been audited multiple times by experienced cryptography teams. Claude Opus 4.8, released May 28 by Anthropic, was one day old when Hornby pointed it at the circuit. The implication is that any cryptosystem deployed before mid-2026 — DeFi protocols, zero-knowledge bridges, hardware wallets, signing libraries — is sitting on an unknown stockpile of bugs that frontier models can now find in days. Decrypt's followup quoted multiple cryptographers warning that crypto-economic systems are not ready for the audit cadence this implies.",
+    "A note for learners: the headline is 'AI found a bug,' but the real story is asymmetric capability. The same model that helps a defender find and patch a flaw in a week helps an attacker find and weaponize one. If you are working on anything that depends on cryptographic invariants — payments, identity, confidential compute — the assumption that 'this code has been reviewed by smart humans, so it's probably fine' no longer holds. Get a frontier model to attack your own code before someone else does, and budget for the patch cadence that implies."
+  ],
+  "sources": [
+    { "title": "Claude Opus Found a Four-Year-Old Hole in Zcash's Privacy Layer — Security Affairs", "url": "https://securityaffairs.com/193224/hacking/claude-opus-found-a-four-year-old-hole-in-zcashs-privacy-layer-nobody-knows-if-someone-already-used-it.html" },
+    { "title": "Zcash selloff extends past 50% amid bug disclosure as liquidations top $100 million — The Block", "url": "https://www.theblock.co/post/403791/zcash-selloff-extends-past-50-amid-bug-disclosure-as-liquidations-top-100-million" },
+    { "title": "Frontier AI Models Can Find Crypto's Biggest Bugs. Experts Warn the Industry Isn't Ready — Decrypt", "url": "https://decrypt.co/370232/frontier-ai-models-find-crypto-bugs-industry-isnt-ready" },
+    { "title": "Zcash founder discloses critical Orchard forgery flaw fixed by emergency hard fork — Blockhead", "url": "https://www.blockhead.co/2026/06/05/zcash-founder-discloses-critical-orchard-forgery-flaw-fixed-by-emergency-hard-fork/" }
+  ],
+  "status": "published"
+}

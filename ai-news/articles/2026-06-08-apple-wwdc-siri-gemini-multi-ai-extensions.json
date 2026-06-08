@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-08-apple-wwdc-siri-gemini-multi-ai-extensions",
+  "title": "Apple opens Siri to Claude, ChatGPT, and Gemini at WWDC 2026 — Tim Cook's last keynote",
+  "subtitle": "A rebuilt Siri runs on a custom 1.2-trillion-parameter Gemini model, and a new Extensions system lets users pick which frontier model handles which task.",
+  "date": "2026-06-08",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["apple", "wwdc-2026", "siri", "gemini", "claude", "ios-27"],
+  "readTime": "4 min read",
+  "heroEmoji": "🍎",
+  "body": [
+    "Tim Cook took the stage at Apple Park on June 8 for his final WWDC keynote as CEO and unveiled the most significant Siri overhaul in the assistant's 15-year history. The rebuilt Siri ships as a dedicated app with an iMessage-style chat interface and is powered by a custom 1.2-trillion-parameter Gemini model that Apple has licensed from Google for roughly $1 billion per year. The queries run through Apple's Private Cloud Compute infrastructure, so Google does not see user data. Alongside Siri, Apple announced iOS 27, iPadOS 27, macOS 27, watchOS 27, tvOS 27, and visionOS 27, with refined Liquid Glass styling and developer betas available today.",
+    "The bigger architectural news is Siri Extensions. iOS 27 lets users plug in third-party chatbots — Claude, ChatGPT, Gemini, and others — and route specific request types to specific providers. A user can send coding questions to Claude, research questions to Gemini, and creative writing requests to ChatGPT, all from the same Siri surface. Third-party responses are rendered in a distinct voice so users can tell which model is speaking. Extensions also extend to Writing Tools and Image Playground, where users pick a default model rather than being locked to Apple's.",
+    "Apple's position has flipped. For two years the company defended Apple Intelligence as a vertically integrated stack — small on-device models, opaque Private Cloud Compute, ChatGPT as the only external fallback. The 2026 version concedes that Apple's own models are not at the frontier and that customers want choice. The $1B/year Gemini license is the largest enterprise AI deal disclosed to date, and the Extensions system effectively turns iOS into a neutral distribution layer for whichever frontier lab a user prefers. For Anthropic, Google, and OpenAI, this is the first time a billion-device install base has been opened on equal terms.",
+    "A note for learners: watch what Apple did not announce — a competitive in-house frontier model. The lesson is that even a company with Apple's resources, talent, and silicon advantage chose to license rather than build at the top of the stack. If you are deciding whether to train your own model, the question is no longer 'can we?' but 'is the marginal value of owning the weights worth the opportunity cost versus shipping product on someone else's frontier?' For most teams, most of the time, the answer Apple just gave is the right one."
+  ],
+  "sources": [
+    { "title": "How to Watch Apple's WWDC 2026 Keynote on June 8 — MacRumors", "url": "https://www.macrumors.com/how-to/how-to-watch-apple-wwdc-2026/" },
+    { "title": "What to Expect From WWDC 2026: Gemini-Powered Siri, iOS 27, macOS 27 and More — MacRumors", "url": "https://www.macrumors.com/guide/wwdc-2026-what-to-expect/" },
+    { "title": "Apple Siri iOS 27 Extensions: Claude, Gemini & ChatGPT — Digital Applied", "url": "https://www.digitalapplied.com/blog/apple-siri-ios-27-extensions-claude-gemini-chatgpt-guide" },
+    { "title": "5 things to expect at WWDC 2026 — from Siri 2.0 to Tim Cook's Apple farewell — TechRadar", "url": "https://www.techradar.com/tech/5-things-to-expect-at-wwdc-2026-from-siri-2-0-to-tim-cooks-apple-farewell" }
+  ],
+  "status": "published"
+}
