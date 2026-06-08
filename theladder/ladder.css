@@ -526,13 +526,16 @@ button.secondary {
 }
 
 .tier-button {
-  align-items: center;
+  align-items: start;
   background: transparent;
   border: 0;
   color: var(--ladder-ink);
   display: grid;
-  grid-template-columns: 38px minmax(0, 1fr) auto;
-  gap: 0.65rem;
+  grid-template-columns: 38px minmax(0, 1fr);
+  grid-template-areas:
+    "number meta"
+    "number progress";
+  gap: 0.28rem 0.65rem;
   justify-items: stretch;
   min-height: 64px;
   padding: 0.75rem;
@@ -576,13 +579,16 @@ button.secondary {
   color: var(--white);
   display: inline-flex;
   font-weight: 800;
+  grid-area: number;
   height: 34px;
   justify-content: center;
+  margin-top: 0.1rem;
   width: 34px;
 }
 
 .tier-meta {
   display: block;
+  grid-area: meta;
   min-width: 0;
 }
 
@@ -610,7 +616,9 @@ button.secondary {
   color: var(--ladder-muted);
   font-size: 0.72rem;
   font-weight: 700;
-  min-width: max-content;
+  grid-area: progress;
+  justify-self: start;
+  min-width: 0;
 }
 
 .topic-strip {
