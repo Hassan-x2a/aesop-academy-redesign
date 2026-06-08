@@ -50,6 +50,7 @@
     }
 
     .ladder-app {
+      box-sizing: border-box;
       width: min(94vw, 1500px);
       margin: 0 auto;
       padding: 0 0 3rem;
@@ -199,6 +200,18 @@
       min-width: max-content;
     }
 
+    .topic-strip {
+      display: flex;
+      gap: 0.35rem;
+      max-width: 100%;
+      overflow-x: auto;
+      padding: 0.55rem 0;
+    }
+
+    .topic-strip button {
+      flex: 0 0 auto;
+    }
+
     .tier-button.active {
       border-color: var(--ladder-focus);
       background: var(--navy);
@@ -232,6 +245,10 @@
         max-height: none;
         overflow: visible;
         padding: 0;
+      }
+
+      .topic-strip {
+        overscroll-behavior-x: contain;
       }
 
       .tier-list {

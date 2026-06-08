@@ -77,6 +77,8 @@ button.secondary {
 }
 
 .ladder-app {
+  box-sizing: border-box;
+  width: 100%;
   max-width: 1500px;
   margin: 0 auto;
   padding: 1.25rem;
@@ -415,6 +417,19 @@ button.secondary {
   min-width: max-content;
 }
 
+.topic-strip {
+  display: flex;
+  gap: 0.35rem;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.55rem 0;
+  scrollbar-color: var(--teal-dark) var(--ladder-soft);
+}
+
+.topic-strip button {
+  flex: 0 0 auto;
+}
+
 .topic-strip button.assigned {
   border-color: var(--gold);
   color: var(--navy);
@@ -644,6 +659,10 @@ button.secondary {
     width: 100%;
   }
 
+  .ladder-app {
+    padding: 0.75rem;
+  }
+
   .topic-grid,
   .learner-actions,
   .chat-form,
@@ -667,6 +686,11 @@ button.secondary {
   .assessment-log {
     max-height: 55vh;
     min-height: 310px;
+  }
+
+  .topic-strip {
+    margin-inline: 0;
+    overscroll-behavior-x: contain;
   }
 
   .tier-rail {
