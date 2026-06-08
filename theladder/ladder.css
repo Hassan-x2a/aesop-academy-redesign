@@ -170,6 +170,13 @@ button.secondary {
   align-items: start;
 }
 
+.workspace > *,
+.tier-meta,
+.topic-column,
+.right-rail {
+  min-width: 0;
+}
+
 .tier-rail,
 .right-rail {
   position: sticky;
@@ -236,6 +243,7 @@ button.secondary {
 .tier-meta small {
   color: var(--ladder-muted);
   display: block;
+  overflow-wrap: anywhere;
 }
 
 .tier-progress {
