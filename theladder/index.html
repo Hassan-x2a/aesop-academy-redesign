@@ -11,7 +11,162 @@
   <meta name="description" content="A guided AI learning ladder with conversations, labs, resources, progress tracking, and transcript evidence.">
   <link rel="stylesheet" href="/academy-theme.css?v=2">
   <link rel="stylesheet" href="/academy-dark-mode.css?v=2">
-  <link rel="stylesheet" href="/theladder/ladder.css?v=0.1.0">
+  <style>
+    :root {
+      --ladder-bg: #f5f1e8;
+      --ladder-panel: #ffffff;
+      --ladder-line: #ded4c5;
+      --ladder-soft: #f0e8dc;
+      --ladder-ink: #18283a;
+      --ladder-muted: #62717f;
+      --ladder-good: #2ba898;
+      --ladder-focus: #c9a05a;
+    }
+
+    body {
+      background: var(--ladder-bg);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--navy);
+      border-radius: 7px;
+      background: var(--navy);
+      color: var(--gold-light);
+      cursor: pointer;
+      font-weight: 700;
+      padding: 0.55rem 0.8rem;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--navy);
+    }
+
+    .ladder-app {
+      width: min(94vw, 1500px);
+      margin: 0 auto;
+      padding: 0 0 3rem;
+    }
+
+    .ladder-hero,
+    .ladder-toolbar,
+    .workspace {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .ladder-hero {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+      align-items: end;
+      padding: 48px 0 30px;
+    }
+
+    .ladder-hero h1 {
+      margin: 0.35rem 0 0;
+      color: var(--navy);
+      font-size: clamp(2.6rem, 6vw, 5.9rem);
+      line-height: 0.9;
+    }
+
+    .hero-text,
+    .placement-summary p {
+      color: var(--ladder-ink);
+      font-size: 1.12rem;
+      line-height: 1.55;
+    }
+
+    .learner-panel,
+    .ladder-toolbar,
+    .ladder-content,
+    .tier-rail {
+      border: 1px solid var(--ladder-line);
+      border-radius: 8px;
+      background: var(--ladder-panel);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .learner-panel,
+    .ladder-toolbar,
+    .ladder-content {
+      padding: 1rem;
+    }
+
+    .ladder-toolbar {
+      grid-template-columns: minmax(250px, 0.9fr) minmax(320px, 1.4fr) minmax(220px, 0.8fr);
+      margin-bottom: 1.3rem;
+    }
+
+    .workspace {
+      grid-template-columns: minmax(240px, 310px) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .tier-rail {
+      position: sticky;
+      top: 84px;
+      max-height: calc(100vh - 104px);
+      overflow: auto;
+      padding: 0.85rem;
+    }
+
+    .tier-list {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .tier-button {
+      width: 100%;
+      display: grid;
+      gap: 0.25rem;
+      justify-items: start;
+      border-color: var(--ladder-line);
+      background: var(--ladder-soft);
+      color: var(--ladder-ink);
+      text-align: left;
+    }
+
+    .tier-button.active {
+      border-color: var(--ladder-focus);
+      background: var(--navy);
+      color: var(--gold-light);
+    }
+
+    .assessment-log,
+    .guide-log,
+    .additional-lessons-log,
+    .transcript-log {
+      border: 1px solid var(--ladder-line);
+      border-radius: 8px;
+      background: #fbf8f1;
+    }
+
+    .vocab-card,
+    .rung-card {
+      border: 1px solid var(--ladder-line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .ladder-hero,
+      .ladder-toolbar,
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .tier-rail {
+        position: static;
+        max-height: none;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="/theladder/ladder.css">
 </head>
 <body>
   <nav class="nav">
@@ -144,6 +299,6 @@
     </section>
   </main>
 
-  <script type="module" src="/theladder/ladder-app.js?v=0.1.0"></script>
+  <script type="module" src="/theladder/ladder-app.js"></script>
 </body>
 </html>
