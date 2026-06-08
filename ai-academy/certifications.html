@@ -149,7 +149,7 @@
 <!-- Page header -->
 <div class="ch">
   <h1>🏆 Certifications</h1>
-  <p>Every module you complete earns a Module Point. Accumulate points, complete Foundations, and rise through 10 levels — from Spark to Architect.</p>
+  <p>Every module you complete earns a Module Point. Accumulate points to rise through 10 levels — from Spark to Architect.</p>
 </div>
 
 <!-- Hero -->
@@ -183,8 +183,8 @@
 <div class="explainer">
   <h3>How Certifications Work</h3>
   <ul>
-    <li><span class="ico">🧩</span><span><strong>Module Points</strong> — 1 point per completed module, across every course on the platform. Finish all lessons in a module to earn the point.</span></li>
-    <li><span class="ico">🏫</span><span><strong>Foundations Requirement</strong> — Level 1 unlocks when you complete any tier of the AI Foundations course. Level 6 requires Foundations Basic. Level 9 requires Foundations Advanced.</span></li>
+    <li><span class="ico">🧩</span><span><strong>Module Points Only</strong> — 1 point per completed module, across every course on the platform. Finish all lessons in a module to earn the point. Points alone determine your level.</span></li>
+    <li><span class="ico">🏫</span><span><strong>Foundations is Optional</strong> — Complete the AI Foundations course to deepen your understanding and build a stronger portfolio. Your certification level progresses independently based on module points.</span></li>
     <li><span class="ico">📈</span><span><strong>Levels never expire.</strong> Points accumulate permanently. You keep every level you reach.</span></li>
     <li><span class="ico">🎖️</span><span><strong>Your badge appears</strong> in the top nav, on your Student Profile, and in every course hub you open — a visible mark of how far you've come.</span></li>
     <li><span class="ico">📄</span><span><strong>Resume-ready credentials</strong> — each level carries a formal certificate title you can list on LinkedIn, a résumé, or a job application.</span></li>
@@ -201,16 +201,16 @@
 // ═══════════════════════════════════════════════════════════════
 const CERT_LEVELS = [
   { level: 0,  name: 'Unranked',   resume: '',                                                    emoji: '',   pts: 0,   fdn: 0, color: '#555',    tagline: '' },
-  { level: 1,  name: 'Spark',      resume: 'Certified AI Foundations Graduate — AESOP AI Academy',       emoji: '🌱', pts: 0,   fdn: 1, color: '#2ba898', tagline: 'The journey begins.' },
-  { level: 2,  name: 'Seeker',     resume: 'Certified AI Literacy Practitioner — AESOP AI Academy',       emoji: '⚡', pts: 10,  fdn: 1, color: '#3db8d0', tagline: 'Momentum is real.' },
-  { level: 3,  name: 'Scholar',    resume: 'Certified Applied AI Practitioner — AESOP AI Academy',        emoji: '🔍', pts: 25,  fdn: 1, color: '#5b8ef0', tagline: 'Knowledge accumulates.' },
-  { level: 4,  name: 'Analyst',    resume: 'Certified AI Analyst — AESOP AI Academy',                     emoji: '🎓', pts: 50,  fdn: 1, color: '#7c6ff7', tagline: 'You see the patterns.' },
-  { level: 5,  name: 'Navigator',  resume: 'Certified AI Professional — AESOP AI Academy',                emoji: '🧩', pts: 80,  fdn: 1, color: '#a855f7', tagline: 'Charting the territory.' },
-  { level: 6,  name: 'Specialist', resume: 'Certified AI Systems Specialist — AESOP AI Academy',          emoji: '🛠️', pts: 100, fdn: 2, color: '#d4a017', tagline: 'Foundations Basic complete.', gate: 'Foundations Basic required' },
-  { level: 7,  name: 'Strategist', resume: 'Certified AI Strategist — AESOP AI Academy',                  emoji: '🎯', pts: 150, fdn: 2, color: '#e07b0e', tagline: 'You think in systems.' },
-  { level: 8,  name: 'Visionary',  resume: 'Certified AI Expert — AESOP AI Academy',                      emoji: '🔮', pts: 200, fdn: 2, color: '#e05050', tagline: 'Ahead of the curve.' },
-  { level: 9,  name: 'Master',     resume: 'Certified AI Master — AESOP AI Academy',                      emoji: '🦅', pts: 250, fdn: 3, color: '#c0384f', tagline: 'Foundations Advanced complete.', gate: 'Foundations Advanced required' },
-  { level: 10, name: 'Architect',  resume: 'Certified AI Leadership Architect — AESOP AI Academy',        emoji: '👑', pts: 400, fdn: 3, color: '#ffd700', tagline: 'You shape what AI becomes.' },
+  { level: 1,  name: 'Spark',      resume: 'Certified AI Foundations Graduate — AESOP AI Academy',       emoji: '🌱', pts: 0,   fdn: 0, color: '#2ba898', tagline: 'The journey begins.' },
+  { level: 2,  name: 'Seeker',     resume: 'Certified AI Literacy Practitioner — AESOP AI Academy',       emoji: '⚡', pts: 10,  fdn: 0, color: '#3db8d0', tagline: 'Momentum is real.' },
+  { level: 3,  name: 'Scholar',    resume: 'Certified Applied AI Practitioner — AESOP AI Academy',        emoji: '🔍', pts: 25,  fdn: 0, color: '#5b8ef0', tagline: 'Knowledge accumulates.' },
+  { level: 4,  name: 'Analyst',    resume: 'Certified AI Analyst — AESOP AI Academy',                     emoji: '🎓', pts: 50,  fdn: 0, color: '#7c6ff7', tagline: 'You see the patterns.' },
+  { level: 5,  name: 'Navigator',  resume: 'Certified AI Professional — AESOP AI Academy',                emoji: '🧩', pts: 80,  fdn: 0, color: '#a855f7', tagline: 'Charting the territory.' },
+  { level: 6,  name: 'Specialist', resume: 'Certified AI Systems Specialist — AESOP AI Academy',          emoji: '🛠️', pts: 100, fdn: 0, color: '#d4a017', tagline: 'Mastery through depth.' },
+  { level: 7,  name: 'Strategist', resume: 'Certified AI Strategist — AESOP AI Academy',                  emoji: '🎯', pts: 150, fdn: 0, color: '#e07b0e', tagline: 'You think in systems.' },
+  { level: 8,  name: 'Visionary',  resume: 'Certified AI Expert — AESOP AI Academy',                      emoji: '🔮', pts: 200, fdn: 0, color: '#e05050', tagline: 'Ahead of the curve.' },
+  { level: 9,  name: 'Master',     resume: 'Certified AI Master — AESOP AI Academy',                      emoji: '🦅', pts: 250, fdn: 0, color: '#c0384f', tagline: 'Excellence recognized.' },
+  { level: 10, name: 'Architect',  resume: 'Certified AI Leadership Architect — AESOP AI Academy',        emoji: '👑', pts: 400, fdn: 0, color: '#ffd700', tagline: 'You shape what AI becomes.' },
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -405,7 +405,7 @@ function getCurrentLevel(fdn, pts) {
   let level = 0;
   for (let i = 1; i <= 10; i++) {
     const cfg = CERT_LEVELS[i];
-    if (fdn >= cfg.fdn && pts >= cfg.pts) level = i;
+    if (pts >= cfg.pts) level = i;
     else break;
   }
   return level;
@@ -448,10 +448,12 @@ function render() {
   document.getElementById('heroResume').textContent = cur > 0 ? cfg.resume : '';
 
   // ── Points line
-  const fdnLabels = ['', 'Foundations Intro complete', 'Foundations Basic complete', 'Foundations Advanced complete'];
   const ptsTxt = modPts === 1 ? '1 Module Point' : `${modPts} Module Points`;
-  const fdnTxt = fdnTier > 0 ? fdnLabels[fdnTier] : 'No Foundations tier complete yet';
-  document.getElementById('heroPts').innerHTML = `<strong>${ptsTxt}</strong>&ensp;·&ensp;${fdnTxt}`;
+  document.getElementById('heroPts').innerHTML = `<strong>${ptsTxt}</strong> earned`;
+  if (fdnTier > 0) {
+    const fdnLabels = ['', 'Foundations Intro complete', 'Foundations Basic complete', 'Foundations Advanced complete'];
+    document.getElementById('heroPts').innerHTML += ` · ${fdnLabels[fdnTier]}`;
+  }
 
   // ── Progress bar
   const fill = document.getElementById('heroFill');
@@ -469,12 +471,8 @@ function render() {
     lbl.innerHTML = `<span>Maximum level — Architect</span><span>${modPts} pts</span>`;
   }
 
-  // ── Gate chip
-  const gateEl = document.getElementById('heroGate');
-  if (next && next.gate) {
-    const met = fdnTier >= next.fdn;
-    gateEl.innerHTML = `<span class="gate-chip ${met ? 'met' : 'unmet'}">${met ? '✓' : '⚠'} Next gate: ${next.gate}</span>`;
-  } else { gateEl.innerHTML = ''; }
+  // ── Gate chip (no longer used — foundations removed from gating)
+  document.getElementById('heroGate').innerHTML = '';
 
   // ── Resume/LinkedIn action button
   if (cur > 0) {
@@ -494,10 +492,7 @@ Earned: ${new Date().toLocaleDateString('en-US', {year:'numeric', month:'long'})
     const lc = CERT_LEVELS[i];
     const earned = i <= cur;
     const isCur  = i === cur;
-    let reqs = [];
-    if (lc.pts > 0) reqs.push(`${lc.pts} Module Points`);
-    if (lc.gate) reqs.push(lc.gate);
-    if (reqs.length === 0) reqs.push('Complete any Foundations tier');
+    const reqs = lc.pts > 0 ? `${lc.pts} Module Points` : 'Start earning points';
 
     const card = document.createElement('div');
     card.className = 'cert-card' + (earned ? (isCur ? ' earned current' : ' earned') : ' locked');
@@ -506,7 +501,7 @@ Earned: ${new Date().toLocaleDateString('en-US', {year:'numeric', month:'long'})
       `<div class="cc-level">Level ${i}</div>
        <div class="cc-name" style="color:${earned ? lc.color : 'inherit'}">${lc.emoji} ${lc.name}</div>
        <div class="cc-resume">${lc.resume}</div>
-       <div class="cc-req">${earned ? '<span style="color:#2dd4c0;font-weight:600">✓ Earned</span>' : reqs.join('<br>')}</div>`;
+       <div class="cc-req">${earned ? '<span style="color:#2dd4c0;font-weight:600">✓ Earned</span>' : reqs}</div>`;
     grid.appendChild(card);
   }
 }
