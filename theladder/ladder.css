@@ -1,10 +1,10 @@
 :root {
-  --ladder-bg: #f5f1e8;
+  --ladder-bg: #ffffff;
   --ladder-panel: #ffffff;
-  --ladder-line: #ded4c5;
-  --ladder-soft: #f0e8dc;
+  --ladder-line: #d8e0e7;
+  --ladder-soft: #f6f8fb;
   --ladder-ink: #18283a;
-  --ladder-muted: #62717f;
+  --ladder-muted: #526576;
   --ladder-good: #2ba898;
   --ladder-focus: #c9a05a;
 }
@@ -167,7 +167,28 @@ button.secondary {
 }
 
 .learner-panel {
+  background: #f7fbfa;
+  border-color: rgba(43, 168, 152, 0.24);
   padding: 1rem;
+}
+
+.ladder-toolbar {
+  background: #fffdf8;
+  border-color: rgba(201, 160, 90, 0.32);
+}
+
+.topic-panel {
+  background: #ffffff;
+}
+
+.conversation-panel {
+  background: #fffdf8;
+  border-color: rgba(201, 160, 90, 0.24);
+}
+
+.transcript-panel {
+  background: #f8fbff;
+  border-color: rgba(43, 91, 138, 0.22);
 }
 
 .hero-panels .learner-panel {
@@ -590,18 +611,12 @@ button.secondary {
 }
 
 .tier-rail {
-  position: sticky;
-  top: 84px;
-}
-
-.tier-rail {
   background: var(--ladder-panel);
   border: 1px solid var(--ladder-line);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 104px);
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
 }
 
@@ -697,9 +712,8 @@ button.secondary {
   background: var(--ladder-panel);
   border: 1px solid var(--ladder-line);
   border-top: none;
-  flex: 1;
   max-height: none;
-  overflow: auto;
+  overflow: visible;
 }
 
 .tier-item {

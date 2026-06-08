@@ -24,19 +24,16 @@
   <meta name="twitter:description" content="A guided AI learning path with placement, conversations, labs, resources, and transcript evidence.">
   <meta name="twitter:image" content="https://aesopacademy.org/theladder/og-theladder.jpg">
   <meta name="twitter:image:alt" content="The Ladder from AESOP AI Academy, a guided AI learning path with placement, labs, and transcript evidence.">
-  <script>
-    if (localStorage.getItem('aesop-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-  </script>
   <link rel="stylesheet" href="/academy-theme.css?v=2">
   <link rel="stylesheet" href="/academy-dark-mode.css?v=2">
   <style>
     :root {
-      --ladder-bg: #f5f1e8;
+      --ladder-bg: #ffffff;
       --ladder-panel: #ffffff;
-      --ladder-line: #ded4c5;
-      --ladder-soft: #f0e8dc;
+      --ladder-line: #d8e0e7;
+      --ladder-soft: #f6f8fb;
       --ladder-ink: #18283a;
-      --ladder-muted: #62717f;
+      --ladder-muted: #526576;
       --ladder-good: #2ba898;
       --ladder-focus: #c9a05a;
     }
@@ -133,6 +130,20 @@
       border-radius: 8px;
       background: var(--ladder-panel);
       box-shadow: var(--shadow-sm);
+    }
+
+    .learner-panel {
+      background: #f7fbfa;
+      border-color: rgba(43, 168, 152, 0.24);
+    }
+
+    .ladder-toolbar {
+      background: #fffdf8;
+      border-color: rgba(201, 160, 90, 0.32);
+    }
+
+    .ladder-content {
+      background: #ffffff;
     }
 
     .learner-panel,
@@ -280,10 +291,7 @@
     .tier-rail {
       display: flex;
       flex-direction: column;
-      position: sticky;
-      top: 84px;
-      max-height: calc(100vh - 104px);
-      overflow: hidden;
+      overflow: visible;
       padding: 0;
     }
 
@@ -293,10 +301,9 @@
 
     .tier-list {
       display: grid;
-      flex: 1;
       gap: 0.55rem;
       max-height: none;
-      overflow: auto;
+      overflow: visible;
     }
 
     .tier-button {
@@ -569,7 +576,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="/theladder/ladder.css?v=10">
+  <link rel="stylesheet" href="/theladder/ladder.css?v=11">
 </head>
 <body>
   <nav class="nav">
@@ -751,6 +758,6 @@
     </section>
   </main>
 
-  <script type="module" src="/theladder/ladder-app.js?v=10"></script>
+  <script type="module" src="/theladder/ladder-app.js?v=11"></script>
 </body>
 </html>
