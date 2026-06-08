@@ -8,6 +8,9 @@ AddType application/javascript .js
 # Force HTTPS
 RewriteEngine On
 
+# Avoid intermittent DirectoryIndex failures on the Ladder route.
+RewriteRule ^theladder/?$ /theladder/index.html [L]
+
 # Allow direct file access (assets, css, js, images)
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
