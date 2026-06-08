@@ -1181,8 +1181,11 @@ async function init() {
   loadLocal();
   renderLanguages();
   bindEvents();
-  if (state.learnerId) await loadRemote(state.learnerId);
   render();
+  if (state.learnerId) {
+    await loadRemote(state.learnerId);
+    render();
+  }
 }
 
 init();
