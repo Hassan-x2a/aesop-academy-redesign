@@ -6,6 +6,7 @@ import { DEFAULT_RESOURCES, LADDER_TIERS, LADDER_VERSION, LANGUAGES } from './la
 const PROXY_URL = '/aesop-api/proxy.php';
 const LS_ID = 'aesop-learner-id';
 const LS_STATE = 'aesop-ladder-state';
+const LS_THEME = 'aesop-theme';
 const PLACEMENT_REGEX = /<!--LADDER_PLACEMENT_COMPLETE:([\s\S]*?)-->/;
 const TRANSCRIPT_STATUS = {
   COMPLETED: 'completed',
@@ -89,6 +90,7 @@ const db = getFirestore(app);
 
 const state = {
   learnerId: localStorage.getItem(LS_ID) || '',
+  theme: localStorage.getItem(LS_THEME) === 'dark' ? 'dark' : 'light',
   language: 'en',
   customLanguage: '',
   activeTierId: LADDER_TIERS[0].id,
@@ -109,6 +111,7 @@ const state = {
 const el = {
   languageSelect: document.getElementById('languageSelect'),
   customLanguageInput: document.getElementById('customLanguageInput'),
+  darkToggle: document.getElementById('darkToggle'),
   learnerIdLabel: document.getElementById('learnerIdLabel'),
   learnerLookup: document.getElementById('learnerLookup'),
   lookupBtn: document.getElementById('lookupBtn'),
@@ -950,6 +953,25 @@ function renderControls() {
   el.languageSelect.value = state.language;
   el.customLanguageInput.value = state.customLanguage || '';
   el.customLanguageInput.style.display = state.language === 'custom' ? '' : 'none';
+  renderThemeToggle();
+}
+
+function applyTheme(theme) {
+  state.theme = theme === 'dark' ? 'dark' : 'light';
+  if (state.theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  localStorage.setItem(LS_THEME, state.theme);
+}
+
+function renderThemeToggle() {
+  if (!el.darkToggle) return;
+  const isDark = state.theme === 'dark';
+  el.darkToggle.setAttribute('aria-pressed', String(isDark));
+  el.darkToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  el.darkToggle.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
 }
 
 function render() {
@@ -1129,6 +1151,11 @@ function findVideos() {
 }
 
 function bindEvents() {
+  el.darkToggle?.addEventListener('click', () => {
+    applyTheme(state.theme === 'dark' ? 'light' : 'dark');
+    renderThemeToggle();
+  });
+
   el.languageSelect.addEventListener('change', async () => {
     state.language = el.languageSelect.value;
     await persist();
@@ -1178,6 +1205,7 @@ function bindEvents() {
 }
 
 async function init() {
+  applyTheme(state.theme);
   loadLocal();
   renderLanguages();
   bindEvents();

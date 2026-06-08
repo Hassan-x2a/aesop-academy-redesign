@@ -9,6 +9,17 @@
   --ladder-focus: #c9a05a;
 }
 
+[data-theme="dark"] {
+  --ladder-bg: #0f1923;
+  --ladder-panel: #172331;
+  --ladder-line: #304252;
+  --ladder-soft: #203242;
+  --ladder-ink: #e8e3db;
+  --ladder-muted: #b7c0c8;
+  --ladder-good: #3dd6c0;
+  --ladder-focus: #dbb87a;
+}
+
 body {
   background: var(--ladder-bg);
 }
@@ -54,6 +65,29 @@ button.secondary {
 
 .ladder-top-actions {
   gap: 0.5rem;
+}
+
+.dark-mode-toggle {
+  border: 1px solid var(--ladder-line);
+  background: transparent;
+  color: var(--ladder-ink);
+  min-height: 40px;
+  padding: 0.35rem 0.6rem;
+  transform: none;
+}
+
+.dark-mode-toggle:hover {
+  background: var(--ladder-soft);
+  box-shadow: none;
+  color: var(--ladder-ink);
+  transform: none;
+}
+
+.dark-mode-toggle__icon {
+  color: inherit;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 .ladder-select,
@@ -851,6 +885,171 @@ button.secondary {
 .transcript-event small,
 #progressText {
   color: var(--ladder-muted);
+}
+
+[data-theme="dark"] body {
+  background: var(--ladder-bg);
+}
+
+[data-theme="dark"] .ladder-hero h1,
+[data-theme="dark"] .learner-panel strong,
+[data-theme="dark"] .placement-summary h2,
+[data-theme="dark"] .assessment-chat-head strong,
+[data-theme="dark"] .assigned-rungs-panel summary,
+[data-theme="dark"] .tier-meta strong,
+[data-theme="dark"] .panel-heading h3,
+[data-theme="dark"] .vocab-definition-box strong,
+[data-theme="dark"] .message strong,
+[data-theme="dark"] .transcript-event strong {
+  color: var(--ink);
+}
+
+[data-theme="dark"] .hero-text,
+[data-theme="dark"] .placement-summary p,
+[data-theme="dark"] .lab-panel p,
+[data-theme="dark"] .vocab-definition-box p {
+  color: var(--ink-light);
+}
+
+[data-theme="dark"] .eyebrow,
+[data-theme="dark"] .panel-label {
+  color: var(--teal);
+}
+
+[data-theme="dark"] .ladder-select,
+[data-theme="dark"] .ladder-input,
+[data-theme="dark"] .learner-actions input,
+[data-theme="dark"] .chat-form input,
+[data-theme="dark"] .assessment-form textarea,
+[data-theme="dark"] .vocab-prompt-form input {
+  background: #111d28;
+  border-color: var(--ladder-line);
+  color: var(--ladder-ink);
+}
+
+[data-theme="dark"] .ladder-select::placeholder,
+[data-theme="dark"] .ladder-input::placeholder,
+[data-theme="dark"] .learner-actions input::placeholder,
+[data-theme="dark"] .chat-form input::placeholder,
+[data-theme="dark"] .assessment-form textarea::placeholder,
+[data-theme="dark"] .vocab-prompt-form input::placeholder {
+  color: var(--ink-muted);
+}
+
+[data-theme="dark"] .dark-mode-toggle {
+  border-color: var(--ladder-line);
+  color: var(--ladder-ink);
+}
+
+[data-theme="dark"] .dark-mode-toggle:hover {
+  background: var(--ladder-soft);
+  color: var(--ladder-ink);
+}
+
+[data-theme="dark"] button.secondary {
+  border-color: var(--ladder-line);
+  color: var(--ladder-ink);
+}
+
+[data-theme="dark"] .placement-profile-prompt,
+[data-theme="dark"] .tier-button.has-assigned {
+  background: rgba(201, 160, 90, 0.12);
+  border-color: rgba(201, 160, 90, 0.38);
+}
+
+[data-theme="dark"] .placement-profile-prompt strong {
+  color: var(--gold-light);
+}
+
+[data-theme="dark"] .placement-profile-prompt span,
+[data-theme="dark"] .assigned-rungs-panel span,
+[data-theme="dark"] .tier-meta small,
+[data-theme="dark"] .tier-progress,
+[data-theme="dark"] .vocab-definition-box small {
+  color: var(--ladder-muted);
+}
+
+[data-theme="dark"] .assessment-log,
+[data-theme="dark"] .assigned-rungs-panel,
+[data-theme="dark"] .vocab-definition-box,
+[data-theme="dark"] .chat-log,
+[data-theme="dark"] .transcript-event {
+  background: #111d28;
+  border-color: var(--ladder-line);
+}
+
+[data-theme="dark"] .assigned-rung-link,
+[data-theme="dark"] .vocab-pill,
+[data-theme="dark"] .resource-chip {
+  background: #132131;
+  border-color: var(--ladder-line);
+  color: var(--ladder-ink);
+}
+
+[data-theme="dark"] .assigned-rung-link:hover,
+[data-theme="dark"] .resource-chip:hover {
+  background: var(--ladder-soft);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .vocab-pill.done {
+  background: rgba(61, 214, 192, 0.14);
+  border-color: rgba(61, 214, 192, 0.48);
+  color: #b7fff2;
+}
+
+[data-theme="dark"] .vocab-pill:hover,
+[data-theme="dark"] .vocab-pill:focus-visible,
+[data-theme="dark"] .vocab-pill.active {
+  background: var(--teal-dark);
+  border-color: var(--teal-dark);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .message.assistant,
+[data-theme="dark"] .vocab-card,
+[data-theme="dark"] .rung-card {
+  background: var(--ladder-panel);
+  border-color: var(--ladder-line);
+}
+
+[data-theme="dark"] .message.user {
+  background: rgba(61, 214, 192, 0.12);
+  border-color: rgba(61, 214, 192, 0.38);
+}
+
+[data-theme="dark"] .progress-meter,
+[data-theme="dark"] .placement-metrics span,
+[data-theme="dark"] .placement-metrics small {
+  background: var(--ladder-soft);
+  border-color: var(--ladder-line);
+  color: var(--ladder-ink);
+}
+
+[data-theme="dark"] .tier-button:hover,
+[data-theme="dark"] .tier-button.active {
+  background: var(--ladder-soft);
+}
+
+[data-theme="dark"] .tier-button.placed-out {
+  background: rgba(61, 214, 192, 0.13);
+}
+
+[data-theme="dark"] .tier-button.placed-out .tier-progress {
+  color: #b7fff2;
+}
+
+[data-theme="dark"] .tier-button.has-assigned .tier-progress {
+  color: var(--gold-light);
+}
+
+[data-theme="dark"] .topic-strip button.assigned {
+  color: var(--gold-light);
+}
+
+[data-theme="dark"] .topic-strip button.placed {
+  background: rgba(61, 214, 192, 0.13);
+  border-color: rgba(61, 214, 192, 0.48);
 }
 
 @media (max-width: 1180px) {

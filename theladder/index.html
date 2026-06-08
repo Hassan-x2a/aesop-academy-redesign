@@ -9,6 +9,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Ladder - AESOP AI Academy</title>
   <meta name="description" content="A guided AI learning ladder with conversations, labs, resources, progress tracking, and transcript evidence.">
+  <meta property="og:title" content="The Ladder - AESOP AI Academy">
+  <meta property="og:description" content="A guided AI learning path with placement, conversations, labs, resources, and transcript evidence.">
+  <meta property="og:url" content="https://aesopacademy.org/theladder/">
+  <meta property="og:site_name" content="AESOP AI Academy">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://aesopacademy.org/theladder/og-theladder.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@aesopacademy">
+  <meta name="twitter:title" content="The Ladder - AESOP AI Academy">
+  <meta name="twitter:description" content="A guided AI learning path with placement, conversations, labs, resources, and transcript evidence.">
+  <meta name="twitter:image" content="https://aesopacademy.org/theladder/og-theladder.jpg">
+  <script>
+    if (localStorage.getItem('aesop-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
   <link rel="stylesheet" href="/academy-theme.css?v=2">
   <link rel="stylesheet" href="/academy-dark-mode.css?v=2">
   <style>
@@ -21,6 +37,17 @@
       --ladder-muted: #62717f;
       --ladder-good: #2ba898;
       --ladder-focus: #c9a05a;
+    }
+
+    [data-theme="dark"] {
+      --ladder-bg: #0f1923;
+      --ladder-panel: #172331;
+      --ladder-line: #304252;
+      --ladder-soft: #203242;
+      --ladder-ink: #e8e3db;
+      --ladder-muted: #b7c0c8;
+      --ladder-good: #3dd6c0;
+      --ladder-focus: #dbb87a;
     }
 
     body {
@@ -47,6 +74,13 @@
     button.secondary {
       background: transparent;
       color: var(--navy);
+    }
+
+    .dark-mode-toggle {
+      border: 1px solid var(--ladder-line);
+      background: transparent;
+      color: var(--ladder-ink);
+      min-height: 40px;
     }
 
     .ladder-app {
@@ -451,6 +485,11 @@
       <div class="nav-links ladder-top-actions">
         <select id="languageSelect" class="ladder-select" aria-label="Language"></select>
         <input id="customLanguageInput" class="ladder-input language-custom" type="text" placeholder="Any language">
+        <button class="dark-mode-toggle" id="darkToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+          <span class="dark-mode-toggle__icon">Light</span>
+          <span class="dark-mode-toggle__track"><span class="dark-mode-toggle__thumb"></span></span>
+          <span class="dark-mode-toggle__icon">Dark</span>
+        </button>
         <a class="nav-btn nav-btn--primary" href="/ai-academy/students.html">Student Hub</a>
       </div>
     </div>
