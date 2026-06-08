@@ -19,7 +19,7 @@ export const LADDER_TIERS = [
     id: 'tier-01',
     name: 'Beginner',
     title: 'AI Orientation',
-    accent: '#2ba898',
+    accent: '#735f9e',
     vocabulary: ['artificial intelligence', 'machine learning', 'generative AI', 'model', 'chatbot', 'assistant', 'prompt', 'response', 'token', 'context', 'training data', 'inference', 'hallucination', 'multimodal', 'privacy'],
     topics: [
       'What artificial intelligence is and is not',
@@ -154,7 +154,7 @@ export const LADDER_TIERS = [
     id: 'tier-06',
     name: 'Business Practitioner',
     title: 'Function-Specific AI Use',
-    accent: '#4caf82',
+    accent: '#8a5cf6',
     vocabulary: ['use case', 'business process', 'ROI', 'customer journey', 'pipeline', 'segmentation', 'personalization', 'support ticket', 'knowledge article', 'HR screening', 'financial analysis', 'legal review', 'clinical decision support', 'domain risk', 'escalation'],
     topics: [
       'AI use-case discovery',
@@ -235,7 +235,7 @@ export const LADDER_TIERS = [
     id: 'tier-09',
     name: 'Knowledge Systems Builder',
     title: 'Data, Embeddings, Search, and RAG',
-    accent: '#2f9c95',
+    accent: '#9a5fb0',
     vocabulary: ['embedding', 'vector', 'vector database', 'semantic search', 'keyword search', 'hybrid search', 'chunking', 'metadata', 'retrieval', 'reranking', 'RAG', 'grounding', 'citation', 'corpus', 'index', 'knowledge graph'],
     topics: [
       'Embeddings basics',
@@ -397,7 +397,7 @@ export const LADDER_TIERS = [
     id: 'tier-15',
     name: 'AI Strategist',
     title: 'Product, Market, Adoption, and Frontier Planning',
-    accent: '#0b7285',
+    accent: '#735f9e',
     vocabulary: ['AI strategy', 'adoption roadmap', 'operating model', 'capability map', 'build vs buy', 'product moat', 'unit economics', 'adoption metric', 'change management', 'frontier model', 'alignment', 'interpretability', 'capability evaluation', 'regulatory monitoring', 'market map'],
     topics: [
       'AI strategy fundamentals',

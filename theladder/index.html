@@ -8,22 +8,22 @@
   <link rel="apple-touch-icon" sizes="512x512" href="/favicon_512.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Ladder - AESOP AI Academy</title>
-  <meta name="description" content="A guided AI learning ladder with conversations, labs, resources, progress tracking, and transcript evidence.">
+  <meta name="description" content="A guided AI learning ladder with conversations, resources, progress tracking, certification, and transcript evidence.">
   <meta property="og:title" content="The Ladder - AESOP AI Academy">
-  <meta property="og:description" content="A guided AI learning path with placement, conversations, labs, resources, and transcript evidence.">
+  <meta property="og:description" content="A guided AI learning path with placement, conversations, certification, resources, and transcript evidence.">
   <meta property="og:url" content="https://aesopacademy.org/theladder/">
   <meta property="og:site_name" content="AESOP AI Academy">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://aesopacademy.org/theladder/og-theladder.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="The Ladder from AESOP AI Academy, a guided AI learning path with placement, labs, and transcript evidence.">
+  <meta property="og:image:alt" content="The Ladder from AESOP AI Academy, a guided AI learning path with placement, certification, and transcript evidence.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@aesopacademy">
   <meta name="twitter:title" content="The Ladder - AESOP AI Academy">
-  <meta name="twitter:description" content="A guided AI learning path with placement, conversations, labs, resources, and transcript evidence.">
+  <meta name="twitter:description" content="A guided AI learning path with placement, conversations, certification, resources, and transcript evidence.">
   <meta name="twitter:image" content="https://aesopacademy.org/theladder/og-theladder.jpg">
-  <meta name="twitter:image:alt" content="The Ladder from AESOP AI Academy, a guided AI learning path with placement, labs, and transcript evidence.">
+  <meta name="twitter:image:alt" content="The Ladder from AESOP AI Academy, a guided AI learning path with placement, certification, and transcript evidence.">
   <script>
     if (localStorage.getItem('aesop-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   </script>
@@ -37,7 +37,7 @@
       --ladder-soft: #f0e8dc;
       --ladder-ink: #18283a;
       --ladder-muted: #62717f;
-      --ladder-good: #2ba898;
+      --ladder-good: #735f9e;
       --ladder-focus: #c9a05a;
     }
 
@@ -48,7 +48,7 @@
       --ladder-soft: #203242;
       --ladder-ink: #e8e3db;
       --ladder-muted: #b7c0c8;
-      --ladder-good: #3dd6c0;
+      --ladder-good: #bda7ff;
       --ladder-focus: #dbb87a;
     }
 
@@ -137,7 +137,7 @@
 
     .learner-panel {
       background: #f7fbfa;
-      border-color: rgba(43, 168, 152, 0.24);
+      border-color: rgba(115, 95, 158, 0.24);
     }
 
     .ladder-toolbar {
@@ -426,7 +426,7 @@
     }
 
     .tier-button.placed-out {
-      background: rgba(43, 168, 152, 0.18);
+      background: rgba(115, 95, 158, 0.18);
       border-left: 5px solid var(--ladder-good);
       color: var(--ladder-ink);
     }
@@ -436,7 +436,7 @@
     }
 
     .tier-button.placed-out .tier-progress {
-      color: #1e756b;
+      color: #5b477e;
     }
 
     .tier-button.has-assigned {
@@ -579,7 +579,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="/theladder/ladder.css?v=13">
+  <link rel="stylesheet" href="/theladder/ladder.css?v=14">
 </head>
 <body>
   <nav class="nav">
@@ -607,7 +607,7 @@
       <div class="ladder-hero-copy">
         <p class="eyebrow">One ladder. One interface. AI-guided learning.</p>
         <h1>The Ladder</h1>
-        <p class="hero-text">A structured AI learning path where every rung becomes a guided conversation, a lab, additional lessons and links, and a transcript event.</p>
+        <p class="hero-text">A structured AI learning path where every rung becomes a guided conversation, additional lessons and links, certification options, and a transcript event.</p>
       </div>
       <div class="hero-panels">
         <div class="learner-panel" id="learnerPanel">
@@ -623,6 +623,19 @@
           <strong>Search topics or courses</strong>
           <input id="topicSearchInput" class="topic-search-input" type="search" placeholder="Agents, ethics, image generation..." aria-label="Search Ladder topics and courses" autocomplete="off">
           <div id="topicSearchResults" class="topic-search-results" aria-live="polite"></div>
+        </div>
+        <div class="learner-panel evaluation-panel" id="evaluationPanel">
+          <span class="panel-label">Certification</span>
+          <strong>Certify this tier</strong>
+          <p id="activeEvaluationTarget">Current certification target</p>
+          <div class="evaluation-controls">
+            <select id="certificationTierSelect" class="evaluation-select" aria-label="Certification tier"></select>
+            <select id="testDepthSelect" class="evaluation-select" aria-label="Certification depth"></select>
+          </div>
+          <div class="evaluation-actions">
+            <button id="startEvaluationBtn" type="button">Start certification</button>
+            <a href="/docs/ladder-certification-architecture.md" target="_blank" rel="noopener">Architecture</a>
+          </div>
         </div>
       </div>
     </section>
@@ -690,6 +703,18 @@
           <button id="completeTopicBtn" type="button">Mark self-reported</button>
         </div>
 
+        <section class="topic-panel certification-workspace-panel" aria-label="Certification">
+          <div>
+            <span class="panel-label">Certification</span>
+            <strong>Certify this rung</strong>
+            <p id="certificationWorkspaceTarget">Current certification target</p>
+          </div>
+          <div class="certification-workspace-actions">
+            <button id="startWorkspaceCertificationBtn" type="button">Start certification</button>
+            <a href="/docs/ladder-certification-architecture.md" target="_blank" rel="noopener">Certification architecture</a>
+          </div>
+        </section>
+
         <div class="topic-grid">
           <section class="topic-panel">
             <div class="panel-heading">
@@ -718,26 +743,14 @@
         <section class="conversation-panel">
           <div class="panel-heading">
             <div>
-              <h3>Assignment Lab</h3>
-              <p id="assignmentSummary">Each rung becomes a debate, skill, or build conversation.</p>
+              <h3>Guided Conversation</h3>
+              <p>The AI asks, challenges, applies, and checks readiness for this rung.</p>
             </div>
-            <div class="assignment-actions">
-              <span id="assignmentTypeBadge" class="assignment-type-badge">Skill</span>
-              <button id="startConversationBtn" type="button">Start assignment</button>
-              <button id="completeLabBtn" class="secondary" type="button">Complete assignment</button>
-            </div>
-          </div>
-          <div class="assignment-brief" id="assignmentBrief">
-            <div>
-              <span class="panel-label">Your task</span>
-              <strong id="assignmentTitle">Apply a technique</strong>
-              <p id="assignmentPrompt">Start the assignment to receive a guided lab conversation for this rung.</p>
-            </div>
-            <ul id="assignmentChecklist"></ul>
+            <button id="startConversationBtn" type="button">Start conversation</button>
           </div>
           <div id="chatLog" class="chat-log" aria-live="polite"></div>
           <form id="chatForm" class="chat-form">
-            <input id="chatInput" type="text" placeholder="Answer the assignment guide or ask for the next challenge" autocomplete="off">
+            <input id="chatInput" type="text" placeholder="Answer the guide or ask for the next challenge" autocomplete="off">
             <button type="submit">Send</button>
           </form>
         </section>
@@ -761,6 +774,6 @@
     </section>
   </main>
 
-  <script type="module" src="/theladder/ladder-app.js?v=12"></script>
+  <script type="module" src="/theladder/ladder-app.js?v=14"></script>
 </body>
 </html>

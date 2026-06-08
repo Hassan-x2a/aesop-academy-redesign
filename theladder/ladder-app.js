@@ -14,32 +14,45 @@ const TRANSCRIPT_STATUS = {
   VERIFIED: 'verified',
   SELF_REPORTED: 'self_reported'
 };
-const LAB_TYPES = {
-  DEBATE: {
-    id: 'debate',
-    label: 'Debate',
-    title: 'Defend a position',
-    summary: 'Take a position, respond to challenge, and decide whether your reasoning holds.',
-    action: 'debate',
-    completion: 'A defended position with at least one revision or justification under pressure.'
+const CERTIFICATION_TIERS = [
+  { id: 'elementary', label: 'Elementary', standards: 'AI4K12, ISTE, UNESCO' },
+  { id: 'middle-school', label: 'Middle School', standards: 'AI4K12, ISTE, CSTA, UNESCO' },
+  { id: 'high-school', label: 'High School', standards: 'AI4K12, ISTE, CSTA, UNESCO' },
+  { id: 'young-adult', label: 'Young Adult', standards: 'ISTE, CSTA, UNESCO, WEF' },
+  { id: 'college', label: 'College / Technical', standards: 'CSTA, O*NET, WEF, NIST AI RMF' },
+  { id: 'workforce', label: 'Workforce', standards: 'O*NET, WEF, NIST AI RMF, EU AI Act' },
+  { id: 'leadership', label: 'Leadership', standards: 'O*NET, WEF, NIST AI RMF, EU AI Act' }
+];
+const TEST_DEPTHS = [
+  {
+    id: 'certification',
+    label: 'Certification',
+    outcome: 'certification path evidence',
+    evidence: 'clear competency evidence for the selected Ladder tier and certification tier',
+    passingStandard: 'solid rubric performance with no critical failures',
+    review: 'AI-assessed, auditable, and challengeable'
   },
-  SKILL: {
-    id: 'skill',
-    label: 'Skill',
-    title: 'Apply a technique',
-    summary: 'Use a repeatable framework or technique on a concrete example.',
-    action: 'skill',
-    completion: 'A completed application of the technique with evidence, limits, and next steps.'
+  {
+    id: 'expert-challenge',
+    label: 'Expert challenge',
+    outcome: 'expert-level evidence for advanced credit',
+    evidence: 'strong transfer, edge-case reasoning, and defensible tradeoff analysis',
+    passingStandard: 'high rubric performance, independent reasoning, and confident defense under challenge',
+    review: 'AI-assessed with human review recommended for public or employment claims'
   },
-  BUILD: {
-    id: 'build',
-    label: 'Build',
-    title: 'Produce an artifact',
-    summary: 'Create a small usable output, then explain the choices that shaped it.',
-    action: 'build',
-    completion: 'A concrete artifact such as a policy, checklist, prompt, workflow, spec, or plan.'
+  {
+    id: 'mastery-challenge',
+    label: 'Mastery challenge',
+    outcome: 'mastery evidence and portfolio-quality artifact',
+    evidence: 'original synthesis, portfolio-grade artifact, standards mapping, and leadership-level defense',
+    passingStandard: 'near-expert rubric performance across all dimensions with no unresolved evidence gaps',
+    review: 'AI-assessed with human or panel review recommended before external credential claims'
   }
-};
+];
+
+function normalizeTestDepthId(id) {
+  return TEST_DEPTHS.some((item) => item.id === id) ? id : TEST_DEPTHS[0].id;
+}
 
 const VOCAB_DEFINITIONS = {
   'artificial intelligence': 'Computer systems that perform tasks usually associated with human intelligence, such as reasoning, language, perception, planning, prediction, or decision support.',
@@ -123,13 +136,16 @@ const state = {
   activeTopicId: LADDER_TIERS[0].topics[0].id,
   activeVocabTerm: LADDER_TIERS[0].vocabulary[0],
   searchQuery: '',
+  certificationTierId: 'workforce',
+  testDepthId: 'certification',
+  evaluationContext: null,
   placementExpanded: false,
   messages: [],
   progress: {
     completedTopics: {},
-    completedLabs: {},
     vocabulary: {},
     selfAssignedTopicIds: [],
+    evaluationAttempts: [],
     placement: null,
     assessmentMessages: [],
     transcriptEvents: []
@@ -145,6 +161,12 @@ const el = {
   lookupBtn: document.getElementById('lookupBtn'),
   topicSearchInput: document.getElementById('topicSearchInput'),
   topicSearchResults: document.getElementById('topicSearchResults'),
+  certificationTierSelect: document.getElementById('certificationTierSelect'),
+  testDepthSelect: document.getElementById('testDepthSelect'),
+  activeEvaluationTarget: document.getElementById('activeEvaluationTarget'),
+  startEvaluationBtn: document.getElementById('startEvaluationBtn'),
+  certificationWorkspaceTarget: document.getElementById('certificationWorkspaceTarget'),
+  startWorkspaceCertificationBtn: document.getElementById('startWorkspaceCertificationBtn'),
   placementSection: document.getElementById('placementSection'),
   placementStatus: document.getElementById('placementStatus'),
   placementSummary: document.getElementById('placementSummary'),
@@ -181,12 +203,6 @@ const el = {
   chatLog: document.getElementById('chatLog'),
   chatForm: document.getElementById('chatForm'),
   chatInput: document.getElementById('chatInput'),
-  assignmentSummary: document.getElementById('assignmentSummary'),
-  assignmentTypeBadge: document.getElementById('assignmentTypeBadge'),
-  assignmentTitle: document.getElementById('assignmentTitle'),
-  assignmentPrompt: document.getElementById('assignmentPrompt'),
-  assignmentChecklist: document.getElementById('assignmentChecklist'),
-  completeLabBtn: document.getElementById('completeLabBtn'),
   transcriptList: document.getElementById('transcriptList'),
   exportTranscriptBtn: document.getElementById('exportTranscriptBtn')
 };
@@ -353,6 +369,9 @@ function saveLocal() {
     activeTierId: state.activeTierId,
     activeTopicId: state.activeTopicId,
     activeVocabTerm: state.activeVocabTerm,
+    certificationTierId: state.certificationTierId,
+    testDepthId: state.testDepthId,
+    evaluationContext: state.evaluationContext,
     placementExpanded: state.placementExpanded,
     progress: state.progress
   }));
@@ -371,10 +390,13 @@ async function saveRemote() {
         activeTierId: state.activeTierId,
         activeTopicId: state.activeTopicId,
         activeVocabTerm: state.activeVocabTerm,
+        certificationTierId: state.certificationTierId,
+        testDepthId: state.testDepthId,
+        evaluationContext: state.evaluationContext,
         completedTopics: state.progress.completedTopics,
-        completedLabs: state.progress.completedLabs,
         vocabulary: state.progress.vocabulary,
         selfAssignedTopicIds: state.progress.selfAssignedTopicIds,
+        evaluationAttempts: state.progress.evaluationAttempts,
         placement: state.progress.placement,
         assessmentMessages: state.progress.assessmentMessages,
         transcriptEvents: state.progress.transcriptEvents
@@ -414,10 +436,13 @@ async function loadRemote(learnerId) {
     state.activeTierId = ladder.activeTierId || state.activeTierId;
     state.activeTopicId = ladder.activeTopicId || state.activeTopicId;
     state.activeVocabTerm = ladder.activeVocabTerm || state.activeVocabTerm;
+    state.certificationTierId = ladder.certificationTierId || state.certificationTierId;
+    state.testDepthId = normalizeTestDepthId(ladder.testDepthId || state.testDepthId);
+    state.evaluationContext = ladder.evaluationContext || null;
     state.progress.completedTopics = ladder.completedTopics || {};
-    state.progress.completedLabs = ladder.completedLabs || {};
     state.progress.vocabulary = ladder.vocabulary || {};
     state.progress.selfAssignedTopicIds = ladder.selfAssignedTopicIds || [];
+    state.progress.evaluationAttempts = ladder.evaluationAttempts || [];
     state.progress.placement = ladder.placement || null;
     state.progress.assessmentMessages = ladder.assessmentMessages || [];
     state.progress.transcriptEvents = ladder.transcriptEvents || [];
@@ -437,12 +462,15 @@ function loadLocal() {
     state.activeTierId = saved.activeTierId || state.activeTierId;
     state.activeTopicId = saved.activeTopicId || state.activeTopicId;
     state.activeVocabTerm = saved.activeVocabTerm || state.activeVocabTerm;
+    state.certificationTierId = saved.certificationTierId || state.certificationTierId;
+    state.testDepthId = normalizeTestDepthId(saved.testDepthId || state.testDepthId);
+    state.evaluationContext = saved.evaluationContext || null;
     state.placementExpanded = saved.placementExpanded ?? state.placementExpanded;
     state.progress = saved.progress || state.progress;
     state.progress.completedTopics ||= {};
-    state.progress.completedLabs ||= {};
     state.progress.vocabulary ||= {};
     state.progress.selfAssignedTopicIds ||= [];
+    state.progress.evaluationAttempts ||= [];
     state.progress.placement ||= null;
     state.progress.assessmentMessages ||= [];
     state.progress.transcriptEvents ||= [];
@@ -1037,72 +1065,6 @@ function renderResources(topic) {
   )).join('');
 }
 
-function labTypeForTopic(topic, tier) {
-  const haystack = `${topic.title} ${tier.title}`.toLowerCase();
-  if (/(should|when not|ethic|governance|risk|privacy|copyright|bias|compliance|law|oversight|red-team|red team|security|vendor|evaluation|assessment)/.test(haystack)) {
-    return LAB_TYPES.DEBATE;
-  }
-  if (/(build|design|create|workflow|template|policy|plan|roadmap|api|json|agent|rag|retrieval|database|tool|automation|deploy|product|strategy|prompt)/.test(haystack)) {
-    return LAB_TYPES.BUILD;
-  }
-  return LAB_TYPES.SKILL;
-}
-
-function assignmentChecklist(topic, tier) {
-  const labType = labTypeForTopic(topic, tier);
-  const common = [
-    `Ground the work in "${topic.title}".`,
-    'Use one concrete example, source, role, or use case.',
-    'Name one risk, limitation, or failure mode.',
-    'Finish with a short artifact or evidence statement for your transcript.'
-  ];
-  if (labType.id === 'debate') {
-    return [
-      'State your position clearly.',
-      'Answer the AI guide when it challenges your reasoning.',
-      'Revise or defend your position with evidence.',
-      ...common.slice(2)
-    ];
-  }
-  if (labType.id === 'build') {
-    return [
-      'Choose the artifact you will produce.',
-      'Draft the artifact in the conversation.',
-      'Explain the design choices behind it.',
-      ...common.slice(2)
-    ];
-  }
-  return [
-    'Apply a specific framework, checklist, or technique.',
-    'Work through a real or realistic example.',
-    'Explain what changed in your understanding.',
-    ...common.slice(2)
-  ];
-}
-
-function assignmentPromptFor(topic, tier) {
-  const labType = labTypeForTopic(topic, tier);
-  const starters = {
-    debate: `Take a position on a real decision involving "${topic.title}". The AI guide will challenge your reasoning until you can defend, revise, or narrow the claim.`,
-    skill: `Apply a repeatable technique for "${topic.title}" to a concrete example. The AI guide will press for specificity and help you turn the work into evidence.`,
-    build: `Create a small usable artifact connected to "${topic.title}". The AI guide will review the artifact for completeness, risk, and practical use.`
-  };
-  return starters[labType.id];
-}
-
-function renderAssignment(topic, tier) {
-  const labType = labTypeForTopic(topic, tier);
-  const completed = state.progress.completedLabs[topicKey(topic.id)];
-  el.assignmentSummary.textContent = `${labType.label} lab - ${labType.summary}`;
-  el.assignmentTypeBadge.textContent = labType.label;
-  el.assignmentTypeBadge.dataset.type = labType.id;
-  el.assignmentTitle.textContent = labType.title;
-  el.assignmentPrompt.textContent = assignmentPromptFor(topic, tier);
-  el.assignmentChecklist.innerHTML = assignmentChecklist(topic, tier).map((item) => `<li>${escapeHtml(item)}</li>`).join('');
-  el.completeLabBtn.textContent = completed ? 'Assignment completed' : 'Complete assignment';
-  el.completeLabBtn.disabled = Boolean(completed);
-}
-
 function renderChat() {
   if (!state.messages.length) {
     el.chatLog.innerHTML = '<div class="message assistant"><strong>Guide</strong>Select Start to begin a guided conversation for this rung.</div>';
@@ -1116,7 +1078,7 @@ function renderChat() {
 
 function renderTranscript() {
   if (!state.progress.transcriptEvents.length) {
-    el.transcriptList.innerHTML = '<div class="transcript-event"><strong>No events yet</strong><small>Complete conversations, vocabulary, labs, or rungs to build a transcript.</small></div>';
+    el.transcriptList.innerHTML = '<div class="transcript-event"><strong>No events yet</strong><small>Complete conversations, vocabulary, certifications, or rungs to build a transcript.</small></div>';
     return;
   }
 
@@ -1138,8 +1100,26 @@ function renderTopic() {
   renderTopicPicker(tier);
   renderVocabulary(tier);
   renderResources(topic);
-  renderAssignment(topic, tier);
   renderChat();
+}
+
+function renderEvaluationPanel() {
+  if (!el.certificationTierSelect || !el.testDepthSelect) return;
+  const tier = getActiveTier();
+  el.certificationTierSelect.innerHTML = CERTIFICATION_TIERS.map((item) => (
+    `<option value="${item.id}">${item.label}</option>`
+  )).join('');
+  el.testDepthSelect.innerHTML = TEST_DEPTHS.map((item) => (
+    `<option value="${item.id}">${item.label}</option>`
+  )).join('');
+  el.certificationTierSelect.value = state.certificationTierId;
+  el.testDepthSelect.value = state.testDepthId;
+  const cert = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
+  const depth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
+  el.testDepthSelect.value = depth.id;
+  const targetText = `${tier.name}: ${tier.title} - ${cert.label}, ${depth.label}`;
+  el.activeEvaluationTarget.textContent = targetText;
+  if (el.certificationWorkspaceTarget) el.certificationWorkspaceTarget.textContent = targetText;
 }
 
 function renderControls() {
@@ -1171,6 +1151,7 @@ function render() {
   renderLearner();
   renderControls();
   renderTopicSearch();
+  renderEvaluationPanel();
   renderPlacement();
   renderProgress();
   renderTiers();
@@ -1193,8 +1174,23 @@ function systemPromptFor(topic, tier) {
   const assigned = placement?.assignedTopicIds?.includes(topic.id) ? 'yes' : 'no';
   const selfAssigned = state.progress.selfAssignedTopicIds?.includes(topic.id) ? 'yes' : 'no';
   const placedOut = state.progress.completedTopics[topicKey(topic.id)]?.status === TRANSCRIPT_STATUS.PLACED_OUT ? 'yes' : 'no';
-  const labType = labTypeForTopic(topic, tier);
-  const checklist = assignmentChecklist(topic, tier).map((item) => `- ${item}`).join('\n');
+  const evaluation = state.evaluationContext;
+  const evaluationBlock = evaluation ? `
+Active certification mode: YES.
+Certification blueprint: ${evaluation.blueprintId} ${evaluation.blueprintVersion}.
+Certification tier: ${evaluation.certificationTierLabel}.
+Mapped standards family: ${evaluation.standards}.
+Certification depth: ${evaluation.testDepthLabel} (${evaluation.testDepthOutcome}).
+Required evidence level: ${evaluation.testDepthEvidence}.
+Passing standard: ${evaluation.testDepthPassingStandard}.
+Review posture: ${evaluation.testDepthReview}.
+
+Act as a structured AI examiner, not a course tutor. The learner is allowed to test out without taking a course. Before asking the first substantive question, briefly state the rubric dimensions in plain language: conceptual accuracy, vocabulary fluency, applied judgment, evidence quality, reasoning defense, risk awareness, and standards alignment. Then deliver a dynamic test for this Ladder tier with vocabulary, scenario judgment, applied task, risk/limitation question, artifact or evidence statement, and defense of reasoning.
+
+For Certification, test for competent and defensible use of the tier. For Expert challenge, increase ambiguity, require transfer to a new context, and press harder on edge cases. For Mastery challenge, require original synthesis, portfolio-quality evidence, standards mapping, and leadership-level defense.
+
+Do not award a final credential in one short response. Collect evidence first. When you are ready to make a determination, explain pass or non-pass with specific learner evidence, missing evidence, standards implications, selected depth expectations, and a challenge path. If evidence is insufficient, say what would change the decision. If confidence is low, say human review is recommended.
+` : '';
   return `You are The Ladder guide inside AESOP AI Academy. You are strictly scoped to the selected topic: ${topic.title}.
 
 Placement interests: ${interestText(placement)}.
@@ -1207,19 +1203,16 @@ Was this rung placed out by assessment? ${placedOut}.
 Tier: ${tier.name} - ${tier.title}.
 Preferred language: ${languageLabel()}. Translate your learner-facing responses into this language unless the learner asks otherwise.
 
-Every rung is now an assignment lab conversation. This assignment's lab type is ${labType.label.toUpperCase()}: ${labType.summary}
-Assignment prompt: ${assignmentPromptFor(topic, tier)}
-Completion target: ${labType.completion}
-Checklist:
-${checklist}
+Every rung is a guided AI learning conversation. The goal is discovery, critical thinking, vocabulary fluency, and applied understanding. Do not frame the experience as schoolwork.
+${evaluationBlock}
 
 Use this guarded teaching pattern:
 1. Diagnose what the learner already understands.
 2. Ask vocabulary questions using relevant terms from this tier.
-3. Run the ${labType.id} assignment: make the learner ${labType.action}, not just read or summarize.
-4. Push application to the learner's role or goal and require a concrete artifact, defense, or worked example.
+3. Force discovery by making the learner compare, question, verify, or reason through the topic.
+4. Push application to the learner's role or goal using a realistic example, decision, workflow, or scenario.
 5. Ask for one risk, limitation, or misconception.
-6. End by telling the learner whether this assignment should be transcripted as completed, verified, self-reported, or not yet ready.
+6. End by telling the learner whether this rung should be transcripted as completed, verified, self-reported, or not yet ready.
 
 Do not act as a general assistant. If the learner goes off topic, warmly redirect them back to ${topic.title}. Do not simply lecture. Ask questions and require the learner to reason. Keep responses concise enough for an interactive learning session.`;
 }
@@ -1252,17 +1245,59 @@ async function callGuide() {
 
 async function startConversation() {
   const topic = getActiveTopic();
-  const tier = getActiveTier();
-  const labType = labTypeForTopic(topic, tier);
   state.messages = [{
     role: 'user',
-    content: `Start my ${labType.label} assignment lab for "${topic.title}". Diagnose my current understanding first, then make me ${labType.action} through a concrete assignment. The assignment prompt is: ${assignmentPromptFor(topic, tier)}`
+    content: `Start my guided conversation for "${topic.title}". Diagnose my current understanding first, then help me discover the topic through questions, vocabulary, examples, application, and one risk or limitation.`
   }];
   renderChat();
   await callGuide();
-  addTranscript('assignment_lab_started', `${topic.title} ${labType.label} lab`, `Started a ${labType.label.toLowerCase()} assignment lab for ${topic.id}.`);
+  addTranscript('guided_conversation_started', topic.title, `Started a guided conversation for ${topic.id}.`);
   await persist();
   renderTranscript();
+}
+
+async function startEvaluation() {
+  const tier = getActiveTier();
+  const cert = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
+  const depth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
+  const attemptId = `eval_${Date.now()}`;
+  state.evaluationContext = {
+    attemptId,
+    certificationTierId: cert.id,
+    certificationTierLabel: cert.label,
+    standards: cert.standards,
+    testDepthId: depth.id,
+    testDepthLabel: depth.label,
+    testDepthOutcome: depth.outcome,
+    testDepthEvidence: depth.evidence,
+    testDepthPassingStandard: depth.passingStandard,
+    testDepthReview: depth.review,
+    ladderTierId: tier.id,
+    ladderTierLabel: `${tier.name} - ${tier.title}`,
+    blueprintId: `${cert.id}:${tier.id}:${depth.id}`,
+    blueprintVersion: 'v0.1',
+    startedAt: new Date().toISOString()
+  };
+  state.progress.evaluationAttempts.unshift({
+    ...state.evaluationContext,
+    status: 'started'
+  });
+  state.progress.evaluationAttempts = state.progress.evaluationAttempts.slice(0, 25);
+  state.messages = [{
+    role: 'user',
+    content: `Start my ${depth.label} for ${tier.name}: ${tier.title}. Certification tier: ${cert.label}. Standards family: ${cert.standards}. Required evidence: ${depth.evidence}. Passing standard: ${depth.passingStandard}. Deliver the test dynamically, document the rubric, require evidence, and do not require that I take a course first.`
+  }];
+  addTranscript(
+    'test_started',
+    `${cert.label} ${tier.name} ${depth.label}`,
+    `Started ${depth.label.toLowerCase()} for ${tier.title}. Blueprint ${state.evaluationContext.blueprintId} ${state.evaluationContext.blueprintVersion}.`,
+    { status: TRANSCRIPT_STATUS.SELF_REPORTED, evidence: 'ai_evaluation_started' }
+  );
+  renderChat();
+  renderTranscript();
+  await persist();
+  await callGuide();
+  document.querySelector('.conversation-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 async function startVocabularyConversation(event) {
@@ -1311,36 +1346,16 @@ async function markTopicComplete() {
   render();
 }
 
-async function markLabComplete() {
-  const topic = getActiveTopic();
-  const tier = getActiveTier();
-  const labType = labTypeForTopic(topic, tier);
-  state.progress.completedLabs[topicKey(topic.id)] = {
-    status: TRANSCRIPT_STATUS.COMPLETED,
-    completedAt: new Date().toISOString(),
-    evidence: TRANSCRIPT_STATUS.SELF_REPORTED,
-    labType: labType.id,
-    artifactDesc: labType.completion
-  };
-  addTranscript(
-    'assignment_lab_completed',
-    `${topic.title} ${labType.label} lab`,
-    `Completed the ${labType.label.toLowerCase()} assignment lab for ${topic.id}: ${labType.completion}`,
-    { status: TRANSCRIPT_STATUS.COMPLETED, evidence: TRANSCRIPT_STATUS.SELF_REPORTED }
-  );
-  await persist();
-  render();
-}
-
 function exportTranscript() {
   const payload = {
     learnerId: state.learnerId,
     ladderVersion: LADDER_VERSION,
     exportedAt: new Date().toISOString(),
     placement: state.progress.placement,
+    evaluationContext: state.evaluationContext,
+    evaluationAttempts: state.progress.evaluationAttempts,
     selfAssignedTopicIds: state.progress.selfAssignedTopicIds,
     completedTopics: state.progress.completedTopics,
-    completedLabs: state.progress.completedLabs,
     transcriptEvents: state.progress.transcriptEvents
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -1383,6 +1398,21 @@ function bindEvents() {
     renderTopicSearch();
   });
 
+  el.certificationTierSelect?.addEventListener('change', async () => {
+    state.certificationTierId = el.certificationTierSelect.value;
+    await persist();
+    renderEvaluationPanel();
+  });
+
+  el.testDepthSelect?.addEventListener('change', async () => {
+    state.testDepthId = el.testDepthSelect.value;
+    await persist();
+    renderEvaluationPanel();
+  });
+
+  el.startEvaluationBtn?.addEventListener('click', startEvaluation);
+  el.startWorkspaceCertificationBtn?.addEventListener('click', startEvaluation);
+
   el.startPlacementBtn.addEventListener('click', startPlacementAssessment);
   el.togglePlacementBtn.addEventListener('click', async () => {
     state.placementExpanded = !state.placementExpanded;
@@ -1415,7 +1445,6 @@ function bindEvents() {
   el.vocabPromptForm.addEventListener('submit', startVocabularyConversation);
   el.chatForm.addEventListener('submit', submitChat);
   el.completeTopicBtn.addEventListener('click', markTopicComplete);
-  el.completeLabBtn.addEventListener('click', markLabComplete);
   el.exportTranscriptBtn.addEventListener('click', exportTranscript);
   el.researchBtn.addEventListener('click', findVideos);
 }
