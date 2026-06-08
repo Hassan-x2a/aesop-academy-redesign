@@ -100,9 +100,15 @@
     }
 
     .ladder-hero {
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+      grid-template-columns: minmax(0, 1fr) minmax(600px, 760px);
       align-items: end;
       padding: 48px 0 30px;
+    }
+
+    .hero-panels {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .ladder-hero h1 {
@@ -133,6 +139,39 @@
     .ladder-toolbar,
     .ladder-content {
       padding: 1rem;
+    }
+
+    .topic-search-panel {
+      min-height: 100%;
+    }
+
+    .topic-search-input {
+      width: 100%;
+    }
+
+    .topic-search-results {
+      display: grid;
+      gap: 0.45rem;
+      max-height: 190px;
+      overflow: auto;
+    }
+
+    .topic-search-result {
+      border: 1px solid var(--ladder-line);
+      background: var(--ladder-soft);
+      color: var(--ladder-ink);
+      display: grid;
+      gap: 0.2rem;
+      padding: 0.55rem;
+      text-align: left;
+      width: 100%;
+    }
+
+    .topic-search-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.25rem;
     }
 
     .ladder-toolbar {
@@ -414,6 +453,10 @@
         grid-template-columns: 1fr;
       }
 
+      .hero-panels {
+        grid-template-columns: 1fr;
+      }
+
       .tier-rail {
         position: static;
         max-height: none;
@@ -502,7 +545,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="/theladder/ladder.css?v=6">
+  <link rel="stylesheet" href="/theladder/ladder.css?v=8">
 </head>
 <body>
   <nav class="nav">
@@ -532,12 +575,20 @@
         <h1>The Ladder</h1>
         <p class="hero-text">A structured AI learning path where every rung becomes a guided conversation, a lab, additional lessons and links, and a transcript event.</p>
       </div>
-      <div class="learner-panel" id="learnerPanel">
-        <span class="panel-label">Learner ID</span>
-        <strong id="learnerIdLabel">Not started</strong>
-        <div class="learner-actions">
-          <input id="learnerLookup" type="text" placeholder="AESOP-7K3X" aria-label="Existing learner ID">
-          <button id="lookupBtn" type="button">Use ID</button>
+      <div class="hero-panels">
+        <div class="learner-panel" id="learnerPanel">
+          <span class="panel-label">Learner ID</span>
+          <strong id="learnerIdLabel">Not started</strong>
+          <div class="learner-actions">
+            <input id="learnerLookup" type="text" placeholder="AESOP-7K3X" aria-label="Existing learner ID">
+            <button id="lookupBtn" type="button">Use ID</button>
+          </div>
+        </div>
+        <div class="learner-panel topic-search-panel" id="topicSearchPanel">
+          <span class="panel-label">Find a Rung</span>
+          <strong>Search topics or courses</strong>
+          <input id="topicSearchInput" class="topic-search-input" type="search" placeholder="Agents, ethics, image generation..." aria-label="Search Ladder topics and courses" autocomplete="off">
+          <div id="topicSearchResults" class="topic-search-results" aria-live="polite"></div>
         </div>
       </div>
     </section>
@@ -674,6 +725,6 @@
     </section>
   </main>
 
-  <script type="module" src="/theladder/ladder-app.js?v=3"></script>
+  <script type="module" src="/theladder/ladder-app.js?v=8"></script>
 </body>
 </html>

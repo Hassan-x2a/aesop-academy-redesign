@@ -96,12 +96,14 @@ const state = {
   activeTierId: LADDER_TIERS[0].id,
   activeTopicId: LADDER_TIERS[0].topics[0].id,
   activeVocabTerm: LADDER_TIERS[0].vocabulary[0],
+  searchQuery: '',
   placementExpanded: false,
   messages: [],
   progress: {
     completedTopics: {},
     completedLabs: {},
     vocabulary: {},
+    selfAssignedTopicIds: [],
     placement: null,
     assessmentMessages: [],
     transcriptEvents: []
@@ -115,6 +117,8 @@ const el = {
   learnerIdLabel: document.getElementById('learnerIdLabel'),
   learnerLookup: document.getElementById('learnerLookup'),
   lookupBtn: document.getElementById('lookupBtn'),
+  topicSearchInput: document.getElementById('topicSearchInput'),
+  topicSearchResults: document.getElementById('topicSearchResults'),
   placementSection: document.getElementById('placementSection'),
   placementStatus: document.getElementById('placementStatus'),
   placementSummary: document.getElementById('placementSummary'),
@@ -185,6 +189,10 @@ function topicById(topicId) {
   return allTopics().find((topic) => topic.id === topicId);
 }
 
+function tierById(tierId) {
+  return LADDER_TIERS.find((tier) => tier.id === tierId) || LADDER_TIERS[0];
+}
+
 function languageLabel() {
   if (state.language === 'custom') return state.customLanguage || 'the learner selected language';
   return LANGUAGES.find((item) => item.code === state.language)?.label || 'English';
@@ -201,6 +209,17 @@ function assignedTopicsByTier(assignedTopicIds = []) {
     tier,
     topics: tier.topics.filter((topic) => assigned.has(topic.id))
   })).filter((group) => group.topics.length);
+}
+
+function assignedTopicIds() {
+  return [
+    ...(state.progress.placement?.assignedTopicIds || []),
+    ...(state.progress.selfAssignedTopicIds || [])
+  ].filter((topicId, index, list) => topicId && list.indexOf(topicId) === index);
+}
+
+function isTopicAssigned(topicId) {
+  return assignedTopicIds().includes(topicId);
 }
 
 function grantRules(capabilityScore, technicalScore, governanceScore) {
@@ -325,6 +344,7 @@ async function saveRemote() {
         completedTopics: state.progress.completedTopics,
         completedLabs: state.progress.completedLabs,
         vocabulary: state.progress.vocabulary,
+        selfAssignedTopicIds: state.progress.selfAssignedTopicIds,
         placement: state.progress.placement,
         assessmentMessages: state.progress.assessmentMessages,
         transcriptEvents: state.progress.transcriptEvents
@@ -367,6 +387,7 @@ async function loadRemote(learnerId) {
     state.progress.completedTopics = ladder.completedTopics || {};
     state.progress.completedLabs = ladder.completedLabs || {};
     state.progress.vocabulary = ladder.vocabulary || {};
+    state.progress.selfAssignedTopicIds = ladder.selfAssignedTopicIds || [];
     state.progress.placement = ladder.placement || null;
     state.progress.assessmentMessages = ladder.assessmentMessages || [];
     state.progress.transcriptEvents = ladder.transcriptEvents || [];
@@ -391,6 +412,7 @@ function loadLocal() {
     state.progress.completedTopics ||= {};
     state.progress.completedLabs ||= {};
     state.progress.vocabulary ||= {};
+    state.progress.selfAssignedTopicIds ||= [];
     state.progress.placement ||= null;
     state.progress.assessmentMessages ||= [];
     state.progress.transcriptEvents ||= [];
@@ -663,6 +685,88 @@ function renderLearner() {
   el.learnerLookup.value = state.learnerId || '';
 }
 
+function topicSearchResults(query) {
+  const terms = String(query || '').toLowerCase().split(/\s+/).filter(Boolean);
+  if (!terms.length) return [];
+  return allTopics().map((topic) => {
+    const tier = tierById(topic.tierId);
+    const haystack = [
+      topic.id,
+      topic.title,
+      tier.name,
+      tier.title,
+      ...(tier.vocabulary || [])
+    ].join(' ').toLowerCase();
+    const matched = terms.filter((term) => haystack.includes(term)).length;
+    const starts = topic.title.toLowerCase().startsWith(terms[0]) ? 2 : 0;
+    const titleHit = terms.some((term) => topic.title.toLowerCase().includes(term)) ? 1 : 0;
+    return { topic, tier, score: matched + starts + titleHit };
+  }).filter((result) => result.score >= terms.length)
+    .sort((a, b) => b.score - a.score || a.tier.order - b.tier.order || a.topic.order - b.topic.order)
+    .slice(0, 8);
+}
+
+function renderTopicSearch() {
+  if (!el.topicSearchInput || !el.topicSearchResults) return;
+  el.topicSearchInput.value = state.searchQuery;
+  const query = state.searchQuery.trim();
+  if (!query) {
+    el.topicSearchResults.innerHTML = '<p class="topic-search-empty">Search any topic, tier, vocabulary word, or course concept. You can start a rung or assign it to your path without taking the assessment.</p>';
+    return;
+  }
+
+  const results = topicSearchResults(query);
+  if (!results.length) {
+    el.topicSearchResults.innerHTML = '<p class="topic-search-empty">No matching rungs yet. Try a broader phrase like agents, ethics, workflow, images, API, or governance.</p>';
+    return;
+  }
+
+  el.topicSearchResults.innerHTML = results.map(({ topic, tier }) => {
+    const assigned = isTopicAssigned(topic.id);
+    const assignedText = assigned ? 'Assigned' : 'Assign';
+    return `
+      <div class="topic-search-result" role="option">
+        <strong>${escapeHtml(topic.title)}</strong>
+        <small>${topic.id} - ${escapeHtml(tier.name)}: ${escapeHtml(tier.title)}</small>
+        <div class="topic-search-actions">
+          <button type="button" data-start-topic="${topic.id}">Start</button>
+          <button type="button" class="secondary" data-assign-topic="${topic.id}" ${assigned ? 'disabled' : ''}>${assignedText}</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  el.topicSearchResults.querySelectorAll('[data-start-topic]').forEach((button) => {
+    button.addEventListener('click', () => openTopicFromSearch(button.dataset.startTopic, false));
+  });
+  el.topicSearchResults.querySelectorAll('[data-assign-topic]').forEach((button) => {
+    button.addEventListener('click', () => openTopicFromSearch(button.dataset.assignTopic, true));
+  });
+}
+
+async function openTopicFromSearch(topicId, assignToPath) {
+  const topic = topicById(topicId);
+  if (!topic) return;
+  const tier = tierById(topic.tierId);
+  state.activeTierId = tier.id;
+  state.activeTopicId = topic.id;
+  state.messages = [];
+
+  if (assignToPath && !state.progress.selfAssignedTopicIds.includes(topic.id)) {
+    state.progress.selfAssignedTopicIds.push(topic.id);
+    addTranscript(
+      'rung_self_assigned',
+      topic.title,
+      `Self-assigned ${topic.id} from Ladder search.`,
+      { status: TRANSCRIPT_STATUS.SELF_REPORTED, evidence: TRANSCRIPT_STATUS.SELF_REPORTED }
+    );
+  }
+
+  await persist();
+  render();
+  document.querySelector('.topic-column')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function renderPlacement() {
   const placement = state.progress.placement;
   const messages = state.progress.assessmentMessages || [];
@@ -759,7 +863,7 @@ function renderProgress() {
 
 function renderTiers() {
   const granted = new Set(state.progress.placement?.grantedTierIds || []);
-  const assigned = new Set(state.progress.placement?.assignedTopicIds || []);
+  const assigned = new Set(assignedTopicIds());
   el.tierList.innerHTML = LADDER_TIERS.map((tier) => {
     const done = tier.topics.filter((topic) => state.progress.completedTopics[topicKey(topic.id)]).length;
     const active = tier.id === state.activeTierId ? ' active' : '';
@@ -811,7 +915,7 @@ function renderTopicPicker(tier) {
   strip.innerHTML = tier.topics.map((topic) => {
     const record = state.progress.completedTopics[topicKey(topic.id)];
     const done = record ? 'done' : '';
-    const assigned = state.progress.placement?.assignedTopicIds?.includes(topic.id) ? 'assigned' : '';
+    const assigned = isTopicAssigned(topic.id) ? 'assigned' : '';
     const placed = record?.status === TRANSCRIPT_STATUS.PLACED_OUT ? 'placed' : '';
     const active = topic.id === state.activeTopicId ? 'active' : '';
     return `<button class="secondary ${done} ${assigned} ${placed} ${active}" type="button" data-topic-id="${topic.id}" title="${topic.title}">${topic.order}</button>`;
@@ -977,6 +1081,7 @@ function renderThemeToggle() {
 function render() {
   renderLearner();
   renderControls();
+  renderTopicSearch();
   renderPlacement();
   renderProgress();
   renderTiers();
@@ -997,6 +1102,7 @@ function escapeHtml(value) {
 function systemPromptFor(topic, tier) {
   const placement = state.progress.placement;
   const assigned = placement?.assignedTopicIds?.includes(topic.id) ? 'yes' : 'no';
+  const selfAssigned = state.progress.selfAssignedTopicIds?.includes(topic.id) ? 'yes' : 'no';
   const placedOut = state.progress.completedTopics[topicKey(topic.id)]?.status === TRANSCRIPT_STATUS.PLACED_OUT ? 'yes' : 'no';
   return `You are The Ladder guide inside AESOP AI Academy. You are strictly scoped to the selected topic: ${topic.title}.
 
@@ -1005,6 +1111,7 @@ Assessment capability score: ${placement?.capabilityScore ?? 'not placed'}.
 Assessment technical score: ${placement?.technicalScore ?? 'not placed'}.
 Assessment governance score: ${placement?.governanceScore ?? 'not placed'}.
 Was this rung assigned by assessment? ${assigned}.
+Was this rung self-assigned by the learner? ${selfAssigned}.
 Was this rung placed out by assessment? ${placedOut}.
 Tier: ${tier.name} - ${tier.title}.
 Preferred language: ${languageLabel()}. Translate your learner-facing responses into this language unless the learner asks otherwise.
@@ -1128,6 +1235,7 @@ function exportTranscript() {
     ladderVersion: LADDER_VERSION,
     exportedAt: new Date().toISOString(),
     placement: state.progress.placement,
+    selfAssignedTopicIds: state.progress.selfAssignedTopicIds,
     completedTopics: state.progress.completedTopics,
     completedLabs: state.progress.completedLabs,
     transcriptEvents: state.progress.transcriptEvents
@@ -1165,6 +1273,11 @@ function bindEvents() {
   el.customLanguageInput.addEventListener('change', async () => {
     state.customLanguage = el.customLanguageInput.value.trim();
     await persist();
+  });
+
+  el.topicSearchInput?.addEventListener('input', () => {
+    state.searchQuery = el.topicSearchInput.value;
+    renderTopicSearch();
   });
 
   el.startPlacementBtn.addEventListener('click', startPlacementAssessment);

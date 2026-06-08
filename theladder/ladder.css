@@ -120,10 +120,16 @@ button.secondary {
 
 .ladder-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1fr) minmax(600px, 760px);
   gap: 1rem;
   align-items: end;
   padding: 2rem 0 1.25rem;
+}
+
+.hero-panels {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .ladder-hero h1 {
@@ -165,6 +171,10 @@ button.secondary {
   padding: 1rem;
 }
 
+.hero-panels .learner-panel {
+  min-height: 190px;
+}
+
 .learner-panel strong {
   color: var(--navy);
   display: block;
@@ -176,6 +186,86 @@ button.secondary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.5rem;
+}
+
+.topic-search-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.topic-search-panel strong {
+  color: var(--navy);
+  display: block;
+  font-size: 1.25rem;
+  margin: 0.25rem 0 0.7rem;
+}
+
+.topic-search-input {
+  border: 1px solid var(--ladder-line);
+  background: var(--white);
+  color: var(--ladder-ink);
+  min-height: 40px;
+  padding: 0.45rem 0.65rem;
+  width: 100%;
+}
+
+.topic-search-results {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+  max-height: 190px;
+  overflow: auto;
+}
+
+.topic-search-result {
+  border: 1px solid var(--ladder-line);
+  background: var(--ladder-soft);
+  color: var(--ladder-ink);
+  display: grid;
+  gap: 0.22rem;
+  padding: 0.55rem;
+  text-align: left;
+  transform: none;
+  width: 100%;
+}
+
+.topic-search-result:hover {
+  background: #fff9ea;
+  box-shadow: none;
+  color: var(--ladder-ink);
+  transform: none;
+}
+
+.topic-search-result strong {
+  color: var(--navy);
+  font-size: 0.95rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.topic-search-result small {
+  color: var(--ladder-muted);
+  display: block;
+  line-height: 1.25;
+}
+
+.topic-search-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.topic-search-actions button {
+  font-size: 0.76rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.topic-search-empty {
+  color: var(--ladder-muted);
+  font-size: 0.84rem;
+  line-height: 1.35;
 }
 
 .ladder-toolbar {
@@ -914,6 +1004,7 @@ button.secondary {
 
 [data-theme="dark"] .ladder-hero h1,
 [data-theme="dark"] .learner-panel strong,
+[data-theme="dark"] .topic-search-panel strong,
 [data-theme="dark"] .placement-summary h2,
 [data-theme="dark"] .assessment-chat-head strong,
 [data-theme="dark"] .assigned-rungs-panel summary,
@@ -940,6 +1031,7 @@ button.secondary {
 [data-theme="dark"] .ladder-select,
 [data-theme="dark"] .ladder-input,
 [data-theme="dark"] .learner-actions input,
+[data-theme="dark"] .topic-search-input,
 [data-theme="dark"] .chat-form input,
 [data-theme="dark"] .assessment-form textarea,
 [data-theme="dark"] .vocab-prompt-form input {
@@ -951,6 +1043,7 @@ button.secondary {
 [data-theme="dark"] .ladder-select::placeholder,
 [data-theme="dark"] .ladder-input::placeholder,
 [data-theme="dark"] .learner-actions input::placeholder,
+[data-theme="dark"] .topic-search-input::placeholder,
 [data-theme="dark"] .chat-form input::placeholder,
 [data-theme="dark"] .assessment-form textarea::placeholder,
 [data-theme="dark"] .vocab-prompt-form input::placeholder {
@@ -1000,6 +1093,7 @@ button.secondary {
 }
 
 [data-theme="dark"] .assigned-rung-link,
+[data-theme="dark"] .topic-search-result,
 [data-theme="dark"] .vocab-pill,
 [data-theme="dark"] .resource-chip {
   background: #132131;
@@ -1008,9 +1102,19 @@ button.secondary {
 }
 
 [data-theme="dark"] .assigned-rung-link:hover,
+[data-theme="dark"] .topic-search-result:hover,
 [data-theme="dark"] .resource-chip:hover {
   background: var(--ladder-soft);
   color: var(--ink);
+}
+
+[data-theme="dark"] .topic-search-result strong {
+  color: var(--ink);
+}
+
+[data-theme="dark"] .topic-search-result small,
+[data-theme="dark"] .topic-search-empty {
+  color: var(--ladder-muted);
 }
 
 [data-theme="dark"] .vocab-pill.done {
@@ -1080,6 +1184,10 @@ button.secondary {
     grid-template-columns: 1fr;
   }
 
+  .hero-panels {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .placement-chat,
   .placement-progress {
     grid-column: auto;
@@ -1118,6 +1226,10 @@ button.secondary {
   .ladder-top-actions {
     margin-left: 0;
     width: 100%;
+  }
+
+  .hero-panels {
+    grid-template-columns: 1fr;
   }
 
   .ladder-app {
