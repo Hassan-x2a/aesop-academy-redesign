@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-09-pointfive-60m-accel-ai-cloud-cost-optimization",
+  "title": "PointFive raises $60M Series B for AI and cloud cost optimization",
+  "subtitle": "Accel leads at a $500M valuation as enterprises hunt for tools to control runaway AI infrastructure bills.",
+  "date": "2026-06-09",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": ["pointfive", "accel", "cloud-costs", "finops", "ai-efficiency", "series-b"],
+  "readTime": "3 min read",
+  "heroEmoji": "💸",
+  "body": [
+    "PointFive announced a $60 million Series B on June 8, led by Accel with participation from Index Ventures, Salesforce Ventures, Entrée Capital, Perpetual Growth, Vesey Ventures, and Sheva Ventures. The round values the Israeli-founded company at $500 million post-money and brings total funding to $96 million. PointFive sells what it calls an AI and cloud efficiency platform — a system called DeepWaste that inspects configuration, telemetry, application code, and reserved-capacity commitments to find spending that does not pull its weight, then auto-remediates by opening GitHub pull requests, Jira tickets, and Slack threads against the engineers who own the resources. The company says annual recurring revenue grew six-fold over the past year and that existing customers, on average, doubled their spend.",
+    "The headline customer numbers are the kind FinOps vendors love to cite: cloud costs cut by up to 30 percent, average return on investment above 1,000 percent, Nubank recouping its PointFive bill within ten days. What is new versus the previous generation of cloud cost tools is the focus on AI workloads specifically — GPU under-utilization, idle inference endpoints, training jobs left running past the experiment, embedding stores that nobody queries anymore. These are the line items that have ballooned every enterprise's cloud invoice over the past eighteen months, and they are not what tools designed for 2018-era EC2 fleets were built to catch.",
+    "The fundraise sits inside a broader shift in enterprise AI spending. Q1 2026 capex from the largest cloud and AI buyers crossed $725 billion, and the next phase of the cycle is no longer about whether to buy compute — it is about who can extract the most output per dollar. FinOps, observability, and efficiency tooling are quietly becoming a distinct AI-adjacent category, with PointFive joining names like CloudZero, Anodot, and Vantage that have all raised growth rounds in 2026. The new hires PointFive plans, roughly forty in marketing and R&D, will go toward Europe and Israel expansion.",
+    "A note for learners: when you are building anything that uses model APIs or GPU compute, instrument cost from day one. Track tokens per request, GPU-hours per training run, embedding writes per user. Most AI projects that get killed inside large companies do not fail on capability — they fail on a bill nobody can defend in a quarterly review. The teams that get to ship are the ones who can show that every dollar spent maps to a measurable outcome. Tools like PointFive are downstream of that discipline; you can build the discipline yourself today."
+  ],
+  "sources": [
+    { "title": "AI infrastructure cost control startup PointFive gets $60M to help enterprises save — SiliconANGLE", "url": "https://siliconangle.com/2026/06/08/ai-infrastructure-cost-control-startup-pointfive-gets-60m-help-enterprises-save/" },
+    { "title": "Israeli AI efficiency co PointFive raises $60m — Globes", "url": "https://en.globes.co.il/en/article-israeli-ai-efficiency-co-pointfive-raises-60m-1001545301" },
+    { "title": "PointFive Raises $60 Million Series B To Help Enterprises Control AI And Cloud Costs — Pulse 2.0", "url": "https://pulse2.com/pointfive-raises-60-million-series-b-to-help-enterprises-control-ai-and-cloud-costs/" }
+  ],
+  "status": "published"
+}
