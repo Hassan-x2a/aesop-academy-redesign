@@ -1843,7 +1843,7 @@ function renderChat() {
   if (!state.messages.length) {
     el.chatLog.innerHTML = state.evaluationContext
       ? '<div class="message assistant"><strong>Examiner</strong>The certification exam will begin here when you start certification for this rung.</div>'
-      : '<div class="message assistant"><strong>Guide</strong>Select Start to begin a guided conversation for this rung.</div>';
+      : '<div class="message assistant"><strong>Guide</strong>Click Start Conversation to begin a guided conversation for this rung.</div>';
     return;
   }
   el.chatLog.innerHTML = state.messages.map((message) => (
