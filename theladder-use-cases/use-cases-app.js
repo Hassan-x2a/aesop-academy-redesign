@@ -80,10 +80,7 @@ async function init() {
   renderLoading();
 
   try {
-    const markdown = await fetch(catalogUrl).then((response) => {
-      if (!response.ok) throw new Error(`Use case catalog request failed: ${response.status}`);
-      return response.text();
-    });
+    const markdown = await fetchCatalogMarkdown();
     state.useCases = parseCatalog(markdown);
     restoreSavedState();
     if (!state.useCases.some((useCase) => useCase.id === state.selectedId)) {
@@ -175,6 +172,21 @@ function render() {
   renderUseCases();
   renderDetail(getSelectedUseCase());
   renderCentralCourseWorkspace(getSelectedUseCase());
+}
+
+async function fetchCatalogMarkdown() {
+  let lastError = null;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const response = await fetch(catalogUrl, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Use case catalog request failed: ${response.status}`);
+      return response.text();
+    } catch (error) {
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, attempt * 450));
+    }
+  }
+  throw lastError || new Error('Use case catalog request failed.');
 }
 
 function renderTopics() {
