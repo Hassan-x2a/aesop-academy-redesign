@@ -1985,11 +1985,12 @@ button.secondary {
   align-items: center !important;
   justify-content: center !important;
   padding: 1rem !important;
-  margin-bottom: 0.55rem !important;
+  margin-bottom: 0.65rem !important;
+  margin-top: 0.5rem !important;
 }
 
 .auth-link {
-  color: #5b477e !important;
+  color: #102235 !important;
   font-weight: 800 !important;
   font-size: 1rem !important;
   text-decoration: none !important;
@@ -1998,6 +1999,24 @@ button.secondary {
 .auth-link:hover {
   color: #102235 !important;
   text-decoration: underline !important;
+}
+
+.evaluation-actions button,
+.evaluation-actions a {
+  color: #102235 !important;
+}
+
+.evaluation-actions button:hover,
+.evaluation-actions a:hover {
+  color: #102235 !important;
+}
+
+.architecture-link {
+  color: #102235 !important;
+}
+
+.credential-demo-link {
+  color: #102235 !important;
 }
 
 .learner-panel .panel-label,
