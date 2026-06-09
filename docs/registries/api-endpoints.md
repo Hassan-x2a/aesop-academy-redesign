@@ -122,6 +122,80 @@ On error: `{"error": "error message"}` with HTTP 5xx
 
 ---
 
+## `POST /aesop-api/product-request-email.php`
+
+Product training request email notification endpoint. Sends an email to `scott@aesopacademy.org` when a learner submits a missing product request from `/theladder-products/`.
+
+**Request shape (JSON body):**
+```
+{
+  productName:        string,
+  productType:        string,
+  reason:             string,
+  requesterEmail:     string,
+  sourcePath:         string,
+  sourceProductName:  string,
+  requestId:          string,
+  storage:            "firestore" | "local_fallback",
+  createdAtIso:       string
+}
+```
+
+**Response shape (JSON):**
+```
+{ "ok": true, "emailSent": true }
+```
+On error: `{"error": "message string"}`
+
+**Rate limit:** 8 requests per 10 minutes per IP.
+
+**Producer**
+- `aesop-api/product-request-email.php` - validates the request, rate limits by IP, and sends via PHP `mail()`
+
+**Consumers**
+- `theladder-products/products-app.js` - calls after a product request is saved to Firestore or to the same-browser fallback queue
+
+**Status:** ✓ product request notification endpoint; depends on host `mail()` delivery
+
+---
+
+## `POST /aesop-api/use-case-request-email.php`
+
+Use-case training request email notification endpoint. Sends an email to `scott@aesopacademy.org` when a learner submits a missing use-case request from `/theladder-use-cases/`.
+
+**Request shape (JSON body):**
+```
+{
+  useCaseName:        string,
+  topic:              string,
+  reason:             string,
+  requesterEmail:     string,
+  sourcePath:         string,
+  sourceUseCaseName:  string,
+  requestId:          string,
+  storage:            "firestore" | "local_fallback",
+  createdAtIso:       string
+}
+```
+
+**Response shape (JSON):**
+```
+{ "ok": true, "emailSent": true }
+```
+On error: `{"error": "message string"}`
+
+**Rate limit:** 8 requests per 10 minutes per IP.
+
+**Producer**
+- `aesop-api/use-case-request-email.php` - validates the request, rate limits by IP, and sends via PHP `mail()`
+
+**Consumers**
+- `theladder-use-cases/use-cases-app.js` - calls after a use-case request is saved to Firestore or to the same-browser fallback queue
+
+**Status:** ✓ use-case request notification endpoint; depends on host `mail()` delivery
+
+---
+
 ## Summary
 
 | Endpoint | Method | Purpose | CORS | Status |
@@ -129,6 +203,8 @@ On error: `{"error": "error message"}` with HTTP 5xx
 | `/aesop-api/proxy.php` | POST | Lab chat proxy (Haiku) | — | ✓ |
 | `/aesop-api/assessment-proxy.php` | POST | Assessment chat proxy (Sonnet) | — | ✓ system prompt server-side |
 | `/aesop-api/catalog.php` | GET | Course catalog export (change detection) | `*` | ✓ task #15 |
+| `/aesop-api/product-request-email.php` | POST | Product request email notification | — | ✓ |
+| `/aesop-api/use-case-request-email.php` | POST | Use-case request email notification | — | ✓ |
 
 ---
 

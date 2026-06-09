@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon_512.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ladder Use Cases - AESOP AI Academy</title>
+  <meta name="description" content="A use-case-based AI learning pathway covering 300 practical AI use cases with certification, expert certification, and master certification options.">
+  <meta property="og:title" content="The Ladder Use Cases - AESOP AI Academy">
+  <meta property="og:description" content="Learn and certify the practical AI use cases people apply across work, school, operations, healthcare, law, creativity, public service, and leadership.">
+  <meta property="og:url" content="https://aesopacademy.org/theladder-use-cases/">
+  <meta property="og:site_name" content="AESOP AI Academy">
+  <meta property="og:type" content="website">
+  <script>
+    if (localStorage.getItem('aesop-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+  <link rel="stylesheet" href="/academy-theme.css?v=2">
+  <link rel="stylesheet" href="/academy-dark-mode.css?v=2">
+  <link rel="stylesheet" href="/theladder-products/products.css?v=7">
+</head>
+<body>
+  <nav class="nav products-nav">
+    <div class="nav-inner">
+      <a href="/" class="brand-link" aria-label="AESOP AI Academy home">
+        <span class="brand">AESOP AI Academy</span>
+      </a>
+      <span class="nav-divider" aria-hidden="true"></span>
+      <a href="/theladder/" class="nav-link">The Ladder</a>
+      <a href="/theladder-products/" class="nav-link">Products</a>
+      <a href="/theladder-use-cases/" class="nav-link active" aria-current="page">Use Cases</a>
+      <div class="nav-spacer"></div>
+      <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
+      <a class="hub-link" href="/ai-academy/">Student hub</a>
+    </div>
+  </nav>
+
+  <main class="products-app">
+    <section class="products-hero" aria-labelledby="useCasesTitle">
+      <div class="hero-copy">
+        <p class="hero-kicker">AESOP use-case pathway</p>
+        <div class="hero-title-row">
+          <h1 id="useCasesTitle">The Ladder Use Cases</h1>
+          <label class="education-focus-control" for="educationFocusSelect">
+            <span>Education Focus</span>
+            <select id="educationFocusSelect" aria-label="Education Focus">
+              <option value="/theladder/">AI Concepts</option>
+              <option value="/theladder-products/">Products</option>
+              <option value="/theladder-use-cases/" selected>Use Cases</option>
+            </select>
+          </label>
+        </div>
+        <p class="hero-text">
+          A practical course map for the AI work people actually need to perform: write, research, build, analyze, support customers, govern risk, and improve real workflows.
+        </p>
+      </div>
+      <div class="hero-stats" aria-label="Use-case pathway summary">
+        <div>
+          <strong id="totalUseCases">300</strong>
+          <span>use cases</span>
+        </div>
+        <div>
+          <strong>3</strong>
+          <span>certification options each</span>
+        </div>
+        <div>
+          <strong id="advancedCount">0</strong>
+          <span>advanced tracks</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="products-layout">
+      <aside class="category-rail" aria-label="Use case topics">
+        <div class="rail-head">
+          <h2>Use case topics</h2>
+          <span id="visibleCount">0 shown</span>
+        </div>
+        <div id="categoryList" class="category-list"></div>
+      </aside>
+
+      <section class="catalog-panel" aria-label="Use case catalog">
+        <div class="catalog-tools">
+          <label class="search-field">
+            <span>Find a use case</span>
+            <input id="useCaseSearch" type="search" placeholder="Search tutoring, legal, SOC, forecasting..." autocomplete="off">
+          </label>
+          <label class="select-field">
+            <span>Course depth</span>
+            <select id="depthFilter">
+              <option value="all">All depths</option>
+              <option value="B">Beginner only</option>
+              <option value="B/I">Beginner + intermediate</option>
+              <option value="B/I/A">Beginner + intermediate + advanced</option>
+            </select>
+          </label>
+        </div>
+        <section class="request-panel" aria-labelledby="requestUseCaseTitle">
+          <div class="request-copy">
+            <span>Missing use case?</span>
+            <h2 id="requestUseCaseTitle">Request use-case training</h2>
+            <p>Send a use case into the admin review queue for approval, research, course build, review, and publication.</p>
+          </div>
+          <form id="useCaseRequestForm" class="request-form">
+            <label>
+              <span>Use case name</span>
+              <input id="requestUseCaseName" name="useCaseName" type="text" autocomplete="off" required>
+            </label>
+            <label>
+              <span>Topic</span>
+              <select id="requestUseCaseTopic" name="topic">
+                <option value="">Choose a topic</option>
+              </select>
+            </label>
+            <label class="request-reason-field">
+              <span>Why add it?</span>
+              <textarea id="requestUseCaseReason" name="reason" rows="3" required></textarea>
+            </label>
+            <label>
+              <span>Your email</span>
+              <input id="requesterEmail" name="requesterEmail" type="email" autocomplete="email" placeholder="Optional">
+            </label>
+            <button id="submitUseCaseRequest" type="submit">Send request</button>
+          </form>
+          <p id="useCaseRequestMessage" class="request-message" hidden></p>
+          <a class="admin-queue-link" href="/theladder-use-cases/admin.html">Admin review queue</a>
+        </section>
+        <div id="useCaseGrid" class="product-grid" aria-live="polite"></div>
+      </section>
+
+      <aside class="product-detail" aria-label="Selected use case course">
+        <div class="detail-inner" id="useCaseDetail">
+          <p class="empty-label">Select a use case</p>
+          <h2>Choose any card to build a course plan.</h2>
+          <p>The certification options will appear here for every use case.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script type="module" src="/theladder-use-cases/use-cases-app.js?v=1"></script>
+</body>
+</html>

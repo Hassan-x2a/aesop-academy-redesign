@@ -12,6 +12,7 @@ const LS_ADULT_ATTESTED = 'aesop-ladder-adult-attested';
 const PLACEMENT_REGEX = /<!--LADDER_PLACEMENT_COMPLETE:([\s\S]*?)-->/;
 const CERTIFICATION_RESULT_REGEX = /<!--LADDER_CERTIFICATION_RESULT:([\s\S]*?)-->/;
 const CERTIFICATION_VALIDATION_REGEX = /<!--LADDER_CERTIFICATION_VALIDATION:([\s\S]*?)-->/;
+const CONVERSATION_COMPLETE_REGEX = /<!--LADDER_CONVERSATION_COMPLETE:([\s\S]*?)-->/;
 const CERTIFICATION_VALIDATOR_MODEL = 'claude-sonnet-4-5-20250929';
 const CERTIFICATION_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 const TRANSCRIPT_STATUS = {
@@ -201,6 +202,7 @@ const state = {
   proctoringMode: 'recorded_review',
   evaluationContext: null,
   trainingMessages: [],
+  pendingStandardsReview: null,
   placementExpanded: false,
   messages: [],
   progress: {
@@ -210,6 +212,7 @@ const state = {
     evaluationAttempts: [],
     ladderCertifications: [],
     certificationValidations: [],
+    standardsReviews: [],
     placement: null,
     assessmentMessages: [],
     transcriptEvents: []
@@ -632,6 +635,7 @@ function saveLocal() {
     proctoringMode: state.proctoringMode,
     evaluationContext: state.evaluationContext,
     trainingMessages: state.trainingMessages,
+    pendingStandardsReview: state.pendingStandardsReview,
     messages: state.messages,
     placementExpanded: state.placementExpanded,
     progress: state.progress
@@ -651,10 +655,12 @@ async function saveRemote() {
       adultAttested: state.adultAttested,
       ladderCertifications,
       certificationValidations,
+      standardsReviews: state.progress.standardsReviews || [],
       studentTranscript: {
         updatedAt: new Date().toISOString(),
         ladderCertifications,
-        certificationValidations
+        certificationValidations,
+        standardsReviews: state.progress.standardsReviews || []
       },
       ladderProgress: {
         version: LADDER_VERSION,
@@ -679,6 +685,7 @@ async function saveRemote() {
         evaluationAttempts: state.progress.evaluationAttempts,
         ladderCertifications,
         certificationValidations,
+        standardsReviews: state.progress.standardsReviews || [],
         placement: state.progress.placement,
         assessmentMessages: state.progress.assessmentMessages,
         transcriptEvents: state.progress.transcriptEvents
@@ -733,6 +740,7 @@ async function loadRemote(learnerId) {
     state.progress.evaluationAttempts = ladder.evaluationAttempts || [];
     state.progress.ladderCertifications = ladder.ladderCertifications || data.ladderCertifications || [];
     state.progress.certificationValidations = ladder.certificationValidations || data.certificationValidations || data.studentTranscript?.certificationValidations || [];
+    state.progress.standardsReviews = ladder.standardsReviews || data.standardsReviews || data.studentTranscript?.standardsReviews || [];
     state.progress.placement = ladder.placement || null;
     state.progress.assessmentMessages = ladder.assessmentMessages || [];
     state.progress.transcriptEvents = ladder.transcriptEvents || [];
@@ -762,6 +770,7 @@ function loadLocal() {
     state.proctoringMode = saved.proctoringMode || state.proctoringMode;
     state.evaluationContext = saved.evaluationContext || null;
     state.trainingMessages = Array.isArray(saved.trainingMessages) ? saved.trainingMessages : [];
+    state.pendingStandardsReview = saved.pendingStandardsReview || null;
     state.messages = Array.isArray(saved.messages) ? saved.messages : [];
     state.placementExpanded = saved.placementExpanded ?? state.placementExpanded;
     state.progress = saved.progress || state.progress;
@@ -771,6 +780,7 @@ function loadLocal() {
     state.progress.evaluationAttempts ||= [];
     state.progress.ladderCertifications ||= [];
     state.progress.certificationValidations ||= [];
+    state.progress.standardsReviews ||= [];
     state.progress.placement ||= null;
     state.progress.assessmentMessages ||= [];
     state.progress.transcriptEvents ||= [];
@@ -914,6 +924,225 @@ function parseCertificationValidationResponse(rawText) {
   } catch (error) {
     console.warn('Could not parse certification validation:', error);
     return null;
+  }
+}
+
+function parseConversationCompletionResponse(rawText) {
+  const visibleText = String(rawText || '').replace(CONVERSATION_COMPLETE_REGEX, '').trim();
+  const match = String(rawText || '').match(CONVERSATION_COMPLETE_REGEX);
+  if (!match) return { completion: null, visibleText };
+  try {
+    return { completion: normalizeConversationCompletion(JSON.parse(match[1])), visibleText };
+  } catch (error) {
+    console.warn('Could not parse conversation completion:', error);
+    return { completion: null, visibleText };
+  }
+}
+
+function normalizeConversationCompletion(raw) {
+  const allowed = new Set([
+    TRANSCRIPT_STATUS.COMPLETED,
+    TRANSCRIPT_STATUS.VERIFIED,
+    TRANSCRIPT_STATUS.SELF_REPORTED,
+    'not_ready'
+  ]);
+  const status = allowed.has(raw?.status) ? raw.status : 'not_ready';
+  return {
+    status,
+    confidence: Math.max(0, Math.min(1, Number(raw?.confidence ?? 0))),
+    rationale: String(raw?.rationale || '').slice(0, 500)
+  };
+}
+
+function standardsReviewIdFor(topicId = getActiveTopic().id) {
+  return `${LADDER_VERSION}:standards:${topicId}`;
+}
+
+function existingStandardsReview(topicId = getActiveTopic().id) {
+  const id = standardsReviewIdFor(topicId);
+  return (state.progress.standardsReviews || []).find((review) => review.id === id) || null;
+}
+
+function isTranscriptableConversationStatus(status) {
+  return [
+    TRANSCRIPT_STATUS.COMPLETED,
+    TRANSCRIPT_STATUS.VERIFIED,
+    TRANSCRIPT_STATUS.SELF_REPORTED
+  ].includes(status);
+}
+
+function queueStandardsReviewOffer(completion) {
+  if (!completion || !isTranscriptableConversationStatus(completion.status)) return;
+  const topic = getActiveTopic();
+  const tier = getActiveTier();
+  if (existingStandardsReview(topic.id)) return;
+  state.pendingStandardsReview = {
+    id: standardsReviewIdFor(topic.id),
+    topicId: topic.id,
+    topicTitle: topic.title,
+    tierId: tier.id,
+    tierLabel: `${tier.name}: ${tier.title}`,
+    completion,
+    offeredAt: new Date().toISOString(),
+    status: 'offered'
+  };
+}
+
+function standardsFrameworksForReview() {
+  const selectedTier = CERTIFICATION_TIERS.find((item) => item.id === state.educationTierId) || CERTIFICATION_TIERS[0];
+  const named = selectedTier.standards.split(',').map((item) => item.trim()).filter(Boolean);
+  const core = ['AI4K12', 'ISTE', 'CSTA', 'UNESCO', 'NIST AI RMF', 'EU AI Act'];
+  return [...new Set([...named, ...core])].slice(0, 8);
+}
+
+function standardsReviewSystemPrompt() {
+  return `You are an AESOP AI Academy standards reviewer.
+
+Review a completed guided education conversation against multiple standards frameworks. Use the AESOP alignment scale:
+- strong: substantial evidence in the conversation
+- partial: incidental or limited evidence
+- none: not addressed
+
+Judge only from the transcript provided. Do not reward claims that are not evidenced by the learner's responses.
+
+Return only JSON with this shape:
+{"overallRating":"strong|partial|none","summary":"one concise student-facing summary","frameworks":[{"framework":"AI4K12","rating":"strong|partial|none","evidence":"one sentence from the conversation evidence","nextStep":"one concise improvement or extension"}]}`;
+}
+
+function standardsReviewMessages(offer) {
+  const selectedTier = CERTIFICATION_TIERS.find((item) => item.id === state.educationTierId) || CERTIFICATION_TIERS[0];
+  const transcript = state.messages
+    .filter((message) => ['user', 'assistant'].includes(message.role))
+    .slice(-30)
+    .map((message, index) => `${index + 1}. ${message.role.toUpperCase()}: ${message.content}`)
+    .join('\n\n');
+  return [{
+    role: 'user',
+    content: `Review this completed Ladder learning conversation.
+
+Topic: ${offer.topicTitle}
+Ladder tier: ${offer.tierLabel}
+Education tier: ${selectedTier.label}
+Frameworks to review: ${standardsFrameworksForReview().join(', ')}
+Completion status: ${offer.completion?.status || 'completed'}
+Completion rationale: ${offer.completion?.rationale || ''}
+
+Conversation transcript:
+${transcript}`
+  }];
+}
+
+function normalizeStandardsReview(raw, offer, responseModel) {
+  const now = new Date().toISOString();
+  const ratings = new Set(['strong', 'partial', 'none']);
+  const frameworks = Array.isArray(raw?.frameworks) ? raw.frameworks : [];
+  const normalizedFrameworks = frameworks.map((item) => ({
+    framework: String(item?.framework || 'Standards').slice(0, 60),
+    rating: ratings.has(String(item?.rating || '').toLowerCase()) ? String(item.rating).toLowerCase() : 'none',
+    evidence: String(item?.evidence || 'No specific evidence returned.').slice(0, 280),
+    nextStep: String(item?.nextStep || '').slice(0, 220)
+  })).filter((item) => item.framework);
+  const overall = ratings.has(String(raw?.overallRating || '').toLowerCase())
+    ? String(raw.overallRating).toLowerCase()
+    : 'partial';
+  return {
+    id: offer.id,
+    source: 'ladder_guided_conversation',
+    topicId: offer.topicId,
+    topicTitle: offer.topicTitle,
+    tierId: offer.tierId,
+    tierLabel: offer.tierLabel,
+    completionStatus: offer.completion?.status || TRANSCRIPT_STATUS.COMPLETED,
+    overallRating: overall,
+    summary: String(raw?.summary || 'Standards review completed.').slice(0, 500),
+    frameworks: normalizedFrameworks.length ? normalizedFrameworks : standardsFrameworksForReview().map((framework) => ({
+      framework,
+      rating: 'partial',
+      evidence: 'The reviewer did not return framework-level detail.',
+      nextStep: 'Run a human spot check before using this externally.'
+    })),
+    reviewedAt: now,
+    reviewerModel: responseModel || CERTIFICATION_VALIDATOR_MODEL,
+    scale: {
+      strong: 'substantial coverage',
+      partial: 'incidental or limited coverage',
+      none: 'not addressed'
+    }
+  };
+}
+
+function upsertStandardsReview(review) {
+  const existing = state.progress.standardsReviews || [];
+  const filtered = existing.filter((item) => item.id !== review.id);
+  state.progress.standardsReviews = [review, ...filtered].slice(0, 200);
+}
+
+function studentTranscriptUrl() {
+  const id = normalizeLearnerId(state.learnerId);
+  const idParam = id ? `?id=${encodeURIComponent(id)}` : '';
+  return `/student-transcript-live.html${idParam}`;
+}
+
+async function runStandardsReview(offer) {
+  const response = await fetch(PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: CERTIFICATION_VALIDATOR_MODEL,
+      messages: standardsReviewMessages(offer),
+      system_prompt: standardsReviewSystemPrompt(),
+      max_tokens: 900
+    })
+  });
+  const data = await response.json();
+  const rawText = data?.content?.[0]?.text || '{}';
+  const cleaned = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
+  const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+  if (!response.ok) throw new Error(data?.error || 'Standards review failed.');
+  return normalizeStandardsReview(JSON.parse(jsonMatch ? jsonMatch[0] : cleaned), offer, data?.model);
+}
+
+async function completeStandardsReview() {
+  const offer = state.pendingStandardsReview;
+  if (!offer || offer.status === 'reviewing') return;
+  await ensureLearnerId();
+  state.pendingStandardsReview = { ...offer, status: 'reviewing' };
+  renderChat();
+  try {
+    const review = await runStandardsReview(offer);
+    upsertStandardsReview(review);
+    addTranscript(
+      'standards_review_completed',
+      `${review.topicTitle} standards review`,
+      `${review.summary} Saved to the student transcript.`,
+      { status: review.completionStatus || TRANSCRIPT_STATUS.COMPLETED, evidence: 'standards_review' }
+    );
+    state.pendingStandardsReview = null;
+    state.messages.push({
+      role: 'assistant',
+      content: `Standards review complete. I saved it to your student page: ${studentTranscriptUrl()}`
+    });
+  } catch (error) {
+    state.pendingStandardsReview = { ...offer, status: 'offered', error: error.message || 'Could not complete standards review.' };
+  }
+  await persist();
+  render();
+}
+
+async function dismissStandardsReviewOffer() {
+  state.pendingStandardsReview = null;
+  await persist();
+  renderChat();
+}
+
+function handleStandardsReviewClick(event) {
+  const button = event.target.closest('[data-standards-review-action]');
+  if (!button) return;
+  const action = button.dataset.standardsReviewAction;
+  if (action === 'run') {
+    completeStandardsReview();
+  } else if (action === 'dismiss') {
+    dismissStandardsReviewOffer();
   }
 }
 
@@ -1839,28 +2068,51 @@ function renderConversationMode() {
   }
 }
 
+function renderStandardsReviewPrompt() {
+  const offer = state.pendingStandardsReview;
+  if (!offer || offer.topicId !== getActiveTopic().id || state.evaluationContext) return '';
+  const isReviewing = offer.status === 'reviewing';
+  const transcriptHref = studentTranscriptUrl();
+  const error = offer.error
+    ? `<p class="standards-review-error">${escapeHtml(offer.error)}</p>`
+    : '';
+  return `
+    <div class="standards-review-offer" role="status">
+      <strong>Map this conversation to standards?</strong>
+      <p>The guide has enough evidence to mark this rung as ${escapeHtml(statusLabel(offer.completion?.status))}. AESOP can now review the conversation against AI4K12, ISTE, CSTA, UNESCO, NIST AI RMF, and EU AI Act style standards, then save the results on your student page.</p>
+      ${error}
+      <div class="standards-review-actions">
+        <button type="button" data-standards-review-action="run" ${isReviewing ? 'disabled' : ''}>${isReviewing ? 'Reviewing...' : 'Complete standards review'}</button>
+        <button type="button" class="secondary" data-standards-review-action="dismiss" ${isReviewing ? 'disabled' : ''}>Not now</button>
+        <a href="${transcriptHref}">Student page</a>
+      </div>
+    </div>`;
+}
+
 function renderChat() {
   renderConversationMode();
   if (!state.messages.length) {
-    el.chatLog.innerHTML = state.evaluationContext
+    el.chatLog.innerHTML = (state.evaluationContext
       ? '<div class="message assistant"><strong>Examiner</strong>The certification exam will begin here when you start certification for this rung.</div>'
-      : '<div class="message assistant"><strong>Guide</strong>Click Start Conversation to begin a guided conversation for this rung.</div>';
+      : '<div class="message assistant"><strong>Guide</strong>Click Start Conversation to begin a guided conversation for this rung.</div>')
+      + renderStandardsReviewPrompt();
     return;
   }
   el.chatLog.innerHTML = state.messages.map((message) => (
     `<div class="message ${message.role === 'user' ? 'user' : 'assistant'}"><strong>${message.role === 'user' ? 'You' : state.evaluationContext ? 'Examiner' : 'Guide'}</strong>${escapeHtml(message.content)}</div>`
-  )).join('');
+  )).join('') + renderStandardsReviewPrompt();
   el.chatLog.scrollTop = el.chatLog.scrollHeight;
 }
 
 function renderTranscript() {
   const certificationLines = certificationTranscriptLines();
-  if (!certificationLines.length) {
-    el.transcriptList.innerHTML = '<div class="transcript-event"><strong>No certifications yet</strong><small>Assessment certifications and exam-awarded certifications will appear here.</small></div>';
+  const standardsReviews = state.progress.standardsReviews || [];
+  if (!certificationLines.length && !standardsReviews.length) {
+    el.transcriptList.innerHTML = '<div class="transcript-event"><strong>No certifications yet</strong><small>Assessment certifications, exam-awarded certifications, and standards reviews will appear here.</small></div>';
     return;
   }
 
-  el.transcriptList.innerHTML = certificationLines.map((record) => {
+  const certificationHtml = certificationLines.map((record) => {
     let content = `<p>${escapeHtml(record.transcriptLine || record.rationale || '')}</p>`;
     if (record.tiersList && record.tiersList.length > 0) {
       content += `<ul style="margin: 0.75rem 0 0 0; padding-left: 1.5rem;">
@@ -1869,6 +2121,16 @@ function renderTranscript() {
     }
     return `<div class="transcript-event"><strong>${escapeHtml(record.title)}</strong><small>${escapeHtml(record.depthLabel)} - ${escapeHtml(record.evidence)} evidence - ${new Date(record.earnedAt).toLocaleString()}</small>${content}</div>`;
   }).join('');
+
+  const standardsHtml = standardsReviews.slice(0, 6).map((review) => (
+    `<div class="transcript-event standards-review-event">
+      <strong>${escapeHtml(review.topicTitle || 'Standards review')}</strong>
+      <small>Standards review - ${escapeHtml(review.overallRating || 'partial')} - ${new Date(review.reviewedAt || Date.now()).toLocaleString()}</small>
+      <p>${escapeHtml(review.summary || 'Standards review completed.')}</p>
+    </div>`
+  )).join('');
+
+  el.transcriptList.innerHTML = certificationHtml + standardsHtml;
 }
 
 function renderTopic() {
@@ -2262,6 +2524,12 @@ Run the readiness check as a guided diagnostic:
 5. End with one of these readiness statements: ready now, close but needs review, or not ready yet.
 6. Recommend the next action: start certification, switch mastery level, review specific rungs, or gather evidence.
 ` : '';
+  const completionBlock = !evaluation && !readinessCheck ? `
+When you have enough evidence to decide whether the learning conversation is complete, say that clearly to the learner. If the rung should be transcripted as completed, verified, or self-reported, append this exact hidden marker on a new line:
+<!--LADDER_CONVERSATION_COMPLETE:{"status":"completed","confidence":0.0,"rationale":"one concise evidence-based reason"}-->
+
+Allowed status values: "completed", "verified", "self_reported", "not_ready". Use "verified" only when the learner gave strong evidence in the conversation. Use "completed" for solid learning completion. Use "self_reported" when the learner has enough engagement for a record but evidence is mostly learner-claimed. Use "not_ready" when the learner needs more work. Do not mention the marker or JSON to the learner.
+` : '';
   return `You are The Ladder guide inside AESOP AI Academy. You are strictly scoped to the selected topic: ${topic.title}.
 
 Placement interests: ${interestText(placement)}.
@@ -2288,6 +2556,7 @@ You are teaching a ${selectedEducationTier.label}-level learner. Adjust your lan
 Every rung is a guided AI learning conversation. The goal is discovery, critical thinking, vocabulary fluency, and applied understanding. Do not frame the experience as schoolwork.
 ${evaluationBlock}
 ${readinessBlock}
+${completionBlock}
 
 Use this guarded teaching pattern:
 1. Diagnose what the learner already understands.
@@ -2324,15 +2593,20 @@ async function callGuide() {
     });
     const data = await response.json();
     const rawText = data?.content?.[0]?.text || data?.error || fallbackGuideText(topic, tier);
-    const { certificationResult, visibleText } = state.evaluationContext
-      ? parseCertificationResponse(rawText)
-      : { certificationResult: null, visibleText: rawText };
+    const parsed = state.evaluationContext
+      ? { ...parseCertificationResponse(rawText), completion: null }
+      : { certificationResult: null, ...parseConversationCompletionResponse(rawText) };
+    const { certificationResult, completion, visibleText } = parsed;
     state.messages.push({ role: 'assistant', content: visibleText });
     renderChat();
     if (certificationResult) {
       await recordCertificationResult(certificationResult);
       renderTranscript();
       renderProgress();
+    }
+    if (completion) {
+      queueStandardsReviewOffer(completion);
+      renderChat();
     }
   } catch (error) {
     state.messages.push({
@@ -2520,7 +2794,8 @@ function exportTranscript() {
     exportedAt: new Date().toISOString(),
     transcriptLines: certificationTranscriptLines(),
     ladderCertifications: buildCertificationTranscript(),
-    certificationValidations: state.progress.certificationValidations || []
+    certificationValidations: state.progress.certificationValidations || [],
+    standardsReviews: state.progress.standardsReviews || []
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -2823,6 +3098,7 @@ function bindEvents() {
   el.startConversationBtn.addEventListener('click', startConversation);
   el.vocabPromptForm.addEventListener('submit', startVocabularyConversation);
   el.chatForm.addEventListener('submit', submitChat);
+  el.chatLog.addEventListener('click', handleStandardsReviewClick);
   el.completeTopicBtn.addEventListener('click', markTopicComplete);
   el.exportTranscriptBtn.addEventListener('click', exportTranscript);
   el.researchBtn.addEventListener('click', findVideos);

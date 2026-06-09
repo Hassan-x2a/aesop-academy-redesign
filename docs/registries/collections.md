@@ -184,6 +184,78 @@ Admin configuration document store.
 
 ---
 
+## `productCourseRequests`
+
+Product training request queue for `/theladder-products/`. Learners can request missing products. Admins approve requests, then move them through research, draft build, review, and publication.
+
+**Schema / shape:**
+```
+{
+  productName:        string,
+  productType:        string,
+  reason:             string,
+  requesterEmail:     string,
+  sourcePath:         string,
+  sourceProductId:    number | null,
+  sourceProductName:  string,
+  status:             "requested" | "approved" | "researching" | "built" | "reviewed" | "published" | "rejected",
+  createdAt:          Firestore server timestamp,
+  updatedAt:          Firestore server timestamp,
+  createdAtIso:       ISO 8601 string,
+  updatedAtIso:       ISO 8601 string,
+  history:            Array<{status, at, actor, note}>
+}
+```
+
+**Producers**
+- `theladder-products/products-app.js` - `addDoc` from the learner request form on `/theladder-products/`
+- `theladder-products/products-admin.js` - `updateDoc` for approval, research, build, review, publication, and rejection status changes
+
+**Consumers**
+- `theladder-products/products-admin.js` - `collection` + `query` with `orderBy('createdAt', 'desc')` via `onSnapshot`
+
+**Firestore rule:** No rules file in repo. This collection should allow public creates with validation, and admin-only reads/updates.
+
+**Status:** ✓ producer and consumer in product request flow; requires Firebase Console rules for production access control
+
+---
+
+## `useCaseTrainingRequests`
+
+Use-case training request queue for `/theladder-use-cases/`. Learners can request missing use cases. Admins approve requests, then move them through research, draft build, review, and publication.
+
+**Schema / shape:**
+```
+{
+  useCaseName:        string,
+  topic:              string,
+  reason:             string,
+  requesterEmail:     string,
+  sourcePath:         string,
+  sourceUseCaseId:    number | null,
+  sourceUseCaseName:  string,
+  status:             "requested" | "approved" | "researching" | "built" | "reviewed" | "published" | "rejected",
+  createdAt:          Firestore server timestamp,
+  updatedAt:          Firestore server timestamp,
+  createdAtIso:       ISO 8601 string,
+  updatedAtIso:       ISO 8601 string,
+  history:            Array<{status, at, actor, note}>
+}
+```
+
+**Producers**
+- `theladder-use-cases/use-cases-app.js` - `addDoc` from the learner request form on `/theladder-use-cases/`
+- `theladder-use-cases/use-cases-admin.js` - `updateDoc` for approval, research, build, review, publication, and rejection status changes
+
+**Consumers**
+- `theladder-use-cases/use-cases-admin.js` - `collection` + `query` with `orderBy('createdAt', 'desc')` via `onSnapshot`
+
+**Firestore rule:** No rules file in repo. This collection should allow public creates with validation, and admin-only reads/updates.
+
+**Status:** ✓ producer and consumer in use-case request flow; requires Firebase Console rules for production access control
+
+---
+
 ## Summary
 
 | Collection | Producers | Consumers | Status |
@@ -192,6 +264,8 @@ Admin configuration document store.
 | `examResults` | index.html | none in code | ⚠ orphan producer |
 | `boardUpdateRequests` | board-approvals.html | board-approvals.html | ✓ |
 | `config` | panel-review.html | panel-review.html | ✓ (no rule guard) |
+| `productCourseRequests` | products-app.js, products-admin.js | products-admin.js | ✓ (requires rules) |
+| `useCaseTrainingRequests` | use-cases-app.js, use-cases-admin.js | use-cases-admin.js | ✓ (requires rules) |
 
 ---
 

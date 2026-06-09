@@ -158,6 +158,54 @@ Dark mode preference.
 
 ---
 
+## `aesop-product-course-requests-v1`
+
+Local fallback queue for product training requests from `/theladder-products/` when Firestore does not accept the write. This is not the primary approval system; it exists so the learner gets a recoverable record instead of losing the request.
+
+**Value format:** `JSON string` - array of product request objects matching the `productCourseRequests` shape, plus `id`, `localOnly`, and `error` fields.
+
+**Producers**
+- `theladder-products/products-app.js` - `setItem` when Firestore `addDoc` fails
+
+**Consumers**
+- `theladder-products/products-admin.js` - `getItem` to show same-browser fallback requests on the admin queue
+
+**Status:** ⚠ same-browser fallback only; production approval should use Firestore `productCourseRequests`
+
+---
+
+## `aesop-ladder-use-cases-state-v1`
+
+Local state for `/theladder-use-cases/`. Preserves the selected use case, active topic, search query, depth filter, and started use-case courses if the learner closes the browser.
+
+**Value format:** `JSON string` - `{selectedId, activeTopic:{start,end}, query, depth, courseStarts}`
+
+**Producers**
+- `theladder-use-cases/use-cases-app.js` - `setItem` on search, topic selection, depth changes, course starts, and unload
+
+**Consumers**
+- `theladder-use-cases/use-cases-app.js` - `getItem` during page initialization
+
+**Status:** ✓ producer and consumer in same route
+
+---
+
+## `aesop-use-case-training-requests-v1`
+
+Local fallback queue for use-case training requests from `/theladder-use-cases/` when Firestore does not accept the write.
+
+**Value format:** `JSON string` - array of use-case request objects matching the `useCaseTrainingRequests` shape, plus `id`, `localOnly`, and `error` fields.
+
+**Producers**
+- `theladder-use-cases/use-cases-app.js` - `setItem` when Firestore `addDoc` fails
+
+**Consumers**
+- `theladder-use-cases/use-cases-admin.js` - `getItem` to show same-browser fallback requests on the admin queue
+
+**Status:** ⚠ same-browser fallback only; production approval should use Firestore `useCaseTrainingRequests`
+
+---
+
 ## Summary
 
 | Key | Format | Producers | Consumers | Status |
@@ -171,6 +219,9 @@ Dark mode preference.
 | `aesop-cert-fdn` | integer string | cert tracking | students.html | ✓ |
 | `aesop-cert-mpts` | integer string | cert tracking | students.html | ✓ |
 | `aesop-theme` | `'dark'\|'light'` | theme toggles | theme init scripts | ✓ |
+| `aesop-product-course-requests-v1` | JSON array | products-app.js | products-admin.js | ⚠ local fallback only |
+| `aesop-ladder-use-cases-state-v1` | JSON object | use-cases-app.js | use-cases-app.js | ✓ |
+| `aesop-use-case-training-requests-v1` | JSON array | use-cases-app.js | use-cases-admin.js | ⚠ local fallback only |
 
 ---
 

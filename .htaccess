@@ -10,6 +10,8 @@ RewriteEngine On
 
 # Avoid intermittent DirectoryIndex failures on the Ladder route.
 RewriteRule ^theladder/?$ /theladder/index.html [R=302,L]
+RewriteRule ^theladder-products/?$ /theladder-products/index.html [R=302,L]
+RewriteRule ^theladder-use-cases/?$ /theladder-use-cases/index.html [R=302,L]
 
 # Allow direct file access (assets, css, js, images)
 RewriteCond %{REQUEST_FILENAME} -f

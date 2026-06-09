@@ -121,6 +121,50 @@
       line-height: 0.9;
     }
 
+    .hero-title-row {
+      align-items: start;
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    .hero-kicker-row {
+      align-items: start;
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    .education-focus-control {
+      background: rgba(7, 17, 29, 0.82);
+      border: 1px solid rgba(219, 184, 122, 0.48);
+      border-radius: 8px;
+      display: grid;
+      flex: 0 0 min(240px, 100%);
+      gap: 0.35rem;
+      padding: 0.65rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .education-focus-control span {
+      color: var(--gold-light);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .education-focus-control select {
+      background: #07111d;
+      border: 1px solid rgba(219, 184, 122, 0.5);
+      border-radius: 7px;
+      color: #ffffff;
+      min-height: 42px;
+      padding: 0.45rem 0.6rem;
+      width: 100%;
+    }
+
     .hero-text,
     .placement-summary p {
       color: var(--ladder-ink);
@@ -508,6 +552,21 @@
         grid-template-columns: 1fr;
       }
 
+      .hero-title-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .hero-kicker-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .education-focus-control {
+        flex-basis: auto;
+        max-width: 360px;
+      }
+
       .tier-rail {
         position: static;
         max-height: none;
@@ -596,7 +655,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="/theladder/ladder.css?v=50">
+  <link rel="stylesheet" href="/theladder/ladder.css?v=51">
 </head>
 <body>
   <nav class="nav">
@@ -622,9 +681,19 @@
   <main class="ladder-app">
     <section class="ladder-hero">
       <div class="ladder-hero-copy">
-        <div class="page-version">v54</div>
-        <p class="eyebrow" data-i18n="howHighCanYouClimb">How high can you climb?</p>
-        <h1>The Ladder</h1>
+        <div class="hero-kicker-row">
+          <p class="eyebrow" data-i18n="howHighCanYouClimb">How high can you climb?</p>
+          <label class="education-focus-control" for="educationFocusSelect">
+            <span>Education Focus</span>
+            <select id="educationFocusSelect" aria-label="Education Focus">
+              <option value="/theladder/" selected>AI Concepts</option>
+              <option value="/theladder-products/">Products</option>
+            </select>
+          </label>
+        </div>
+        <div class="hero-title-row">
+          <h1>The Ladder</h1>
+        </div>
         <p class="hero-text">A structured AI learning path where every rung becomes a guided conversation, additional lessons and links, certification options, and a transcript event.</p>
         <div class="ladder-hero-stats" aria-label="Ladder progress summary">
           <div class="ladder-hero-stat ladder-hero-stat--primary">
@@ -834,6 +903,11 @@
     </section>
   </main>
 
+  <footer class="ladder-legal">
+    <span>&copy; 2026 AESOP AI Academy - All Rights Reserved</span>
+    <span>The Ladder / AESOP Engine - Patent Pending - U.S. Provisional Patent Application No. 64/085,986</span>
+  </footer>
+
   <dialog id="architectureDialog" aria-labelledby="architectureDialogTitle" style="max-width:min(980px, calc(100vw - 2rem)); max-height:calc(100vh - 2rem); overflow:auto;">
     <section class="topic-panel">
       <div class="panel-heading">
@@ -872,8 +946,22 @@
       }
     }
 
+    function setupEducationFocusSelect() {
+      const select = document.getElementById('educationFocusSelect');
+      if (!select) return;
+      select.addEventListener('change', (event) => {
+        const target = event.target.value;
+        if (target && target !== window.location.pathname) {
+          window.location.href = target;
+        }
+      });
+    }
+
     // Update on page load
-    document.addEventListener('DOMContentLoaded', updateNavCertCount);
+    document.addEventListener('DOMContentLoaded', () => {
+      updateNavCertCount();
+      setupEducationFocusSelect();
+    });
 
     // Update every hour
     setInterval(updateNavCertCount, 3600000);

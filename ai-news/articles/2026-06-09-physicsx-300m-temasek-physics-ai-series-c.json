@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-09-physicsx-300m-temasek-physics-ai-series-c",
+  "title": "PhysicsX raises $300M Series C at $2.4B — physics AI for industrial engineering",
+  "subtitle": "Temasek leads an oversubscribed round in the London startup building large pre-trained models that predict physical behavior in seconds instead of hours.",
+  "date": "2026-06-09",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["physicsx", "temasek", "physics-ai", "series-c", "industrial-ai", "simulation"],
+  "readTime": "3 min read",
+  "heroEmoji": "⚙️",
+  "body": [
+    "PhysicsX announced a $300 million Series C on June 9, led by Temasek and backed by M&G Investments, Intrepid Growth Partners, and existing investors including NVIDIA, Siemens, Applied Materials, Atomico, General Catalyst, July Fund, NGP, and Radius. The round was oversubscribed and values the London-based company at approximately $2.4 billion. PhysicsX builds AI models that predict physical behavior — fluid flow, structural stress, electromagnetic response — in seconds rather than the hours or days a conventional finite-element simulation takes. The company reported doubling year-over-year recognized revenue, tripling booked revenue, and more than doubling its customer count over the past year. Headcount has also doubled in twelve months, to more than 300 people.",
+    "The proceeds will fund international expansion, platform development, and what PhysicsX calls Large Physics Models — pre-trained foundation models for physics that follow the same scaling pattern that worked for language. The pitch to customers is concrete: engineering teams can evaluate orders of magnitude more design variants per project, then carry that physics intuition all the way into real-time digital twins running on equipment in the field. Existing deployments span aerospace, automotive, energy, and semiconductor manufacturing — domains where a single prototype iteration costs millions and weeks.",
+    "Vertical AI funding has been the strongest pocket of the 2026 startup market. Investors have grown skeptical of horizontal wrapper companies and chat-shaped products that compete head-on with frontier labs, but they keep writing nine-figure checks for teams that pair AI with deep domain physics, chemistry, or biology. PhysicsX's round lands in the same week that PointFive raised $60M for AI cost optimization and A Security raised $37M for autonomous cyber agents — different verticals, same thesis: take a specific industrial problem, apply AI where the data and the math actually constrain the answer, and the unit economics work.",
+    "A note for learners: when you hear 'foundation model,' the default association is language — GPT, Claude, Gemini. PhysicsX is a reminder that the same pre-training recipe works on any data with structure and scale. Weather, protein folding, circuit design, fluid dynamics — these are all domains where 'one big model trained on a lot of relevant data' is starting to beat hand-tuned per-problem solvers. If you're choosing what to study, the bottleneck in physics AI right now is not ML expertise. It's people who understand both the math of a domain and how to feed it into a training loop."
+  ],
+  "sources": [
+    { "title": "PhysicsX Announces $300M Series C to Accelerate Physics AI for Industrial Engineering — PhysicsX Newsroom", "url": "https://www.physicsx.ai/newsroom/physicsx-announces-300m-series-c-to-accelerate-physics-ai-for-industrial-engineering" },
+    { "title": "PhysicsX hits $2.4bn valuation after $300m Temasek-led funding round — Sifted", "url": "https://sifted.eu/articles/physicsx-funding-round-temasek-valuation" },
+    { "title": "Temasek leads UK's AI firm PhysicsX $300M Series C funding — TechNode Global", "url": "https://technode.global/2026/06/09/temasek-leads-uks-ai-firm-physicsx-300m-series-c-funding/" }
+  ],
+  "status": "published"
+}

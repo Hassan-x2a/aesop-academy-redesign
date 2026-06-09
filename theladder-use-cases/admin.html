@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon_512.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use Case Training Requests - AESOP Admin</title>
+  <script>
+    if (localStorage.getItem('aesop-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+  <link rel="stylesheet" href="/academy-theme.css?v=2">
+  <link rel="stylesheet" href="/academy-dark-mode.css?v=2">
+  <link rel="stylesheet" href="/theladder-products/products.css?v=7">
+</head>
+<body>
+  <nav class="nav products-nav">
+    <div class="nav-inner">
+      <a href="/" class="brand-link" aria-label="AESOP AI Academy home">
+        <span class="brand">AESOP AI Academy</span>
+      </a>
+      <span class="nav-divider" aria-hidden="true"></span>
+      <a href="/theladder/" class="nav-link">The Ladder</a>
+      <a href="/theladder-products/" class="nav-link">Products</a>
+      <a href="/theladder-use-cases/" class="nav-link">Use Cases</a>
+      <a href="/theladder-use-cases/admin.html" class="nav-link active" aria-current="page">Use case requests</a>
+      <div class="nav-spacer"></div>
+      <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
+      <a class="hub-link" href="/ai-academy/">Student hub</a>
+    </div>
+  </nav>
+
+  <main class="products-admin">
+    <section class="admin-hero" aria-labelledby="adminTitle">
+      <div>
+        <p class="hero-kicker">AESOP use-case pathway</p>
+        <h1 id="adminTitle">Use Case Training Requests</h1>
+        <p>Approve requested use cases, then move each course through research, draft build, review, and publication.</p>
+      </div>
+      <div class="admin-summary" aria-label="Request summary">
+        <strong id="pendingRequestCount">0</strong>
+        <span>requests awaiting approval</span>
+      </div>
+    </section>
+
+    <section id="authPanel" class="admin-auth-panel">
+      <h2>Admin sign in</h2>
+      <p>Sign in with an AESOP admin account to manage the use case queue.</p>
+      <label>
+        <span>Email</span>
+        <input id="adminEmail" type="email" autocomplete="email">
+      </label>
+      <label>
+        <span>Password</span>
+        <input id="adminPassword" type="password" autocomplete="current-password">
+      </label>
+      <button id="adminSignIn" type="button">Sign in</button>
+      <p id="adminAuthError" class="admin-error" hidden></p>
+    </section>
+
+    <section id="adminQueue" class="admin-queue" hidden>
+      <div class="queue-toolbar">
+        <div>
+          <h2>Approval queue</h2>
+          <p id="adminUserLabel"></p>
+        </div>
+        <div class="queue-actions">
+          <button class="filter-btn active" type="button" data-filter="active">Active</button>
+          <button class="filter-btn" type="button" data-filter="requested">Requested</button>
+          <button class="filter-btn" type="button" data-filter="approved">Approved</button>
+          <button class="filter-btn" type="button" data-filter="researching">Researching</button>
+          <button class="filter-btn" type="button" data-filter="built">Built</button>
+          <button class="filter-btn" type="button" data-filter="reviewed">Reviewed</button>
+          <button class="filter-btn" type="button" data-filter="published">Published</button>
+          <button class="filter-btn" type="button" data-filter="all">All</button>
+          <button id="adminSignOut" class="secondary-admin-button" type="button">Sign out</button>
+        </div>
+      </div>
+      <div id="requestList" class="admin-request-list" aria-live="polite">
+        <p class="empty-state">Loading requests...</p>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/theladder-use-cases/use-cases-admin.js?v=1"></script>
+</body>
+</html>

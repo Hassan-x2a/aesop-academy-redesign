@@ -38,14 +38,33 @@ body { padding-top: 92px; }
 .st-card-actions a, .st-card-actions button { align-items: center; border: 1px solid var(--navy); border-radius: var(--radius-sm); display: inline-flex; font: inherit; font-size: 0.78rem; font-weight: 800; justify-content: center; min-height: 34px; padding: 0.4rem 0.6rem; }
 .st-card-actions a { color: var(--navy); }
 .st-card-actions button { background: var(--navy); color: var(--gold-light); cursor: pointer; }
+.st-review-list { display: grid; gap: 1rem; }
+.st-review-card { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem; }
+.st-review-head { align-items: flex-start; display: flex; gap: 1rem; justify-content: space-between; }
+.st-review-head strong { color: var(--ink); display: block; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.15; }
+.st-rating { border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--ink); font-size: 0.72rem; font-weight: 900; letter-spacing: 0.08em; padding: 0.28rem 0.48rem; text-transform: uppercase; white-space: nowrap; }
+.st-rating--strong { background: #eef8f0; border-color: #9bc7a5; color: #14532d; }
+.st-rating--partial { background: #fff4db; border-color: #d5aa55; color: #6f4a00; }
+.st-rating--none { background: #f5f5f5; color: #555; }
+.st-framework-list { display: grid; gap: 0.55rem; margin-top: 0.85rem; }
+.st-framework-row { border: 1px solid var(--border); border-radius: var(--radius-sm); display: grid; gap: 0.6rem; grid-template-columns: 130px 90px minmax(0, 1fr); padding: 0.65rem; }
+.st-framework-row strong { color: var(--ink); font-size: 0.86rem; }
+.st-framework-row em { color: inherit; }
 .st-table { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
 .st-row { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1.4fr) 150px 150px; padding: 0.9rem 1rem; border-top: 1px solid var(--border); }
 .st-row:first-child { border-top: 0; }
 .st-row.header { background: var(--cream); color: var(--ink-muted); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
 .st-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1rem; }
 .st-empty { color: var(--ink-muted); padding: 1rem; text-align: center; }
+[data-theme="dark"] .st-review-card,
+[data-theme="dark"] .st-framework-row { background: #172331; border-color: #304252; }
+[data-theme="dark"] .st-review-head strong,
+[data-theme="dark"] .st-framework-row strong { color: #fff7df; }
+[data-theme="dark"] .st-rating--strong { background: #17351f; border-color: #5f986d; color: #d7f5df; }
+[data-theme="dark"] .st-rating--partial { background: #352914; border-color: #b88a37; color: #ffe7a8; }
+[data-theme="dark"] .st-rating--none { background: #202936; border-color: #425466; color: #d8e5ef; }
 @media (max-width: 760px) {
-  .st-learner-card, .st-stats, .st-row { grid-template-columns: 1fr; }
+  .st-learner-card, .st-stats, .st-row, .st-framework-row { grid-template-columns: 1fr; }
   .st-lookup { justify-content: flex-start; }
   .st-row.header { display: none; }
 }
@@ -90,6 +109,11 @@ body { padding-top: 92px; }
   </section>
 
   <section class="st-section">
+    <div class="st-section-label">Conversation Standards Reviews</div>
+    <div id="standardsReviewList" class="st-review-list"></div>
+  </section>
+
+  <section class="st-section">
     <div class="st-section-label">Course Transcript</div>
     <div id="courseTable" class="st-table"></div>
   </section>
@@ -111,6 +135,15 @@ const initialId = (qs.get('id') || localStorage.getItem(LS_ID) || '').toUpperCas
 if (initialId) document.getElementById('learnerIdInput').value = initialId;
 updateLinkedPages(initialId);
 
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 function updateLinkedPages(id) {
   const learnerId = String(id || '').trim().toUpperCase();
   const idParam = learnerId ? `?id=${encodeURIComponent(learnerId)}` : '';
@@ -119,6 +152,10 @@ function updateLinkedPages(id) {
 
 function certsFrom(data) {
   return data?.ladderCertifications || data?.studentTranscript?.ladderCertifications || data?.ladderProgress?.ladderCertifications || [];
+}
+
+function standardsReviewsFrom(data) {
+  return data?.standardsReviews || data?.studentTranscript?.standardsReviews || data?.ladderProgress?.standardsReviews || [];
 }
 
 function fmtDate(value) {
@@ -162,6 +199,42 @@ function validationLine(cert) {
   return `<p class="st-muted"><strong>${status}:</strong> ${detail}</p>`;
 }
 
+function ratingBadge(rating) {
+  const value = ['strong', 'partial', 'none'].includes(String(rating || '').toLowerCase())
+    ? String(rating).toLowerCase()
+    : 'partial';
+  return `<span class="st-rating st-rating--${value}">${value}</span>`;
+}
+
+function renderStandardsReviews(reviews) {
+  const list = document.getElementById('standardsReviewList');
+  if (!reviews.length) {
+    list.innerHTML = '<div class="st-empty">No conversation standards reviews recorded yet.</div>';
+    return;
+  }
+  list.innerHTML = reviews.map((review) => `
+    <article class="st-review-card">
+      <div class="st-review-head">
+        <div>
+          <strong>${escapeHtml(review.topicTitle || 'Standards review')}</strong>
+          <small class="st-muted">${escapeHtml(review.tierLabel || 'The Ladder')} &middot; ${fmtDate(review.reviewedAt)}</small>
+        </div>
+        ${ratingBadge(review.overallRating)}
+      </div>
+      <p class="st-muted">${escapeHtml(review.summary || 'Standards review completed.')}</p>
+      <div class="st-framework-list">
+        ${(review.frameworks || []).map((item) => `
+          <div class="st-framework-row">
+            <strong>${escapeHtml(item.framework || 'Framework')}</strong>
+            <div>${ratingBadge(item.rating)}</div>
+            <small class="st-muted">${escapeHtml(item.evidence || '')}${item.nextStep ? `<br><em>Next: ${escapeHtml(item.nextStep)}</em>` : ''}</small>
+          </div>
+        `).join('')}
+      </div>
+    </article>
+  `).join('');
+}
+
 function identityLine(cert) {
   if (!cert.identityAssurance) return '';
   const identity = cert.identityAssurance;
@@ -186,6 +259,7 @@ function courseRecords(data) {
 function render(data, id) {
   const certs = certsFrom(data);
   const courses = courseRecords(data);
+  const standardsReviews = standardsReviewsFrom(data);
   const assessment = certs.filter((cert) => cert.source === 'assessment');
   const exams = certs.filter((cert) => cert.source === 'ai_exam');
   document.getElementById('displayLearnerId').textContent = id || 'Not loaded';
@@ -208,6 +282,8 @@ function render(data, id) {
       </div>
     </article>
   `).join('') : '<div class="st-empty">No Ladder certifications recorded for this learner yet.</div>';
+
+  renderStandardsReviews(standardsReviews);
 
   document.getElementById('courseTable').innerHTML = courses.length ? `
     <div class="st-row header"><div>Course</div><div>Status</div><div>Evidence</div></div>
@@ -259,7 +335,8 @@ document.getElementById('exportBtn').addEventListener('click', () => {
     learnerId: activeId,
     exportedAt: new Date().toISOString(),
     courseProgress: activeDoc?.courseProgress || {},
-    ladderCertifications: certsFrom(activeDoc)
+    ladderCertifications: certsFrom(activeDoc),
+    standardsReviews: standardsReviewsFrom(activeDoc)
   };
   const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
   const a = document.createElement('a');
