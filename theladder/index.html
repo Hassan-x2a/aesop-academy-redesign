@@ -596,7 +596,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="/theladder/ladder.css?v=42">
+  <link rel="stylesheet" href="/theladder/ladder.css?v=50">
 </head>
 <body>
   <nav class="nav">
@@ -622,7 +622,7 @@
   <main class="ladder-app">
     <section class="ladder-hero">
       <div class="ladder-hero-copy">
-        <div class="page-version">v42</div>
+        <div class="page-version">v51</div>
         <p class="eyebrow" data-i18n="howHighCanYouClimb">How high can you climb?</p>
         <h1>The Ladder</h1>
         <p class="hero-text">A structured AI learning path where every rung becomes a guided conversation, additional lessons and links, certification options, and a transcript event.</p>
@@ -674,9 +674,6 @@
               <span>Mastery level</span>
               <select id="testDepthSelect" class="evaluation-select" aria-label="Mastery level"></select>
             </label>
-            <div id="authRequiredLink" class="authentication-required" hidden>
-              <a href="/theladder/authenticate.html" class="auth-link" data-i18n="authenticationRequired">Authentication Required</a>
-            </div>
           <div class="evaluation-actions">
             <button id="startEvaluationBtn" type="button" data-i18n="startCertification">Start certification</button>
             <a class="credential-demo-link" href="/ladder-credential.html?learner=AESOP-YAPT&amp;tier=Agent%20Builder&amp;level=Mastery%20Challenge&amp;education=Workforce&amp;earned=2026-06-09" data-i18n="ladderCredentialExample">Ladder Credential Example</a>
@@ -882,6 +879,6 @@
     setInterval(updateNavCertCount, 3600000);
   </script>
 
-  <script type="module" src="/theladder/ladder-app.js?v=42"></script>
+  <script type="module" src="/theladder/ladder-app.js?v=50"></script>
 </body>
 </html>

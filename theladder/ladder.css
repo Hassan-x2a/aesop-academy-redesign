@@ -1335,8 +1335,8 @@ button.secondary {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
-  min-height: 340px;
-  max-height: 480px;
+  min-height: 510px;
+  max-height: 720px;
   overflow: auto;
   padding: 0.8rem;
 }
@@ -1468,9 +1468,12 @@ button.secondary {
   border-bottom: 2px solid #735f9e;
 }
 
-.conversation-panel .panel-heading h3,
+.conversation-panel .panel-heading h3 {
+  color: #ffffff;
+}
+
 .conversation-panel .panel-heading p {
-  color: #e8e3db;
+  color: #c9a05a;
 }
 
 .conversation-panel .panel-label {
@@ -1897,7 +1900,10 @@ button.secondary {
 }
 
 [data-theme="dark"] .topic-search-empty,
-[data-theme="dark"] .conversation-panel .panel-heading p,
+[data-theme="dark"] .conversation-panel .panel-heading p {
+  color: #c9a05a;
+}
+
 [data-theme="dark"] .vocab-definition-box small {
   color: #34495d;
 }
@@ -1995,6 +2001,10 @@ button.secondary {
   height: 18px !important;
   padding: 0 0.3rem !important;
   flex-shrink: 0 !important;
+}
+
+[data-theme="dark"] .nav-cert-count {
+  color: #ffffff !important;
 }
 
 .nav-version {
