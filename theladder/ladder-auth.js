@@ -48,6 +48,7 @@ const PROCTORING_MODES = [
 const auth = getAuth(initializeApp(FIREBASE_CONFIG));
 const LS_IDENTITY_ASSURANCE = 'aesop-ladder-identity-assurance';
 const LS_PROCTORING_MODE = 'aesop-ladder-proctoring-mode';
+const LS_ADULT_ATTESTED = 'aesop-ladder-adult-attested';
 
 const el = {
   authEmailInput: document.getElementById('authEmailInput'),
@@ -234,6 +235,7 @@ function handleProceed() {
   // Save selections to localStorage
   localStorage.setItem(LS_IDENTITY_ASSURANCE, state.identityAssuranceId);
   localStorage.setItem(LS_PROCTORING_MODE, state.proctoringModeId);
+  localStorage.setItem(LS_ADULT_ATTESTED, 'true');
 
   // Redirect back to the appropriate ladder pathway
   const returnTo = new URLSearchParams(window.location.search).get('returnTo') || '/theladder/';
