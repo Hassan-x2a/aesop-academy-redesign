@@ -78,6 +78,10 @@ select {
   width: 1px;
 }
 
+[data-theme="dark"] .nav-divider {
+  background: rgba(219, 184, 122, 0.18);
+}
+
 .nav-link {
   color: #e8e3db;
   font-weight: 750;
@@ -91,6 +95,19 @@ select {
 .products-nav .nav-link:hover {
   background: rgba(255, 231, 168, 0.1);
   color: var(--products-gold-light);
+}
+
+[data-theme="dark"] .nav-link {
+  color: #b7c0c8;
+}
+
+[data-theme="dark"] .nav-link.active {
+  color: #dbb87a;
+}
+
+[data-theme="dark"] .products-nav .nav-link:hover {
+  background: rgba(219, 184, 122, 0.15);
+  color: #dbb87a;
 }
 
 .nav-spacer {

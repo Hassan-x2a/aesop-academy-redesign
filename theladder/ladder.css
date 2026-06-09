@@ -1694,6 +1694,59 @@ button.secondary {
   margin: 0 !important;
 }
 
+.nav-pathway-divider {
+  display: inline-block !important;
+  height: 24px !important;
+  background: rgba(201, 160, 90, 0.2) !important;
+  margin: 0 0.75rem !important;
+}
+
+.nav-pathway-links {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav-pathway-link {
+  color: #62717f;
+  text-decoration: none;
+  font-weight: 750;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-pathway-link:hover {
+  background: rgba(201, 160, 90, 0.1);
+  color: #8f681c;
+}
+
+.nav-pathway-link.active {
+  color: #8f681c;
+  background: rgba(201, 160, 90, 0.08);
+}
+
+[data-theme="dark"] .nav-pathway-divider {
+  background: rgba(219, 184, 122, 0.2) !important;
+}
+
+[data-theme="dark"] .nav-pathway-link {
+  color: #b7c0c8;
+}
+
+[data-theme="dark"] .nav-pathway-link:hover {
+  background: rgba(219, 184, 122, 0.15);
+  color: #dbb87a;
+}
+
+[data-theme="dark"] .nav-pathway-link.active {
+  color: #dbb87a;
+  background: rgba(219, 184, 122, 0.12);
+}
+
 .ladder-nav .nav-brand-secondary {
   color: #8f681c;
   font-size: 0.7rem !important;
