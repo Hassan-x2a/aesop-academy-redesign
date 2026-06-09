@@ -458,6 +458,9 @@ select {
 
 .request-form button {
   align-self: end;
+  justify-self: start;
+  min-width: 156px;
+  white-space: nowrap;
 }
 
 .request-form button:disabled,
@@ -492,11 +495,14 @@ select {
 }
 
 .admin-queue-link {
-  bottom: 1rem;
   color: var(--products-violet);
+  display: inline-flex;
   font-weight: 850;
-  position: absolute;
-  right: 1rem;
+  grid-column: 2;
+  justify-self: start;
+  line-height: 1.25;
+  margin-top: -0.2rem;
+  text-wrap: balance;
 }
 
 [data-theme="dark"] .request-panel {
@@ -1415,7 +1421,8 @@ select:focus-visible {
   }
 
   .admin-queue-link {
-    position: static;
+    grid-column: 1;
+    margin-top: 0;
   }
 }
 
