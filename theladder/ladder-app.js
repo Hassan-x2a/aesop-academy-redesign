@@ -2313,8 +2313,20 @@ function renderAccountGate() {
   }
   if (el.accountSignOutBtn) el.accountSignOutBtn.hidden = !state.authUser;
   if (el.accountConfirmAdultBtn) {
-    el.accountConfirmAdultBtn.hidden = !state.authUser || state.adultAttested || !certificationTierRequiresAccount();
-    el.accountConfirmAdultBtn.disabled = !state.authReady;
+    const shouldShow = state.authUser && certificationTierRequiresAccount();
+    el.accountConfirmAdultBtn.hidden = !shouldShow;
+
+    if (shouldShow) {
+      if (state.adultAttested) {
+        el.accountConfirmAdultBtn.textContent = 'Adult Access Confirmed';
+        el.accountConfirmAdultBtn.disabled = true;
+        el.accountConfirmAdultBtn.style.opacity = '0.6';
+      } else {
+        el.accountConfirmAdultBtn.textContent = 'Confirm adult access';
+        el.accountConfirmAdultBtn.disabled = !state.authReady;
+        el.accountConfirmAdultBtn.style.opacity = '1';
+      }
+    }
   }
   if (el.accountEmailInput && state.authUser?.email && !el.accountEmailInput.value) {
     el.accountEmailInput.value = state.authUser.email;
