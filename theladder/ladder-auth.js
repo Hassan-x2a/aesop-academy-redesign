@@ -170,12 +170,17 @@ async function handleCreateAccount() {
 }
 
 async function handleGoogleSignIn() {
+  console.log('[Google Sign-In] Button clicked');
   setError('');
   try {
+    console.log('[Google Sign-In] Creating provider and redirecting...');
     const provider = new GoogleAuthProvider();
+    console.log('[Google Sign-In] Calling signInWithRedirect...');
     await signInWithRedirect(auth, provider);
+    console.log('[Google Sign-In] Redirect initiated');
     // Page will redirect to Google, then return here after sign-in
   } catch (error) {
+    console.error('[Google Sign-In] Error:', error);
     setError(`Google sign in failed: ${error.message}`);
   }
 }
@@ -268,7 +273,10 @@ if (el.authCreateBtn) {
 }
 
 if (el.authGoogleBtn) {
+  console.log('[Init] Google Sign-In button found, attaching listener');
   el.authGoogleBtn.addEventListener('click', handleGoogleSignIn);
+} else {
+  console.warn('[Init] Google Sign-In button NOT found');
 }
 
 if (el.authProceedBtn) {
