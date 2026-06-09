@@ -1468,9 +1468,12 @@ button.secondary {
   border-bottom: 2px solid #735f9e;
 }
 
-.conversation-panel .panel-heading h3,
+.conversation-panel .panel-heading h3 {
+  color: #ffffff;
+}
+
 .conversation-panel .panel-heading p {
-  color: #e8e3db;
+  color: #b8c9d9;
 }
 
 .conversation-panel .panel-label {
