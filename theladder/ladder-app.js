@@ -9,6 +9,7 @@ const LS_STATE = 'aesop-ladder-state';
 const LS_THEME = 'aesop-theme';
 const PLACEMENT_REGEX = /<!--LADDER_PLACEMENT_COMPLETE:([\s\S]*?)-->/;
 const CERTIFICATION_RESULT_REGEX = /<!--LADDER_CERTIFICATION_RESULT:([\s\S]*?)-->/;
+const CERTIFICATION_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 const TRANSCRIPT_STATUS = {
   COMPLETED: 'completed',
   PLACED_OUT: 'placed_out',
@@ -167,8 +168,10 @@ const el = {
   certificationTierSelect: document.getElementById('certificationTierSelect'),
   testDepthSelect: document.getElementById('testDepthSelect'),
   activeEvaluationTarget: document.getElementById('activeEvaluationTarget'),
+  evaluationCooldownNotice: document.getElementById('evaluationCooldownNotice'),
   startEvaluationBtn: document.getElementById('startEvaluationBtn'),
   certificationWorkspaceTarget: document.getElementById('certificationWorkspaceTarget'),
+  certificationWorkspaceCooldown: document.getElementById('certificationWorkspaceCooldown'),
   startWorkspaceCertificationBtn: document.getElementById('startWorkspaceCertificationBtn'),
   placementSection: document.getElementById('placementSection'),
   placementStatus: document.getElementById('placementStatus'),
@@ -400,6 +403,48 @@ function clampInt(value, min, max) {
   const n = parseInt(value, 10);
   if (Number.isNaN(n)) return min;
   return Math.min(Math.max(n, min), max);
+}
+
+function formatDuration(ms) {
+  const totalMinutes = Math.max(1, Math.ceil(ms / 60000));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours && minutes) return `${hours}h ${minutes}m`;
+  if (hours) return `${hours}h`;
+  return `${minutes}m`;
+}
+
+function certificationCooldownKey(tierId, depthId) {
+  return `${LADDER_VERSION}:${tierId}:${depthId}`;
+}
+
+function attemptCooldownKey(attempt) {
+  return attempt.cooldownKey || certificationCooldownKey(attempt.ladderTierId, attempt.testDepthId);
+}
+
+function certificationCooldownFor(tierId, depthId) {
+  const key = certificationCooldownKey(tierId, depthId);
+  const now = Date.now();
+  const attempts = (state.progress.evaluationAttempts || [])
+    .filter((attempt) => attemptCooldownKey(attempt) === key)
+    .map((attempt) => {
+      const startedAt = attempt.startedAt || attempt.createdAt || attempt.completedAt;
+      const startedTime = Date.parse(startedAt || '');
+      return Number.isNaN(startedTime) ? null : { ...attempt, startedAt, startedTime };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.startedTime - a.startedTime);
+  const latest = attempts[0] || null;
+  if (!latest) return { locked: false, key, latest: null, remainingMs: 0, availableAt: null };
+  const availableTime = latest.startedTime + CERTIFICATION_COOLDOWN_MS;
+  const remainingMs = availableTime - now;
+  return {
+    locked: remainingMs > 0,
+    key,
+    latest,
+    remainingMs: Math.max(0, remainingMs),
+    availableAt: new Date(availableTime).toISOString()
+  };
 }
 
 function saveLocal() {
@@ -1442,6 +1487,21 @@ function renderEvaluationPanel() {
   const targetText = `${tier.name}: ${tier.title} - ${cert.label}, ${depth.label}`;
   el.activeEvaluationTarget.textContent = targetText;
   if (el.certificationWorkspaceTarget) el.certificationWorkspaceTarget.textContent = targetText;
+  const cooldown = certificationCooldownFor(tier.id, depth.id);
+  const lockedText = cooldown.locked
+    ? `This ${depth.label} can be tried again in ${formatDuration(cooldown.remainingMs)}. The 24-hour wait applies to this Ladder tier and challenge depth across all education tiers.`
+    : `24-hour retry limit: this Ladder tier and challenge depth can be attempted once per day, even if the education tier changes.`;
+  [el.evaluationCooldownNotice, el.certificationWorkspaceCooldown].forEach((notice) => {
+    if (!notice) return;
+    notice.hidden = false;
+    notice.textContent = lockedText;
+  });
+  [el.startEvaluationBtn, el.startWorkspaceCertificationBtn].forEach((button) => {
+    if (!button) return;
+    button.disabled = cooldown.locked;
+    button.textContent = cooldown.locked ? `Available in ${formatDuration(cooldown.remainingMs)}` : 'Start certification';
+    button.title = cooldown.locked ? `Available at ${new Date(cooldown.availableAt).toLocaleString()}` : 'Start certification';
+  });
   if (state.evaluationContext && el.certificationModeDetail) renderConversationMode();
 }
 
@@ -1684,7 +1744,16 @@ async function startEvaluation() {
   const tier = getActiveTier();
   const cert = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
   const depth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
+  const cooldown = certificationCooldownFor(tier.id, depth.id);
+  if (cooldown.locked) {
+    renderEvaluationPanel();
+    document.getElementById('evaluationPanel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
   const attemptId = `eval_${Date.now()}`;
+  const startedAt = new Date().toISOString();
+  const cooldownKey = certificationCooldownKey(tier.id, depth.id);
+  const cooldownExpiresAt = new Date(Date.parse(startedAt) + CERTIFICATION_COOLDOWN_MS).toISOString();
   if (!state.evaluationContext) {
     state.trainingMessages = [...state.messages];
   }
@@ -1703,7 +1772,9 @@ async function startEvaluation() {
     ladderTierLabel: `${tier.name} - ${tier.title}`,
     blueprintId: `${cert.id}:${tier.id}:${depth.id}`,
     blueprintVersion: 'v0.1',
-    startedAt: new Date().toISOString()
+    cooldownKey,
+    cooldownExpiresAt,
+    startedAt
   };
   state.progress.evaluationAttempts.unshift({
     ...state.evaluationContext,
@@ -1720,6 +1791,7 @@ async function startEvaluation() {
     `Started ${depth.label.toLowerCase()} for ${tier.title}. Blueprint ${state.evaluationContext.blueprintId} ${state.evaluationContext.blueprintVersion}.`,
     { status: TRANSCRIPT_STATUS.SELF_REPORTED, evidence: 'ai_evaluation_started' }
   );
+  renderEvaluationPanel();
   renderChat();
   renderTranscript();
   await persist();

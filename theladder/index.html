@@ -596,7 +596,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="/theladder/ladder.css?v=19">
+  <link rel="stylesheet" href="/theladder/ladder.css?v=20">
 </head>
 <body>
   <nav class="nav">
@@ -659,6 +659,7 @@
           <span class="panel-label">Certification</span>
           <strong>Certify this tier</strong>
           <p id="activeEvaluationTarget">Current certification target</p>
+          <p id="evaluationCooldownNotice" class="evaluation-cooldown" hidden></p>
           <div class="evaluation-controls">
             <select id="certificationTierSelect" class="evaluation-select" aria-label="Certification tier"></select>
             <select id="testDepthSelect" class="evaluation-select" aria-label="Certification depth"></select>
@@ -739,6 +740,7 @@
             <span class="panel-label">Certification</span>
             <strong>Certify this rung</strong>
             <p id="certificationWorkspaceTarget">Current certification target</p>
+            <p id="certificationWorkspaceCooldown" class="evaluation-cooldown" hidden></p>
           </div>
           <div class="certification-workspace-actions">
             <button id="startWorkspaceCertificationBtn" type="button">Start certification</button>
@@ -833,6 +835,6 @@
     </section>
   </dialog>
 
-  <script type="module" src="/theladder/ladder-app.js?v=18"></script>
+  <script type="module" src="/theladder/ladder-app.js?v=19"></script>
 </body>
 </html>

@@ -355,6 +355,17 @@ button.secondary {
   overflow: hidden;
 }
 
+.evaluation-cooldown {
+  border-top: 1px solid var(--ladder-line);
+  color: var(--ladder-muted) !important;
+  font-size: 0.76rem !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding-top: 0.55rem;
+}
+
 .evaluation-controls {
   display: grid;
   gap: 0.45rem;
@@ -382,6 +393,12 @@ button.secondary {
 
 .evaluation-actions button {
   padding: 0.42rem 0.65rem;
+}
+
+.evaluation-actions button:disabled,
+.certification-workspace-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
 }
 
 .evaluation-actions a {
