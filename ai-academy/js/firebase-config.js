@@ -7,4 +7,5 @@ export const FIREBASE_CONFIG = {
   storageBucket:     'playagame-f733d.firebasestorage.app',
   messagingSenderId: '610508714644',
   appId:             '1:610508714644:web:d54f7263afd6877381ba81',
+  measurementId:     'G-RPDZKZT7XT',
 };
