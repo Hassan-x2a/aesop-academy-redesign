@@ -215,9 +215,9 @@
       "category": "feature",
       "priority": 85,
       "impact": "major",
-      "status": "build-started",
+      "status": "production",
       "created_at": "2026-06-09",
-      "completed_at": null,
+      "completed_at": "2026-06-09",
       "dependencies": [
         24
       ],
@@ -247,9 +247,9 @@
       "category": "feature",
       "priority": 85,
       "impact": "major",
-      "status": "build-started",
+      "status": "production",
       "created_at": "2026-06-09",
-      "completed_at": null,
+      "completed_at": "2026-06-09",
       "dependencies": [
         23,
         21
@@ -281,13 +281,13 @@
       "category": "feature",
       "priority": 88,
       "impact": "major",
-      "status": "build-started",
+      "status": "production",
       "created_at": "2026-06-09",
-      "completed_at": null,
+      "completed_at": "2026-06-09",
       "dependencies": [
         21
       ],
-      "branch": "orch/products+use-cases",
+      "branch": "orch/products+orch/use-cases",
       "wave": 2
     },
     {
@@ -386,6 +386,19 @@
       ],
       "branch": null,
       "wave": 3
+    },
+    {
+      "number": 36,
+      "title": "Dedupe duplicate element IDs in Products page",
+      "description": "products-app.js / theladder-products/index.html have duplicate element IDs (productConversationTitle, productChatLog, productChatForm, productChatInput appear in both #productCourseWorkspace and hidden #productDetailWorkspace), and the original renderProductChat emits class \"message\" while CSS targets .course-message. Pre-existing debt surfaced during Wave 2. getElementById returns only the first match, a latent bug. Dedupe IDs and reconcile the class.",
+      "category": "fix",
+      "priority": 50,
+      "impact": "minor",
+      "status": "backlog",
+      "created_at": "2026-06-09",
+      "completed_at": null,
+      "dependencies": [],
+      "branch": null
     }
   ]
 }
