@@ -1376,6 +1376,22 @@ button.secondary {
   max-width: 88%;
   padding: 0.65rem 0.75rem;
   color: #102235;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.message p {
+  margin: 0.25rem 0;
+}
+
+.message ol,
+.message ul {
+  margin: 0.25rem 0;
+  padding-left: 1.5rem;
+}
+
+.message li {
+  margin: 0.15rem 0;
 }
 
 .assessment-log .message {
@@ -1402,6 +1418,27 @@ button.secondary {
   letter-spacing: 0.08em;
   margin-bottom: 0.25rem;
   text-transform: uppercase;
+}
+
+.message h2,
+.message h3,
+.message h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0.25rem 0;
+  line-height: 1.3;
+}
+
+.message h2 {
+  font-size: 0.95rem;
+}
+
+.message h3 {
+  font-size: 0.9rem;
+}
+
+.message h4 {
+  font-size: 0.85rem;
 }
 
 .standards-review-offer {
