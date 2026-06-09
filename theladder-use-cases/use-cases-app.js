@@ -921,8 +921,15 @@ async function callUseCaseGuide() {
 }
 
 function parseUseCaseCompletionResponse(rawText) {
-  const visibleText = String(rawText || '').replace(CONVERSATION_COMPLETE_REGEX, '').trim();
-  const match = String(rawText || '').match(CONVERSATION_COMPLETE_REGEX);
+  const text = String(rawText || '');
+  const match = text.match(CONVERSATION_COMPLETE_REGEX);
+
+  // Remove the completion signal and any remaining HTML comment artifacts
+  let visibleText = text
+    .replace(CONVERSATION_COMPLETE_REGEX, '')  // Remove the actual completion signal
+    .replace(/<!--[\s\S]*?-->/g, '')            // Remove any remaining HTML comments
+    .trim();
+
   if (!match) return { completion: null, visibleText };
   try {
     return { completion: JSON.parse(match[1]), visibleText };
