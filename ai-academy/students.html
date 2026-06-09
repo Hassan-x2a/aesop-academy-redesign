@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.2.0 | 2026-06-09 | Added Products and Use Cases completions tracking -->
+<!-- v1.3.0 | 2026-06-09 | Surface Products + Use-Case completions/certifications from unified learner record; cert card + pathway cards reflect all three pathways -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,6 +19,7 @@
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
     import { renderPathway } from './js/pathway-display.js';
     import { renderRecoveryWidget } from './js/qr-recovery.js';
+    import { loadPathways, depthLabel, evidenceLabel } from './js/learner-record.js?v=1';
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0-J6BVarJ0_lnSBkdtBDCbCHVoABUTrU",
@@ -129,6 +130,65 @@
       location.reload();
     };
 
+    // ── Helpers: unified learner record (Products + Use-Cases) ────
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
+    function prettyId(id) {
+      return String(id || '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+    // Firestore getter for learners/{id}; resolves to doc data or null, no throw.
+    async function fetchRemoteRecord(id) {
+      try {
+        const snap = await getDoc(doc(db, 'learners', id));
+        return snap.exists() ? snap.data() : null;
+      } catch (e) {
+        console.warn('[students] learners/{id} read failed:', e);
+        return null;
+      }
+    }
+    // Render one pathway card (Products or Use-Cases): completions + cert depth.
+    function renderPathwayCard(cardId, listId, pathway, pathwayKey, icon) {
+      const card = document.getElementById(cardId);
+      const list = document.getElementById(listId);
+      if (!card || !list) return;
+      const certByItem = {};
+      (pathway.certs || []).forEach(c => { if (c.itemId) certByItem[c.itemId] = c; });
+
+      const seen = new Set();
+      const rows = [];
+      (pathway.completions || []).forEach(comp => {
+        seen.add(comp.itemId);
+        rows.push(pathwayRowHTML(comp, certByItem[comp.itemId], icon));
+      });
+      (pathway.certs || []).forEach(cert => {
+        if (cert.itemId && seen.has(cert.itemId)) return;
+        rows.push(pathwayRowHTML(
+          { itemId: cert.itemId, itemName: cert.itemName, level: cert.certificationTier || '', evidenceStatus: cert.evidenceStatus },
+          cert, icon
+        ));
+      });
+
+      if (!rows.length) { card.style.display = 'none'; return; }
+      card.style.display = '';
+      list.innerHTML = rows.join('');
+    }
+    function pathwayRowHTML(comp, cert, icon) {
+      const name = escapeHtml(comp.itemName || prettyId(comp.itemId) || 'Item');
+      const ev = evidenceLabel(comp.evidenceStatus || comp.status);
+      const depth = cert && cert.depth ? `<span class="sh-rubric-status sh-rubric-pass" style="margin:0 0 0 0.5rem">🎖 ${escapeHtml(cert.depth)}</span>` : '';
+      const lvl = comp.level ? ` · ${escapeHtml(comp.level)}` : '';
+      return `<div class="sh-prog-item" style="display:flex;align-items:center;gap:0.6rem">
+        <span style="font-size:1.3rem">${icon}</span>
+        <div style="flex:1">
+          <div class="sh-prog-top" style="margin-bottom:0.15rem"><span>${name}</span></div>
+          <div class="sh-prog-sub">${escapeHtml(ev.label)}${lvl}${depth}</div>
+        </div>
+      </div>`;
+    }
+
     // ── Load student hub ──────────────────────────────────────────
     async function loadStudent(id) {
       document.getElementById('welcomeGate').style.display = 'none';
@@ -152,21 +212,14 @@
         }
       } catch (_) {}
 
-      // Load Products completions from localStorage
-      let productsCompleted = 0;
+      // Products + Use-Cases — unified record (Firestore → unified cache →
+      // legacy per-pathway localStorage). Renders the two pathway cards.
+      let pathways = null;
       try {
-        const productsState = JSON.parse(localStorage.getItem('aesop-ladder-products-state-v1') || '{}');
-        const courseStarts = productsState.courseStarts || {};
-        productsCompleted = Object.values(courseStarts).filter(c => c.status === 'completed').length;
-      } catch (_) {}
-
-      // Load Use Cases completions from localStorage
-      let useCasesCompleted = 0;
-      try {
-        const useCasesState = JSON.parse(localStorage.getItem('aesop-ladder-use-cases-state-v1') || '{}');
-        const courseStarts = useCasesState.courseStarts || {};
-        useCasesCompleted = Object.values(courseStarts).filter(c => c.status === 'completed').length;
-      } catch (_) {}
+        pathways = await loadPathways({ learnerId: id, fetchRemote: fetchRemoteRecord });
+        renderPathwayCard('productsCard', 'productsList', pathways.products, 'product', '🛍️');
+        renderPathwayCard('useCasesCard', 'useCasesList', pathways.useCases, 'use-case', '💡');
+      } catch (e) { console.warn('Pathway load error:', e); }
 
       // Populate continue secondary with begun courses
       const continueSecondaryEl = document.getElementById('continueSecondary');
@@ -746,12 +799,29 @@
         if(fdn>=CERT_FDN[i]&&pts>=CERT_PTS[i]) level=i; else break;
       }
 
-      // Load Ladder certifications
+      // Load Ladder (Concepts) certifications
       var ladderState = JSON.parse(localStorage.getItem('aesop-ladder-state') || '{}');
       var ladderCerts = (ladderState.heroTiersCertified || 0) + (ladderState.heroTiersExpert || 0) + (ladderState.heroTiersMastered || 0);
 
-      // Show card if either type of certification exists
-      if(level < 1 && ladderCerts < 1) return;
+      // Sibling pathways from the unified record cache (Products + Use-Cases).
+      var unified = {};
+      try { unified = JSON.parse(localStorage.getItem('aesop-ladder-unified-record-v1') || '{}') || {}; } catch(_){ unified = {}; }
+      function countCompleted(prog){
+        var starts = (prog && prog.courseStarts) || {};
+        return Object.keys(starts).filter(function(k){ var s=starts[k]; return s && (s.status==='completed'||s.status==='placed_out'); }).length;
+      }
+      var allCerts = Array.isArray(unified.ladderCertifications) ? unified.ladderCertifications : [];
+      var productCerts = allCerts.filter(function(c){ return c && c.pathway==='product'; }).length;
+      var useCaseCerts = allCerts.filter(function(c){ return c && c.pathway==='use-case'; }).length;
+      var productsDone = countCompleted(unified.productProgress);
+      var useCasesDone = countCompleted(unified.useCaseProgress);
+      // Fallback to legacy per-pathway keys when the unified cache is empty.
+      if (!productsDone) { try { productsDone = countCompleted(JSON.parse(localStorage.getItem('aesop-ladder-products-state-v1')||'{}')); } catch(_){} }
+      if (!useCasesDone) { try { useCasesDone = countCompleted(JSON.parse(localStorage.getItem('aesop-ladder-use-cases-state-v1')||'{}')); } catch(_){} }
+      var pathwayTotal = productsDone + useCasesDone + productCerts + useCaseCerts;
+
+      // Show card if any pathway has certifications/completions.
+      if(level < 1 && ladderCerts < 1 && pathwayTotal < 1) return;
       var card = document.getElementById('certCard');
       if(!card) return;
       card.style.display = '';
@@ -775,11 +845,28 @@
         displayContent += '<div style="font-size: 0.78rem; color: var(--ink-muted, #666);">Level ' + level + ' · ' + CERT_NAMES[level] + '</div></div>';
       }
 
+      if (productsDone > 0 || useCasesDone > 0 || productCerts > 0 || useCaseCerts > 0) {
+        displayContent += '<div style="font-size: 0.88rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1);">';
+        displayContent += '<div style="font-weight: 700; color: #2ba898; margin-bottom: 0.25rem;">Products &amp; Use Cases</div>';
+        displayContent += '<div style="font-size: 0.78rem; color: var(--ink-muted, #666);">';
+        var bits = [];
+        if (productsDone > 0)  bits.push('🛍️ ' + productsDone + ' Product' + (productsDone===1?'':'s') + ' completed');
+        if (useCasesDone > 0)  bits.push('💡 ' + useCasesDone + ' Use Case' + (useCasesDone===1?'':'s') + ' completed');
+        if (productCerts > 0)  bits.push('🎖 ' + productCerts + ' Product cert' + (productCerts===1?'':'s'));
+        if (useCaseCerts > 0)  bits.push('🎖 ' + useCaseCerts + ' Use Case cert' + (useCaseCerts===1?'':'s'));
+        displayContent += bits.join('<br>');
+        displayContent += '</div></div>';
+      }
+
+      // Pathway-only case: no Concepts ladder certs and no course cert level,
+      // but Products/Use-Cases progress exists.
+      var pathwayOnly = (ladderCerts < 1 && level < 1 && pathwayTotal > 0);
+
       // Badge (simple emoji version for the student page)
       var badge = document.getElementById('certBadgeSmall');
       if(badge){
-        var badgeEmoji = ladderCerts > 0 ? '🪜' : CERT_EMOJIS[displayLevel];
-        var badgeColor = ladderCerts > 0 ? '#735f9e' : CERT_COLORS[displayLevel];
+        var badgeEmoji = pathwayOnly ? '🎖' : (ladderCerts > 0 ? '🪜' : CERT_EMOJIS[displayLevel]);
+        var badgeColor = pathwayOnly ? '#2ba898' : (ladderCerts > 0 ? '#735f9e' : CERT_COLORS[displayLevel]);
         badge.innerHTML =
           '<div style="width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;' +
           'font-size:28px;background:rgba(255,255,255,0.06);border:2px solid ' + badgeColor + ';' +
@@ -787,7 +874,10 @@
       }
       var nm = document.getElementById('certLevelName');
       if(nm){
-        if (ladderCerts > 0) {
+        if (pathwayOnly) {
+          nm.textContent = 'Products & Use Cases';
+          nm.style.color = '#2ba898';
+        } else if (ladderCerts > 0) {
           nm.textContent = ladderCerts + ' Ladder Certification' + (ladderCerts === 1 ? '' : 's');
           nm.style.color = '#735f9e';
         } else {
@@ -799,6 +889,8 @@
       if(rt) {
         if (level > 0) {
           rt.textContent = CERT_RESUME[level];
+        } else if (pathwayOnly) {
+          rt.textContent = 'Earned through Products & Use Cases';
         } else {
           rt.textContent = 'Earned through The Ladder';
         }

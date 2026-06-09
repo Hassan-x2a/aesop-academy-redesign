@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v1.2.0 | 2026-06-09 | Added Products and Use Cases completions tracking -->
+<!-- v1.3.0 | 2026-06-09 | Surface Products + Use-Case completions/certifications from unified learner record (Firestore → unified cache → legacy LS); evidence types + cert depth + credential links -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,6 +18,8 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getFirestore, doc, getDoc, setDoc }
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { loadPathways, depthLabel, evidenceLabel }
+      from '/ai-academy/js/learner-record.js?v=1';
 
     const firebaseConfig = {
       apiKey: "AIzaSyC0-J6BVarJ0_lnSBkdtBDCbCHVoABUTrU",
@@ -129,7 +131,19 @@
       document.getElementById('displayLearnerId').textContent = id;
       document.getElementById('printName').textContent        = id;
 
-      renderTranscript();
+      renderTranscript(id);
+    }
+
+    // Firestore getter for the unified learners/{id} doc. Resolves to the doc
+    // data or null; never throws (the reader degrades to localStorage).
+    async function fetchRemoteRecord(id) {
+      try {
+        const snap = await getDoc(doc(db, 'learners', id));
+        return snap.exists() ? snap.data() : null;
+      } catch (e) {
+        console.warn('[transcript] learners/{id} read failed:', e);
+        return null;
+      }
     }
 
     // ── Switch to different learner ────────────────────────────
@@ -138,33 +152,43 @@
       showWelcome();
     };
 
-    function renderTranscript() {
-      // Load ladder state from localStorage
-      let ladderState = {};
-      try {
-        ladderState = JSON.parse(localStorage.getItem('aesop-ladder-state') || '{}');
-      } catch (_) {}
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
 
-      // Load products state
-      let productsState = {};
-      try {
-        productsState = JSON.parse(localStorage.getItem('aesop-ladder-products-state-v1') || '{}');
-      } catch (_) {}
+    function prettyId(id) {
+      return String(id || '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
 
-      // Load use cases state
-      let useCasesState = {};
-      try {
-        useCasesState = JSON.parse(localStorage.getItem('aesop-ladder-use-cases-state-v1') || '{}');
-      } catch (_) {}
+    // Sibling-pathway credential page for a cert summary.
+    function pathwayCredentialUrl(pathway, item, learnerId) {
+      const page = pathway === 'product' ? '/product-credential.html' : '/use-case-credential.html';
+      const params = new URLSearchParams({
+        learner: learnerId || '',
+        item: item.itemId || '',
+        title: item.itemName || prettyId(item.itemId) || (pathway === 'product' ? 'Product' : 'Use Case'),
+        level: item.depth || depthLabel(item.testDepth) || 'Certification',
+        evidence: item.evidenceStatus || (item.result === 'pass' ? 'ai_verified' : ''),
+        earned: item.awardedAt || '',
+      });
+      return `${page}?${params.toString()}`;
+    }
 
-      const certified = ladderState.heroTiersCertified || 0;
-      const expertise = ladderState.heroTiersExpert || 0;
-      const mastery = ladderState.heroTiersMastered || 0;
-      const totalCerts = certified + expertise + mastery;
-      const productsCompleted = Object.values(productsState.courseStarts || {}).filter(c => c.status === 'completed').length;
-      const useCasesCompleted = Object.values(useCasesState.courseStarts || {}).filter(c => c.status === 'completed').length;
+    async function renderTranscript(learnerId) {
+      // Prefer the unified record (Firestore → unified cache → legacy LS keys).
+      const pathways = await loadPathways({ learnerId, fetchRemote: fetchRemoteRecord });
 
-      // Build tier cards
+      const certified = pathways.concept.certified || 0;
+      const expertise = pathways.concept.expert || 0;
+      const mastery = pathways.concept.mastery || 0;
+      const products = pathways.products;
+      const useCases = pathways.useCases;
+      const productsCompleted = products.completions.length;
+      const useCasesCompleted = useCases.completions.length;
+
+      // Build Concepts tier cards (unchanged rendering — load-bearing).
       const tiersCertified = [], tiersExpertise = [], tiersMastery = [];
 
       LADDER_TIERS.forEach(tier => {
@@ -185,13 +209,78 @@
       renderSection('sectionExpertise', tiersExpertise,  'expertise');
       renderSection('sectionCertified', tiersCertified,  'certified');
 
+      renderPathwayList('productsList',  'sectionProducts',  products,  'product',  learnerId, '🛍️');
+      renderPathwayList('useCasesList',  'sectionUseCases',  useCases,  'use-case', learnerId, '💡');
+
       document.getElementById('statMastery').textContent   = mastery;
       document.getElementById('statExpertise').textContent = expertise;
       document.getElementById('statCertified').textContent = certified;
       document.getElementById('statProducts').textContent = productsCompleted;
       document.getElementById('statUseCases').textContent = useCasesCompleted;
 
-      buildPrintCerts(mastery, expertise, certified, productsCompleted, useCasesCompleted);
+      buildPrintCerts(mastery, expertise, certified, products, useCases);
+    }
+
+    // Render a Products or Use-Cases section: completions + certifications.
+    function renderPathwayList(listId, sectionId, pathway, pathwayKey, learnerId, icon) {
+      const listEl = document.getElementById(listId);
+      const section = document.getElementById(sectionId);
+      if (!listEl) return;
+      const emptyEl = section ? section.querySelector('.tx-empty') : null;
+
+      // Index certs by itemId so a completed item can show its cert depth.
+      const certByItem = {};
+      pathway.certs.forEach(c => { if (c.itemId) certByItem[c.itemId] = c; });
+
+      // Cards: one per completion, plus any cert whose item had no completion row.
+      const seen = new Set();
+      const cards = [];
+      pathway.completions.forEach(comp => {
+        seen.add(comp.itemId);
+        cards.push(pathwayCardHTML(comp, certByItem[comp.itemId], pathwayKey, learnerId, icon));
+      });
+      pathway.certs.forEach(cert => {
+        if (cert.itemId && seen.has(cert.itemId)) return;
+        cards.push(pathwayCardHTML(
+          { itemId: cert.itemId, itemName: cert.itemName, level: cert.certificationTier || '', evidenceStatus: cert.evidenceStatus, completedAt: cert.awardedAt },
+          cert, pathwayKey, learnerId, icon
+        ));
+      });
+
+      if (!cards.length) {
+        listEl.innerHTML = '';
+        if (emptyEl) emptyEl.style.display = 'block';
+        return;
+      }
+      if (emptyEl) emptyEl.style.display = 'none';
+      listEl.innerHTML = `<div class="tx-grid">${cards.join('')}</div>`;
+    }
+
+    function pathwayCardHTML(comp, cert, pathwayKey, learnerId, icon) {
+      const name = escapeHtml(comp.itemName || prettyId(comp.itemId) || 'Item');
+      const ev = evidenceLabel(comp.evidenceStatus || comp.status);
+      const evClass = `tx-ev tx-ev--${escapeHtml(ev.key || 'completed')}`;
+      let badges = `<span class="${evClass}">${escapeHtml(ev.label)}</span>`;
+      if (cert && cert.depth) {
+        badges += `<span class="tx-ev tx-ev--cert">🎖 ${escapeHtml(cert.depth)}</span>`;
+      }
+      const meta = comp.level ? `<div class="tx-tier-info">${escapeHtml(comp.level)} level</div>` : '';
+      const certLink = cert && cert.depth
+        ? `<a class="tx-cta tx-cta--gold" href="${escapeHtml(pathwayCredentialUrl(pathwayKey, cert, learnerId))}">View Credential →</a>`
+        : `<a class="tx-cta tx-cta--gold" href="/theladder-${pathwayKey === 'product' ? 'products' : 'use-cases'}/">Explore →</a>`;
+      return `
+        <div class="tx-card tx-card--certified">
+          <div class="tx-card__bar" style="background: var(--gold);"></div>
+          <div class="tx-card__body">
+            <div class="tx-card__header">
+              <span class="tx-icon">${icon}</span>
+              <div class="tx-badges">${badges}</div>
+            </div>
+            <h2>${name}</h2>
+            ${meta}
+          </div>
+          <div class="tx-card__footer">${certLink}</div>
+        </div>`;
     }
 
     function renderSection(id, items, type) {
@@ -235,8 +324,10 @@
         </div>`;
     }
 
-    function buildPrintCerts(mastery, expertise, certified, productsCompleted, useCasesCompleted) {
+    function buildPrintCerts(mastery, expertise, certified, products, useCases) {
       const list = document.getElementById('printCertList');
+      const productsCompleted = products.completions.length;
+      const useCasesCompleted = useCases.completions.length;
       let html = '';
 
       if (mastery > 0) {
@@ -248,11 +339,26 @@
       if (certified > 0) {
         html += `<div class="print-cert-row"><div class="print-cert-left"><span class="print-cert-icon">✓</span><div><div class="print-cert-title">Certified Tiers</div></div></div><div class="print-cert-right"><span class="print-cert-status certified">${certified} Tier${certified!==1?'s':''}</span></div></div>`;
       }
+
+      const printPathwayRows = (items, certs, icon, singular) => {
+        const certByItem = {};
+        certs.forEach(c => { if (c.itemId) certByItem[c.itemId] = c; });
+        return items.map(it => {
+          const cert = certByItem[it.itemId];
+          const ev = evidenceLabel(it.evidenceStatus || it.status);
+          const depth = cert && cert.depth ? ` · ${escapeHtml(cert.depth)}` : '';
+          const name = escapeHtml(it.itemName || prettyId(it.itemId) || singular);
+          return `<div class="print-cert-row"><div class="print-cert-left"><span class="print-cert-icon">${icon}</span><div><div class="print-cert-title">${name}</div><div class="print-cert-sub">${escapeHtml(ev.label)}${depth}</div></div></div><div class="print-cert-right"><span class="print-cert-status certified">${singular}</span></div></div>`;
+        }).join('');
+      };
+
       if (productsCompleted > 0) {
-        html += `<div class="print-cert-row"><div class="print-cert-left"><span class="print-cert-icon">🛍️</span><div><div class="print-cert-title">Products Completed</div></div></div><div class="print-cert-right"><span class="print-cert-status">${productsCompleted} Product${productsCompleted!==1?'s':''}</span></div></div>`;
+        html += `<div class="print-section-head">Products (${productsCompleted})</div>`;
+        html += printPathwayRows(products.completions, products.certs, '🛍️', 'Product');
       }
       if (useCasesCompleted > 0) {
-        html += `<div class="print-cert-row"><div class="print-cert-left"><span class="print-cert-icon">💡</span><div><div class="print-cert-title">Use Cases Completed</div></div></div><div class="print-cert-right"><span class="print-cert-status">${useCasesCompleted} Use Case${useCasesCompleted!==1?'s':''}</span></div></div>`;
+        html += `<div class="print-section-head">Use Cases (${useCasesCompleted})</div>`;
+        html += printPathwayRows(useCases.completions, useCases.certs, '💡', 'Use Case');
       }
 
       if (!html) {
@@ -620,6 +726,21 @@
     .tx-badge--certified { background: rgba(61,214,192,0.12);  color: var(--teal-dark); border: 1px solid rgba(61,214,192,0.3); }
     .tx-badge--expertise { background: rgba(124,58,237,0.12);  color: #6d28d9; border: 1px solid rgba(124,58,237,0.25); }
     .tx-badge--mastery   { background: rgba(201,160,90,0.12); color: #8a6a2e; border: 1px solid rgba(201,160,90,0.3); }
+
+    /* Evidence-type + depth pills (Products / Use-Cases) */
+    .tx-ev {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.22rem 0.55rem; border-radius: 99px;
+      background: rgba(61,214,192,0.12); color: var(--teal-dark); border: 1px solid rgba(61,214,192,0.3);
+    }
+    .tx-ev--placed_out    { background: rgba(91,142,240,0.12); color: #2c54b8; border-color: rgba(91,142,240,0.3); }
+    .tx-ev--ai_verified   { background: rgba(124,58,237,0.12); color: #6d28d9; border-color: rgba(124,58,237,0.25); }
+    .tx-ev--verified      { background: rgba(45,122,74,0.14);  color: #2d7a4a; border-color: rgba(45,122,74,0.3); }
+    .tx-ev--self_reported { background: rgba(0,0,0,0.05);      color: var(--ink-muted); border-color: var(--border); }
+    .tx-ev--cert          { background: rgba(201,160,90,0.14); color: #8a6a2e; border-color: rgba(201,160,90,0.35); }
+    [data-theme="dark"] .tx-ev { background: rgba(61,214,192,0.18); }
+    [data-theme="dark"] .tx-ev--self_reported { background: rgba(255,255,255,0.07); color: var(--ink-light); }
 
     .tx-card__sub {
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
