@@ -39,7 +39,7 @@ export const LADDER_TIERS = [
       'Basic privacy and sensitive data precautions',
       'Copyright and ownership awareness for beginners',
       'When not to use AI',
-      'Beginner self-assessment'
+      'Beginner readiness check'
     ]
   },
   {
@@ -66,7 +66,7 @@ export const LADDER_TIERS = [
       'Prompting for step-by-step help',
       'Prompting for checklists',
       'Prompting for critique and revision',
-      'Novice self-assessment'
+      'Novice readiness check'
     ]
   },
   {
@@ -93,7 +93,7 @@ export const LADDER_TIERS = [
       'Recognizing bias in AI responses',
       'Using AI with search engines',
       'Personal knowledge capture with AI',
-      'Capable learner self-assessment'
+      'Capable learner readiness check'
     ]
   },
   {
@@ -120,7 +120,7 @@ export const LADDER_TIERS = [
       'AI-assisted team communication',
       'Reusable prompt libraries',
       'Human review checkpoints',
-      'Knowledge worker self-assessment'
+      'Knowledge worker readiness check'
     ]
   },
   {
@@ -147,7 +147,7 @@ export const LADDER_TIERS = [
       'Presentation design with AI',
       'Synthetic media disclosure',
       'Deepfake awareness',
-      'Creative user self-assessment'
+      'Creative user readiness check'
     ]
   },
   {
@@ -174,7 +174,7 @@ export const LADDER_TIERS = [
       'AI for real estate',
       'AI for government and civic services',
       'AI use-case risk screening',
-      'Business practitioner self-assessment'
+      'Business practitioner readiness check'
     ]
   },
   {
@@ -201,7 +201,7 @@ export const LADDER_TIERS = [
       'Audit trails for AI workflows',
       'Change management for AI workflows',
       'Automation failure modes',
-      'Workflow designer self-assessment'
+      'Workflow designer readiness check'
     ]
   },
   {
@@ -228,7 +228,7 @@ export const LADDER_TIERS = [
       'Cost estimation',
       'Latency management',
       'Basic AI application architecture',
-      'Applied builder self-assessment'
+      'Applied builder readiness check'
     ]
   },
   {
@@ -255,7 +255,7 @@ export const LADDER_TIERS = [
       'Data freshness',
       'Retrieval evaluation',
       'Enterprise search architecture',
-      'Knowledge systems builder self-assessment'
+      'Knowledge systems builder readiness check'
     ]
   },
   {
@@ -282,7 +282,7 @@ export const LADDER_TIERS = [
       'Agent permissions',
       'Agent sandboxes',
       'Agent observability',
-      'Agent builder self-assessment'
+      'Agent builder readiness check'
     ]
   },
   {
@@ -309,7 +309,7 @@ export const LADDER_TIERS = [
       'Deployment patterns',
       'Incident response for AI systems',
       'AI system lifecycle management',
-      'AI engineer self-assessment'
+      'AI engineer readiness check'
     ]
   },
   {
@@ -336,7 +336,7 @@ export const LADDER_TIERS = [
       'Red teaming AI applications',
       'Abuse monitoring',
       'Secure AI deployment checklists',
-      'AI security practitioner self-assessment'
+      'AI security practitioner readiness check'
     ]
   },
   {
@@ -363,7 +363,7 @@ export const LADDER_TIERS = [
       'ISO/IEC 42001 AI management systems',
       'EU AI Act basics',
       'Sector-specific AI compliance',
-      'AI governance practitioner self-assessment'
+      'AI governance practitioner readiness check'
     ]
   },
   {
@@ -390,7 +390,7 @@ export const LADDER_TIERS = [
       'Recommendation systems',
       'Forecasting and time series',
       'Reinforcement learning and robotics',
-      'AI specialist self-assessment'
+      'AI specialist readiness check'
     ]
   },
   {
@@ -417,7 +417,7 @@ export const LADDER_TIERS = [
       'Interpretability and alignment awareness',
       'Regulatory monitoring',
       'Future-of-work planning',
-      'AI strategist self-assessment'
+      'AI strategist readiness check'
     ]
   }
 ].map((tier, tierIndex) => ({

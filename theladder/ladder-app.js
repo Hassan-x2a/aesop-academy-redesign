@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { FIREBASE_CONFIG } from '/ai-academy/js/firebase-config.js';
-import { DEFAULT_RESOURCES, LADDER_TIERS, LADDER_VERSION, LANGUAGES } from './ladder-data.js';
+import { DEFAULT_RESOURCES, LADDER_TIERS, LADDER_VERSION, LANGUAGES } from './ladder-data.js?v=2';
 
 const PROXY_URL = '/aesop-api/proxy.php';
 const LS_ID = 'aesop-learner-id';
@@ -349,12 +349,21 @@ function topicMatchesInterest(topic, tier, tags) {
   });
 }
 
+function topicIsReadinessCheckTitle(title) {
+  const normalized = String(title || '').toLowerCase();
+  return normalized.includes('readiness check') || normalized.includes('self-assessment');
+}
+
+function isReadinessCheckTopic(topic) {
+  return topicIsReadinessCheckTitle(topic?.title);
+}
+
 function assignedTopicsForPlacement(grantedTierIds, interestTags) {
   const granted = new Set(grantedTierIds);
   const assigned = [];
   LADDER_TIERS.forEach((tier) => {
     if (granted.has(tier.id)) return;
-    const core = tier.topics.filter((topic) => topic.order <= 4 || topic.title.toLowerCase().includes('self-assessment'));
+    const core = tier.topics.filter((topic) => topic.order <= 4 || isReadinessCheckTopic(topic));
     const matched = tier.topics.filter((topic) => topicMatchesInterest(topic, tier, interestTags));
     [...core, ...matched].forEach((topic) => {
       if (!assigned.includes(topic.id)) assigned.push(topic.id);
@@ -1092,6 +1101,8 @@ async function openTopicFromSearch(topicId, assignToPath) {
   const tier = tierById(topic.tierId);
   state.activeTierId = tier.id;
   state.activeTopicId = topic.id;
+  state.evaluationContext = null;
+  state.trainingMessages = [];
   state.messages = [];
 
   if (assignToPath && !state.progress.selfAssignedTopicIds.includes(topic.id)) {
@@ -1648,6 +1659,9 @@ function systemPromptFor(topic, tier) {
   const selfAssigned = state.progress.selfAssignedTopicIds?.includes(topic.id) ? 'yes' : 'no';
   const placedOut = state.progress.completedTopics[topicKey(topic.id)]?.status === TRANSCRIPT_STATUS.PLACED_OUT ? 'yes' : 'no';
   const evaluation = state.evaluationContext;
+  const selectedCertificationTier = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
+  const selectedDepth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
+  const readinessCheck = isReadinessCheckTopic(topic);
   const evaluationBlock = evaluation ? `
 Active certification mode: YES.
 Certification blueprint: ${evaluation.blueprintId} ${evaluation.blueprintVersion}.
@@ -1669,6 +1683,25 @@ When and only when you make a final determination, append this exact hidden mark
 
 If the learner has not met the standard, use "result":"not_certified" and include the missing evidence in rationale. Do not mention the marker or JSON to the learner.
 ` : '';
+  const readinessBlock = readinessCheck && !evaluation ? `
+Active readiness check: YES.
+Desired education tier: ${selectedCertificationTier.label}.
+Mapped standards family: ${selectedCertificationTier.standards}.
+Desired mastery level: ${selectedDepth.label}.
+Target outcome: ${selectedDepth.outcome}.
+Required evidence level: ${selectedDepth.evidence}.
+Passing standard being prepared for: ${selectedDepth.passingStandard}.
+
+This is a readiness check, not a certification exam and not a course lesson. Do not certify the learner, do not append a certification result marker, and do not imply transcript credit. Use the selected education tier and mastery level as the target. If the learner seems to have chosen the wrong target, ask whether they want to change the Education tier or Mastery level controls before continuing.
+
+Run the readiness check as a guided diagnostic:
+1. Confirm the learner's target in plain language.
+2. Ask for current confidence and relevant experience.
+3. Ask 3-5 targeted questions that sample vocabulary, applied judgment, risk awareness, and evidence quality for this Ladder tier.
+4. Ask what evidence or artifact they could use in a real challenge.
+5. End with one of these readiness statements: ready now, close but needs review, or not ready yet.
+6. Recommend the next action: start certification, switch mastery level, review specific rungs, or gather evidence.
+` : '';
   return `You are The Ladder guide inside AESOP AI Academy. You are strictly scoped to the selected topic: ${topic.title}.
 
 Placement interests: ${interestText(placement)}.
@@ -1683,6 +1716,7 @@ Preferred language: ${languageLabel()}. Translate your learner-facing responses 
 
 Every rung is a guided AI learning conversation. The goal is discovery, critical thinking, vocabulary fluency, and applied understanding. Do not frame the experience as schoolwork.
 ${evaluationBlock}
+${readinessBlock}
 
 Use this guarded teaching pattern:
 1. Diagnose what the learner already understands.
@@ -1693,6 +1727,15 @@ Use this guarded teaching pattern:
 6. End by telling the learner whether this rung should be transcripted as completed, verified, self-reported, or not yet ready.
 
 Do not act as a general assistant. If the learner goes off topic, warmly redirect them back to ${topic.title}. Do not simply lecture. Ask questions and require the learner to reason. Keep responses concise enough for an interactive learning session.`;
+}
+
+function fallbackGuideText(topic, tier) {
+  if (isReadinessCheckTopic(topic)) {
+    const cert = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
+    const depth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
+    return `Readiness check practice mode: target ${cert.label}, ${depth.label}. Rate your confidence, name three concepts from ${tier.title} you can explain, describe one realistic application, name one risk or limitation, and identify the evidence you would use in a certification challenge.`;
+  }
+  return 'The guide could not respond. Use practice mode: explain the topic, name one risk, and ask yourself what evidence would change your mind.';
 }
 
 async function callGuide() {
@@ -1709,7 +1752,7 @@ async function callGuide() {
       })
     });
     const data = await response.json();
-    const rawText = data?.content?.[0]?.text || data?.error || 'The guide could not respond. Use practice mode: explain the topic, name one risk, and ask yourself what evidence would change your mind.';
+    const rawText = data?.content?.[0]?.text || data?.error || fallbackGuideText(topic, tier);
     const { certificationResult, visibleText } = state.evaluationContext
       ? parseCertificationResponse(rawText)
       : { certificationResult: null, visibleText: rawText };
@@ -1718,7 +1761,7 @@ async function callGuide() {
   } catch (error) {
     state.messages.push({
       role: 'assistant',
-      content: 'AI is temporarily unavailable. Practice mode: explain the topic in your own words, name one example, name one limitation, and decide what you still need to verify.'
+      content: fallbackGuideText(topic, tier)
     });
   }
   renderChat();
@@ -1727,11 +1770,17 @@ async function callGuide() {
 
 async function startConversation() {
   const topic = getActiveTopic();
+  const tier = getActiveTier();
+  const cert = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
+  const depth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
+  const readinessCheck = isReadinessCheckTopic(topic);
   state.evaluationContext = null;
   state.trainingMessages = [];
   state.messages = [{
     role: 'user',
-    content: `Start my guided conversation for "${topic.title}". Diagnose my current understanding first, then help me discover the topic through questions, vocabulary, examples, application, and one risk or limitation.`
+    content: readinessCheck
+      ? `Start my readiness check for ${tier.name}: ${tier.title}. Use my selected Education tier: ${cert.label}. Use my selected Mastery level: ${depth.label}. Help me determine whether I am ready to attempt that challenge, what evidence I need, and what I should review before trying.`
+      : `Start my guided conversation for "${topic.title}". Diagnose my current understanding first, then help me discover the topic through questions, vocabulary, examples, application, and one risk or limitation.`
   }];
   renderChat();
   await callGuide();
