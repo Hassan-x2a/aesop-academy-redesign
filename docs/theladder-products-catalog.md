@@ -109,7 +109,7 @@ The 250 products are separated into these curriculum blocks:
 | 58 | Codeium Enterprise | Coding assistant | Enterprise coding assistant lineage and deployment model. | B/I |
 | 59 | CodiumAI Cover-Agent | Test generation tool | Useful for teaching AI-assisted test generation and quality gates. | B/I |
 | 60 | Mutable.ai | Code intelligence tool | Documentation, codebase understanding, and engineering knowledge workflows. | B/I |
-| 61 | CodePen AI | Frontend coding assistant | Useful learner-facing sandbox for frontend prototyping. | B |
+| 61 | GitHub | Developer collaboration platform | Essential platform for repositories, issues, pull requests, Actions, releases, security alerts, and AI-assisted software teamwork. | B/I/A |
 | 62 | NotebookLM | Research and study assistant | Widely used document-grounded learning and briefing product. | B/I/A |
 | 63 | Elicit | Research assistant | Literature review, paper discovery, and evidence extraction workflow. | B/I |
 | 64 | Consensus | Research answer engine | Scientific consensus search and citation-backed answer workflow. | B/I |
