@@ -1940,6 +1940,14 @@ button.secondary {
   max-width: 320px !important;
 }
 
+.ladder-nav .nav-brand-primary {
+  color: #8f681c !important;
+}
+
+.ladder-nav .nav-brand-primary:hover {
+  color: #8f681c !important;
+}
+
 .ladder-nav .nav-brand-secondary {
   color: #8f681c;
   font-size: 0.7rem !important;
