@@ -931,15 +931,28 @@ function parseCertificationValidationResponse(rawText) {
 }
 
 function parseConversationCompletionResponse(rawText) {
-  const visibleText = String(rawText || '').replace(CONVERSATION_COMPLETE_REGEX, '').trim();
-  const match = String(rawText || '').match(CONVERSATION_COMPLETE_REGEX);
-  if (!match) return { completion: null, visibleText };
-  try {
-    return { completion: normalizeConversationCompletion(JSON.parse(match[1])), visibleText };
-  } catch (error) {
-    console.warn('Could not parse conversation completion:', error);
-    return { completion: null, visibleText };
-  }
+  const text = String(rawText || '');
+
+  // Look for COMPLETION:status format
+  const completionMatch = text.match(/COMPLETION:\s*(completed|verified|self_reported|not_ready)/i);
+
+  // Remove completion marker from visible text
+  let visibleText = text
+    .replace(/COMPLETION:\s*(completed|verified|self_reported|not_ready)\s*$/gim, '')
+    .replace(CONVERSATION_COMPLETE_REGEX, '')  // Also remove old format if present
+    .replace(/<!--[\s\S]*?-->/g, '')            // Remove any HTML comments
+    .trim();
+
+  if (!completionMatch) return { completion: null, visibleText };
+
+  const status = completionMatch[1].toLowerCase();
+  const completion = {
+    status: ['completed', 'verified', 'self_reported', 'not_ready'].includes(status) ? status : 'not_ready',
+    confidence: 0.95,
+    rationale: 'parsed from completion marker'
+  };
+
+  return { completion: normalizeConversationCompletion(completion), visibleText };
 }
 
 function normalizeConversationCompletion(raw) {
@@ -2575,10 +2588,9 @@ Run the readiness check as a guided diagnostic:
 6. Recommend the next action: start certification, switch mastery level, review specific rungs, or gather evidence.
 ` : '';
   const completionBlock = !evaluation && !readinessCheck ? `
-When you have enough evidence to decide whether the learning conversation is complete, say that clearly to the learner. If the rung should be transcripted as completed, verified, or self-reported, append this exact hidden marker on a new line:
-<!--LADDER_CONVERSATION_COMPLETE:{"status":"completed","confidence":0.0,"rationale":"one concise evidence-based reason"}-->
+When you have enough evidence to decide whether the learning conversation is complete, say that clearly to the learner. Then on a new line, write the completion status in this format: COMPLETION:status where status is one of: completed, verified, self_reported, or not_ready.
 
-Allowed status values: "completed", "verified", "self_reported", "not_ready". Use "verified" only when the learner gave strong evidence in the conversation. Use "completed" for solid learning completion. Use "self_reported" when the learner has enough engagement for a record but evidence is mostly learner-claimed. Use "not_ready" when the learner needs more work. Do not mention the marker or JSON to the learner.
+Use "verified" only when the learner gave strong evidence in the conversation. Use "completed" for solid learning completion. Use "self_reported" when the learner has enough engagement for a record but evidence is mostly learner-claimed. Use "not_ready" when the learner needs more work. Do not mention the completion marker format to the learner.
 ` : '';
   return `You are The Ladder guide inside AESOP AI Academy. You are strictly scoped to the selected topic: ${topic.title}.
 
