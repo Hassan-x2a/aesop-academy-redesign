@@ -7,7 +7,6 @@ const courseProxyUrl = '/aesop-api/proxy.php';
 let requestDbContext = null;
 
 const categoryRanges = [
-  { label: 'All products', start: 1, end: 500 },
   { label: 'AI assistants', start: 1, end: 20 },
   { label: 'Workplace + writing', start: 21, end: 35 },
   { label: 'Coding tools', start: 36, end: 61 },
@@ -31,6 +30,7 @@ const categoryRanges = [
   { label: 'Science + clinical AI', start: 451, end: 475 },
   { label: 'Personal productivity', start: 476, end: 500 }
 ];
+const defaultCategory = categoryRanges[0];
 
 const certificationOptions = [
   {
@@ -50,7 +50,7 @@ const certificationOptions = [
 const state = {
   products: [],
   selectedId: 1,
-  activeCategory: categoryRanges[0],
+  activeCategory: defaultCategory,
   query: '',
   depth: 'all',
   courseStarts: {},
@@ -186,7 +186,7 @@ function renderCategories() {
     button.addEventListener('click', () => {
       const start = Number(button.dataset.start);
       const end = Number(button.dataset.end);
-      state.activeCategory = categoryRanges.find((category) => category.start === start && category.end === end) || categoryRanges[0];
+      state.activeCategory = categoryRanges.find((category) => category.start === start && category.end === end) || defaultCategory;
       saveState();
       renderCategories();
       renderProducts();
@@ -235,7 +235,7 @@ function renderDetail(product) {
   if (!product) return;
   const courses = getCourseLevels(product.depth);
   const defaultCourse = courses[0] || 'Beginner';
-  const chat = state.courseChats[product.id];
+  const chat = ensureDefaultCourseChat(product, defaultCourse);
   elements.productDetail.innerHTML = `
     <p class="detail-label">Product course</p>
     <h2>${escapeHtml(product.name)}</h2>
@@ -252,7 +252,7 @@ function renderDetail(product) {
       </button>
     </section>
     <div id="courseStartNotice" class="course-start-notice" hidden></div>
-    <section id="courseWorkspace" class="course-conversation-workspace" aria-label="Course conversation workspace" ${chat ? '' : 'hidden'}>
+    <section id="courseWorkspace" class="course-conversation-workspace" aria-label="Course conversation workspace">
       ${renderCourseWorkspace(product, chat)}
     </section>
     <div class="cert-stack" aria-label="Certification options">
@@ -286,6 +286,24 @@ function renderDetail(product) {
     launchButton.textContent = 'Continue course';
     if (chat?.mode === 'course') launchButton.setAttribute('aria-current', 'true');
   }
+}
+
+function ensureDefaultCourseChat(product, level) {
+  if (state.courseChats[product.id]) return state.courseChats[product.id];
+  const savedAt = new Date().toISOString();
+  state.courseChats[product.id] = {
+    mode: 'course',
+    level,
+    savedAt,
+    updatedAt: savedAt,
+    status: 'ready',
+    messages: [{
+      role: 'assistant',
+      content: `This is the course chat for ${product.name}. Tell me what you want to learn or click Begin course and I will start the guided class.`
+    }]
+  };
+  saveState();
+  return state.courseChats[product.id];
 }
 
 function renderCourseWorkspace(product, chat) {
@@ -429,12 +447,17 @@ async function callCourseGuide(product) {
   if (!chat) return;
   chat.messages.push({ role: 'assistant', content: 'Thinking through the next step...' });
   renderDetail(product);
+  const outboundMessages = chat.messages.filter((message) => message.content !== 'Thinking through the next step...');
+  while (outboundMessages[0]?.role === 'assistant') outboundMessages.shift();
+  if (!outboundMessages.length) {
+    outboundMessages.push({ role: 'user', content: `Start the course conversation for ${product.name}.` });
+  }
   try {
     const response = await fetch(courseProxyUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        messages: chat.messages.filter((message) => message.content !== 'Thinking through the next step...'),
+        messages: outboundMessages,
         system_prompt: productSystemPrompt(product, chat),
         max_tokens: 900
       })
@@ -483,13 +506,7 @@ function restoreSavedState() {
     state.depth = saved.depth;
   }
 
-  const savedCategory = categoryRanges.find((category) => (
-    category.start === saved.activeCategory?.start &&
-    category.end === saved.activeCategory?.end
-  ));
-  if (savedCategory) {
-    state.activeCategory = savedCategory;
-  }
+  state.activeCategory = defaultCategory;
 
   if (saved.courseStarts && typeof saved.courseStarts === 'object') {
     state.courseStarts = Object.fromEntries(
@@ -541,10 +558,6 @@ function saveState() {
   try {
     localStorage.setItem(storageKey, JSON.stringify({
       selectedId: state.selectedId,
-      activeCategory: {
-        start: state.activeCategory.start,
-        end: state.activeCategory.end
-      },
       query: state.query,
       depth: state.depth,
       courseStarts: state.courseStarts,

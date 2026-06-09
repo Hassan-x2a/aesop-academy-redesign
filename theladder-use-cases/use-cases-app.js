@@ -241,7 +241,7 @@ function renderDetail(useCase) {
   if (!useCase) return;
   const courses = getCourseLevels(useCase.depth);
   const defaultCourse = courses[0] || 'Beginner';
-  const chat = state.courseChats[useCase.id];
+  const chat = ensureDefaultCourseChat(useCase, defaultCourse);
   elements.useCaseDetail.innerHTML = `
     <p class="detail-label">Use-case course</p>
     <h2>${escapeHtml(useCase.name)}</h2>
@@ -259,7 +259,7 @@ function renderDetail(useCase) {
       </button>
     </section>
     <div id="courseStartNotice" class="course-start-notice" hidden></div>
-    <section id="courseWorkspace" class="course-conversation-workspace" aria-label="Course conversation workspace" ${chat ? '' : 'hidden'}>
+    <section id="courseWorkspace" class="course-conversation-workspace" aria-label="Course conversation workspace">
       ${renderCourseWorkspace(useCase, chat)}
     </section>
     <div class="cert-stack" aria-label="Certification options">
@@ -293,6 +293,24 @@ function renderDetail(useCase) {
     launchButton.textContent = 'Continue course';
     if (chat?.mode === 'course') launchButton.setAttribute('aria-current', 'true');
   }
+}
+
+function ensureDefaultCourseChat(useCase, level) {
+  if (state.courseChats[useCase.id]) return state.courseChats[useCase.id];
+  const savedAt = new Date().toISOString();
+  state.courseChats[useCase.id] = {
+    mode: 'course',
+    level,
+    savedAt,
+    updatedAt: savedAt,
+    status: 'ready',
+    messages: [{
+      role: 'assistant',
+      content: `This is the course chat for ${useCase.name}. Tell me what you want to practice or click Begin course and I will start the guided class.`
+    }]
+  };
+  saveState();
+  return state.courseChats[useCase.id];
 }
 
 function renderCourseWorkspace(useCase, chat) {
@@ -436,12 +454,17 @@ async function callCourseGuide(useCase) {
   if (!chat) return;
   chat.messages.push({ role: 'assistant', content: 'Thinking through the next step...' });
   renderDetail(useCase);
+  const outboundMessages = chat.messages.filter((message) => message.content !== 'Thinking through the next step...');
+  while (outboundMessages[0]?.role === 'assistant') outboundMessages.shift();
+  if (!outboundMessages.length) {
+    outboundMessages.push({ role: 'user', content: `Start the course conversation for ${useCase.name}.` });
+  }
   try {
     const response = await fetch(courseProxyUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        messages: chat.messages.filter((message) => message.content !== 'Thinking through the next step...'),
+        messages: outboundMessages,
         system_prompt: useCaseSystemPrompt(useCase, chat),
         max_tokens: 900
       })
