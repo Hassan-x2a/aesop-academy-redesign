@@ -650,7 +650,7 @@ function startProductChat(product, level) {
   state.activeProductChat = { product, level, messages: [] };
   state.messages = [{
     role: 'user',
-    content: `Start my guided conversation for "${product.name}". I'm taking the ${level} course. Help me understand this product through questions, examples, applications, and limitations. When I've demonstrated understanding and we've completed the learning objectives, let me know by including <!--LADDER_CONVERSATION_COMPLETE:{"status":"completed","confidence":0.95,"rationale":"..."}-->`
+    content: `Start my guided conversation for "${product.name}". I'm taking the ${level} course. Help me understand this product through questions, examples, applications, and limitations. When I've demonstrated sufficient understanding of the learning objectives, end with a completion confirmation.`
   }];
   renderProductChat();
   callProductGuide();
