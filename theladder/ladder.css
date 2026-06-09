@@ -2000,6 +2000,10 @@ button.secondary {
   flex-shrink: 0 !important;
 }
 
+[data-theme="dark"] .nav-cert-count {
+  color: #ffffff !important;
+}
+
 .nav-version {
   color: #8f681c !important;
   font-size: 0.65rem !important;
