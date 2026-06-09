@@ -1,3 +1,20 @@
+import { createPlacementEngine } from '/theladder-shared/placement-engine.js';
+import { createCertificationEngine } from '/theladder-shared/certification-engine.js';
+import {
+  initDataLayer,
+  saveLearnerProgress,
+  recordCompletion,
+  recordCertification
+} from '/theladder-shared/data-layer.js';
+import {
+  buildProductPlacementDescriptor,
+  buildProductBlueprint,
+  buildProductCertContext,
+  buildProductIdentityAssurance,
+  CERT_DEPTHS,
+  depthForLabel
+} from '/theladder-products/products-ladder.js';
+
 const catalogUrl = '/docs/theladder-products-catalog.md?v=1';
 const storageKey = 'aesop-ladder-products-state-v1';
 const requestStorageKey = 'aesop-product-course-requests-v1';
@@ -6,6 +23,11 @@ const requestEmailUrl = '/aesop-api/product-request-email.php';
 const PROXY_URL = '/aesop-api/proxy.php';
 const CONVERSATION_COMPLETE_REGEX = /<!--LADDER_CONVERSATION_COMPLETE:([\s\S]*?)-->/;
 let requestDbContext = null;
+
+// Shared certification engine (examiner + independent second-model validator).
+const certificationEngine = createCertificationEngine();
+// Placement engine is built once the catalog is parsed (needs the products).
+let placementEngine = null;
 
 const categoryRanges = [
   { label: 'All products', start: 1, end: 250 },
@@ -46,7 +68,16 @@ const state = {
   depth: 'all',
   courseStarts: {},
   messages: [],
-  activeProductChat: null
+  activeProductChat: null,
+  // Placement assessment (Task 25)
+  assessmentMessages: [],
+  assessmentOpen: false,
+  placement: null,
+  // Certification exam (Task 27) — separate chat channel from the course chat
+  certMessages: [],
+  certContext: null,
+  activeCert: null,
+  certOutcome: null
 };
 
 const elements = {
@@ -67,7 +98,22 @@ const elements = {
   productConversationTitle: document.querySelector('#productConversationTitle'),
   productChatLog: document.querySelector('#productChatLog'),
   productChatForm: document.querySelector('#productChatForm'),
-  productChatInput: document.querySelector('#productChatInput')
+  productChatInput: document.querySelector('#productChatInput'),
+  // Placement assessment (Task 25)
+  assessmentToggle: document.querySelector('#assessmentToggle'),
+  assessmentPanel: document.querySelector('#assessmentPanel'),
+  assessmentLog: document.querySelector('#assessmentLog'),
+  assessmentForm: document.querySelector('#assessmentForm'),
+  assessmentInput: document.querySelector('#assessmentInput'),
+  assessmentResult: document.querySelector('#assessmentResult'),
+  // Certification exam (Task 27)
+  certWorkspace: document.querySelector('#certWorkspace'),
+  certTitle: document.querySelector('#certTitle'),
+  certLog: document.querySelector('#certLog'),
+  certForm: document.querySelector('#certForm'),
+  certInput: document.querySelector('#certInput'),
+  certOutcomePanel: document.querySelector('#certOutcomePanel'),
+  certClose: document.querySelector('#certClose')
 };
 
 init();
@@ -76,12 +122,18 @@ async function init() {
   setupTheme();
   renderLoading();
 
+  // Task 29: route all durable writes through the shared data layer. Local-first,
+  // so this never blocks the catalog UI even if Firebase is unavailable.
+  initDataLayer().catch((error) => console.warn('Data layer init failed (local-only mode)', error));
+
   try {
     const markdown = await fetch(catalogUrl).then((response) => {
       if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);
       return response.text();
     });
     state.products = parseCatalog(markdown);
+    // Task 25: build the placement engine from the parsed catalog.
+    placementEngine = createPlacementEngine(buildProductPlacementDescriptor(state.products, categoryRanges));
     restoreSavedState();
     if (!state.products.some((product) => product.id === state.selectedId)) {
       state.selectedId = state.products[0]?.id || 1;
@@ -138,6 +190,14 @@ function bindEvents() {
   elements.productRequestForm?.addEventListener('submit', handleProductRequestSubmit);
   elements.productChatForm?.addEventListener('submit', submitProductChat);
 
+  // Task 25: placement assessment
+  elements.assessmentToggle?.addEventListener('click', toggleAssessment);
+  elements.assessmentForm?.addEventListener('submit', submitAssessment);
+
+  // Task 27: certification exam
+  elements.certForm?.addEventListener('submit', submitCertChat);
+  elements.certClose?.addEventListener('click', closeCertExam);
+
   window.addEventListener('beforeunload', saveState);
 }
 
@@ -166,6 +226,7 @@ function render() {
   renderCategories();
   renderProducts();
   renderDetail(getSelectedProduct());
+  renderAssessment();
 }
 
 function renderCategories() {
@@ -255,7 +316,7 @@ function renderDetail(product) {
         <div class="cert-option">
           <strong>${escapeHtml(option.label)}</strong>
           <p>${escapeHtml(option.summary)}</p>
-          <button type="button" aria-label="Start ${escapeHtml(option.label.toLowerCase())} for ${escapeHtml(product.name)}">Start</button>
+          <button type="button" data-cert-depth="${escapeHtml(option.label)}" aria-label="Start ${escapeHtml(option.label.toLowerCase())} for ${escapeHtml(product.name)}">Start</button>
         </div>
       `).join('')}
     </div>
@@ -267,6 +328,13 @@ function renderDetail(product) {
     const level = levelSelect?.value || defaultCourse;
     showCourseStart(product, level, launchButton);
     startProductChat(product, level);
+  });
+
+  elements.productDetail.querySelectorAll('[data-cert-depth]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const level = levelSelect?.value || defaultCourse;
+      startCertificationExam(product, button.dataset.certDepth, level);
+    });
   });
 
   const savedCourse = state.courseStarts[product.id];
@@ -349,6 +417,10 @@ function restoreSavedState() {
         }])
     );
   }
+
+  if (saved.placement && typeof saved.placement === 'object') {
+    state.placement = saved.placement;
+  }
 }
 
 function readSavedState() {
@@ -370,7 +442,8 @@ function saveState() {
       },
       query: state.query,
       depth: state.depth,
-      courseStarts: state.courseStarts
+      courseStarts: state.courseStarts,
+      placement: state.placement
     }));
   } catch (error) {
     console.warn('Could not save Products course state', error);
@@ -645,19 +718,349 @@ function parseProductCompletionResponse(rawText) {
 function handleProductCompletion(completion) {
   if (!state.activeProductChat || !completion || completion.status !== 'completed') return;
   const { product, level } = state.activeProductChat;
-  const completionKey = `product_${product.id}_${level}_completed`;
   state.courseStarts[product.id] = {
     level,
     status: 'completed',
     completedAt: new Date().toISOString()
   };
   saveState();
+
+  // Task 29: durable completion through the shared data layer (local-first; it
+  // also flips productProgress.courseStarts[itemId].status to 'completed').
+  recordCompletion({
+    pathway: 'product',
+    itemId: product.id,
+    itemType: product.type,
+    itemName: product.name,
+    level,
+    status: 'completed',
+    source: 'ai_verified',
+    completedAt: state.courseStarts[product.id].completedAt
+  }).catch((error) => console.warn('recordCompletion failed (local state kept)', error));
+
   // Add confirmation message to chat
   state.messages.push({
     role: 'assistant',
-    content: '✓ Course complete! You can now move to the next product or return to the catalog.'
+    content: 'Course complete. You can now move to the next product, take a certification test, or return to the catalog.'
   });
   renderProductChat();
   // Update UI and show completion
   renderDetail(product);
+}
+
+// =============================================================================
+// Task 25 — Conversational placement assessment.
+// Mirrors the Concepts ladder's assessment UX: a conversational assessor that
+// ends with the LADDER_PLACEMENT_COMPLETE marker, then applies placement and
+// persists it via the shared data layer. Catalog browsing is never blocked.
+// =============================================================================
+
+function toggleAssessment() {
+  state.assessmentOpen = !state.assessmentOpen;
+  if (state.assessmentOpen && state.assessmentMessages.length === 0) {
+    state.assessmentMessages = [{ role: 'assistant', content: placementEngine.placementOpener() }];
+  }
+  renderAssessment();
+  if (state.assessmentOpen) {
+    elements.assessmentInput?.focus();
+  }
+}
+
+function learnerTurnCount() {
+  return state.assessmentMessages.filter((message) => message.role === 'user').length;
+}
+
+async function submitAssessment(event) {
+  event.preventDefault();
+  if (!placementEngine) return;
+  const content = elements.assessmentInput.value.trim();
+  if (!content) return;
+  state.assessmentMessages.push({ role: 'user', content });
+  elements.assessmentInput.value = '';
+  renderAssessment();
+
+  try {
+    const response = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: state.assessmentMessages,
+        system_prompt: placementEngine.buildSystemPrompt({ languageLabel: 'English' }),
+        max_tokens: 800
+      })
+    });
+    const data = await response.json();
+    const rawText = data?.content?.[0]?.text || data?.error || 'I had trouble responding. Could you say that another way?';
+    const { placement, visibleText } = placementEngine.parsePlacementResponse(rawText);
+    state.assessmentMessages.push({ role: 'assistant', content: visibleText });
+    renderAssessment();
+    if (placementEngine.shouldApplyPlacement(placement, learnerTurnCount())) {
+      applyPlacement(placement);
+    }
+  } catch (error) {
+    console.error('Placement assessment error:', error);
+    state.assessmentMessages.push({ role: 'assistant', content: 'I could not reach the placement assessor. Please try again, or browse the catalog directly.' });
+    renderAssessment();
+  }
+}
+
+function applyPlacement(placement) {
+  state.placement = placement;
+  saveState();
+
+  // Resolve granted category labels + assigned product ids into readable names.
+  const grantedCategories = placement.grantedTierIds || [];
+  const assignedProductIds = (placement.assignedTopicIds || [])
+    .map((itemId) => Number(String(itemId).replace('product-', '')))
+    .filter((id) => Number.isFinite(id));
+  const assignedProducts = assignedProductIds
+    .map((id) => state.products.find((product) => product.id === id))
+    .filter(Boolean);
+
+  // Task 29 + 25: persist placement (transcript-style record) via the data layer.
+  saveLearnerProgress('product', {
+    version: 'v1',
+    placement: {
+      ...placement,
+      grantedCategories,
+      assignedProductNames: assignedProducts.map((product) => product.name),
+      transcriptLine: `Product placement: granted ${grantedCategories.length} categories, assigned ${assignedProducts.length} products. ${placement.reasoning || ''}`.trim()
+    },
+    assessmentMessages: state.assessmentMessages
+  }).catch((error) => console.warn('saveLearnerProgress(placement) failed (local kept)', error));
+
+  renderAssessment();
+}
+
+function renderAssessment() {
+  if (!elements.assessmentPanel) return;
+  elements.assessmentPanel.hidden = !state.assessmentOpen;
+  if (elements.assessmentToggle) {
+    elements.assessmentToggle.textContent = state.assessmentOpen
+      ? 'Hide placement assessment'
+      : (state.placement ? 'Reopen placement assessment' : 'Take the placement assessment');
+    elements.assessmentToggle.setAttribute('aria-expanded', String(state.assessmentOpen));
+  }
+
+  if (elements.assessmentLog) {
+    elements.assessmentLog.innerHTML = state.assessmentMessages.map((message) => `
+      <div class="course-message ${message.role === 'assistant' ? 'assistant' : 'user'}">
+        <span>${message.role === 'assistant' ? 'Assessor' : 'You'}</span>
+        <p>${escapeHtml(message.content)}</p>
+      </div>
+    `).join('');
+    elements.assessmentLog.scrollTop = elements.assessmentLog.scrollHeight;
+  }
+
+  renderPlacementResult();
+}
+
+function renderPlacementResult() {
+  if (!elements.assessmentResult) return;
+  const placement = state.placement;
+  if (!placement) {
+    elements.assessmentResult.hidden = true;
+    elements.assessmentResult.innerHTML = '';
+    return;
+  }
+  const grantedCategories = placement.grantedTierIds || [];
+  const assignedProducts = (placement.assignedTopicIds || [])
+    .map((itemId) => Number(String(itemId).replace('product-', '')))
+    .map((id) => state.products.find((product) => product.id === id))
+    .filter(Boolean)
+    .slice(0, 12);
+
+  elements.assessmentResult.hidden = false;
+  elements.assessmentResult.innerHTML = `
+    <strong>Your product placement</strong>
+    <p class="placement-scores">
+      Hands-on use ${placement.capabilityScore} ·
+      APIs/automation ${placement.technicalScore} ·
+      Responsible use ${placement.governanceScore}
+    </p>
+    <div class="placement-block">
+      <span class="placement-block-label">Categories you can skip</span>
+      ${grantedCategories.length
+        ? `<ul>${grantedCategories.map((label) => `<li>${escapeHtml(label)}</li>`).join('')}</ul>`
+        : '<p class="placement-empty">None yet — start anywhere in the catalog.</p>'}
+    </div>
+    <div class="placement-block">
+      <span class="placement-block-label">Products assigned to you${assignedProducts.length > 12 ? ' (top 12)' : ''}</span>
+      ${assignedProducts.length
+        ? `<ul>${assignedProducts.map((product) => `<li>${escapeHtml(product.name)} <small>${escapeHtml(product.type)}</small></li>`).join('')}</ul>`
+        : '<p class="placement-empty">No specific assignments — explore freely.</p>'}
+    </div>
+    ${placement.reasoning ? `<p class="placement-reasoning">${escapeHtml(placement.reasoning)}</p>` : ''}
+  `;
+}
+
+// =============================================================================
+// Task 27 — Real certification (examiner + independent validator).
+// Wires the three certification buttons to createCertificationEngine: builds a
+// blueprint per (product, depth), runs the examiner conversation, then on the
+// examiner's final determination validates with a second model and records the
+// result. NO credential is stored unless validation.valid — the engine enforces
+// this in recordCertificationResult; we wire its hooks correctly.
+// =============================================================================
+
+function startCertificationExam(product, depthLabel, level) {
+  const depth = depthForLabel(depthLabel);
+  const blueprint = buildProductBlueprint({ product, level, depth });
+  state.activeCert = { product, depth, level, blueprint };
+  state.certContext = buildProductCertContext({ product, depth });
+  state.certOutcome = null;
+  state.certMessages = [{
+    role: 'user',
+    content: `I want to attempt the ${depth.label} for "${product.name}" (${product.type}). I studied at the ${level} level. Begin the certification test now: state the rubric, then assess my evidence.`
+  }];
+  renderCertExam();
+  callCertExaminer();
+}
+
+async function submitCertChat(event) {
+  event.preventDefault();
+  if (!state.activeCert) return;
+  const content = elements.certInput.value.trim();
+  if (!content) return;
+  state.certMessages.push({ role: 'user', content });
+  elements.certInput.value = '';
+  renderCertExam();
+  await callCertExaminer();
+}
+
+async function callCertExaminer() {
+  if (!state.activeCert) return;
+  try {
+    const response = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: state.certMessages,
+        system_prompt: certificationEngine.buildExaminerSystemPrompt(state.activeCert.blueprint),
+        max_tokens: 900
+      })
+    });
+    const data = await response.json();
+    const rawText = data?.content?.[0]?.text || data?.error || 'The examiner had trouble responding. Please continue.';
+    const { certificationResult, rubricDimensions, visibleText } = certificationEngine.parseExaminerResponse(rawText);
+    state.certMessages.push({ role: 'assistant', content: visibleText });
+    renderCertExam();
+    if (certificationResult) {
+      await finalizeCertification(certificationResult, rubricDimensions);
+    }
+  } catch (error) {
+    console.error('Certification examiner error:', error);
+    state.certMessages.push({ role: 'assistant', content: 'I could not reach the examiner. Please try again.' });
+    renderCertExam();
+  }
+}
+
+async function finalizeCertification(certificationResult, rubricDimensions) {
+  const context = state.certContext;
+  if (!context) return;
+
+  // The engine runs the independent second-model validator and enforces the
+  // no-credential-without-validation invariant. We persist via data-layer hooks.
+  const { outcome, validation, record } = await certificationEngine.recordCertificationResult({
+    context,
+    result: certificationResult,
+    conversationMessages: state.certMessages,
+    hooks: {
+      // onCredential fires ONLY when outcome === 'awarded' (validation.valid &&
+      // certified) — so recordCertification only ever runs for a validated pass.
+      onCredential: (credentialRecord) => {
+        const evidencePacket = certificationEngine.buildEvidencePacket({
+          context,
+          result: certificationResult,
+          rubricDimensions: rubricDimensions || [],
+          validation,
+          extra: {
+            modelName: certificationResult.model || '',
+            learnerResponses: state.certMessages
+              .filter((message) => message.role === 'user')
+              .map((message) => message.content)
+          }
+        });
+        evidencePacket.pathway = 'product';
+        recordCertification(evidencePacket, validation)
+          .catch((error) => console.warn('recordCertification failed (local kept)', error));
+      },
+      buildIdentityAssurance: (earnedAt) => buildProductIdentityAssurance(earnedAt)
+    }
+  });
+
+  state.certOutcome = {
+    outcome,
+    validation,
+    record,
+    result: certificationResult,
+    rubricDimensions: rubricDimensions || []
+  };
+  renderCertExam();
+}
+
+function startCertChatWorkspace() {
+  if (elements.certWorkspace) elements.certWorkspace.hidden = false;
+}
+
+function closeCertExam() {
+  state.activeCert = null;
+  state.certContext = null;
+  state.certMessages = [];
+  state.certOutcome = null;
+  if (elements.certWorkspace) elements.certWorkspace.hidden = true;
+}
+
+function renderCertExam() {
+  if (!elements.certWorkspace || !state.activeCert) return;
+  startCertChatWorkspace();
+  const { product, depth } = state.activeCert;
+  if (elements.certTitle) {
+    elements.certTitle.textContent = `${product.name} — ${depth.label}`;
+  }
+  if (elements.certLog) {
+    elements.certLog.innerHTML = state.certMessages.map((message) => `
+      <div class="course-message ${message.role === 'assistant' ? 'assistant' : 'user'}">
+        <span>${message.role === 'assistant' ? 'Examiner' : 'You'}</span>
+        <p>${escapeHtml(message.content)}</p>
+      </div>
+    `).join('');
+    elements.certLog.scrollTop = elements.certLog.scrollHeight;
+  }
+  renderCertOutcome();
+}
+
+function renderCertOutcome() {
+  if (!elements.certOutcomePanel) return;
+  const data = state.certOutcome;
+  if (!data) {
+    elements.certOutcomePanel.hidden = true;
+    elements.certOutcomePanel.innerHTML = '';
+    return;
+  }
+  const { outcome, validation, result, rubricDimensions } = data;
+  const passed = outcome === 'awarded';
+  const headline = passed
+    ? 'Certified — credential recorded'
+    : outcome === 'validation_failed'
+      ? 'Not certified — independent validation did not pass'
+      : 'Not certified yet — more evidence needed';
+
+  const rubricRows = (rubricDimensions || []).map((dimension) => `
+    <li class="rubric-row rubric-${dimension.status}">
+      <span class="rubric-dim">${escapeHtml(dimension.dimension)}</span>
+      <span class="rubric-status">${escapeHtml((dimension.status || 'unknown').toUpperCase())}</span>
+      <small>${escapeHtml(dimension.reason || '')}</small>
+    </li>
+  `).join('');
+
+  elements.certOutcomePanel.hidden = false;
+  elements.certOutcomePanel.dataset.outcome = passed ? 'pass' : 'non-pass';
+  elements.certOutcomePanel.innerHTML = `
+    <strong class="cert-outcome-headline">${escapeHtml(headline)}</strong>
+    ${result?.rationale ? `<p class="cert-rationale">${escapeHtml(result.rationale)}</p>` : ''}
+    ${rubricRows ? `<ul class="rubric-list" aria-label="Rubric evaluation">${rubricRows}</ul>` : ''}
+    ${validation ? `<p class="cert-validation"><strong>Independent validator:</strong> ${escapeHtml(validation.rationale || '')}${validation.reviewerModel ? ` <small>(${escapeHtml(validation.reviewerModel)})</small>` : ''}</p>` : ''}
+    <p class="cert-challenge">Disagree with this result? You can submit a challenge with additional evidence for review.</p>
+  `;
 }
