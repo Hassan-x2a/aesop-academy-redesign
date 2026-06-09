@@ -2,6 +2,7 @@ const catalogUrl = '/docs/theladder-products-catalog.md?v=1';
 const storageKey = 'aesop-ladder-products-state-v1';
 const requestStorageKey = 'aesop-product-course-requests-v1';
 const requestCollection = 'productCourseRequests';
+const requestEmailUrl = '/aesop-api/product-request-email.php';
 let requestDbContext = null;
 
 const categoryRanges = [
@@ -415,10 +416,15 @@ async function handleProductRequestSubmit(event) {
   setRequestSubmitting(true);
   try {
     const { collection, addDoc, serverTimestamp, db } = await getRequestDbContext();
-    await addDoc(collection(db, requestCollection), {
+    const requestRef = await addDoc(collection(db, requestCollection), {
       ...request,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
+    });
+    await notifyProductRequest({
+      ...request,
+      requestId: requestRef.id,
+      storage: 'firestore'
     });
     form.reset();
     showRequestMessage('Request sent to the admin review queue.', 'success');
@@ -430,6 +436,11 @@ async function handleProductRequestSubmit(event) {
       error: error.message || 'Firebase write failed'
     };
     saveOfflineRequest(offlineRequest);
+    await notifyProductRequest({
+      ...offlineRequest,
+      requestId: offlineRequest.id,
+      storage: 'local_fallback'
+    });
     form.reset();
     showRequestMessage('Firebase did not accept the request, so it was saved locally on this browser for admin review.', 'warning');
     console.warn('Product request saved locally', error);
@@ -482,6 +493,22 @@ function showRequestMessage(message, tone = 'success') {
   elements.productRequestMessage.hidden = false;
   elements.productRequestMessage.dataset.tone = tone;
   elements.productRequestMessage.textContent = message;
+}
+
+async function notifyProductRequest(request) {
+  try {
+    const response = await fetch(requestEmailUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request)
+    });
+    if (!response.ok) {
+      const result = await response.json().catch(() => ({}));
+      throw new Error(result.error || `Email notification failed: ${response.status}`);
+    }
+  } catch (error) {
+    console.warn('Product request email notification failed', error);
+  }
 }
 
 function renderLoading() {
