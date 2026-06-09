@@ -1472,7 +1472,7 @@ button.secondary {
 }
 
 .conversation-panel .panel-heading p {
-  color: #c9a05a;
+  color: #ffffff !important;
 }
 
 .conversation-panel .panel-label {
