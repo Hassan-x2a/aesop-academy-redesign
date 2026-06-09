@@ -54,6 +54,8 @@ button.secondary {
 }
 
 .ladder-top-actions {
+  align-items: center !important;
+  display: flex !important;
   gap: 0.5rem;
 }
 
@@ -96,6 +98,11 @@ button.secondary {
   color: var(--ladder-ink);
   min-height: 40px;
   padding: 0.45rem 0.65rem;
+}
+
+.ladder-select {
+  min-height: 42px !important;
+  padding: 0.55rem 0.65rem !important;
 }
 
 .language-custom {
@@ -1369,6 +1376,22 @@ button.secondary {
   max-width: 88%;
   padding: 0.65rem 0.75rem;
   color: #102235;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.message p {
+  margin: 0.25rem 0;
+}
+
+.message ol,
+.message ul {
+  margin: 0.25rem 0;
+  padding-left: 1.5rem;
+}
+
+.message li {
+  margin: 0.15rem 0;
 }
 
 .assessment-log .message {
@@ -1380,6 +1403,14 @@ button.secondary {
 .message.assistant {
   align-self: flex-start;
   background: var(--white);
+}
+
+/* Certification exam messages - visual distinction */
+.message.exam {
+  background: #f8f4e6;
+  border: 2px solid #c9a05a;
+  border-left: 5px solid #c9a05a;
+  box-shadow: 0 2px 8px rgba(201, 160, 90, 0.15);
 }
 
 .message.user {
@@ -1395,6 +1426,27 @@ button.secondary {
   letter-spacing: 0.08em;
   margin-bottom: 0.25rem;
   text-transform: uppercase;
+}
+
+.message h2,
+.message h3,
+.message h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0.25rem 0;
+  line-height: 1.3;
+}
+
+.message h2 {
+  font-size: 0.95rem;
+}
+
+.message h3 {
+  font-size: 0.9rem;
+}
+
+.message h4 {
+  font-size: 0.85rem;
 }
 
 .standards-review-offer {

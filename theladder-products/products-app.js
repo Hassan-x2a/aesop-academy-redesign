@@ -11,12 +11,21 @@ import {
   buildProductBlueprint,
   buildProductCertContext,
   buildProductIdentityAssurance,
+  resolveProductIdentityLevel,
+  PRODUCT_IDENTITY_LEVELS,
   CERT_DEPTHS,
   depthForLabel
 } from '/theladder-products/products-ladder.js';
+import {
+  PRODUCTS_LANGUAGES,
+  PRODUCTS_UI_TRANSLATIONS,
+  productsLanguageLabel
+} from '/theladder-products/products-i18n.js?v=1';
 
-const catalogUrl = '/docs/theladder-products-catalog.md?v=1';
+const catalogUrl = '/docs/theladder-products-catalog.md?v=2';
 const storageKey = 'aesop-ladder-products-state-v1';
+// Task 31 — persisted UI language (shared key shape with the Concepts ladder).
+const languageStorageKey = 'aesop-ladder-products-lang-v1';
 const requestStorageKey = 'aesop-product-course-requests-v1';
 const requestCollection = 'productCourseRequests';
 const requestEmailUrl = '/aesop-api/product-request-email.php';
@@ -29,8 +38,15 @@ const certificationEngine = createCertificationEngine();
 // Placement engine is built once the catalog is parsed (needs the products).
 let placementEngine = null;
 
+// Expansion tracks (Task 34): a higher-level grouping layered over the per-type
+// product categories. The 10 new product types (ids 251-500) and the existing
+// foundation types each map to one of three tracks. The foundation categories
+// (ids 1-250) are not assigned to an expansion track; they surface only under
+// "All tracks". Mapping follows the Products Ladder Expansion Research doc.
+const ALL_PRODUCTS_END = 500;
+
 const categoryRanges = [
-  { label: 'All products', start: 1, end: 250 },
+  { label: 'All products', start: 1, end: ALL_PRODUCTS_END },
   { label: 'AI assistants', start: 1, end: 20 },
   { label: 'Workplace + writing', start: 21, end: 35 },
   { label: 'Coding tools', start: 36, end: 61 },
@@ -42,30 +58,86 @@ const categoryRanges = [
   { label: 'Sales + support', start: 167, end: 191 },
   { label: 'Agents + automation', start: 192, end: 210 },
   { label: 'Model APIs + cloud', start: 211, end: 230 },
-  { label: 'Regulated AI', start: 231, end: 250 }
+  { label: 'Regulated AI', start: 231, end: 250 },
+  // Expansion product types (ids 251-500).
+  { label: 'HR + recruiting', start: 251, end: 275, track: 'Workforce' },
+  { label: 'Education + tutoring', start: 276, end: 300, track: 'Workforce' },
+  { label: 'Ecommerce + retail', start: 301, end: 325, track: 'Operations' },
+  { label: 'Finance + accounting', start: 326, end: 350, track: 'Operations' },
+  { label: 'AIOps + incidents', start: 351, end: 375, track: 'Operations' },
+  { label: 'AI governance', start: 376, end: 400, track: 'Operations' },
+  { label: 'Construction + real estate', start: 401, end: 425, track: 'Industry' },
+  { label: 'Manufacturing + supply chain', start: 426, end: 450, track: 'Industry' },
+  { label: 'Science + clinical AI', start: 451, end: 475, track: 'Industry' },
+  { label: 'Personal productivity', start: 476, end: 500, track: 'Workforce' }
 ];
 
+// Track filter options layered over categoryRanges. "All tracks" disables the
+// track constraint; each named track narrows to its mapped categories.
+const expansionTracks = [
+  { id: 'all', label: 'All tracks' },
+  { id: 'Workforce', label: 'Workforce' },
+  { id: 'Operations', label: 'Operations' },
+  { id: 'Industry', label: 'Industry' }
+];
+
+// A category belongs to the active track when its track tag matches. "All
+// tracks" matches every category.
+function categoryInTrack(category, track) {
+  return track === 'all' || category.track === track;
+}
+
+// A product belongs to a track when it falls inside the id range of a category
+// tagged with that track. "All tracks" matches every product.
+function productInTrack(product, track) {
+  if (track === 'all') return true;
+  return categoryRanges.some((category) =>
+    category.track === track && inRange(product, category)
+  );
+}
+
+// The `label` stays canonical English: it is the data-cert-depth value passed to
+// depthForLabel() downstream, so it must NOT be translated. The labelKey/summaryKey
+// map to products-i18n.js for display only.
 const certificationOptions = [
   {
     label: 'Certification',
+    labelKey: 'certification',
+    summaryKey: 'certificationSummary',
     summary: 'Proves you can use the product safely for common work, explain its core features, and complete a guided assignment.'
   },
   {
     label: 'Expert certification',
+    labelKey: 'expertCertification',
+    summaryKey: 'expertCertificationSummary',
     summary: 'Proves you can choose the right workflow, troubleshoot limits, compare alternatives, and teach another learner.'
   },
   {
     label: 'Master certification',
+    labelKey: 'masterCertification',
+    summaryKey: 'masterCertificationSummary',
     summary: 'Proves you can design a production workflow, evaluate risk, document evidence, and defend your choices.'
   }
 ];
 
+// Course-level display keys. The level VALUE stays canonical English (used by
+// getCourseLevels / course start records / the AI prompts); only the label is
+// translated for display.
+const COURSE_LEVEL_KEYS = {
+  Beginner: 'levelBeginner',
+  Intermediate: 'levelIntermediate',
+  Advanced: 'levelAdvanced'
+};
+
 const state = {
+  // Task 31 — persisted UI language (defaults to English, restored on init).
+  language: 'en',
   products: [],
   selectedId: 1,
   activeCategory: categoryRanges[0],
   query: '',
   depth: 'all',
+  track: 'all',
   courseStarts: {},
   messages: [],
   activeProductChat: null,
@@ -77,8 +149,36 @@ const state = {
   certMessages: [],
   certContext: null,
   activeCert: null,
-  certOutcome: null
+  certOutcome: null,
+  // Task 30 — identity-assurance gate shown before a certification starts.
+  // pendingCert holds the (product, depthLabel, level) chosen at the gate until
+  // the learner confirms; identityGate holds the resolved assurance record.
+  pendingCert: null,
+  identityGate: null,
+  authUser: null
 };
+
+const IDENTITY_GATE_LS = 'aesop-products-identity-gate-v1';
+
+// Lazily import Firebase auth (same gstatic 10.12.0 modules the page already
+// uses) only when the certification gate is opened — never on catalog load.
+let authContext = null;
+async function getAuthContext() {
+  if (authContext) return authContext;
+  const [{ initializeApp, getApps, getApp }, authModule, configModule] = await Promise.all([
+    import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js'),
+    import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js'),
+    import('/ai-academy/js/firebase-config.js')
+  ]);
+  const app = getApps().length ? getApp() : initializeApp(configModule.FIREBASE_CONFIG);
+  const auth = authModule.getAuth(app);
+  authContext = { auth, ...authModule };
+  authModule.onAuthStateChanged(auth, (user) => {
+    state.authUser = user ? { uid: user.uid, email: user.email || '' } : null;
+    if (state.pendingCert) renderIdentityGate();
+  });
+  return authContext;
+}
 
 const elements = {
   categoryList: document.querySelector('#categoryList'),
@@ -86,10 +186,12 @@ const elements = {
   productDetail: document.querySelector('#productDetail'),
   productSearch: document.querySelector('#productSearch'),
   depthFilter: document.querySelector('#depthFilter'),
+  trackFilter: document.querySelector('#trackFilter'),
   visibleCount: document.querySelector('#visibleCount'),
   totalProducts: document.querySelector('#totalProducts'),
   advancedCount: document.querySelector('#advancedCount'),
   educationFocusSelect: document.querySelector('#educationFocusSelect'),
+  languageSelect: document.querySelector('#languageSelect'),
   themeToggle: document.querySelector('#themeToggle'),
   productRequestForm: document.querySelector('#productRequestForm'),
   productRequestMessage: document.querySelector('#productRequestMessage'),
@@ -113,13 +215,21 @@ const elements = {
   certForm: document.querySelector('#certForm'),
   certInput: document.querySelector('#certInput'),
   certOutcomePanel: document.querySelector('#certOutcomePanel'),
-  certClose: document.querySelector('#certClose')
+  certClose: document.querySelector('#certClose'),
+  // Task 30 — identity-assurance gate
+  identityGate: document.querySelector('#identityGate'),
+  identityGateTitle: document.querySelector('#identityGateTitle'),
+  identityGateBody: document.querySelector('#identityGateBody'),
+  identityGateCancel: document.querySelector('#identityGateCancel')
 };
 
 init();
 
 async function init() {
+  restoreLanguage();
   setupTheme();
+  setupLanguageSelect();
+  updatePageTranslations();
   renderLoading();
 
   // Task 29: route all durable writes through the shared data layer. Local-first,
@@ -140,6 +250,7 @@ async function init() {
     }
     bindEvents();
     render();
+    updatePageTranslations();
   } catch (error) {
     renderError(error);
   }
@@ -187,6 +298,17 @@ function bindEvents() {
     renderProducts();
   });
 
+  elements.trackFilter?.addEventListener('change', (event) => {
+    state.track = event.target.value;
+    // If the active category is not in the new track, fall back to "All products".
+    if (!categoryInTrack(state.activeCategory, state.track)) {
+      state.activeCategory = categoryRanges[0];
+    }
+    saveState();
+    renderCategories();
+    renderProducts();
+  });
+
   elements.productRequestForm?.addEventListener('submit', handleProductRequestSubmit);
   elements.productChatForm?.addEventListener('submit', submitProductChat);
 
@@ -197,6 +319,9 @@ function bindEvents() {
   // Task 27: certification exam
   elements.certForm?.addEventListener('submit', submitCertChat);
   elements.certClose?.addEventListener('click', closeCertExam);
+
+  // Task 30: identity-assurance gate (shown before a certification starts)
+  elements.identityGateCancel?.addEventListener('click', closeIdentityGate);
 
   window.addEventListener('beforeunload', saveState);
 }
@@ -223,6 +348,7 @@ function render() {
   elements.advancedCount.textContent = state.products.filter((product) => product.depth === 'B/I/A').length.toString();
   elements.productSearch.value = state.query;
   elements.depthFilter.value = state.depth;
+  if (elements.trackFilter) elements.trackFilter.value = state.track;
   renderCategories();
   renderProducts();
   renderDetail(getSelectedProduct());
@@ -230,8 +356,16 @@ function render() {
 }
 
 function renderCategories() {
-  elements.categoryList.innerHTML = categoryRanges.map((category) => {
-    const count = state.products.filter((product) => inRange(product, category)).length;
+  // When a track is active, show only that track's categories (plus the
+  // always-present "All products" entry). "All tracks" shows every category.
+  const visibleCategories = categoryRanges.filter((category, index) =>
+    index === 0 || categoryInTrack(category, state.track)
+  );
+
+  elements.categoryList.innerHTML = visibleCategories.map((category) => {
+    const count = state.products.filter((product) =>
+      inRange(product, category) && productInTrack(product, state.track)
+    ).length;
     const active = category.label === state.activeCategory.label ? ' active' : '';
     return `
       <button class="category-button${active}" type="button" data-start="${category.start}" data-end="${category.end}">
@@ -258,7 +392,7 @@ function renderProducts() {
   elements.visibleCount.textContent = `${products.length} shown`;
 
   if (!products.length) {
-    elements.productGrid.innerHTML = '<p class="empty-state">No products match those filters.</p>';
+    elements.productGrid.innerHTML = `<p class="empty-state">${escapeHtml(t('noProductsMatch'))}</p>`;
     return;
   }
 
@@ -295,28 +429,28 @@ function renderDetail(product) {
   const courses = getCourseLevels(product.depth);
   const defaultCourse = courses[0] || 'Beginner';
   elements.productDetail.innerHTML = `
-    <p class="detail-label">Product course</p>
+    <p class="detail-label">${escapeHtml(t('productCourse'))}</p>
     <h2>${escapeHtml(product.name)}</h2>
     <section class="course-launch-panel" aria-label="Start product class">
-      <span>Start class</span>
+      <span>${escapeHtml(t('startClass'))}</span>
       <label class="course-level-field" for="courseLevelSelect">
-        <span>Course level</span>
+        <span>${escapeHtml(t('courseLevel'))}</span>
         <select id="courseLevelSelect">
-          ${courses.map((course) => `<option value="${escapeHtml(course)}">${escapeHtml(course)}</option>`).join('')}
+          ${courses.map((course) => `<option value="${escapeHtml(course)}">${escapeHtml(t(COURSE_LEVEL_KEYS[course] || '') || course)}</option>`).join('')}
         </select>
       </label>
       <button id="beginSelectedCourseBtn" class="course-launch-button" type="button">
-        Begin course
+        ${escapeHtml(t('beginCourse'))}
       </button>
     </section>
     <div id="courseStartNotice" class="course-start-notice" hidden></div>
     <div class="cert-stack" aria-label="Certification options">
-      <span class="cert-stack-label">Certification tests</span>
+      <span class="cert-stack-label">${escapeHtml(t('certificationTests'))}</span>
       ${certificationOptions.map((option) => `
         <div class="cert-option">
-          <strong>${escapeHtml(option.label)}</strong>
-          <p>${escapeHtml(option.summary)}</p>
-          <button type="button" data-cert-depth="${escapeHtml(option.label)}" aria-label="Start ${escapeHtml(option.label.toLowerCase())} for ${escapeHtml(product.name)}">Start</button>
+          <strong>${escapeHtml(t(option.labelKey))}</strong>
+          <p>${escapeHtml(t(option.summaryKey))}</p>
+          <button type="button" data-cert-depth="${escapeHtml(option.label)}" aria-label="Start ${escapeHtml(option.label.toLowerCase())} for ${escapeHtml(product.name)}">${escapeHtml(t('start'))}</button>
         </div>
       `).join('')}
     </div>
@@ -333,7 +467,9 @@ function renderDetail(product) {
   elements.productDetail.querySelectorAll('[data-cert-depth]').forEach((button) => {
     button.addEventListener('click', () => {
       const level = levelSelect?.value || defaultCourse;
-      startCertificationExam(product, button.dataset.certDepth, level);
+      // Task 30: certification depths pass through the identity-assurance gate
+      // first. Ordinary product courses (Begin course, above) are NOT gated.
+      openIdentityGate(product, button.dataset.certDepth, level);
     });
   });
 
@@ -341,7 +477,7 @@ function renderDetail(product) {
   if (savedCourse) {
     const savedLevel = courses.includes(savedCourse.level) ? savedCourse.level : defaultCourse;
     if (levelSelect) levelSelect.value = savedLevel;
-    launchButton.textContent = 'Continue course';
+    launchButton.textContent = t('continueCourse');
     showCourseStart(product, savedLevel, launchButton, {
       persist: false,
       scroll: false,
@@ -375,7 +511,7 @@ function showCourseStart(product, level, activeButton, options = {}) {
     courseButton.removeAttribute('aria-current');
   });
   activeButton?.setAttribute('aria-current', 'true');
-  activeButton.textContent = 'Continue course';
+  activeButton.textContent = t('continueCourse');
   if (scroll) notice.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
@@ -393,6 +529,10 @@ function restoreSavedState() {
 
   if (['all', 'B', 'B/I', 'B/I/A'].includes(saved.depth)) {
     state.depth = saved.depth;
+  }
+
+  if (expansionTracks.some((track) => track.id === saved.track)) {
+    state.track = saved.track;
   }
 
   const savedCategory = categoryRanges.find((category) => (
@@ -442,6 +582,7 @@ function saveState() {
       },
       query: state.query,
       depth: state.depth,
+      track: state.track,
       courseStarts: state.courseStarts,
       placement: state.placement
     }));
@@ -471,7 +612,7 @@ async function handleProductRequestSubmit(event) {
   const requesterEmail = String(formData.get('requesterEmail') || '').trim();
 
   if (!productName || !reason) {
-    showRequestMessage('Add the product name and why it should be taught.', 'error');
+    showRequestMessage(t('requestNeedsFields'), 'error');
     return;
   }
 
@@ -510,7 +651,7 @@ async function handleProductRequestSubmit(event) {
       storage: 'firestore'
     });
     form.reset();
-    showRequestMessage('Request sent to the admin review queue.', 'success');
+    showRequestMessage(t('requestSentSuccess'), 'success');
   } catch (error) {
     const offlineRequest = {
       ...request,
@@ -525,7 +666,7 @@ async function handleProductRequestSubmit(event) {
       storage: 'local_fallback'
     });
     form.reset();
-    showRequestMessage('Firebase did not accept the request, so it was saved locally on this browser for admin review.', 'warning');
+    showRequestMessage(t('requestSavedLocally'), 'warning');
     console.warn('Product request saved locally', error);
   } finally {
     setRequestSubmitting(false);
@@ -568,7 +709,7 @@ function readOfflineRequests() {
 function setRequestSubmitting(isSubmitting) {
   if (!elements.submitProductRequest) return;
   elements.submitProductRequest.disabled = isSubmitting;
-  elements.submitProductRequest.textContent = isSubmitting ? 'Sending...' : 'Send request';
+  elements.submitProductRequest.textContent = isSubmitting ? t('sending') : t('sendRequest');
 }
 
 function showRequestMessage(message, tone = 'success') {
@@ -595,7 +736,7 @@ async function notifyProductRequest(request) {
 }
 
 function renderLoading() {
-  elements.productGrid.innerHTML = '<p class="empty-state">Loading product catalog...</p>';
+  elements.productGrid.innerHTML = `<p class="empty-state">${escapeHtml(t('loadingCatalog'))}</p>`;
 }
 
 function renderError(error) {
@@ -607,12 +748,13 @@ function renderError(error) {
 function getFilteredProducts() {
   return state.products.filter((product) => {
     const categoryMatch = inRange(product, state.activeCategory);
+    const trackMatch = productInTrack(product, state.track);
     const depthMatch = state.depth === 'all' || product.depth === state.depth;
     const queryMatch = !state.query || [product.name, product.type, product.reason, product.depth]
       .join(' ')
       .toLowerCase()
       .includes(state.query);
-    return categoryMatch && depthMatch && queryMatch;
+    return categoryMatch && trackMatch && depthMatch && queryMatch;
   });
 }
 
@@ -643,6 +785,67 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+// =============================================================================
+// Task 31 — Multi-language UI. Mirrors theladder/ladder-app.js: t(key) looks up
+// the active language with an English fallback; updatePageTranslations() rewrites
+// every [data-i18n] / [data-i18n-placeholder] element; languageLabel() feeds the
+// readable language name into the AI system prompts (placement, course, cert).
+// =============================================================================
+
+function t(key) {
+  const translations = PRODUCTS_UI_TRANSLATIONS[state.language] || PRODUCTS_UI_TRANSLATIONS.en;
+  return translations[key] || PRODUCTS_UI_TRANSLATIONS.en[key] || key;
+}
+
+function languageLabel() {
+  return productsLanguageLabel(state.language);
+}
+
+function updatePageTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+}
+
+function restoreLanguage() {
+  try {
+    const saved = localStorage.getItem(languageStorageKey);
+    if (saved && PRODUCTS_LANGUAGES.some((language) => language.code === saved)) {
+      state.language = saved;
+    }
+  } catch (error) {
+    console.warn('Could not restore Products language', error);
+  }
+}
+
+function setupLanguageSelect() {
+  if (!elements.languageSelect) return;
+  elements.languageSelect.innerHTML = PRODUCTS_LANGUAGES.map((language) =>
+    `<option value="${language.code}">${escapeHtml(language.label)}</option>`
+  ).join('');
+  elements.languageSelect.value = state.language;
+  elements.languageSelect.addEventListener('change', (event) => {
+    const next = event.target.value;
+    if (!PRODUCTS_LANGUAGES.some((language) => language.code === next)) return;
+    state.language = next;
+    try { localStorage.setItem(languageStorageKey, next); } catch (error) {
+      console.warn('Could not save Products language', error);
+    }
+    updatePageTranslations();
+    // Re-render the dynamic panels so their freshly built markup picks up the
+    // new language too (catalog detail, assessment, certification UI).
+    renderCategories();
+    renderProducts();
+    renderDetail(getSelectedProduct());
+    renderAssessment();
+    if (state.activeCert) renderCertExam();
+    if (state.pendingCert) renderIdentityGate();
+  });
 }
 
 // Chat and Course Completion System
@@ -707,7 +910,7 @@ async function callProductGuide() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages: state.messages,
-        system_prompt: `You are a product training guide for ${state.activeProductChat.product.name}. Help the learner understand this product through guided conversation using questions, examples, applications, and limitations. Engage naturally until the learner demonstrates sufficient understanding. When ready to end, write "COURSE_COMPLETE" on its own line as your final line.`,
+        system_prompt: `You are a product training guide for ${state.activeProductChat.product.name}. Help the learner understand this product through guided conversation using questions, examples, applications, and limitations. Engage naturally until the learner demonstrates sufficient understanding. When ready to end, write "COURSE_COMPLETE" on its own line as your final line. Preferred language: ${languageLabel()}. Write your learner-facing responses in this language unless the learner asks otherwise.`,
         max_tokens: 700
       })
     });
@@ -775,7 +978,7 @@ function handleProductCompletion(completion) {
   // Add confirmation message to chat
   state.messages.push({
     role: 'assistant',
-    content: 'Course complete. You can now move to the next product, take a certification test, or return to the catalog.'
+    content: t('courseComplete')
   });
   renderProductChat();
   // Update UI and show completion
@@ -819,7 +1022,7 @@ async function submitAssessment(event) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages: state.assessmentMessages,
-        system_prompt: placementEngine.buildSystemPrompt({ languageLabel: 'English' }),
+        system_prompt: placementEngine.buildSystemPrompt({ languageLabel: languageLabel() }),
         max_tokens: 800
       })
     });
@@ -871,15 +1074,15 @@ function renderAssessment() {
   elements.assessmentPanel.hidden = !state.assessmentOpen;
   if (elements.assessmentToggle) {
     elements.assessmentToggle.textContent = state.assessmentOpen
-      ? 'Hide placement assessment'
-      : (state.placement ? 'Reopen placement assessment' : 'Take the placement assessment');
+      ? t('hidePlacementAssessment')
+      : (state.placement ? t('reopenPlacementAssessment') : t('takePlacementAssessment'));
     elements.assessmentToggle.setAttribute('aria-expanded', String(state.assessmentOpen));
   }
 
   if (elements.assessmentLog) {
     elements.assessmentLog.innerHTML = state.assessmentMessages.map((message) => `
       <div class="course-message ${message.role === 'assistant' ? 'assistant' : 'user'}">
-        <span>${message.role === 'assistant' ? 'Assessor' : 'You'}</span>
+        <span>${message.role === 'assistant' ? escapeHtml(t('assessor')) : escapeHtml(t('you'))}</span>
         <p>${escapeHtml(message.content)}</p>
       </div>
     `).join('');
@@ -906,23 +1109,23 @@ function renderPlacementResult() {
 
   elements.assessmentResult.hidden = false;
   elements.assessmentResult.innerHTML = `
-    <strong>Your product placement</strong>
+    <strong>${escapeHtml(t('yourProductPlacement'))}</strong>
     <p class="placement-scores">
       Hands-on use ${placement.capabilityScore} ·
       APIs/automation ${placement.technicalScore} ·
       Responsible use ${placement.governanceScore}
     </p>
     <div class="placement-block">
-      <span class="placement-block-label">Categories you can skip</span>
+      <span class="placement-block-label">${escapeHtml(t('categoriesYouCanSkip'))}</span>
       ${grantedCategories.length
         ? `<ul>${grantedCategories.map((label) => `<li>${escapeHtml(label)}</li>`).join('')}</ul>`
-        : '<p class="placement-empty">None yet — start anywhere in the catalog.</p>'}
+        : `<p class="placement-empty">${escapeHtml(t('noCategoriesYet'))}</p>`}
     </div>
     <div class="placement-block">
-      <span class="placement-block-label">Products assigned to you${assignedProducts.length > 12 ? ' (top 12)' : ''}</span>
+      <span class="placement-block-label">${escapeHtml(t('productsAssignedToYou'))}${assignedProducts.length > 12 ? ' (top 12)' : ''}</span>
       ${assignedProducts.length
         ? `<ul>${assignedProducts.map((product) => `<li>${escapeHtml(product.name)} <small>${escapeHtml(product.type)}</small></li>`).join('')}</ul>`
-        : '<p class="placement-empty">No specific assignments — explore freely.</p>'}
+        : `<p class="placement-empty">${escapeHtml(t('noAssignmentsYet'))}</p>`}
     </div>
     ${placement.reasoning ? `<p class="placement-reasoning">${escapeHtml(placement.reasoning)}</p>` : ''}
   `;
@@ -937,11 +1140,154 @@ function renderPlacementResult() {
 // this in recordCertificationResult; we wire its hooks correctly.
 // =============================================================================
 
-function startCertificationExam(product, depthLabel, level) {
+// ---------------------------------------------------------------------------
+// Task 30 — Identity-assurance gate (only before CERTIFICATION, not courses).
+//
+// The learner picks an active assurance level (self_attested / account_bound /
+// identity_attested) and confirms the 18+ adult attestation before the exam
+// starts. The resolved record is stored on state.identityGate and then onto the
+// certification context (and from there into the credential record + evidence
+// packet). The gate never blocks: with no account it resolves to self_attested
+// (or identity_attested when the learner signs the identity statement).
+// ---------------------------------------------------------------------------
+
+function readSavedGate() {
+  try {
+    return JSON.parse(localStorage.getItem(IDENTITY_GATE_LS) || 'null') || {};
+  } catch { return {}; }
+}
+
+function openIdentityGate(product, depthLabel, level) {
+  const depth = depthForLabel(depthLabel);
+  const saved = readSavedGate();
+  state.pendingCert = { product, depth, depthLabel, level };
+  state.identityGate = {
+    levelId: saved.levelId || 'self_attested',
+    adultAttested: false,
+    identitySigned: false
+  };
+  // Kick off auth detection (populates state.authUser, re-renders the gate).
+  getAuthContext().catch((error) => console.warn('Firebase auth unavailable (gate stays usable)', error));
+  renderIdentityGate();
+  elements.identityGate?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+function closeIdentityGate() {
+  state.pendingCert = null;
+  if (elements.identityGate) elements.identityGate.hidden = true;
+}
+
+function renderIdentityGate() {
+  if (!elements.identityGate || !state.pendingCert || !state.identityGateBody) return;
+  const { product, depth, level } = state.pendingCert;
+  const gate = state.identityGate;
+  const account = state.authUser;
+  const resolved = resolveProductIdentityLevel({ ...gate, account });
+
+  if (elements.identityGateTitle) {
+    elements.identityGateTitle.textContent = `${t('verifyBeforeCertification')} — ${depth.label}`;
+  }
+
+  const accountLine = account
+    ? `Signed in as <strong>${escapeHtml(account.email || account.uid)}</strong>. ${escapeHtml(t('accountBoundAvailable'))}`
+    : escapeHtml(t('noAccountSignedIn'));
+
+  const levelOptions = PRODUCT_IDENTITY_LEVELS.map((option) => {
+    const disabled = option.id === 'account_bound' && !account;
+    return `
+      <label class="identity-level${gate.levelId === option.id ? ' selected' : ''}${disabled ? ' disabled' : ''}">
+        <input type="radio" name="identityLevel" value="${option.id}" ${gate.levelId === option.id ? 'checked' : ''} ${disabled ? 'disabled' : ''}>
+        <span class="identity-level-label">${escapeHtml(option.label)}</span>
+        <span class="identity-level-desc">${escapeHtml(option.description)}</span>
+        ${disabled ? `<span class="identity-level-note">${escapeHtml(t('signInToUseLevel'))}</span>` : ''}
+      </label>
+    `;
+  }).join('');
+
+  const showSign = resolveProductIdentityLevel({ ...gate, account }).requiresSignature
+    || gate.levelId === 'identity_attested';
+
+  elements.identityGateBody.innerHTML = `
+    <p class="identity-gate-intro">Certification credentials record <em>who</em> took the test, not just the score. Pick how this ${escapeHtml(depth.label.toLowerCase())} attempt for <strong>${escapeHtml(product.name)}</strong> is identified. You can always continue — we just record the honest level.</p>
+    <p class="identity-gate-account">${accountLine}</p>
+    <div class="identity-levels" role="radiogroup" aria-label="Identity assurance level">${levelOptions}</div>
+    <label class="identity-check identity-sign" ${showSign ? '' : 'hidden'}>
+      <input type="checkbox" id="identitySignCheck" ${gate.identitySigned ? 'checked' : ''}>
+      <span>${escapeHtml(t('identitySignAffirm'))}</span>
+    </label>
+    <label class="identity-check identity-adult">
+      <input type="checkbox" id="identityAdultCheck" ${gate.adultAttested ? 'checked' : ''}>
+      <span>${escapeHtml(t('identityAdultAffirm'))}</span>
+    </label>
+    <p class="identity-resolved">${escapeHtml(t('identityRecordedAs'))} <strong>${escapeHtml((PRODUCT_IDENTITY_LEVELS.find((l) => l.id === resolved.level) || {}).label || resolved.level)}</strong>.</p>
+    <div class="identity-gate-actions">
+      <button type="button" id="identityGateStart">${escapeHtml(t('start'))}</button>
+    </div>
+    <p class="identity-gate-error" id="identityGateError" hidden></p>
+  `;
+
+  elements.identityGate.hidden = false;
+
+  elements.identityGateBody.querySelectorAll('input[name="identityLevel"]').forEach((radio) => {
+    radio.addEventListener('change', (event) => {
+      state.identityGate.levelId = event.target.value;
+      renderIdentityGate();
+    });
+  });
+  const signCheck = elements.identityGateBody.querySelector('#identitySignCheck');
+  signCheck?.addEventListener('change', (event) => {
+    state.identityGate.identitySigned = event.target.checked;
+    renderIdentityGate();
+  });
+  const adultCheck = elements.identityGateBody.querySelector('#identityAdultCheck');
+  adultCheck?.addEventListener('change', (event) => {
+    state.identityGate.adultAttested = event.target.checked;
+  });
+  const startButton = elements.identityGateBody.querySelector('#identityGateStart');
+  startButton?.addEventListener('click', confirmIdentityGate);
+}
+
+function confirmIdentityGate() {
+  if (!state.pendingCert) return;
+  const errorEl = elements.identityGateBody?.querySelector('#identityGateError');
+  const gate = { ...state.identityGate, account: state.authUser };
+  const resolved = resolveProductIdentityLevel(gate);
+
+  // 18+ adult attestation is required for the adult certification path (mirrors
+  // ladder-auth.js). identity_attested additionally requires the signature.
+  if (!gate.adultAttested) {
+    if (errorEl) { errorEl.textContent = t('errorConfirmAdult'); errorEl.hidden = false; }
+    return;
+  }
+  if (resolved.requiresSignature && !resolved.identitySigned) {
+    if (errorEl) { errorEl.textContent = t('errorSignIdentity'); errorEl.hidden = false; }
+    return;
+  }
+
+  // Remember the chosen level for next time (not the attestations).
+  try { localStorage.setItem(IDENTITY_GATE_LS, JSON.stringify({ levelId: resolved.level })); } catch {}
+
+  const { product, depthLabel, level } = state.pendingCert;
+  closeIdentityGate();
+  startCertificationExam(product, depthLabel, level, gate);
+}
+
+function startCertificationExam(product, depthLabel, level, identityGate = {}) {
   const depth = depthForLabel(depthLabel);
   const blueprint = buildProductBlueprint({ product, level, depth });
+  // Task 31: thread the selected UI language into the examiner system prompt
+  // (buildExaminerSystemPrompt reads blueprint.languageLabel).
+  blueprint.languageLabel = languageLabel();
   state.activeCert = { product, depth, level, blueprint };
   state.certContext = buildProductCertContext({ product, depth });
+  // Task 30: stamp the resolved identity-assurance record onto the context now,
+  // at attempt start. It rides into the credential record (via the
+  // buildIdentityAssurance hook) and the evidence packet (set in onCredential).
+  state.identityGate = identityGate;
+  state.certContext.identityAssurance = buildProductIdentityAssurance(
+    new Date().toISOString(),
+    identityGate
+  );
   state.certOutcome = null;
   state.certMessages = [{
     role: 'user',
@@ -1016,10 +1362,22 @@ async function finalizeCertification(certificationResult, rubricDimensions) {
           }
         });
         evidencePacket.pathway = 'product';
+        // Task 30: carry the resolved identity-assurance level onto the evidence
+        // packet so the data-layer certification row records it (the credential
+        // record already carries it via the buildIdentityAssurance hook below).
+        evidencePacket.identityAssurance = context.identityAssurance
+          || credentialRecord.identityAssurance
+          || null;
         recordCertification(evidencePacket, validation)
           .catch((error) => console.warn('recordCertification failed (local kept)', error));
       },
-      buildIdentityAssurance: (earnedAt) => buildProductIdentityAssurance(earnedAt)
+      // Re-stamp at award time using the gate selection captured at attempt
+      // start, so attestedAt/earnedAt reflect the credential timestamp. Falls
+      // back to the context's pre-stamped record if the gate is unavailable.
+      buildIdentityAssurance: (earnedAt) =>
+        (state.identityGate
+          ? buildProductIdentityAssurance(earnedAt, { ...state.identityGate, account: state.authUser })
+          : (context.identityAssurance || buildProductIdentityAssurance(earnedAt)))
     }
   });
 
@@ -1042,6 +1400,7 @@ function closeCertExam() {
   state.certContext = null;
   state.certMessages = [];
   state.certOutcome = null;
+  state.identityGate = null;
   if (elements.certWorkspace) elements.certWorkspace.hidden = true;
 }
 
@@ -1055,7 +1414,7 @@ function renderCertExam() {
   if (elements.certLog) {
     elements.certLog.innerHTML = state.certMessages.map((message) => `
       <div class="course-message ${message.role === 'assistant' ? 'assistant' : 'user'}">
-        <span>${message.role === 'assistant' ? 'Examiner' : 'You'}</span>
+        <span>${message.role === 'assistant' ? escapeHtml(t('examiner')) : escapeHtml(t('you'))}</span>
         <p>${escapeHtml(message.content)}</p>
       </div>
     `).join('');
@@ -1075,10 +1434,10 @@ function renderCertOutcome() {
   const { outcome, validation, result, rubricDimensions } = data;
   const passed = outcome === 'awarded';
   const headline = passed
-    ? 'Certified — credential recorded'
+    ? t('certifiedRecorded')
     : outcome === 'validation_failed'
-      ? 'Not certified — independent validation did not pass'
-      : 'Not certified yet — more evidence needed';
+      ? t('notCertifiedValidation')
+      : t('notCertifiedYet');
 
   const rubricRows = (rubricDimensions || []).map((dimension) => `
     <li class="rubric-row rubric-${dimension.status}">
@@ -1094,7 +1453,7 @@ function renderCertOutcome() {
     <strong class="cert-outcome-headline">${escapeHtml(headline)}</strong>
     ${result?.rationale ? `<p class="cert-rationale">${escapeHtml(result.rationale)}</p>` : ''}
     ${rubricRows ? `<ul class="rubric-list" aria-label="Rubric evaluation">${rubricRows}</ul>` : ''}
-    ${validation ? `<p class="cert-validation"><strong>Independent validator:</strong> ${escapeHtml(validation.rationale || '')}${validation.reviewerModel ? ` <small>(${escapeHtml(validation.reviewerModel)})</small>` : ''}</p>` : ''}
-    <p class="cert-challenge">Disagree with this result? You can submit a challenge with additional evidence for review.</p>
+    ${validation ? `<p class="cert-validation"><strong>${escapeHtml(t('independentValidator'))}</strong> ${escapeHtml(validation.rationale || '')}${validation.reviewerModel ? ` <small>(${escapeHtml(validation.reviewerModel)})</small>` : ''}</p>` : ''}
+    <p class="cert-challenge">${escapeHtml(t('certChallenge'))}</p>
   `;
 }

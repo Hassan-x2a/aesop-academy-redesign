@@ -1,5 +1,6 @@
+// Authentication module for The Ladder
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { FIREBASE_CONFIG } from '/ai-academy/js/firebase-config.js';
 
 const IDENTITY_ASSURANCE_LEVELS = [
@@ -47,6 +48,7 @@ const PROCTORING_MODES = [
 const auth = getAuth(initializeApp(FIREBASE_CONFIG));
 const LS_IDENTITY_ASSURANCE = 'aesop-ladder-identity-assurance';
 const LS_PROCTORING_MODE = 'aesop-ladder-proctoring-mode';
+const LS_ADULT_ATTESTED = 'aesop-ladder-adult-attested';
 
 const el = {
   authEmailInput: document.getElementById('authEmailInput'),
@@ -54,6 +56,15 @@ const el = {
   authSignInBtn: document.getElementById('authSignInBtn'),
   authCreateBtn: document.getElementById('authCreateBtn'),
   authGoogleBtn: document.getElementById('authGoogleBtn'),
+  createAccountModal: document.getElementById('createAccountModal'),
+  createEmailInput: document.getElementById('createEmailInput'),
+  createPasswordInput: document.getElementById('createPasswordInput'),
+  createAccountError: document.getElementById('createAccountError'),
+  closeCreateModal: document.getElementById('closeCreateModal'),
+  submitCreateAccount: document.getElementById('submitCreateAccount'),
+  loggedInSection: document.getElementById('loggedInSection'),
+  loggedInEmail: document.getElementById('loggedInEmail'),
+  logoutBtn: document.getElementById('logoutBtn'),
   authIdentityAssuranceSelect: document.getElementById('authIdentityAssuranceSelect'),
   authIdentityAssuranceDescription: document.getElementById('authIdentityAssuranceDescription'),
   authProctoringModeField: document.getElementById('authProctoringModeField'),
@@ -79,18 +90,24 @@ function setError(message) {
 }
 
 function renderIdentityAssuranceSelect() {
-  el.authIdentityAssuranceSelect.innerHTML = IDENTITY_ASSURANCE_LEVELS
-    .filter(level => level.active)
-    .map(level => `<option value="${level.id}">${level.label}</option>`)
-    .join('');
+  const options = [
+    '<option value="">Choose verification level...</option>',
+    ...IDENTITY_ASSURANCE_LEVELS
+      .filter(level => level.active)
+      .map(level => `<option value="${level.id}">${level.label}</option>`)
+  ];
+  el.authIdentityAssuranceSelect.innerHTML = options.join('');
   el.authIdentityAssuranceSelect.value = state.identityAssuranceId;
   updateIdentityAssuranceDescription();
 }
 
 function renderProctoringModeSelect() {
-  el.authProctoringModeSelect.innerHTML = PROCTORING_MODES
-    .map(mode => `<option value="${mode.id}">${mode.label}</option>`)
-    .join('');
+  const options = [
+    '<option value="">Choose proctoring method...</option>',
+    ...PROCTORING_MODES
+      .map(mode => `<option value="${mode.id}">${mode.label}</option>`)
+  ];
+  el.authProctoringModeSelect.innerHTML = options.join('');
   el.authProctoringModeSelect.value = state.proctoringModeId;
   updateProctoringModeDescription();
 }
@@ -128,9 +145,12 @@ function updateProctoringModeVisibility() {
 
 async function handleSignIn(e) {
   e.preventDefault();
+  console.log('[SIGN IN] Handler called');
   setError('');
   const email = el.authEmailInput?.value?.trim();
   const password = el.authPasswordInput?.value;
+
+  console.log('[SIGN IN] Email:', email ? '***' : 'empty', 'Password:', password ? '***' : 'empty');
 
   if (!email || !password) {
     setError('Please enter email and password.');
@@ -138,67 +158,98 @@ async function handleSignIn(e) {
   }
 
   try {
+    console.log('[SIGN IN] Calling Firebase...');
     await signInWithEmailAndPassword(auth, email, password);
+    console.log('[SIGN IN] Success');
     setError('');
   } catch (error) {
     setError(`Sign in failed: ${error.message}`);
   }
 }
 
+function openCreateAccountModal() {
+  if (el.createAccountModal) {
+    el.createAccountModal.style.display = 'flex';
+    el.createEmailInput?.focus();
+    el.createAccountError.textContent = '';
+  }
+}
+
+function closeCreateAccountModal() {
+  if (el.createAccountModal) {
+    el.createAccountModal.style.display = 'none';
+    el.createEmailInput.value = '';
+    el.createPasswordInput.value = '';
+    el.createAccountError.textContent = '';
+  }
+}
+
+async function handleLogout() {
+  try {
+    await signOut(auth);
+    el.authEmailInput.value = '';
+    el.authPasswordInput.value = '';
+  } catch (error) {
+    console.error('Logout error:', error);
+  }
+}
+
 async function handleCreateAccount() {
-  setError('');
-  const email = el.authEmailInput?.value?.trim();
-  const password = el.authPasswordInput?.value;
+  const email = el.createEmailInput?.value?.trim();
+  const password = el.createPasswordInput?.value;
 
   if (!email || !password) {
-    setError('Please enter email and password.');
+    el.createAccountError.textContent = 'Please enter email and password.';
     return;
   }
 
   try {
+    el.createAccountError.textContent = '';
     await createUserWithEmailAndPassword(auth, email, password);
-    setError('');
+    closeCreateAccountModal();
   } catch (error) {
-    setError(`Account creation failed: ${error.message}`);
+    el.createAccountError.textContent = error.message;
   }
 }
 
-async function handleGoogleSignIn() {
-  setError('');
-  try {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-    setError('');
-  } catch (error) {
-    setError(`Google sign in failed: ${error.message}`);
-  }
-}
 
 function handleProceed() {
+  console.log('[ATTESTATION] handleProceed called');
   // Validate required fields
   const selectedLevel = IDENTITY_ASSURANCE_LEVELS.find(l => l.id === state.identityAssuranceId);
 
+  console.log('[ATTESTATION] Identity assurance level:', state.identityAssuranceId);
   if (!state.identityAssuranceId) {
+    console.log('[ATTESTATION] ERROR: No identity assurance level selected');
     setError('Please select an identity assurance level.');
     return;
   }
 
+  console.log('[ATTESTATION] Proctoring required:', selectedLevel?.proctoringRequired, 'Mode selected:', state.proctoringModeId);
   if (selectedLevel?.proctoringRequired && !state.proctoringModeId) {
+    console.log('[ATTESTATION] ERROR: Proctoring required but not selected');
     setError('Please select a proctoring method for the selected assurance level.');
     return;
   }
 
+  console.log('[ATTESTATION] Attestation checkbox checked:', el.authIdentityAttestationCheck?.checked);
   if (!el.authIdentityAttestationCheck?.checked) {
+    console.log('[ATTESTATION] ERROR: Attestation not checked');
     setError('Please confirm that you will take this certification attempt yourself.');
     return;
   }
 
   // Save selections to localStorage
+  console.log('[ATTESTATION] About to save to localStorage');
   localStorage.setItem(LS_IDENTITY_ASSURANCE, state.identityAssuranceId);
   localStorage.setItem(LS_PROCTORING_MODE, state.proctoringModeId);
+  localStorage.setItem(LS_ADULT_ATTESTED, 'true');
+  console.log('[ATTESTATION] Saved. Value in localStorage:', localStorage.getItem(LS_ADULT_ATTESTED));
 
-  // Redirect back to the ladder page
-  window.location.href = '/theladder/';
+  // Redirect back to the appropriate ladder pathway
+  const returnTo = new URLSearchParams(window.location.search).get('returnTo') || '/theladder/';
+  console.log('[ATTESTATION] Redirecting to:', returnTo);
+  window.location.href = returnTo;
 }
 
 function initializeDarkMode() {
@@ -239,15 +290,37 @@ if (el.authProctoringModeSelect) {
 }
 
 if (el.authSignInBtn) {
-  el.authSignInBtn.addEventListener('click', handleSignIn);
+  el.authSignInBtn.addEventListener('click', (e) => {
+    console.log('[SIGN IN] Button clicked');
+    handleSignIn(e);
+  });
+} else {
+  console.warn('[SIGN IN] Button not found');
 }
 
 if (el.authCreateBtn) {
-  el.authCreateBtn.addEventListener('click', handleCreateAccount);
+  el.authCreateBtn.addEventListener('click', openCreateAccountModal);
 }
 
-if (el.authGoogleBtn) {
-  el.authGoogleBtn.addEventListener('click', handleGoogleSignIn);
+if (el.closeCreateModal) {
+  el.closeCreateModal.addEventListener('click', closeCreateAccountModal);
+}
+
+if (el.submitCreateAccount) {
+  el.submitCreateAccount.addEventListener('click', handleCreateAccount);
+}
+
+// Close modal when clicking outside of it
+if (el.createAccountModal) {
+  el.createAccountModal.addEventListener('click', (e) => {
+    if (e.target === el.createAccountModal) {
+      closeCreateAccountModal();
+    }
+  });
+}
+
+if (el.logoutBtn) {
+  el.logoutBtn.addEventListener('click', handleLogout);
 }
 
 if (el.authProceedBtn) {
@@ -257,11 +330,33 @@ if (el.authProceedBtn) {
 // Monitor auth state
 onAuthStateChanged(auth, (user) => {
   state.authUser = user;
+  console.log('[AUTH STATE] User:', user ? user.email : 'not logged in');
+
   if (el.authSignInBtn && el.authCreateBtn) {
     el.authSignInBtn.hidden = !!user;
     el.authCreateBtn.hidden = !!user;
   }
+
+  // Hide login form when logged in
+  const authForm = document.getElementById('authAccountForm');
+  if (authForm) {
+    authForm.parentElement.style.display = user ? 'none' : 'block';
+  }
+
+  // Show/hide logout section
+  if (el.loggedInSection) {
+    el.loggedInSection.hidden = !user;
+    if (user && el.loggedInEmail) {
+      el.loggedInEmail.textContent = `Logged in as: ${user.email}`;
+    }
+  }
+
   if (el.authEmailInput && user?.email && !el.authEmailInput.value) {
     el.authEmailInput.value = user.email;
+  }
+
+  if (user) {
+    console.log('[AUTH STATE] Logged in as:', user.email);
+    setError(''); // Clear any errors
   }
 });

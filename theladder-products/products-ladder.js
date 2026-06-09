@@ -18,8 +18,16 @@
 //   buildProductCertContext({ product, depth }) -> certification context
 //       The context object recordCertificationResult / buildEvidencePacket need.
 //
-//   buildProductIdentityAssurance(startedAt) -> identity-assurance record
-//       Minimal identity-assurance snapshot mirroring the Concepts ladder.
+//   PRODUCT_IDENTITY_LEVELS — the three ACTIVE identity-assurance levels a
+//       learner may resolve to before a product certification (doc-16):
+//       self_attested, account_bound, identity_attested. proctored_verified is
+//       intentionally absent — it is scaffolded, not active.
+//
+//   buildProductIdentityAssurance(earnedAt, gate) -> identity-assurance record
+//       Full doc-16-shaped identity-assurance record built from the learner's
+//       pre-certification gate selection. Populated at gate time, stored into
+//       the certification context, the credential record, and the evidence
+//       packet (so the data-layer credential row carries the honest level).
 //
 //   CERT_DEPTHS — the three product certification depths (Certification /
 //       Expert / Master) with doc-16 depth fields.
@@ -232,15 +240,110 @@ export function buildProductCertContext({ product, depth, learnerId }) {
   };
 }
 
+// ---------------------------------------------------------------------------
+// IDENTITY ASSURANCE — lightweight pre-certification gate (doc-16).
+//
+// Before a learner STARTS any certification depth, products-app.js presents an
+// identity step that resolves to one of the three ACTIVE levels below. The
+// resolved record is stored on the certification context and flows into both
+// the credential record and the evidence packet. proctored_verified is NOT
+// offered here — it is scaffolded in doc-16 but has no provider workflow yet,
+// so we never claim it.
+// ---------------------------------------------------------------------------
+
+export const PRODUCT_IDENTITY_LEVELS = [
+  {
+    id: 'self_attested',
+    label: 'Self-attested',
+    requiresSignature: false,
+    accountRequired: false,
+    description: 'You claim the work. No account or identity check beyond this browser session.'
+  },
+  {
+    id: 'account_bound',
+    label: 'Account-bound',
+    requiresSignature: false,
+    accountRequired: true,
+    description: 'Your attempt is tied to a signed-in AESOP account, learner ID, and saved transcript record.'
+  },
+  {
+    id: 'identity_attested',
+    label: 'Identity-attested',
+    requiresSignature: true,
+    accountRequired: false,
+    description: 'You sign an identity statement before the attempt, confirming you are the person named on the credential.'
+  }
+];
+
+export function identityLevelById(levelId) {
+  return PRODUCT_IDENTITY_LEVELS.find((level) => level.id === levelId) || null;
+}
+
 /**
- * Minimal identity-assurance snapshot. Mirrors the Concepts ladder's record
- * shape (doc-data-model section 3) without the auth gate (out of scope here).
+ * Resolve the honest identity-assurance level from a gate selection. Never
+ * blocks: if no account is present we fall back to self_attested (or
+ * identity_attested when the learner signs the identity statement).
+ *
+ * @param {object} gate
+ * @param {string} [gate.levelId]      learner's chosen level id
+ * @param {boolean} [gate.adultAttested]   18+ adult attestation checkbox
+ * @param {boolean} [gate.identitySigned]  identity-statement signature (for identity_attested)
+ * @param {object|null} [gate.account]     { uid, email } when a Firebase user is signed in
+ * @returns {{level:string, requiresSignature:boolean, accountRequired:boolean, adultAttested:boolean, identitySigned:boolean, account:object|null}}
  */
-export function buildProductIdentityAssurance(startedAt = new Date().toISOString()) {
+export function resolveProductIdentityLevel(gate = {}) {
+  const account = gate.account && gate.account.uid ? gate.account : null;
+  let levelId = gate.levelId;
+  let level = identityLevelById(levelId);
+
+  // account_bound requires a signed-in account; without one, fall back honestly.
+  if (level && level.id === 'account_bound' && !account) {
+    levelId = gate.identitySigned ? 'identity_attested' : 'self_attested';
+    level = identityLevelById(levelId);
+  }
+  // No explicit choice: prefer account_bound when signed in, else the honest
+  // signed/unsigned self level.
+  if (!level) {
+    levelId = account ? 'account_bound' : (gate.identitySigned ? 'identity_attested' : 'self_attested');
+    level = identityLevelById(levelId);
+  }
+
   return {
-    level: 'session_only',
-    accountBound: false,
-    method: 'anonymous_session',
-    attestedAt: startedAt
+    level: level.id,
+    requiresSignature: level.requiresSignature,
+    accountRequired: level.accountRequired,
+    adultAttested: Boolean(gate.adultAttested),
+    identitySigned: Boolean(gate.identitySigned),
+    account
+  };
+}
+
+/**
+ * Full doc-16-shaped identity-assurance record. Built at gate time from the
+ * resolved level so the credential record + evidence packet carry the honest
+ * level, account binding, and attestation. proctoringRequired is always false
+ * and proctoringMode is always 'none' on this pathway.
+ *
+ * @param {string} earnedAt  ISO timestamp the credential/attempt is stamped with
+ * @param {object} gate      gate selection (see resolveProductIdentityLevel)
+ */
+export function buildProductIdentityAssurance(earnedAt = new Date().toISOString(), gate = {}) {
+  const resolved = resolveProductIdentityLevel(gate);
+  const meta = identityLevelById(resolved.level);
+  // "attested" tracks the identity-statement signature; account_bound and
+  // self_attested do not sign, so attested is false unless the learner signed.
+  const attested = resolved.requiresSignature ? resolved.identitySigned : false;
+  return {
+    level: resolved.level,
+    label: meta ? meta.label : resolved.level,
+    status: resolved.level,
+    accountRequired: resolved.accountRequired,
+    accountUid: resolved.account ? resolved.account.uid : '',
+    accountEmail: resolved.account ? (resolved.account.email || '') : '',
+    adultAttested: resolved.adultAttested,
+    attested,
+    attestedAt: attested ? earnedAt : null,
+    proctoringRequired: false,
+    proctoringMode: 'none'
   };
 }

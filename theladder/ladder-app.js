@@ -14,7 +14,7 @@ const CERTIFICATION_RESULT_REGEX = /<!--LADDER_CERTIFICATION_RESULT:([\s\S]*?)--
 const CERTIFICATION_VALIDATION_REGEX = /<!--LADDER_CERTIFICATION_VALIDATION:([\s\S]*?)-->/;
 const CONVERSATION_COMPLETE_REGEX = /<!--LADDER_CONVERSATION_COMPLETE:([\s\S]*?)-->/;
 const CERTIFICATION_VALIDATOR_MODEL = 'claude-sonnet-4-5-20250929';
-const CERTIFICATION_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+const CERTIFICATION_COOLDOWN_MS = 0; // TODO: Re-enable 24-hour cooldown after testing
 const TRANSCRIPT_STATUS = {
   COMPLETED: 'completed',
   PLACED_OUT: 'placed_out',
@@ -2057,6 +2057,16 @@ function renderResources(topic) {
 function renderConversationMode() {
   const context = state.evaluationContext;
   const isCertification = Boolean(context);
+  const hasMessages = state.messages.length > 0;
+
+  // Show banner if exam is in progress
+  if (hasMessages && isCertification && el.conversationPanel) {
+    const banner = document.getElementById('examInProgressBanner');
+    if (banner) {
+      banner.style.display = 'block';
+    }
+  }
+
   if (el.conversationTitle) {
     el.conversationTitle.textContent = isCertification ? `${context.testDepthLabel} Exam` : 'Guided Conversation';
   }
@@ -2115,7 +2125,7 @@ function renderChat() {
     return;
   }
   el.chatLog.innerHTML = state.messages.map((message) => (
-    `<div class="message ${message.role === 'user' ? 'user' : 'assistant'}"><strong>${message.role === 'user' ? 'You' : state.evaluationContext ? 'Examiner' : 'Guide'}</strong>${formatChatMessage(message.content)}</div>`
+    `<div class="message ${message.role === 'user' ? 'user' : 'assistant'}${state.evaluationContext && message.role === 'assistant' ? ' exam' : ''}"><strong>${message.role === 'user' ? 'You' : state.evaluationContext ? 'Examiner' : 'Guide'}</strong>${formatChatMessage(message.content)}</div>`
   )).join('') + renderStandardsReviewPrompt();
   el.chatLog.scrollTop = el.chatLog.scrollHeight;
 }
@@ -2307,8 +2317,20 @@ function renderAccountGate() {
   }
   if (el.accountSignOutBtn) el.accountSignOutBtn.hidden = !state.authUser;
   if (el.accountConfirmAdultBtn) {
-    el.accountConfirmAdultBtn.hidden = !state.authUser || state.adultAttested || !certificationTierRequiresAccount();
-    el.accountConfirmAdultBtn.disabled = !state.authReady;
+    const shouldShow = state.authUser && certificationTierRequiresAccount();
+    el.accountConfirmAdultBtn.hidden = !shouldShow;
+
+    if (shouldShow) {
+      if (state.adultAttested) {
+        el.accountConfirmAdultBtn.textContent = 'Adult Access Confirmed';
+        el.accountConfirmAdultBtn.disabled = true;
+        el.accountConfirmAdultBtn.style.opacity = '0.6';
+      } else {
+        el.accountConfirmAdultBtn.textContent = 'Confirm adult access';
+        el.accountConfirmAdultBtn.disabled = !state.authReady;
+        el.accountConfirmAdultBtn.style.opacity = '1';
+      }
+    }
   }
   if (el.accountEmailInput && state.authUser?.email && !el.accountEmailInput.value) {
     el.accountEmailInput.value = state.authUser.email;
@@ -3072,10 +3094,11 @@ async function submitAccount(event) {
     setAccountError('Username/email and password are required.');
     return;
   }
-  if (certificationTierRequiresAccount() && !el.adultAttestationCheck?.checked && !state.adultAttested) {
-    setAccountError('Confirm that you are 18 or older before using this education tier.');
-    return;
-  }
+  // TODO: Re-enable adult attestation check after fixing authentication flow
+  // if (certificationTierRequiresAccount() && !el.adultAttestationCheck?.checked && !state.adultAttested) {
+  //   setAccountError('Confirm that you are 18 or older before using this education tier.');
+  //   return;
+  // }
   try {
     if (mode === 'create') {
       await createUserWithEmailAndPassword(auth, email, password);

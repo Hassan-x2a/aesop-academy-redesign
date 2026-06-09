@@ -119,6 +119,7 @@ td small { color: var(--muted); display: block; margin-top: 0.18rem; }
     <button class="tab active" type="button" data-view="assessments">Assessments</button>
     <button class="tab" type="button" data-view="courses">Completed courses</button>
     <button class="tab" type="button" data-view="certifications">Certification attempts</button>
+    <button class="tab" type="button" data-view="cert-stats">Certification stats</button>
   </div>
 
   <main>
@@ -379,15 +380,120 @@ function certificationTable(items) {
   </tbody></table>`;
 }
 
+function computeCertificationStats() {
+  const attempts = rows.certifications || [];
+  const stats = {
+    total: attempts.length,
+    certified: attempts.filter((a) => ['completed', 'certified', 'valid'].some((word) => String(a.status || '').toLowerCase().includes(word))).length,
+    notCertified: attempts.filter((a) => ['failed', 'not_certified', 'invalid'].some((word) => String(a.status || '').toLowerCase().includes(word))).length,
+    started: attempts.filter((a) => ['started'].some((word) => String(a.status || '').toLowerCase().includes(word))).length,
+    byTier: {},
+    byDepth: {},
+    scores: {
+      all: attempts.filter((a) => a.score && !isNaN(a.score)).map((a) => Number(a.score)),
+      certified: attempts.filter((a) => a.score && !isNaN(a.score) && ['completed', 'certified', 'valid'].some((word) => String(a.status || '').toLowerCase().includes(word))).map((a) => Number(a.score)),
+      notCertified: attempts.filter((a) => a.score && !isNaN(a.score) && ['failed', 'not_certified', 'invalid'].some((word) => String(a.status || '').toLowerCase().includes(word))).map((a) => Number(a.score))
+    }
+  };
+
+  attempts.forEach((attempt) => {
+    const tier = attempt.tier || 'unknown';
+    if (!stats.byTier[tier]) stats.byTier[tier] = { total: 0, certified: 0, avg: 0, scores: [] };
+    stats.byTier[tier].total++;
+    if (['completed', 'certified', 'valid'].some((word) => String(attempt.status || '').toLowerCase().includes(word))) {
+      stats.byTier[tier].certified++;
+    }
+    if (attempt.score && !isNaN(attempt.score)) {
+      stats.byTier[tier].scores.push(Number(attempt.score));
+    }
+  });
+  Object.keys(stats.byTier).forEach((tier) => {
+    const scores = stats.byTier[tier].scores || [];
+    stats.byTier[tier].avg = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
+  });
+
+  attempts.forEach((attempt) => {
+    const depth = attempt.depth || 'unknown';
+    if (!stats.byDepth[depth]) stats.byDepth[depth] = { total: 0, certified: 0, avg: 0, scores: [] };
+    stats.byDepth[depth].total++;
+    if (['completed', 'certified', 'valid'].some((word) => String(attempt.status || '').toLowerCase().includes(word))) {
+      stats.byDepth[depth].certified++;
+    }
+    if (attempt.score && !isNaN(attempt.score)) {
+      stats.byDepth[depth].scores.push(Number(attempt.score));
+    }
+  });
+  Object.keys(stats.byDepth).forEach((depth) => {
+    const scores = stats.byDepth[depth].scores || [];
+    stats.byDepth[depth].avg = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '-';
+  });
+
+  return stats;
+}
+
+function certificationStatsTable() {
+  const stats = computeCertificationStats();
+  const certRate = stats.total ? ((stats.certified / stats.total) * 100).toFixed(1) : 0;
+  const avgScoreAll = stats.scores.all.length ? (stats.scores.all.reduce((a, b) => a + b, 0) / stats.scores.all.length).toFixed(1) : '-';
+  const avgScoreCert = stats.scores.certified.length ? (stats.scores.certified.reduce((a, b) => a + b, 0) / stats.scores.certified.length).toFixed(1) : '-';
+  const avgScoreFail = stats.scores.notCertified.length ? (stats.scores.notCertified.reduce((a, b) => a + b, 0) / stats.scores.notCertified.length).toFixed(1) : '-';
+
+  const tierRows = Object.entries(stats.byTier).sort(([a], [b]) => a.localeCompare(b));
+  const depthRows = Object.entries(stats.byDepth).sort(([a], [b]) => a.localeCompare(b));
+
+  return `<div style="display: grid; gap: 2rem;">
+    <section class="section">
+      <div class="section-head"><h2>Overall Pass Rate</h2></div>
+      <div style="padding: 1.5rem 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; text-align: center;">
+        <div><div style="font-size: 2.2rem; font-weight: 800; color: var(--gold);">${esc(certRate)}%</div><div style="color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem;">Pass rate</div></div>
+        <div><div style="font-size: 2.2rem; font-weight: 800; color: var(--good);">${esc(stats.certified)}</div><div style="color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem;">Certified</div></div>
+        <div><div style="font-size: 2.2rem; font-weight: 800; color: var(--bad);">${esc(stats.notCertified)}</div><div style="color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem;">Not certified</div></div>
+        <div><div style="font-size: 2.2rem; font-weight: 800; color: var(--warn);">${esc(stats.started)}</div><div style="color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem;">In progress</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>By Education Tier</h2></div>
+      <div class="table-wrap"><table><thead><tr><th>Tier</th><th>Attempts</th><th>Certified</th><th>Pass Rate</th><th>Avg Score</th></tr></thead><tbody>
+        ${tierRows.map(([tier, data]) => { const rate = data.total ? ((data.certified / data.total) * 100).toFixed(1) : 0; return `<tr><td><strong>${esc(tier)}</strong></td><td>${esc(data.total)}</td><td><span class="pill good">${esc(data.certified)}</span></td><td>${esc(rate)}%</td><td>${esc(data.avg)}</td></tr>`; }).join('')}
+      </tbody></table></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>By Certification Depth</h2></div>
+      <div class="table-wrap"><table><thead><tr><th>Depth</th><th>Attempts</th><th>Certified</th><th>Pass Rate</th><th>Avg Score</th></tr></thead><tbody>
+        ${depthRows.map(([depth, data]) => { const rate = data.total ? ((data.certified / data.total) * 100).toFixed(1) : 0; return `<tr><td><strong>${esc(depth)}</strong></td><td>${esc(data.total)}</td><td><span class="pill good">${esc(data.certified)}</span></td><td>${esc(rate)}%</td><td>${esc(data.avg)}</td></tr>`; }).join('')}
+      </tbody></table></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Average Scores</h2></div>
+      <div style="padding: 1.5rem 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; text-align: center;">
+        <div><div style="font-size: 1.8rem; font-weight: 800; color: var(--blue);">${esc(avgScoreAll)}</div><div style="color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem;">All attempts</div></div>
+        <div><div style="font-size: 1.8rem; font-weight: 800; color: var(--good);">${esc(avgScoreCert)}</div><div style="color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem;">Certified</div></div>
+        <div><div style="font-size: 1.8rem; font-weight: 800; color: var(--bad);">${esc(avgScoreFail)}</div><div style="color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem;">Not certified</div></div>
+      </div>
+    </section>
+  </div>`;
+}
+
 function render() {
   setStats();
-  const items = currentRows();
   const titles = {
     assessments: 'Assessment Activity',
     courses: 'Completed Course Records',
-    certifications: 'Certification Attempts'
+    certifications: 'Certification Attempts',
+    'cert-stats': 'Certification Statistics'
   };
   el.viewTitle.textContent = titles[activeView];
+
+  if (activeView === 'cert-stats') {
+    el.viewMeta.textContent = '';
+    el.tableWrap.innerHTML = certificationStatsTable();
+    return;
+  }
+
+  const items = currentRows();
   el.viewMeta.textContent = `${items.length} visible of ${(rows[activeView] || []).length} total`;
   if (!items.length) {
     el.tableWrap.innerHTML = '<div class="empty">No records match this view.</div>';

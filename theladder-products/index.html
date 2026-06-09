@@ -18,7 +18,7 @@
   </script>
   <link rel="stylesheet" href="/academy-theme.css?v=2">
   <link rel="stylesheet" href="/academy-dark-mode.css?v=2">
-  <link rel="stylesheet" href="/theladder-products/products.css?v=12">
+  <link rel="stylesheet" href="/theladder-products/products.css?v=15">
 </head>
 <body>
   <nav class="nav products-nav">
@@ -27,47 +27,48 @@
         <span class="brand">AESOP AI Academy</span>
       </a>
       <span class="nav-divider" aria-hidden="true"></span>
-      <a href="/theladder/" class="nav-link">The Ladder</a>
-      <span class="nav-link active" aria-current="page">Products</span>
-      <a href="/theladder-use-cases/" class="nav-link">Use Cases</a>
+      <a href="/theladder/" class="nav-link" data-i18n="navTheLadder">The Ladder</a>
+      <span class="nav-link active" aria-current="page" data-i18n="navProducts">Products</span>
+      <a href="/theladder-use-cases/" class="nav-link" data-i18n="navUseCases">Use Cases</a>
       <div class="nav-spacer"></div>
+      <select id="languageSelect" class="products-select" aria-label="Language"></select>
       <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
-      <a class="hub-link" href="/ai-academy/students.html">Student Hub</a>
-      <a class="hub-link" href="/ai-academy/transcript.html">Transcript</a>
+      <a class="hub-link" href="/ai-academy/students.html" data-i18n="studentHub">Student Hub</a>
+      <a class="hub-link" href="/ai-academy/transcript.html" data-i18n="transcript">Transcript</a>
     </div>
   </nav>
 
   <main class="products-app products-page">
     <section class="products-hero" aria-labelledby="productsTitle">
       <div class="hero-copy">
-        <p class="hero-kicker">AESOP product pathway</p>
+        <p class="hero-kicker" data-i18n="heroKicker">AESOP product pathway</p>
         <div class="hero-title-row">
-          <h1 id="productsTitle">The Ladder Products</h1>
+          <h1 id="productsTitle" data-i18n="heroTitle">The Ladder Products</h1>
           <label class="education-focus-control" for="educationFocusSelect">
-            <span>Education Focus</span>
+            <span data-i18n="educationFocus">Education Focus</span>
             <select id="educationFocusSelect" aria-label="Education Focus">
-              <option value="/theladder/">AI Concepts</option>
-              <option value="/theladder-products/" selected>Products</option>
-              <option value="/theladder-use-cases/">Use Cases</option>
+              <option value="/theladder/" data-i18n="optionAiConcepts">AI Concepts</option>
+              <option value="/theladder-products/" selected data-i18n="optionProducts">Products</option>
+              <option value="/theladder-use-cases/" data-i18n="optionUseCases">Use Cases</option>
             </select>
           </label>
         </div>
-        <p class="hero-text">
+        <p class="hero-text" data-i18n="heroText">
           A course map for the AI products people actually touch: assistants, office suites, coding agents, RAG databases, creative tools, cloud platforms, regulated industry AI, and specialized work tools.
         </p>
       </div>
       <div class="hero-stats" aria-label="Product pathway summary">
         <div>
           <strong id="totalProducts">500</strong>
-          <span>products</span>
+          <span data-i18n="statProducts">products</span>
         </div>
         <div>
           <strong>3</strong>
-          <span>certification options each</span>
+          <span data-i18n="statCertificationOptions">certification options each</span>
         </div>
         <div>
           <strong id="advancedCount">0</strong>
-          <span>advanced tracks</span>
+          <span data-i18n="statAdvancedTracks">advanced tracks</span>
         </div>
       </div>
     </section>
@@ -75,7 +76,7 @@
     <section class="products-layout">
       <aside class="category-rail" aria-label="Product categories">
         <div class="rail-head">
-          <h2>Product types</h2>
+          <h2 data-i18n="productTypes">Product types</h2>
           <span id="visibleCount">0 shown</span>
         </div>
         <div id="categoryList" class="category-list"></div>
@@ -85,38 +86,48 @@
         <section class="placement-panel" aria-label="Product placement assessment">
           <div class="placement-head">
             <div class="placement-copy">
-              <span>Not sure where to start?</span>
-              <h2>Find your product placement</h2>
-              <p>Take a short conversational assessment. It gauges how fluently you already use AI products, skips the categories you know, and assigns the products you still need. You can skip this and browse the catalog directly.</p>
+              <span data-i18n="placementKicker">Not sure where to start?</span>
+              <h2 data-i18n="placementTitle">Find your product placement</h2>
+              <p data-i18n="placementBody">Take a short conversational assessment. It gauges how fluently you already use AI products, skips the categories you know, and assigns the products you still need. You can skip this and browse the catalog directly.</p>
             </div>
-            <button id="assessmentToggle" class="placement-toggle" type="button" aria-expanded="false" aria-controls="assessmentPanel">Take the placement assessment</button>
+            <button id="assessmentToggle" class="placement-toggle" type="button" aria-expanded="false" aria-controls="assessmentPanel" data-i18n="takePlacementAssessment">Take the placement assessment</button>
           </div>
           <div id="assessmentPanel" class="placement-conversation" hidden>
             <div id="assessmentLog" class="course-chat-log" aria-live="polite"></div>
             <form id="assessmentForm" class="course-chat-form">
-              <label for="assessmentInput" style="height: 1px; margin: -1px; overflow: hidden; position: absolute;">Your answer</label>
-              <input id="assessmentInput" type="text" placeholder="Answer the assessor" autocomplete="off" required>
+              <label for="assessmentInput" style="height: 1px; margin: -1px; overflow: hidden; position: absolute;" data-i18n="assessmentAnswerLabel">Your answer</label>
+              <input id="assessmentInput" type="text" placeholder="Answer the assessor" data-i18n-placeholder="answerTheAssessor" autocomplete="off" required>
               <div class="course-chat-actions">
-                <button type="submit">Send</button>
+                <button type="submit" data-i18n="send">Send</button>
               </div>
             </form>
             <div id="assessmentResult" class="placement-result" hidden></div>
           </div>
         </section>
 
+        <section id="identityGate" class="identity-gate central-course-workspace" aria-label="Identity verification before certification" hidden>
+          <div class="course-conversation-workspace">
+            <div class="workspace-head">
+              <strong id="identityGateTitle" data-i18n="verifyBeforeCertification">Verify before certification</strong>
+              <button id="identityGateCancel" class="cert-close" type="button" aria-label="Cancel certification" data-i18n="cancelCertification">Cancel</button>
+            </div>
+            <div id="identityGateBody" class="identity-gate-body"></div>
+          </div>
+        </section>
+
         <section id="certWorkspace" class="cert-workspace central-course-workspace" aria-label="Certification exam" hidden>
           <div class="course-conversation-workspace">
             <div class="workspace-head">
-              <strong id="certTitle">Certification test</strong>
-              <button id="certClose" class="cert-close" type="button" aria-label="Close certification test">Close</button>
+              <strong id="certTitle" data-i18n="certificationTest">Certification test</strong>
+              <button id="certClose" class="cert-close" type="button" aria-label="Close certification test" data-i18n="closeCertificationTest">Close</button>
             </div>
             <div id="certLog" class="course-chat-log" aria-live="polite"></div>
             <div id="certOutcomePanel" class="cert-outcome" hidden></div>
             <form id="certForm" class="course-chat-form">
-              <label for="certInput" style="height: 1px; margin: -1px; overflow: hidden; position: absolute;">Your answer</label>
-              <input id="certInput" type="text" placeholder="Answer the examiner" autocomplete="off" required>
+              <label for="certInput" style="height: 1px; margin: -1px; overflow: hidden; position: absolute;" data-i18n="assessmentAnswerLabel">Your answer</label>
+              <input id="certInput" type="text" placeholder="Answer the examiner" data-i18n-placeholder="answerTheExaminer" autocomplete="off" required>
               <div class="course-chat-actions">
-                <button type="submit">Send</button>
+                <button type="submit" data-i18n="send">Send</button>
               </div>
             </form>
           </div>
@@ -125,49 +136,58 @@
         <section id="productCourseWorkspace" class="central-course-workspace" aria-label="Selected product course chat">
           <div class="course-conversation-workspace">
             <div class="workspace-head">
-              <strong id="productConversationTitle">Guided Conversation</strong>
-              <small>Chat with an AI guide through this product</small>
+              <strong id="productConversationTitle" data-i18n="guidedConversation">Guided Conversation</strong>
+              <small data-i18n="guidedConversationSubtitle">Chat with an AI guide through this product</small>
             </div>
             <div id="productChatLog" class="course-chat-log" aria-live="polite"></div>
             <form id="productChatForm" class="course-chat-form">
-              <label for="productChatInput" style="height: 1px; margin: -1px; overflow: hidden; position: absolute;">Message</label>
-              <input id="productChatInput" type="text" placeholder="Answer the guide or ask for the next challenge" autocomplete="off" required>
+              <label for="productChatInput" style="height: 1px; margin: -1px; overflow: hidden; position: absolute;" data-i18n="messageLabel">Message</label>
+              <input id="productChatInput" type="text" placeholder="Answer the guide or ask for the next challenge" data-i18n-placeholder="guideInputPlaceholder" autocomplete="off" required>
               <div class="course-chat-actions">
-                <button type="submit">Send</button>
+                <button type="submit" data-i18n="send">Send</button>
               </div>
             </form>
           </div>
         </section>
         <div class="catalog-tools">
           <label class="search-field">
-            <span>Find a product</span>
-            <input id="productSearch" type="search" placeholder="Search GitHub, RAG, video, Salesforce..." autocomplete="off">
+            <span data-i18n="findAProduct">Find a product</span>
+            <input id="productSearch" type="search" placeholder="Search GitHub, RAG, video, Salesforce..." data-i18n-placeholder="searchProductsPlaceholder" autocomplete="off">
           </label>
           <label class="select-field">
-            <span>Course depth</span>
+            <span data-i18n="expansionTrack">Expansion track</span>
+            <select id="trackFilter">
+              <option value="all" data-i18n="allTracks">All tracks</option>
+              <option value="Workforce" data-i18n="trackWorkforce">Workforce</option>
+              <option value="Operations" data-i18n="trackOperations">Operations</option>
+              <option value="Industry" data-i18n="trackIndustry">Industry</option>
+            </select>
+          </label>
+          <label class="select-field">
+            <span data-i18n="courseDepth">Course depth</span>
             <select id="depthFilter">
-              <option value="all">All depths</option>
-              <option value="B">Beginner only</option>
-              <option value="B/I">Beginner + intermediate</option>
-              <option value="B/I/A">Beginner + intermediate + advanced</option>
+              <option value="all" data-i18n="allDepths">All depths</option>
+              <option value="B" data-i18n="depthBeginnerOnly">Beginner only</option>
+              <option value="B/I" data-i18n="depthBeginnerIntermediate">Beginner + intermediate</option>
+              <option value="B/I/A" data-i18n="depthBeginnerIntermediateAdvanced">Beginner + intermediate + advanced</option>
             </select>
           </label>
         </div>
         <section class="request-panel" aria-labelledby="requestProductTitle">
           <div class="request-copy">
-            <span>Missing product?</span>
-            <h2 id="requestProductTitle">Request product training</h2>
-            <p>Send a product into the admin review queue for approval, research, course build, review, and publication.</p>
+            <span data-i18n="missingProduct">Missing product?</span>
+            <h2 id="requestProductTitle" data-i18n="requestProductTraining">Request product training</h2>
+            <p data-i18n="requestProductBody">Send a product into the admin review queue for approval, research, course build, review, and publication.</p>
           </div>
           <form id="productRequestForm" class="request-form">
             <label>
-              <span>Product name</span>
+              <span data-i18n="productName">Product name</span>
               <input id="requestProductName" name="productName" type="text" autocomplete="off" required>
             </label>
             <label>
-              <span>Product type</span>
+              <span data-i18n="productType">Product type</span>
               <select id="requestProductType" name="productType">
-                <option value="">Choose a type</option>
+                <option value="" data-i18n="chooseAType">Choose a type</option>
                 <option>AI assistants</option>
                 <option>Workplace + writing</option>
                 <option>Coding tools</option>
@@ -193,39 +213,39 @@
               </select>
             </label>
             <label class="request-reason-field">
-              <span>Why add it?</span>
+              <span data-i18n="whyAddIt">Why add it?</span>
               <textarea id="requestProductReason" name="reason" rows="3" required></textarea>
             </label>
             <label>
-              <span>Your email</span>
-              <input id="requesterEmail" name="requesterEmail" type="email" autocomplete="email" placeholder="Optional">
+              <span data-i18n="yourEmail">Your email</span>
+              <input id="requesterEmail" name="requesterEmail" type="email" autocomplete="email" placeholder="Optional" data-i18n-placeholder="optional">
             </label>
-            <button id="submitProductRequest" type="submit">Send request</button>
+            <button id="submitProductRequest" type="submit" data-i18n="sendRequest">Send request</button>
           </form>
           <p id="productRequestMessage" class="request-message" hidden></p>
-          <a class="admin-queue-link" href="/theladder-products/admin.html">Admin review queue</a>
+          <a class="admin-queue-link" href="/theladder-products/admin.html" data-i18n="adminReviewQueue">Admin review queue</a>
         </section>
         <div id="productGrid" class="product-grid" aria-live="polite"></div>
       </section>
 
       <aside class="product-detail" aria-label="Selected product course">
         <div class="detail-inner" id="productDetail">
-          <p class="empty-label">Select a product</p>
-          <h2>Choose any card to build a course plan.</h2>
-          <p>The certification options will appear here for every product.</p>
+          <p class="empty-label" data-i18n="selectAProduct">Select a product</p>
+          <h2 data-i18n="selectAProductHeading">Choose any card to build a course plan.</h2>
+          <p data-i18n="selectAProductBody">The certification options will appear here for every product.</p>
         </div>
         <div id="productDetailWorkspace" class="course-workspace" hidden>
-          <h3 id="productConversationTitle">Guided Conversation</h3>
+          <h3 id="productConversationTitle" data-i18n="guidedConversation">Guided Conversation</h3>
           <div id="productChatLog" class="chat-log" aria-live="polite"></div>
           <form id="productChatForm" class="chat-form">
-            <input id="productChatInput" type="text" placeholder="Answer the guide or ask for the next challenge" autocomplete="off" required>
-            <button type="submit">Send</button>
+            <input id="productChatInput" type="text" placeholder="Answer the guide or ask for the next challenge" data-i18n-placeholder="guideInputPlaceholder" autocomplete="off" required>
+            <button type="submit" data-i18n="send">Send</button>
           </form>
         </div>
       </aside>
     </section>
   </main>
 
-  <script type="module" src="/theladder-products/products-app.js?v=17"></script>
+  <script type="module" src="/theladder-products/products-app.js?v=20"></script>
 </body>
 </html>
