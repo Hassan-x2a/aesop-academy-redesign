@@ -2152,6 +2152,33 @@ button.secondary {
   flex: 0 0 min(240px, 38%) !important;
 }
 
+.hero-certifications-row {
+  align-items: center !important;
+  display: flex !important;
+  gap: 0.5rem !important;
+  margin-top: 0.5rem !important;
+}
+
+.hero-cert-label {
+  color: var(--ladder-muted) !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+}
+
+.hero-cert-count {
+  background: rgba(201, 160, 90, 0.15) !important;
+  border-radius: 10px !important;
+  color: var(--ladder-focus) !important;
+  display: inline-flex !important;
+  font-size: 0.85rem !important;
+  font-weight: 900 !important;
+  min-width: 24px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 24px !important;
+  padding: 0 0.4rem !important;
+}
+
 .ladder-hero .eyebrow {
   background: transparent !important;
   border: 0 !important;
