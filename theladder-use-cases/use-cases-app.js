@@ -924,7 +924,7 @@ async function callUseCaseGuide() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages: state.messages,
-        system_prompt: `You are a use case training guide for "${state.activeUseCaseChat.useCase.name}". Help the learner understand this use case through guided conversation using questions, examples, applications, and limitations. When the learner demonstrates sufficient understanding of the ${state.activeUseCaseChat.level} level learning objectives, end your final message with this completion marker on a new line: <!--LADDER_CONVERSATION_COMPLETE:{"status":"completed","confidence":0.95,"rationale":"learner demonstrated competency"}-->`,
+        system_prompt: `You are a use case training guide for "${state.activeUseCaseChat.useCase.name}". Help the learner understand this use case through guided conversation using questions, examples, applications, and limitations. Engage naturally until the learner demonstrates sufficient understanding. When ready to end, write "COURSE_COMPLETE" on its own line as your final line.`,
         max_tokens: 700
       })
     });
@@ -945,21 +945,25 @@ async function callUseCaseGuide() {
 
 function parseUseCaseCompletionResponse(rawText) {
   const text = String(rawText || '');
-  const match = text.match(CONVERSATION_COMPLETE_REGEX);
 
-  // Remove the completion signal and any remaining HTML comment artifacts
+  // Check for completion marker
+  const isCourseComplete = text.includes('COURSE_COMPLETE');
+
+  // Remove completion marker and any HTML comments from visible text
   let visibleText = text
-    .replace(CONVERSATION_COMPLETE_REGEX, '')  // Remove the actual completion signal
-    .replace(/<!--[\s\S]*?-->/g, '')            // Remove any remaining HTML comments
+    .replace(/COURSE_COMPLETE\s*$/gm, '')      // Remove COURSE_COMPLETE marker
+    .replace(/<!--[\s\S]*?-->/g, '')            // Remove any HTML comments
     .trim();
 
-  if (!match) return { completion: null, visibleText };
-  try {
-    return { completion: JSON.parse(match[1]), visibleText };
-  } catch (error) {
-    console.warn('Could not parse completion:', error);
-    return { completion: null, visibleText };
-  }
+  if (!isCourseComplete) return { completion: null, visibleText };
+
+  const completion = {
+    status: 'completed',
+    confidence: 0.95,
+    rationale: 'learner demonstrated competency'
+  };
+
+  return { completion, visibleText };
 }
 
 function handleUseCaseCompletion(completion) {
