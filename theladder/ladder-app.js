@@ -2057,6 +2057,16 @@ function renderResources(topic) {
 function renderConversationMode() {
   const context = state.evaluationContext;
   const isCertification = Boolean(context);
+  const hasMessages = state.messages.length > 0;
+
+  // Show banner if exam is in progress
+  if (hasMessages && isCertification && el.conversationPanel) {
+    const banner = document.getElementById('examInProgressBanner');
+    if (banner) {
+      banner.style.display = 'block';
+    }
+  }
+
   if (el.conversationTitle) {
     el.conversationTitle.textContent = isCertification ? `${context.testDepthLabel} Exam` : 'Guided Conversation';
   }
