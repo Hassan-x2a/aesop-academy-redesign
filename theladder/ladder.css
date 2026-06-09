@@ -1405,6 +1405,14 @@ button.secondary {
   background: var(--white);
 }
 
+/* Certification exam messages - visual distinction */
+.message.exam {
+  background: #f8f4e6;
+  border: 2px solid #c9a05a;
+  border-left: 5px solid #c9a05a;
+  box-shadow: 0 2px 8px rgba(201, 160, 90, 0.15);
+}
+
 .message.user {
   align-self: flex-end;
   background: #f2edff;

@@ -2115,7 +2115,7 @@ function renderChat() {
     return;
   }
   el.chatLog.innerHTML = state.messages.map((message) => (
-    `<div class="message ${message.role === 'user' ? 'user' : 'assistant'}"><strong>${message.role === 'user' ? 'You' : state.evaluationContext ? 'Examiner' : 'Guide'}</strong>${formatChatMessage(message.content)}</div>`
+    `<div class="message ${message.role === 'user' ? 'user' : 'assistant'}${state.evaluationContext && message.role === 'assistant' ? ' exam' : ''}"><strong>${message.role === 'user' ? 'You' : state.evaluationContext ? 'Examiner' : 'Guide'}</strong>${formatChatMessage(message.content)}</div>`
   )).join('') + renderStandardsReviewPrompt();
   el.chatLog.scrollTop = el.chatLog.scrollHeight;
 }
