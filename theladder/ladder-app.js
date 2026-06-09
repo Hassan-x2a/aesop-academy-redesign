@@ -2030,7 +2030,7 @@ function renderEvaluationPanel() {
   });
   [el.startEvaluationBtn, el.startWorkspaceCertificationBtn].forEach((button) => {
     if (!button) return;
-    button.disabled = cooldown.locked || accountGate.locked || identityGate.locked;
+    button.disabled = cooldown.locked || (accountGate.locked && !certificationTierRequiresAccount()) || identityGate.locked;
     button.textContent = cooldown.locked
       ? `Available in ${formatDuration(cooldown.remainingMs)}`
       : accountGate.locked ? accountGate.buttonLabel
