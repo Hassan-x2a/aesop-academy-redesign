@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guided Conversation Design Mockups</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+      background: #f5f1e8;
+      padding: 2rem;
+    }
+
+    h1 { text-align: center; margin-bottom: 3rem; color: #102235; font-size: 2.5rem; }
+
+    .mockups-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .mockup {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .mockup-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #735f9e;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .mockup-description {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      background: #f9f9f9;
+      border-left: 3px solid #ddd;
+      padding-left: 0.75rem;
+    }
+
+    /* Base styles for conversation boxes */
+    .conversation-container {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .conversation-header {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .conversation-title {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .conversation-subtitle {
+      margin: 0.3rem 0 0 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .start-btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .chat-preview {
+      padding: 1rem;
+      min-height: 80px;
+      font-size: 0.85rem;
+    }
+
+    /* ===== MOCKUP 1: BOLD BLUE BORDER ===== */
+    .m1-conversation {
+      border: 3px solid #4a7ba7;
+      background: #f9fbfd;
+    }
+    .m1-header { background: #4a7ba7; color: white; }
+    .m1-chat { background: white; }
+    .m1-btn { background: #4a7ba7; color: white; }
+
+    /* ===== MOCKUP 2: PURPLE ACCENT WITH GLOW ===== */
+    .m2-conversation {
+      border: 2px solid #735f9e;
+      background: #faf9fd;
+      box-shadow: 0 0 20px rgba(115, 95, 158, 0.15);
+    }
+    .m2-header { background: #735f9e; color: white; }
+    .m2-chat { background: white; color: #333; }
+    .m2-btn { background: #735f9e; color: white; }
+
+    /* ===== MOCKUP 3: GOLD/AMBER GRADIENT ===== */
+    .m3-conversation {
+      border: 3px solid #c9a05a;
+      background: linear-gradient(135deg, #fffbf0 0%, #fff9e6 100%);
+    }
+    .m3-header { background: linear-gradient(135deg, #c9a05a 0%, #d4b370 100%); color: white; }
+    .m3-chat { background: white; }
+    .m3-btn { background: #c9a05a; color: white; }
+
+    /* ===== MOCKUP 4: TEAL WITH LEFT ACCENT ===== */
+    .m4-conversation {
+      border: none;
+      border-left: 5px solid #1b9b8e;
+      background: #f0faf8;
+      box-shadow: -2px 4px 12px rgba(27, 155, 142, 0.1);
+    }
+    .m4-header { background: transparent; color: #102235; border-bottom: 2px solid #1b9b8e; }
+    .m4-chat { background: white; }
+    .m4-btn { background: #1b9b8e; color: white; }
+
+    /* ===== MOCKUP 5: DARK NAVY WITH WHITE TEXT ===== */
+    .m5-conversation {
+      border: none;
+      background: #1a2a3a;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+    .m5-header { background: #0f1923; color: #e8e3db; border-bottom: 2px solid #735f9e; }
+    .m5-chat { background: #243142; color: #e8e3db; }
+    .m5-btn { background: #735f9e; color: white; }
+
+    /* ===== MOCKUP 6: MINIMAL DOTS/DASHES ===== */
+    .m6-conversation {
+      border: none;
+      border-top: 3px dashed #c9a05a;
+      background: white;
+      padding-top: 1rem;
+    }
+    .m6-header { background: transparent; color: #102235; }
+    .m6-chat { background: #f9f7f3; }
+    .m6-btn { background: #102235; color: #ffe7a8; }
+
+    /* ===== MOCKUP 7: CARD ELEVATED WITH SHADOW ===== */
+    .m7-conversation {
+      border: 1px solid #e0d5c7;
+      background: white;
+      box-shadow: 0 8px 24px rgba(16, 34, 53, 0.12);
+      border-radius: 12px;
+    }
+    .m7-header { background: #f5f1e8; color: #102235; border-bottom: 1px solid #e0d5c7; }
+    .m7-chat { background: #fafaf8; }
+    .m7-btn { background: #102235; color: #ffe7a8; }
+
+    /* ===== MOCKUP 8: GREEN ACCENT (POSITIVE) ===== */
+    .m8-conversation {
+      border: 2px solid #2d7a4a;
+      background: #f1f9f4;
+      border-radius: 12px;
+    }
+    .m8-header { background: #2d7a4a; color: white; border-radius: 10px 10px 0 0; }
+    .m8-chat { background: white; }
+    .m8-btn { background: #2d7a4a; color: white; }
+
+    /* ===== MOCKUP 9: RED/CORAL ACCENT (ENERGETIC) ===== */
+    .m9-conversation {
+      border: 3px solid #e07856;
+      background: #fff5f2;
+      box-shadow: 0 0 25px rgba(224, 120, 86, 0.12);
+    }
+    .m9-header { background: #e07856; color: white; }
+    .m9-chat { background: white; }
+    .m9-btn { background: #e07856; color: white; }
+
+    /* ===== MOCKUP 10: FULL WIDTH IMMERSIVE ===== */
+    .m10-container {
+      width: 100%;
+    }
+    .m10-conversation {
+      border: 4px solid #735f9e;
+      background: linear-gradient(135deg, #f5f1e8 0%, #ede7dd 100%);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .m10-header {
+      background: linear-gradient(135deg, #735f9e 0%, #5b477e 100%);
+      color: white;
+      padding: 1.5rem;
+      border: none;
+    }
+    .m10-title { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .m10-subtitle { font-size: 0.95rem; opacity: 0.95; }
+    .m10-chat { background: white; padding: 1.5rem; min-height: 120px; }
+    .m10-btn {
+      background: #735f9e;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guided Conversation Design Options</h1>
+
+  <div class="mockups-grid">
+
+    <!-- MOCKUP 1 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 1: Bold Blue Border</span>
+      <p class="mockup-description">Clean, professional blue with thick border. Signals trust and focus.</p>
+      <div class="conversation-container m1-conversation">
+        <div class="conversation-header m1-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m1-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m1-chat">
+          <div style="color: #888;">GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 2 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 2: Purple with Glow Effect</span>
+      <p class="mockup-description">Brand purple with subtle glow. Emphasizes the active learning moment.</p>
+      <div class="conversation-container m2-conversation">
+        <div class="conversation-header m2-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m2-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m2-chat">
+          <div style="color: #888;">GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 3 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 3: Gold Gradient</span>
+      <p class="mockup-description">Warm, premium feel with gradient. Suggests value and importance.</p>
+      <div class="conversation-container m3-conversation">
+        <div class="conversation-header m3-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m3-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m3-chat">
+          <div style="color: #888;">GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 4 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 4: Left Teal Accent</span>
+      <p class="mockup-description">Teal left border with subtle shadow. Modern, minimal approach.</p>
+      <div class="conversation-container m4-conversation">
+        <div class="conversation-header m4-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m4-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m4-chat">
+          <div style="color: #888;">GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 5 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 5: Dark Navy Immersive</span>
+      <p class="mockup-description">Dark mode aesthetic. Creates focused, distraction-free learning space.</p>
+      <div class="conversation-container m5-conversation">
+        <div class="conversation-header m5-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m5-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m5-chat">
+          <div>GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 6 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 6: Top Dashed Border</span>
+      <p class="mockup-description">Minimal with dashed top. Subtle but distinctive separation.</p>
+      <div class="conversation-container m6-conversation">
+        <div class="conversation-header m6-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m6-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m6-chat">
+          <div style="color: #888;">GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 7 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 7: Elevated Card</span>
+      <p class="mockup-description">Strong shadow with light background. Appears to float above page.</p>
+      <div class="conversation-container m7-conversation">
+        <div class="conversation-header m7-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m7-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m7-chat">
+          <div style="color: #888;">GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 8 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 8: Green Success Accent</span>
+      <p class="mockup-description">Green signals positive growth and progress in learning.</p>
+      <div class="conversation-container m8-conversation">
+        <div class="conversation-header m8-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m8-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m8-chat">
+          <div style="color: #888;">GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 9 -->
+    <div class="mockup">
+      <span class="mockup-label">Option 9: Coral/Red Energetic</span>
+      <p class="mockup-description">Warm coral with glow. Creates energy and urgency for action.</p>
+      <div class="conversation-container m9-conversation">
+        <div class="conversation-header m9-header">
+          <div>
+            <h3 class="conversation-title">Guided Conversation</h3>
+            <p class="conversation-subtitle">The AI asks, challenges, applies, and checks readiness.</p>
+          </div>
+          <button class="start-btn m9-btn">Start conversation</button>
+        </div>
+        <div class="chat-preview m9-chat">
+          <div style="color: #888;">GUIDE: Let's explore this topic together...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP 10 -->
+    <div class="mockup m10-container">
+      <span class="mockup-label">Option 10: Full Width Immersive</span>
+      <p class="mockup-description">Large header, bold gradient, rounded corners. Dominates the space as primary interface.</p>
+      <div class="conversation-container m10-conversation">
+        <div class="conversation-header m10-header">
+          <h3 class="m10-title">Guided Conversation</h3>
+          <p class="m10-subtitle">The AI asks, challenges, applies, and checks readiness for this rung.</p>
+        </div>
+        <div class="chat-preview m10-chat">
+          <div style="color: #888; margin-bottom: 1rem;">GUIDE: Let's explore this topic together...</div>
+          <button class="start-btn m10-btn">Start conversation</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
