@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon_512.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ladder Products - AESOP AI Academy</title>
+  <meta name="description" content="A product-based AI learning pathway covering 250 widely used AI products with certification, expert certification, and master certification options.">
+  <meta property="og:title" content="The Ladder Products - AESOP AI Academy">
+  <meta property="og:description" content="Learn the AI products people actually use, from assistants and coding tools to RAG databases, creative suites, cloud platforms, and regulated industry AI.">
+  <meta property="og:url" content="https://aesopacademy.org/theladder-products/">
+  <meta property="og:site_name" content="AESOP AI Academy">
+  <meta property="og:type" content="website">
+  <script>
+    if (localStorage.getItem('aesop-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+  <link rel="stylesheet" href="/academy-theme.css?v=2">
+  <link rel="stylesheet" href="/academy-dark-mode.css?v=2">
+  <link rel="stylesheet" href="/theladder-products/products.css?v=7">
+</head>
+<body>
+  <nav class="nav products-nav">
+    <div class="nav-inner">
+      <a href="/" class="brand-link" aria-label="AESOP AI Academy home">
+        <span class="brand">AESOP AI Academy</span>
+      </a>
+      <span class="nav-divider" aria-hidden="true"></span>
+      <a href="/theladder/" class="nav-link">The Ladder</a>
+      <a href="/theladder-products/" class="nav-link active" aria-current="page">Products</a>
+      <a href="/theladder-use-cases/" class="nav-link">Use Cases</a>
+      <div class="nav-spacer"></div>
+      <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
+      <a class="hub-link" href="/ai-academy/">Student hub</a>
+    </div>
+  </nav>
+
+  <main class="products-app">
+    <section class="products-hero" aria-labelledby="productsTitle">
+      <div class="hero-copy">
+        <p class="hero-kicker">AESOP product pathway</p>
+        <div class="hero-title-row">
+          <h1 id="productsTitle">The Ladder Products</h1>
+          <label class="education-focus-control" for="educationFocusSelect">
+            <span>Education Focus</span>
+            <select id="educationFocusSelect" aria-label="Education Focus">
+              <option value="/theladder/">AI Concepts</option>
+              <option value="/theladder-products/" selected>Products</option>
+              <option value="/theladder-use-cases/">Use Cases</option>
+            </select>
+          </label>
+        </div>
+        <p class="hero-text">
+          A course map for the AI products people actually touch: assistants, office suites, coding agents, RAG databases, creative tools, cloud platforms, and regulated industry AI.
+        </p>
+      </div>
+      <div class="hero-stats" aria-label="Product pathway summary">
+        <div>
+          <strong id="totalProducts">250</strong>
+          <span>products</span>
+        </div>
+        <div>
+          <strong>3</strong>
+          <span>certification options each</span>
+        </div>
+        <div>
+          <strong id="advancedCount">0</strong>
+          <span>advanced tracks</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="products-layout">
+      <aside class="category-rail" aria-label="Product categories">
+        <div class="rail-head">
+          <h2>Product types</h2>
+          <span id="visibleCount">0 shown</span>
+        </div>
+        <div id="categoryList" class="category-list"></div>
+      </aside>
+
+      <section class="catalog-panel" aria-label="Product catalog">
+        <div class="catalog-tools">
+          <label class="search-field">
+            <span>Find a product</span>
+            <input id="productSearch" type="search" placeholder="Search GitHub, RAG, video, Salesforce..." autocomplete="off">
+          </label>
+          <label class="select-field">
+            <span>Course depth</span>
+            <select id="depthFilter">
+              <option value="all">All depths</option>
+              <option value="B">Beginner only</option>
+              <option value="B/I">Beginner + intermediate</option>
+              <option value="B/I/A">Beginner + intermediate + advanced</option>
+            </select>
+          </label>
+        </div>
+        <section class="request-panel" aria-labelledby="requestProductTitle">
+          <div class="request-copy">
+            <span>Missing product?</span>
+            <h2 id="requestProductTitle">Request product training</h2>
+            <p>Send a product into the admin review queue for approval, research, course build, review, and publication.</p>
+          </div>
+          <form id="productRequestForm" class="request-form">
+            <label>
+              <span>Product name</span>
+              <input id="requestProductName" name="productName" type="text" autocomplete="off" required>
+            </label>
+            <label>
+              <span>Product type</span>
+              <select id="requestProductType" name="productType">
+                <option value="">Choose a type</option>
+                <option>AI assistants</option>
+                <option>Workplace + writing</option>
+                <option>Coding tools</option>
+                <option>Search + RAG</option>
+                <option>Vector databases</option>
+                <option>Data + analytics</option>
+                <option>Design + slides</option>
+                <option>Video + audio</option>
+                <option>Sales + support</option>
+                <option>Agents + automation</option>
+                <option>Model APIs + cloud</option>
+                <option>Regulated AI</option>
+              </select>
+            </label>
+            <label class="request-reason-field">
+              <span>Why add it?</span>
+              <textarea id="requestProductReason" name="reason" rows="3" required></textarea>
+            </label>
+            <label>
+              <span>Your email</span>
+              <input id="requesterEmail" name="requesterEmail" type="email" autocomplete="email" placeholder="Optional">
+            </label>
+            <button id="submitProductRequest" type="submit">Send request</button>
+          </form>
+          <p id="productRequestMessage" class="request-message" hidden></p>
+          <a class="admin-queue-link" href="/theladder-products/admin.html">Admin review queue</a>
+        </section>
+        <div id="productGrid" class="product-grid" aria-live="polite"></div>
+      </section>
+
+      <aside class="product-detail" aria-label="Selected product course">
+        <div class="detail-inner" id="productDetail">
+          <p class="empty-label">Select a product</p>
+          <h2>Choose any card to build a course plan.</h2>
+          <p>The certification options will appear here for every product.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script type="module" src="/theladder-products/products-app.js?v=8"></script>
+</body>
+</html>
