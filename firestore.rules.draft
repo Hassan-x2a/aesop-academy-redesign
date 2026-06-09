@@ -1,0 +1,168 @@
+// =============================================================================
+// firestore.rules.draft  —  THE LADDER unified data layer
+// =============================================================================
+// DRAFT FOR REVIEW. DO NOT DEPLOY AS-IS.
+//
+// This is a draft authored by the data-layer worktree alongside ADR
+// docs/adr/0001-ladder-database-of-record.md and docs/ladder-data-model.md.
+// It must be reviewed by Scott and reconciled with any rules already live on
+// Firebase project `playagame-f733d` BEFORE it is copied to firestore.rules and
+// deployed. This worktree does not run the firebase CLI and does not deploy.
+//
+// IDENTITY MODEL (see doc 16 + ladder-app.js):
+//   The Concepts ladder is localStorage-first with an anonymous `learnerId` and
+//   an OPTIONAL bound Firebase account (`accountUid` / `accountEmail`). Most
+//   learners are NOT signed in. So the baseline `learners/{learnerId}` access
+//   cannot require auth without breaking the existing anonymous flow.
+//
+//   Two access tiers are modeled below:
+//     - "owner" = the request carries the matching account uid OR (fallback)
+//       the doc is the unauthenticated anon-learnerId pattern the concept
+//       ladder already uses.
+//     - "admin" = a custom claim `admin == true` (set out of band).
+//
+//   OPEN QUESTION for Scott (also in ADR 0001): should certifications/evidence
+//   REQUIRE an authenticated account? The rules below allow anon owner writes to
+//   match today's behavior, but flag the looseness. If certs must be account-
+//   bound, tighten `isLearnerOwner` to `isSignedInOwner` on those collections.
+// =============================================================================
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---- helpers ----------------------------------------------------------
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    // Owner check for a learner-scoped doc. A signed-in user owns the doc when
+    // their uid matches the doc's accountUid. Anonymous learners (no auth) are
+    // permitted under the existing concept-ladder anon-learnerId pattern.
+    // NOTE: anon ownership cannot be cryptographically proven; this mirrors the
+    // current production behavior, NOT a hardened posture. See open question.
+    function ownsLearner(learnerId, resourceData) {
+      return isAdmin()
+        || (isSignedIn() && resourceData != null && resourceData.accountUid == request.auth.uid)
+        || (resourceData == null)               // creating a brand-new anon record
+        || (resourceData != null && (resourceData.accountUid == null || resourceData.accountUid == '')); // legacy anon record
+    }
+
+    // ---- learners/{learnerId} --------------------------------------------
+    // Unified learner record across all three pathways.
+    match /learners/{learnerId} {
+      allow read:   if ownsLearner(learnerId, resource.data);
+      allow create: if ownsLearner(learnerId, request.resource.data);
+      allow update: if ownsLearner(learnerId, resource.data)
+                    // an anon record may bind an account, but once bound the
+                    // accountUid must not be reassigned by a different user
+                    && (resource.data.accountUid == null
+                        || resource.data.accountUid == ''
+                        || !isSignedIn()
+                        || request.resource.data.accountUid == resource.data.accountUid);
+      allow delete: if isAdmin();
+    }
+
+    // ---- completions/{completionId} --------------------------------------
+    // Pathway-agnostic completion log. Owner-create, owner+admin read.
+    match /completions/{completionId} {
+      allow read:   if isAdmin()
+                    || (isSignedIn() && resource.data.learnerId != null);
+      allow create: if request.resource.data.learnerId is string;
+      allow update, delete: if isAdmin();
+    }
+
+    // ---- certifications/{certificationId} --------------------------------
+    // Awarded credentials. Read by owner+admin; writes controlled.
+    // Created by the client at award time today; an issuer/Cloud-Function path
+    // should eventually own creation. Once written, only admin may mutate.
+    match /certifications/{certificationId} {
+      allow read:   if isAdmin()
+                    || (isSignedIn() && resource.data.accountUid == request.auth.uid)
+                    || (resource.data.accountUid == null || resource.data.accountUid == '');
+      allow create: if request.resource.data.learnerId is string
+                    && request.resource.data.result in ['pass', 'non_pass'];
+      allow update, delete: if isAdmin();  // credentials are immutable post-award except by admin
+    }
+
+    // ---- evidencePackets/{evidencePacketId} ------------------------------
+    // Per-attempt evidence (doc-16 field list). Read by owner+admin.
+    // Immutable after create (challenge outcomes live in the challengePackets
+    // subcollection); only admin may amend.
+    match /evidencePackets/{evidencePacketId} {
+      allow read:   if isAdmin() || (isSignedIn() && resource.data.learnerId != null);
+      allow create: if request.resource.data.learnerId is string;
+      allow update, delete: if isAdmin();
+
+      match /challengePackets/{challengePacketId} {
+        allow read:   if isAdmin() || isSignedIn();
+        allow create: if isSignedIn();   // learner files a challenge
+        allow update, delete: if isAdmin(); // resolution is admin/reviewer-controlled
+      }
+    }
+
+    // ---- certificationValidations/{validationId} -------------------------
+    // Second-model validation records. Read by owner+admin; create controlled.
+    match /certificationValidations/{validationId} {
+      allow read:   if isAdmin() || (isSignedIn() && resource.data.learnerId != null);
+      allow create: if request.resource.data.learnerId is string
+                    && request.resource.data.evidencePacketId is string;
+      allow update, delete: if isAdmin();
+    }
+
+    // ---- standardsEvidence/{standardsEvidenceId} -------------------------
+    // ADVISORY candidate evidence only. New records MUST be created as
+    // 'candidate'. Status upgrades (learner_confirmed / reviewer_verified /
+    // rejected / stale) are gated: a learner may confirm/reject their OWN
+    // candidate; only admin/reviewer may set reviewer_verified.
+    match /standardsEvidence/{standardsEvidenceId} {
+      allow read:   if isAdmin() || (isSignedIn() && resource.data.learnerId != null)
+                    || (resource.data.learnerId == null || resource.data.learnerId == '');
+      // Creation must start as candidate — no engine may write a verified record.
+      allow create: if request.resource.data.status == 'candidate'
+                    && request.resource.data.linkedStandard != null
+                    && request.resource.data.transcriptSpan != null;
+      // Learner self-confirmation/rejection of their own candidate.
+      allow update: if isAdmin()
+                    || (isSignedIn()
+                        && resource.data.status == 'candidate'
+                        && request.resource.data.status in ['learner_confirmed', 'rejected', 'stale']);
+      allow delete: if isAdmin();
+    }
+
+    // ---- resource & mapping catalogs (doc 15) ----------------------------
+    // Read-mostly reference data; admin-only writes.
+    match /rungs/{rungId}                  { allow read: if true; allow write: if isAdmin(); }
+    match /resources/{resourceId}          { allow read: if true; allow write: if isAdmin(); }
+    match /videos/{videoId}                { allow read: if true; allow write: if isAdmin(); }
+    match /courses/{courseId}              { allow read: if true; allow write: if isAdmin(); }
+    match /products/{productId}            { allow read: if true; allow write: if isAdmin(); }
+    match /useCases/{useCaseId}            { allow read: if true; allow write: if isAdmin(); }
+    match /assignmentLabs/{labId}          { allow read: if true; allow write: if isAdmin(); }
+    match /standardsDefinitions/{stdId}    { allow read: if true; allow write: if isAdmin(); }
+    match /resourceResearchRuns/{runId}    { allow read: if isAdmin(); allow write: if isAdmin(); }
+
+    // ---- request queues (already in production, docs 18/19) --------------
+    // Public-create, admin-read. Anyone may submit a request; only admins read
+    // and triage. Status is admin-controlled after create.
+    match /productCourseRequests/{requestId} {
+      allow create: if request.resource.data.itemId != null;
+      allow read, update, delete: if isAdmin();
+    }
+    match /useCaseTrainingRequests/{requestId} {
+      allow create: if request.resource.data.itemId != null;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // ---- default deny -----------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
