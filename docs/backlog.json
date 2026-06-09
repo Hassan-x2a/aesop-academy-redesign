@@ -215,13 +215,13 @@
       "category": "feature",
       "priority": 85,
       "impact": "major",
-      "status": "backlog",
+      "status": "build-started",
       "created_at": "2026-06-09",
       "completed_at": null,
       "dependencies": [
         24
       ],
-      "branch": null,
+      "branch": "orch/products",
       "wave": 2
     },
     {
@@ -231,13 +231,13 @@
       "category": "feature",
       "priority": 85,
       "impact": "major",
-      "status": "backlog",
+      "status": "build-started",
       "created_at": "2026-06-09",
       "completed_at": null,
       "dependencies": [
         24
       ],
-      "branch": null,
+      "branch": "orch/use-cases",
       "wave": 2
     },
     {
@@ -247,14 +247,14 @@
       "category": "feature",
       "priority": 85,
       "impact": "major",
-      "status": "backlog",
+      "status": "build-started",
       "created_at": "2026-06-09",
       "completed_at": null,
       "dependencies": [
         23,
         21
       ],
-      "branch": null,
+      "branch": "orch/products",
       "wave": 2
     },
     {
@@ -264,14 +264,14 @@
       "category": "feature",
       "priority": 85,
       "impact": "major",
-      "status": "backlog",
+      "status": "build-started",
       "created_at": "2026-06-09",
       "completed_at": null,
       "dependencies": [
         23,
         21
       ],
-      "branch": null,
+      "branch": "orch/use-cases",
       "wave": 2
     },
     {
@@ -281,13 +281,13 @@
       "category": "feature",
       "priority": 88,
       "impact": "major",
-      "status": "backlog",
+      "status": "build-started",
       "created_at": "2026-06-09",
       "completed_at": null,
       "dependencies": [
         21
       ],
-      "branch": null,
+      "branch": "orch/products+use-cases",
       "wave": 2
     },
     {
