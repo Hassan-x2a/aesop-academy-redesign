@@ -1476,7 +1476,11 @@ button.secondary {
   color: #ffffff;
 }
 
-.conversation-panel .panel-heading p {
+:root .conversation-panel .panel-heading p {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .conversation-panel .panel-heading p {
   color: #ffffff !important;
 }
 
