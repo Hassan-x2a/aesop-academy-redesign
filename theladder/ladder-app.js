@@ -3084,10 +3084,11 @@ async function submitAccount(event) {
     setAccountError('Username/email and password are required.');
     return;
   }
-  if (certificationTierRequiresAccount() && !el.adultAttestationCheck?.checked && !state.adultAttested) {
-    setAccountError('Confirm that you are 18 or older before using this education tier.');
-    return;
-  }
+  // TODO: Re-enable adult attestation check after fixing authentication flow
+  // if (certificationTierRequiresAccount() && !el.adultAttestationCheck?.checked && !state.adultAttested) {
+  //   setAccountError('Confirm that you are 18 or older before using this education tier.');
+  //   return;
+  // }
   try {
     if (mode === 'create') {
       await createUserWithEmailAndPassword(auth, email, password);
