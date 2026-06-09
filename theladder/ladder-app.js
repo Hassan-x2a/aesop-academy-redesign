@@ -1619,7 +1619,7 @@ function renderHeroRibbons() {
       <div class="hero-ribbon-slot ${label ? `has-ribbon ribbon-${depthId}` : 'is-empty'}" title="${escapeHtml(title)}">
         <span class="hero-ribbon-number">${tier.order}</span>
         <span class="hero-ribbon-medal">${label ? label.short : ''}</span>
-        <span class="hero-ribbon-tier">${escapeHtml(tier.name)}</span>
+        <span class="hero-ribbon-tier">${label ? label.short : 'no cert'}</span>
       </div>
     `;
   }).join('');
