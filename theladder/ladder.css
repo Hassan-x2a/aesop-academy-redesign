@@ -54,6 +54,8 @@ button.secondary {
 }
 
 .ladder-top-actions {
+  align-items: center !important;
+  display: flex !important;
   gap: 0.5rem;
 }
 
@@ -96,6 +98,11 @@ button.secondary {
   color: var(--ladder-ink);
   min-height: 40px;
   padding: 0.45rem 0.65rem;
+}
+
+.ladder-select {
+  min-height: 42px !important;
+  padding: 0.55rem 0.65rem !important;
 }
 
 .language-custom {
