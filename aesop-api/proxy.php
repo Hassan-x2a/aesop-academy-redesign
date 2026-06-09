@@ -12,19 +12,29 @@
 // Try to load secrets from multiple locations
 $secretsFile = dirname(__DIR__) . '/secrets.php';
 $apiKeyLoaded = false;
+$API_KEY = '';
+
+log_error("Secrets file path: $secretsFile");
+log_error("Secrets file exists: " . (file_exists($secretsFile) ? 'yes' : 'no'));
 
 if (file_exists($secretsFile)) {
     require_once $secretsFile;
     if (function_exists('aesop_secret')) {
         $API_KEY = aesop_secret('AESOP_ANTHROPIC_API_KEY', '');
         $apiKeyLoaded = ($API_KEY !== '');
+        log_error("API key from aesop_secret: " . ($apiKeyLoaded ? 'loaded' : 'empty'));
+    } else {
+        log_error("aesop_secret function not found");
     }
+} else {
+    log_error("secrets.php file not found");
 }
 
 // Fallback: check environment variable directly
 if (!$apiKeyLoaded) {
     $API_KEY = getenv('AESOP_ANTHROPIC_API_KEY') ?: '';
     $apiKeyLoaded = ($API_KEY !== '');
+    log_error("API key from environment: " . ($apiKeyLoaded ? 'loaded' : 'empty'));
 }
 
 // ── CONFIG ──────────────────────────────────────────────────────────────
@@ -39,6 +49,25 @@ $MAX_TOKENS_CAP = 1024;
 header('Content-Type: application/json');
 header('X-Content-Type-Options: nosniff');
 
+// Error logging to file
+$debugLog = dirname(__DIR__) . '/aesop-api-debug.log';
+function log_error($msg) {
+    global $debugLog;
+    file_put_contents($debugLog, date('Y-m-d H:i:s') . ' - ' . $msg . "\n", FILE_APPEND);
+}
+
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    log_error("PHP Error [$errno]: $errstr in $errfile:$errline");
+    return false;
+});
+
+set_exception_handler(function($e) {
+    log_error("Exception: " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine());
+    http_response_code(500);
+    echo json_encode(['error' => 'Server error']);
+    exit;
+});
+
 // Only POST
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
@@ -51,10 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 if ($API_KEY === '') {
+    log_error("API_KEY is empty, returning 500 error");
     http_response_code(500);
     echo json_encode(['error' => 'Server is missing AESOP_ANTHROPIC_API_KEY']);
     exit;
 }
+
+log_error("API_KEY is present, proceeding with request");
 
 // ── PARSE REQUEST ───────────────────────────────────────────────────────
 $raw = file_get_contents('php://input');
