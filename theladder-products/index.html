@@ -18,7 +18,7 @@
   </script>
   <link rel="stylesheet" href="/academy-theme.css?v=2">
   <link rel="stylesheet" href="/academy-dark-mode.css?v=2">
-  <link rel="stylesheet" href="/theladder-products/products.css?v=12">
+  <link rel="stylesheet" href="/theladder-products/products.css?v=13">
 </head>
 <body>
   <nav class="nav products-nav">
@@ -144,6 +144,15 @@
             <input id="productSearch" type="search" placeholder="Search GitHub, RAG, video, Salesforce..." autocomplete="off">
           </label>
           <label class="select-field">
+            <span>Expansion track</span>
+            <select id="trackFilter">
+              <option value="all">All tracks</option>
+              <option value="Workforce">Workforce</option>
+              <option value="Operations">Operations</option>
+              <option value="Industry">Industry</option>
+            </select>
+          </label>
+          <label class="select-field">
             <span>Course depth</span>
             <select id="depthFilter">
               <option value="all">All depths</option>
@@ -226,6 +235,6 @@
     </section>
   </main>
 
-  <script type="module" src="/theladder-products/products-app.js?v=17"></script>
+  <script type="module" src="/theladder-products/products-app.js?v=18"></script>
 </body>
 </html>

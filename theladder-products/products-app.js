@@ -15,7 +15,7 @@ import {
   depthForLabel
 } from '/theladder-products/products-ladder.js';
 
-const catalogUrl = '/docs/theladder-products-catalog.md?v=1';
+const catalogUrl = '/docs/theladder-products-catalog.md?v=2';
 const storageKey = 'aesop-ladder-products-state-v1';
 const requestStorageKey = 'aesop-product-course-requests-v1';
 const requestCollection = 'productCourseRequests';
@@ -29,8 +29,15 @@ const certificationEngine = createCertificationEngine();
 // Placement engine is built once the catalog is parsed (needs the products).
 let placementEngine = null;
 
+// Expansion tracks (Task 34): a higher-level grouping layered over the per-type
+// product categories. The 10 new product types (ids 251-500) and the existing
+// foundation types each map to one of three tracks. The foundation categories
+// (ids 1-250) are not assigned to an expansion track; they surface only under
+// "All tracks". Mapping follows the Products Ladder Expansion Research doc.
+const ALL_PRODUCTS_END = 500;
+
 const categoryRanges = [
-  { label: 'All products', start: 1, end: 250 },
+  { label: 'All products', start: 1, end: ALL_PRODUCTS_END },
   { label: 'AI assistants', start: 1, end: 20 },
   { label: 'Workplace + writing', start: 21, end: 35 },
   { label: 'Coding tools', start: 36, end: 61 },
@@ -42,8 +49,43 @@ const categoryRanges = [
   { label: 'Sales + support', start: 167, end: 191 },
   { label: 'Agents + automation', start: 192, end: 210 },
   { label: 'Model APIs + cloud', start: 211, end: 230 },
-  { label: 'Regulated AI', start: 231, end: 250 }
+  { label: 'Regulated AI', start: 231, end: 250 },
+  // Expansion product types (ids 251-500).
+  { label: 'HR + recruiting', start: 251, end: 275, track: 'Workforce' },
+  { label: 'Education + tutoring', start: 276, end: 300, track: 'Workforce' },
+  { label: 'Ecommerce + retail', start: 301, end: 325, track: 'Operations' },
+  { label: 'Finance + accounting', start: 326, end: 350, track: 'Operations' },
+  { label: 'AIOps + incidents', start: 351, end: 375, track: 'Operations' },
+  { label: 'AI governance', start: 376, end: 400, track: 'Operations' },
+  { label: 'Construction + real estate', start: 401, end: 425, track: 'Industry' },
+  { label: 'Manufacturing + supply chain', start: 426, end: 450, track: 'Industry' },
+  { label: 'Science + clinical AI', start: 451, end: 475, track: 'Industry' },
+  { label: 'Personal productivity', start: 476, end: 500, track: 'Workforce' }
 ];
+
+// Track filter options layered over categoryRanges. "All tracks" disables the
+// track constraint; each named track narrows to its mapped categories.
+const expansionTracks = [
+  { id: 'all', label: 'All tracks' },
+  { id: 'Workforce', label: 'Workforce' },
+  { id: 'Operations', label: 'Operations' },
+  { id: 'Industry', label: 'Industry' }
+];
+
+// A category belongs to the active track when its track tag matches. "All
+// tracks" matches every category.
+function categoryInTrack(category, track) {
+  return track === 'all' || category.track === track;
+}
+
+// A product belongs to a track when it falls inside the id range of a category
+// tagged with that track. "All tracks" matches every product.
+function productInTrack(product, track) {
+  if (track === 'all') return true;
+  return categoryRanges.some((category) =>
+    category.track === track && inRange(product, category)
+  );
+}
 
 const certificationOptions = [
   {
@@ -66,6 +108,7 @@ const state = {
   activeCategory: categoryRanges[0],
   query: '',
   depth: 'all',
+  track: 'all',
   courseStarts: {},
   messages: [],
   activeProductChat: null,
@@ -86,6 +129,7 @@ const elements = {
   productDetail: document.querySelector('#productDetail'),
   productSearch: document.querySelector('#productSearch'),
   depthFilter: document.querySelector('#depthFilter'),
+  trackFilter: document.querySelector('#trackFilter'),
   visibleCount: document.querySelector('#visibleCount'),
   totalProducts: document.querySelector('#totalProducts'),
   advancedCount: document.querySelector('#advancedCount'),
@@ -187,6 +231,17 @@ function bindEvents() {
     renderProducts();
   });
 
+  elements.trackFilter?.addEventListener('change', (event) => {
+    state.track = event.target.value;
+    // If the active category is not in the new track, fall back to "All products".
+    if (!categoryInTrack(state.activeCategory, state.track)) {
+      state.activeCategory = categoryRanges[0];
+    }
+    saveState();
+    renderCategories();
+    renderProducts();
+  });
+
   elements.productRequestForm?.addEventListener('submit', handleProductRequestSubmit);
   elements.productChatForm?.addEventListener('submit', submitProductChat);
 
@@ -223,6 +278,7 @@ function render() {
   elements.advancedCount.textContent = state.products.filter((product) => product.depth === 'B/I/A').length.toString();
   elements.productSearch.value = state.query;
   elements.depthFilter.value = state.depth;
+  if (elements.trackFilter) elements.trackFilter.value = state.track;
   renderCategories();
   renderProducts();
   renderDetail(getSelectedProduct());
@@ -230,8 +286,16 @@ function render() {
 }
 
 function renderCategories() {
-  elements.categoryList.innerHTML = categoryRanges.map((category) => {
-    const count = state.products.filter((product) => inRange(product, category)).length;
+  // When a track is active, show only that track's categories (plus the
+  // always-present "All products" entry). "All tracks" shows every category.
+  const visibleCategories = categoryRanges.filter((category, index) =>
+    index === 0 || categoryInTrack(category, state.track)
+  );
+
+  elements.categoryList.innerHTML = visibleCategories.map((category) => {
+    const count = state.products.filter((product) =>
+      inRange(product, category) && productInTrack(product, state.track)
+    ).length;
     const active = category.label === state.activeCategory.label ? ' active' : '';
     return `
       <button class="category-button${active}" type="button" data-start="${category.start}" data-end="${category.end}">
@@ -395,6 +459,10 @@ function restoreSavedState() {
     state.depth = saved.depth;
   }
 
+  if (expansionTracks.some((track) => track.id === saved.track)) {
+    state.track = saved.track;
+  }
+
   const savedCategory = categoryRanges.find((category) => (
     category.start === saved.activeCategory?.start &&
     category.end === saved.activeCategory?.end
@@ -442,6 +510,7 @@ function saveState() {
       },
       query: state.query,
       depth: state.depth,
+      track: state.track,
       courseStarts: state.courseStarts,
       placement: state.placement
     }));
@@ -607,12 +676,13 @@ function renderError(error) {
 function getFilteredProducts() {
   return state.products.filter((product) => {
     const categoryMatch = inRange(product, state.activeCategory);
+    const trackMatch = productInTrack(product, state.track);
     const depthMatch = state.depth === 'all' || product.depth === state.depth;
     const queryMatch = !state.query || [product.name, product.type, product.reason, product.depth]
       .join(' ')
       .toLowerCase()
       .includes(state.query);
-    return categoryMatch && depthMatch && queryMatch;
+    return categoryMatch && trackMatch && depthMatch && queryMatch;
   });
 }
 
