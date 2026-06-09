@@ -34,6 +34,10 @@ body { padding-top: 92px; }
 .st-card { border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: var(--radius-md); padding: 1rem; }
 .st-card strong { color: var(--ink); display: block; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.15; margin-bottom: 0.35rem; }
 .st-card small, .st-muted { color: var(--ink-muted); line-height: 1.5; }
+.st-card-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.st-card-actions a, .st-card-actions button { align-items: center; border: 1px solid var(--navy); border-radius: var(--radius-sm); display: inline-flex; font: inherit; font-size: 0.78rem; font-weight: 800; justify-content: center; min-height: 34px; padding: 0.4rem 0.6rem; }
+.st-card-actions a { color: var(--navy); }
+.st-card-actions button { background: var(--navy); color: var(--gold-light); cursor: pointer; }
 .st-table { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
 .st-row { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1.4fr) 150px 150px; padding: 0.9rem 1rem; border-top: 1px solid var(--border); }
 .st-row:first-child { border-top: 0; }
@@ -122,6 +126,35 @@ function fmtDate(value) {
   return new Date(value).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+function credentialUrl(cert, learnerId) {
+  const level = cert.depthLabel || 'Certification';
+  const normalized = String(level).toLowerCase();
+  const page = normalized.includes('mastery')
+    ? '/ladder-credential-mastery.html'
+    : normalized.includes('expert')
+      ? '/ladder-credential-expert.html'
+      : normalized.includes('assessment')
+        ? '/ladder-credential-assessment.html'
+        : '/ladder-credential-certification.html';
+  const params = new URLSearchParams({
+    learner: learnerId || activeId || 'AESOP',
+    title: cert.title || cert.ladderTierLabel || 'Ladder certification',
+    tier: cert.ladderTierLabel || cert.title || 'The Ladder',
+    level,
+    education: cert.certificationTierLabel || 'AESOP',
+    earned: cert.earnedAt || '',
+    standards: cert.standards || ''
+  });
+  if (cert.score !== null && cert.score !== undefined) params.set('score', String(cert.score));
+  return `${page}?${params.toString()}`;
+}
+
+function bragText(cert, learnerId) {
+  const score = cert.score !== null && cert.score !== undefined ? ` with a recorded score of ${cert.score}` : '';
+  const url = `${location.origin}${credentialUrl(cert, learnerId)}`;
+  return `${learnerId || activeId || 'AESOP learner'} climbed The Ladder and earned ${cert.depthLabel || 'Certification'} for ${cert.ladderTierLabel || cert.title || 'The Ladder'}${score}. Are you up to challenging The Ladder? ${url}`;
+}
+
 function courseRecords(data) {
   const progress = data?.courseProgress || {};
   return Object.entries(progress).map(([id, record]) => ({
@@ -151,6 +184,10 @@ function render(data, id) {
       <strong>${cert.title || cert.ladderTierLabel || 'Ladder certification'}</strong>
       <small>${cert.depthLabel || 'Certification'} · ${cert.certificationTierLabel || 'AESOP'} · ${fmtDate(cert.earnedAt)}</small>
       <p class="st-muted">${cert.transcriptLine || cert.rationale || 'Certification evidence recorded.'}</p>
+      <div class="st-card-actions">
+        <a href="${credentialUrl(cert, id)}">Brag page</a>
+        <button type="button" data-brag="${encodeURIComponent(bragText(cert, id))}">Copy brag</button>
+      </div>
     </article>
   `).join('') : '<div class="st-empty">No Ladder certifications recorded for this learner yet.</div>';
 
@@ -165,6 +202,20 @@ function render(data, id) {
     `).join('')}
   ` : '<div class="st-empty">No course records found.</div>';
 }
+
+document.getElementById('certGrid').addEventListener('click', async (event) => {
+  const button = event.target.closest('[data-brag]');
+  if (!button) return;
+  const text = decodeURIComponent(button.dataset.brag || '');
+  try {
+    await navigator.clipboard.writeText(text);
+    const old = button.textContent;
+    button.textContent = 'Copied';
+    setTimeout(() => { button.textContent = old; }, 1400);
+  } catch (error) {
+    console.warn('Could not copy brag text:', error);
+  }
+});
 
 async function loadTranscript(id) {
   const learnerId = String(id || '').trim().toUpperCase();
