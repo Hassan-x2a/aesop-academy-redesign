@@ -1938,6 +1938,21 @@ button.secondary {
   color: #8f681c;
 }
 
+.nav-cert-count {
+  background: rgba(219, 184, 122, 0.28) !important;
+  border-radius: 12px !important;
+  color: #102235 !important;
+  display: inline-flex !important;
+  font-size: 0.76rem !important;
+  font-weight: 900 !important;
+  margin-left: 0.4rem !important;
+  min-width: 22px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 22px !important;
+  padding: 0 0.4rem !important;
+}
+
 .learner-panel .panel-label,
 .topic-search-panel .panel-label,
 .evaluation-panel .panel-label,

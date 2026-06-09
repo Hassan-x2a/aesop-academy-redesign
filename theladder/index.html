@@ -604,7 +604,7 @@
       <a class="nav-brand-group" href="/ai-academy/">
         <span class="nav-brand-primary">AESOP AI Academy</span>
         <span class="nav-divider"></span>
-        <span class="nav-brand-secondary">The Ladder</span>
+        <span class="nav-brand-secondary">The Ladder Certifications <span id="navCertCount" class="nav-cert-count">0</span></span>
       </a>
       <div class="nav-links ladder-top-actions">
         <select id="languageSelect" class="ladder-select" aria-label="Language"></select>
@@ -886,6 +886,34 @@
       </div>
     </section>
   </dialog>
+
+  <script>
+    function updateNavCertCount() {
+      const certCountEl = document.getElementById('navCertCount');
+      const certifiedEl = document.getElementById('heroTiersCertified');
+      const expertEl = document.getElementById('heroTiersExpert');
+      const masteredEl = document.getElementById('heroTiersMastered');
+
+      if (certCountEl && certifiedEl && expertEl && masteredEl) {
+        const certifiedText = certifiedEl.textContent || '0';
+        const expertText = expertEl.textContent || '0';
+        const masteredText = masteredEl.textContent || '0';
+
+        const certified = parseInt(certifiedText.match(/\d+/)?.[0] || 0);
+        const expert = parseInt(expertText.match(/\d+/)?.[0] || 0);
+        const mastered = parseInt(masteredText.match(/\d+/)?.[0] || 0);
+
+        const total = certified + expert + mastered;
+        certCountEl.textContent = total;
+      }
+    }
+
+    // Update on page load
+    document.addEventListener('DOMContentLoaded', updateNavCertCount);
+
+    // Update every hour
+    setInterval(updateNavCertCount, 3600000);
+  </script>
 
   <script type="module" src="/theladder/ladder-app.js?v=23"></script>
 </body>
