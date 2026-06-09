@@ -1935,9 +1935,9 @@ button.secondary {
 }
 
 .ladder-nav .nav-brand-group {
-  flex-shrink: 1 !important;
-  min-width: 0 !important;
-  max-width: 320px !important;
+  flex-shrink: 0 !important;
+  min-width: auto !important;
+  max-width: none !important;
 }
 
 .ladder-nav .nav-brand-primary {
