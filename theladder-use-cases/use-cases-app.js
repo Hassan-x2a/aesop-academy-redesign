@@ -3,6 +3,8 @@ const storageKey = 'aesop-ladder-use-cases-state-v1';
 const requestStorageKey = 'aesop-use-case-training-requests-v1';
 const requestCollection = 'useCaseTrainingRequests';
 const requestEmailUrl = '/aesop-api/use-case-request-email.php';
+const PROXY_URL = '/aesop-api/proxy.php';
+const CONVERSATION_COMPLETE_REGEX = /<!--LADDER_CONVERSATION_COMPLETE:([\s\S]*?)-->/;
 let requestDbContext = null;
 
 const topicRanges = [
@@ -50,7 +52,9 @@ const state = {
   activeTopic: topicRanges[0],
   query: '',
   depth: 'all',
-  courseStarts: {}
+  courseStarts: {},
+  messages: [],
+  activeUseCaseChat: null
 };
 
 const elements = {
@@ -67,7 +71,12 @@ const elements = {
   useCaseRequestForm: document.querySelector('#useCaseRequestForm'),
   useCaseRequestMessage: document.querySelector('#useCaseRequestMessage'),
   submitUseCaseRequest: document.querySelector('#submitUseCaseRequest'),
-  requestUseCaseTopic: document.querySelector('#requestUseCaseTopic')
+  requestUseCaseTopic: document.querySelector('#requestUseCaseTopic'),
+  useCaseCourseWorkspace: document.querySelector('#useCaseCourseWorkspace'),
+  useCaseConversationTitle: document.querySelector('#useCaseConversationTitle'),
+  useCaseChatLog: document.querySelector('#useCaseChatLog'),
+  useCaseChatForm: document.querySelector('#useCaseChatForm'),
+  useCaseChatInput: document.querySelector('#useCaseChatInput')
 };
 
 init();
@@ -127,6 +136,7 @@ function bindEvents() {
   });
 
   elements.useCaseRequestForm?.addEventListener('submit', handleUseCaseRequestSubmit);
+  elements.useCaseChatForm?.addEventListener('submit', submitUseCaseChat);
   window.addEventListener('beforeunload', saveState);
 }
 
@@ -271,7 +281,9 @@ function renderDetail(useCase) {
   const levelSelect = elements.useCaseDetail.querySelector('#courseLevelSelect');
   const launchButton = elements.useCaseDetail.querySelector('#beginSelectedCourseBtn');
   launchButton?.addEventListener('click', () => {
-    showCourseStart(useCase, levelSelect?.value || defaultCourse, launchButton);
+    const level = levelSelect?.value || defaultCourse;
+    showCourseStart(useCase, level, launchButton);
+    startUseCaseChat(useCase, level);
   });
 
   const savedCourse = state.courseStarts[useCase.id];
@@ -304,11 +316,9 @@ function showCourseStart(useCase, level, activeButton, options = {}) {
     <strong>${escapeHtml(level)} class ${persist ? 'started' : 'saved'}</strong>
     <span>${escapeHtml(useCase.name)} is ready for a guided conversation, a practice task, and completion evidence.</span>
     <small>Saved ${escapeHtml(formatSavedDate(savedAt))}</small>
-    <div class="course-conversation-workspace">
-      <strong>Guided class conversation</strong>
-      <p>Start with the real work scenario, then complete one lab: debate the right use of AI, practice the workflow skill, or build a usable artifact.</p>
-    </div>
   `;
+  // Show the chat workspace
+  elements.useCaseCourseWorkspace.hidden = false;
   elements.useCaseDetail.querySelectorAll('.course-launch-button').forEach((courseButton) => {
     courseButton.removeAttribute('aria-current');
   });
@@ -549,4 +559,93 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+// Chat and Course Completion System
+function startUseCaseChat(useCase, level) {
+  state.activeUseCaseChat = { useCase, level, messages: [] };
+  state.messages = [{
+    role: 'user',
+    content: `Start my guided conversation for "${useCase.name}". I'm taking the ${level} course. Help me understand this use case through questions, examples, applications, and limitations. When I've demonstrated understanding and we've completed the learning objectives, let me know by including <!--LADDER_CONVERSATION_COMPLETE:{"status":"completed","confidence":0.95,"rationale":"..."}-->`
+  }];
+  renderUseCaseChat();
+  callUseCaseGuide();
+}
+
+function renderUseCaseChat() {
+  if (!state.activeUseCaseChat) return;
+  const { useCase } = state.activeUseCaseChat;
+  elements.useCaseConversationTitle.textContent = `${useCase.name} - Guided Conversation`;
+  elements.useCaseChatLog.innerHTML = state.messages.map(msg =>
+    `<div class="message ${msg.role}"><strong>${msg.role === 'assistant' ? 'Guide' : 'You'}</strong><p>${escapeHtml(msg.content)}</p></div>`
+  ).join('');
+  elements.useCaseChatLog.scrollTop = elements.useCaseChatLog.scrollHeight;
+}
+
+async function submitUseCaseChat(event) {
+  event.preventDefault();
+  const content = elements.useCaseChatInput.value.trim();
+  if (!content) return;
+  state.messages.push({ role: 'user', content });
+  elements.useCaseChatInput.value = '';
+  renderUseCaseChat();
+  await callUseCaseGuide();
+}
+
+async function callUseCaseGuide() {
+  if (!state.activeUseCaseChat) return;
+  try {
+    const response = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: state.messages,
+        system_prompt: `You are a use case training guide for "${state.activeUseCaseChat.useCase.name}". Help the learner understand this use case through guided conversation. When the learner demonstrates sufficient understanding of the ${state.activeUseCaseChat.level} level learning objectives, end the conversation with a completion signal.`,
+        max_tokens: 700
+      })
+    });
+    const data = await response.json();
+    const rawText = data?.content?.[0]?.text || 'I encountered an issue. Please try again.';
+    const parsed = parseUseCaseCompletionResponse(rawText);
+    state.messages.push({ role: 'assistant', content: parsed.visibleText });
+    renderUseCaseChat();
+    if (parsed.completion) {
+      handleUseCaseCompletion(parsed.completion);
+    }
+  } catch (error) {
+    console.error('Chat error:', error);
+    state.messages.push({ role: 'assistant', content: 'I encountered an issue connecting to the guide. Please try again.' });
+    renderUseCaseChat();
+  }
+}
+
+function parseUseCaseCompletionResponse(rawText) {
+  const visibleText = String(rawText || '').replace(CONVERSATION_COMPLETE_REGEX, '').trim();
+  const match = String(rawText || '').match(CONVERSATION_COMPLETE_REGEX);
+  if (!match) return { completion: null, visibleText };
+  try {
+    return { completion: JSON.parse(match[1]), visibleText };
+  } catch (error) {
+    console.warn('Could not parse completion:', error);
+    return { completion: null, visibleText };
+  }
+}
+
+function handleUseCaseCompletion(completion) {
+  if (!state.activeUseCaseChat || !completion || completion.status !== 'completed') return;
+  const { useCase, level } = state.activeUseCaseChat;
+  state.courseStarts[useCase.id] = {
+    level,
+    status: 'completed',
+    completedAt: new Date().toISOString()
+  };
+  saveState();
+  // Add confirmation message to chat
+  state.messages.push({
+    role: 'assistant',
+    content: '✓ Course complete! You can now move to the next use case or return to the catalog.'
+  });
+  renderUseCaseChat();
+  // Update UI and show completion
+  renderDetail(useCase);
 }

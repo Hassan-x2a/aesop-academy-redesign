@@ -3,6 +3,8 @@ const storageKey = 'aesop-ladder-products-state-v1';
 const requestStorageKey = 'aesop-product-course-requests-v1';
 const requestCollection = 'productCourseRequests';
 const requestEmailUrl = '/aesop-api/product-request-email.php';
+const PROXY_URL = '/aesop-api/proxy.php';
+const CONVERSATION_COMPLETE_REGEX = /<!--LADDER_CONVERSATION_COMPLETE:([\s\S]*?)-->/;
 let requestDbContext = null;
 
 const categoryRanges = [
@@ -42,7 +44,9 @@ const state = {
   activeCategory: categoryRanges[0],
   query: '',
   depth: 'all',
-  courseStarts: {}
+  courseStarts: {},
+  messages: [],
+  activeProductChat: null
 };
 
 const elements = {
@@ -58,7 +62,12 @@ const elements = {
   themeToggle: document.querySelector('#themeToggle'),
   productRequestForm: document.querySelector('#productRequestForm'),
   productRequestMessage: document.querySelector('#productRequestMessage'),
-  submitProductRequest: document.querySelector('#submitProductRequest')
+  submitProductRequest: document.querySelector('#submitProductRequest'),
+  productCourseWorkspace: document.querySelector('#productCourseWorkspace'),
+  productConversationTitle: document.querySelector('#productConversationTitle'),
+  productChatLog: document.querySelector('#productChatLog'),
+  productChatForm: document.querySelector('#productChatForm'),
+  productChatInput: document.querySelector('#productChatInput')
 };
 
 init();
@@ -127,6 +136,7 @@ function bindEvents() {
   });
 
   elements.productRequestForm?.addEventListener('submit', handleProductRequestSubmit);
+  elements.productChatForm?.addEventListener('submit', submitProductChat);
 
   window.addEventListener('beforeunload', saveState);
 }
@@ -254,7 +264,9 @@ function renderDetail(product) {
   const levelSelect = elements.productDetail.querySelector('#courseLevelSelect');
   const launchButton = elements.productDetail.querySelector('#beginSelectedCourseBtn');
   launchButton?.addEventListener('click', () => {
-    showCourseStart(product, levelSelect?.value || defaultCourse, launchButton);
+    const level = levelSelect?.value || defaultCourse;
+    showCourseStart(product, level, launchButton);
+    startProductChat(product, level);
   });
 
   const savedCourse = state.courseStarts[product.id];
@@ -288,11 +300,9 @@ function showCourseStart(product, level, activeButton, options = {}) {
     <strong>${escapeHtml(level)} class ${persist ? 'started' : 'saved'}</strong>
     <span>${escapeHtml(product.name)} is ready for a guided class conversation, a practice task, and completion evidence.</span>
     <small>Saved ${escapeHtml(savedDate)}</small>
-    <div class="course-conversation-workspace">
-      <strong>Guided class conversation</strong>
-      <p>Start with how ${escapeHtml(product.name)} is used, then complete one lab: debate a product choice, practice a workflow skill, or build a usable artifact.</p>
-    </div>
   `;
+  // Show the chat workspace
+  elements.productCourseWorkspace.hidden = false;
   elements.productDetail.querySelectorAll('.begin-course-button, .course-launch-button').forEach((courseButton) => {
     courseButton.removeAttribute('aria-current');
   });
@@ -560,4 +570,94 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+// Chat and Course Completion System
+function startProductChat(product, level) {
+  state.activeProductChat = { product, level, messages: [] };
+  state.messages = [{
+    role: 'user',
+    content: `Start my guided conversation for "${product.name}". I'm taking the ${level} course. Help me understand this product through questions, examples, applications, and limitations. When I've demonstrated understanding and we've completed the learning objectives, let me know by including <!--LADDER_CONVERSATION_COMPLETE:{"status":"completed","confidence":0.95,"rationale":"..."}-->`
+  }];
+  renderProductChat();
+  callProductGuide();
+}
+
+function renderProductChat() {
+  if (!state.activeProductChat) return;
+  const { product } = state.activeProductChat;
+  elements.productConversationTitle.textContent = `${product.name} - Guided Conversation`;
+  elements.productChatLog.innerHTML = state.messages.map(msg =>
+    `<div class="message ${msg.role}"><strong>${msg.role === 'assistant' ? 'Guide' : 'You'}</strong><p>${escapeHtml(msg.content)}</p></div>`
+  ).join('');
+  elements.productChatLog.scrollTop = elements.productChatLog.scrollHeight;
+}
+
+async function submitProductChat(event) {
+  event.preventDefault();
+  const content = elements.productChatInput.value.trim();
+  if (!content) return;
+  state.messages.push({ role: 'user', content });
+  elements.productChatInput.value = '';
+  renderProductChat();
+  await callProductGuide();
+}
+
+async function callProductGuide() {
+  if (!state.activeProductChat) return;
+  try {
+    const response = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: state.messages,
+        system_prompt: `You are a product training guide for ${state.activeProductChat.product.name}. Help the learner understand the product through guided conversation. When the learner demonstrates sufficient understanding of the ${state.activeProductChat.level} level learning objectives, end the conversation with a completion signal.`,
+        max_tokens: 700
+      })
+    });
+    const data = await response.json();
+    const rawText = data?.content?.[0]?.text || 'I encountered an issue. Please try again.';
+    const parsed = parseProductCompletionResponse(rawText);
+    state.messages.push({ role: 'assistant', content: parsed.visibleText });
+    renderProductChat();
+    if (parsed.completion) {
+      handleProductCompletion(parsed.completion);
+    }
+  } catch (error) {
+    console.error('Chat error:', error);
+    state.messages.push({ role: 'assistant', content: 'I encountered an issue connecting to the guide. Please try again.' });
+    renderProductChat();
+  }
+}
+
+function parseProductCompletionResponse(rawText) {
+  const visibleText = String(rawText || '').replace(CONVERSATION_COMPLETE_REGEX, '').trim();
+  const match = String(rawText || '').match(CONVERSATION_COMPLETE_REGEX);
+  if (!match) return { completion: null, visibleText };
+  try {
+    return { completion: JSON.parse(match[1]), visibleText };
+  } catch (error) {
+    console.warn('Could not parse completion:', error);
+    return { completion: null, visibleText };
+  }
+}
+
+function handleProductCompletion(completion) {
+  if (!state.activeProductChat || !completion || completion.status !== 'completed') return;
+  const { product, level } = state.activeProductChat;
+  const completionKey = `product_${product.id}_${level}_completed`;
+  state.courseStarts[product.id] = {
+    level,
+    status: 'completed',
+    completedAt: new Date().toISOString()
+  };
+  saveState();
+  // Add confirmation message to chat
+  state.messages.push({
+    role: 'assistant',
+    content: '✓ Course complete! You can now move to the next product or return to the catalog.'
+  });
+  renderProductChat();
+  // Update UI and show completion
+  renderDetail(product);
 }
