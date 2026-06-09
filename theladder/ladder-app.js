@@ -2338,6 +2338,10 @@ async function startEvaluation() {
   const accountGate = accountGateForCertificationTier(cert.id);
   const identityGate = certificationIdentityGate();
   if (cooldown.locked || accountGate.locked || identityGate.locked) {
+    if (accountGate.locked && certificationTierRequiresAccount()) {
+      window.location.href = '/theladder/authenticate.html';
+      return;
+    }
     renderEvaluationPanel();
     document.getElementById(accountGate.locked ? 'accountGatePanel' : 'evaluationPanel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
