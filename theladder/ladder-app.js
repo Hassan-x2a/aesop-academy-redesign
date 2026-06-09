@@ -2,7 +2,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { FIREBASE_CONFIG } from '/ai-academy/js/firebase-config.js';
-import { DEFAULT_RESOURCES, LADDER_TIERS, LADDER_VERSION, LANGUAGES } from './ladder-data.js?v=2';
+import { DEFAULT_RESOURCES, LADDER_TIERS, LADDER_VERSION, LANGUAGES, LADDER_UI_TRANSLATIONS } from './ladder-data.js?v=2';
 
 const PROXY_URL = '/aesop-api/proxy.php';
 const LS_ID = 'aesop-learner-id';
@@ -427,9 +427,25 @@ function languageConfirmationText() {
     ja: '言語を日本語に設定しました。日本語で続けます。',
     ko: '언어가 한국어로 설정되었습니다. 한국어로 계속하겠습니다.',
     pt: 'Idioma alterado para português. Continuarei em português.',
-    zh: '语言已切换为中文。我会继续使用中文。'
+    'zh-TW': '語言已切換為繁體中文。我將繼續使用繁體中文。'
   };
   return confirmations[state.language] || `Language set to ${languageLabel()}. I will continue in ${languageLabel()}.`;
+}
+
+function t(key) {
+  const translations = LADDER_UI_TRANSLATIONS[state.language] || LADDER_UI_TRANSLATIONS['en'];
+  return translations[key] || LADDER_UI_TRANSLATIONS['en'][key] || key;
+}
+
+function updatePageTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    el.placeholder = t(key);
+  });
 }
 
 function interestText(placement) {
@@ -647,6 +663,7 @@ async function saveRemote() {
         activeTierId: state.activeTierId,
         activeTopicId: state.activeTopicId,
         activeVocabTerm: state.activeVocabTerm,
+        educationTierId: state.educationTierId,
         certificationTierId: state.certificationTierId,
         testDepthId: state.testDepthId,
         accountUid: state.authUser?.uid || '',
@@ -701,6 +718,7 @@ async function loadRemote(learnerId) {
     state.activeTierId = ladder.activeTierId || state.activeTierId;
     state.activeTopicId = ladder.activeTopicId || state.activeTopicId;
     state.activeVocabTerm = ladder.activeVocabTerm || state.activeVocabTerm;
+    state.educationTierId = ladder.educationTierId || state.educationTierId;
     state.certificationTierId = ladder.certificationTierId || state.certificationTierId;
     state.testDepthId = normalizeTestDepthId(ladder.testDepthId || state.testDepthId);
     state.adultAttested = Boolean(ladder.adultAttested || data.adultAttested || state.adultAttested);
@@ -1999,8 +2017,12 @@ function renderEvaluationPanel() {
   el.testDepthSelect.innerHTML = TEST_DEPTHS.map((item) => (
     `<option value="${item.id}">${item.label}</option>`
   )).join('');
+  el.educationTierSelect.innerHTML = CERTIFICATION_TIERS.map((item) => (
+    `<option value="${item.id}">${item.label}</option>`
+  )).join('');
   el.certificationTierSelect.value = state.certificationTierId;
   el.testDepthSelect.value = state.testDepthId;
+  el.educationTierSelect.value = state.educationTierId;
   const cert = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
   const depth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
   el.testDepthSelect.value = depth.id;
@@ -2188,6 +2210,7 @@ function systemPromptFor(topic, tier) {
   const selfAssigned = state.progress.selfAssignedTopicIds?.includes(topic.id) ? 'yes' : 'no';
   const placedOut = state.progress.completedTopics[topicKey(topic.id)]?.status === TRANSCRIPT_STATUS.PLACED_OUT ? 'yes' : 'no';
   const evaluation = state.evaluationContext;
+  const selectedEducationTier = CERTIFICATION_TIERS.find((item) => item.id === state.educationTierId) || CERTIFICATION_TIERS[0];
   const selectedCertificationTier = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
   const selectedDepth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
   const readinessCheck = isReadinessCheckTopic(topic);
@@ -2658,6 +2681,7 @@ function bindEvents() {
     state.language = el.languageSelect.value;
     await persist();
     renderControls();
+    updatePageTranslations();
     if (state.language === 'custom' && !state.customLanguage) {
       el.customLanguageInput?.focus();
       return;
@@ -2671,6 +2695,7 @@ function bindEvents() {
     if (state.customLanguage) state.language = 'custom';
     await persist();
     renderControls();
+    updatePageTranslations();
     await continueChatAfterLanguageChange(previousLabel);
   }
 
@@ -2696,6 +2721,11 @@ function bindEvents() {
     state.testDepthId = el.testDepthSelect.value;
     await persist();
     renderEvaluationPanel();
+  });
+
+  el.educationTierSelect?.addEventListener('change', async () => {
+    state.educationTierId = el.educationTierSelect.value;
+    await persist();
   });
 
   el.accountForm?.addEventListener('submit', submitAccount);
