@@ -1040,7 +1040,7 @@ button.secondary {
     "number progress";
   gap: 0.28rem 0.65rem;
   justify-items: stretch;
-  height: 120px;
+  min-height: 140px;
   padding: 0.75rem;
   text-align: left;
   transform: none;
