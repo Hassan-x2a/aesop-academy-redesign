@@ -1456,13 +1456,31 @@ button.secondary {
 }
 
 .conversation-panel {
-  background: #f7f0e3;
-  border-color: rgba(201, 160, 90, 0.5);
+  background: #1a2a3a;
+  border-color: rgba(115, 95, 158, 0.8);
+  border: none;
+  border-bottom: 3px solid #735f9e;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.conversation-panel .panel-heading {
+  background: #0f1923;
+  border-bottom: 2px solid #735f9e;
+}
+
+.conversation-panel .panel-heading h3,
+.conversation-panel .panel-heading p {
+  color: #e8e3db;
+}
+
+.conversation-panel .panel-label {
+  color: #dbb87a;
 }
 
 .chat-log {
-  background: #fff8e8;
-  border-color: rgba(201, 160, 90, 0.45);
+  background: #243142;
+  border-color: rgba(115, 95, 158, 0.5);
+  color: #e8e3db;
 }
 
 .resource-panel {
