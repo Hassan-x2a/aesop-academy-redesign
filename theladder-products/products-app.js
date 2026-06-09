@@ -199,9 +199,22 @@ function renderProducts() {
 function renderDetail(product) {
   if (!product) return;
   const courses = getCourseLevels(product.depth);
+  const defaultCourse = courses[0] || 'Beginner';
   elements.productDetail.innerHTML = `
     <p class="detail-label">Product course</p>
     <h2>${escapeHtml(product.name)}</h2>
+    <section class="course-launch-panel" aria-label="Start product class">
+      <span>Start class</span>
+      <label class="course-level-field" for="courseLevelSelect">
+        <span>Course level</span>
+        <select id="courseLevelSelect">
+          ${courses.map((course) => `<option value="${escapeHtml(course)}">${escapeHtml(course)}</option>`).join('')}
+        </select>
+      </label>
+      <button id="beginSelectedCourseBtn" class="course-launch-button" type="button">
+        Begin course
+      </button>
+    </section>
     <p>${escapeHtml(product.reason)}</p>
     <div id="courseStartNotice" class="course-start-notice" hidden></div>
     <div class="course-stack" aria-label="Course levels">
@@ -216,6 +229,7 @@ function renderDetail(product) {
       `).join('')}
     </div>
     <div class="cert-stack" aria-label="Certification options">
+      <span class="cert-stack-label">Certification tests</span>
       ${certificationOptions.map((option) => `
         <div class="cert-option">
           <strong>${escapeHtml(option.label)}</strong>
@@ -226,22 +240,38 @@ function renderDetail(product) {
     </div>
   `;
 
+  const levelSelect = elements.productDetail.querySelector('#courseLevelSelect');
+  const launchButton = elements.productDetail.querySelector('#beginSelectedCourseBtn');
+  launchButton?.addEventListener('click', () => {
+    showCourseStart(product, levelSelect?.value || defaultCourse, launchButton);
+  });
+
   elements.productDetail.querySelectorAll('.begin-course-button').forEach((button) => {
     button.addEventListener('click', () => {
       const level = button.dataset.courseLevel || 'Beginner';
-      const notice = elements.productDetail.querySelector('#courseStartNotice');
-      if (!notice) return;
-      notice.hidden = false;
-      notice.innerHTML = `
-        <strong>${escapeHtml(level)} course selected</strong>
-        <span>${escapeHtml(product.name)} is ready for a guided product lesson with a conversation, practice task, and completion evidence.</span>
-      `;
-      elements.productDetail.querySelectorAll('.begin-course-button').forEach((courseButton) => {
-        courseButton.removeAttribute('aria-current');
-      });
-      button.setAttribute('aria-current', 'true');
+      if (levelSelect) levelSelect.value = level;
+      showCourseStart(product, level, button);
     });
   });
+}
+
+function showCourseStart(product, level, activeButton) {
+  const notice = elements.productDetail.querySelector('#courseStartNotice');
+  if (!notice) return;
+  notice.hidden = false;
+  notice.innerHTML = `
+    <strong>${escapeHtml(level)} class started</strong>
+    <span>${escapeHtml(product.name)} is ready for a guided class conversation, a practice task, and completion evidence.</span>
+    <div class="course-conversation-workspace">
+      <strong>Guided class conversation</strong>
+      <p>Start with how ${escapeHtml(product.name)} is used, then complete one lab: debate a product choice, practice a workflow skill, or build a usable artifact.</p>
+    </div>
+  `;
+  elements.productDetail.querySelectorAll('.begin-course-button, .course-launch-button').forEach((courseButton) => {
+    courseButton.removeAttribute('aria-current');
+  });
+  activeButton?.setAttribute('aria-current', 'true');
+  notice.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
 function renderLoading() {
