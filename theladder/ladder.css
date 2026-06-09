@@ -1345,6 +1345,7 @@ button.secondary {
   border: 1px solid var(--ladder-line);
   max-width: 88%;
   padding: 0.65rem 0.75rem;
+  color: #102235;
 }
 
 .assessment-log .message {
