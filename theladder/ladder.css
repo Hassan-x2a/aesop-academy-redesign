@@ -2540,7 +2540,7 @@ button.secondary {
 }
 
 .hero-ribbon-tier {
-  display: block !important;
+  display: none !important;
   font-size: 0.5rem !important;
   font-weight: 850 !important;
   letter-spacing: 0.04em !important;
