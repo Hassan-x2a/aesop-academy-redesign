@@ -782,6 +782,15 @@
           <strong data-i18n="searchTopicsOrCourses">Search topics or courses</strong>
           <input id="topicSearchInput" class="topic-search-input" type="search" placeholder="Agents, ethics, image generation..." aria-label="Search Ladder topics and courses" autocomplete="off">
           <div id="topicSearchResults" class="topic-search-results" aria-live="polite"></div>
+          <details class="concept-request-container">
+            <summary class="concept-request-toggle">💡 Suggest a concept</summary>
+            <form id="conceptRequestForm" class="concept-request-form">
+              <input id="conceptRequestName" type="text" placeholder="Concept name (e.g., 'Prompt Engineering')" required aria-label="Concept name">
+              <textarea id="conceptRequestDescription" rows="3" placeholder="Brief description of why this concept should be on The Ladder" required aria-label="Concept description"></textarea>
+              <button type="submit" id="submitConceptBtn">Submit</button>
+              <small id="conceptRequestMessage" class="concept-request-message" hidden></small>
+            </form>
+          </details>
         </div>
         <div class="learner-panel evaluation-panel" id="evaluationPanel">
           <span class="panel-label" data-i18n="certification">Certification</span>

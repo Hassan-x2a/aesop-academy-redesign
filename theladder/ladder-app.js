@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { FIREBASE_CONFIG } from '/ai-academy/js/firebase-config.js';
 import { DEFAULT_RESOURCES, LADDER_TIERS, LADDER_VERSION, LANGUAGES, LADDER_UI_TRANSLATIONS } from './ladder-data.js?v=2';
 
@@ -13,6 +13,7 @@ const PLACEMENT_REGEX = /<!--LADDER_PLACEMENT_COMPLETE:([\s\S]*?)-->/;
 const CERTIFICATION_RESULT_REGEX = /<!--LADDER_CERTIFICATION_RESULT:([\s\S]*?)-->/;
 const CERTIFICATION_VALIDATION_REGEX = /<!--LADDER_CERTIFICATION_VALIDATION:([\s\S]*?)-->/;
 const CONVERSATION_COMPLETE_REGEX = /<!--LADDER_CONVERSATION_COMPLETE:([\s\S]*?)-->/;
+const CONCEPT_REQUEST_EMAIL_URL = '/aesop-api/concept-request-email.php';
 const CERTIFICATION_VALIDATOR_MODEL = 'claude-sonnet-4-5-20250929';
 const CERTIFICATION_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 const TRANSCRIPT_STATUS = {
@@ -309,7 +310,12 @@ const el = {
   ladderCertificationsLink: document.getElementById('ladderCertificationsLink'),
   studentTranscriptLink: document.getElementById('studentTranscriptLink'),
   architectureDialog: document.getElementById('architectureDialog'),
-  architectureDialogContent: document.getElementById('architectureDialogContent')
+  architectureDialogContent: document.getElementById('architectureDialogContent'),
+  conceptRequestForm: document.getElementById('conceptRequestForm'),
+  conceptRequestName: document.getElementById('conceptRequestName'),
+  conceptRequestDescription: document.getElementById('conceptRequestDescription'),
+  submitConceptBtn: document.getElementById('submitConceptBtn'),
+  conceptRequestMessage: document.getElementById('conceptRequestMessage')
 };
 
 function generateLearnerId() {
@@ -3110,6 +3116,82 @@ async function confirmAdultAccess() {
   render();
 }
 
+async function submitConceptRequest(event) {
+  event.preventDefault();
+
+  const conceptName = el.conceptRequestName?.value?.trim();
+  const conceptDescription = el.conceptRequestDescription?.value?.trim();
+
+  if (!conceptName || !conceptDescription) {
+    showConceptRequestMessage('Please fill in all required fields.', 'error');
+    return;
+  }
+
+  try {
+    el.submitConceptBtn.disabled = true;
+    el.submitConceptBtn.textContent = 'Submitting...';
+
+    const now = new Date();
+    const payload = {
+      conceptName,
+      description: conceptDescription,
+      sourcePath: '/theladder/',
+      learnerId: state.learnerId,
+      status: 'requested',
+      createdAt: now,
+      createdAtIso: now.toISOString(),
+      updatedAt: now,
+      updatedAtIso: now.toISOString()
+    };
+
+    // Save to Firestore
+    try {
+      const conceptRequestsRef = collection(db, 'conceptRequests');
+      await addDoc(conceptRequestsRef, payload);
+    } catch (firestoreError) {
+      console.warn('Firestore save failed, but will send email:', firestoreError);
+      // Continue with email notification anyway
+    }
+
+    // Send email notification
+    const emailResponse = await fetch(CONCEPT_REQUEST_EMAIL_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!emailResponse.ok) {
+      console.warn('Email notification failed, but request was captured');
+    }
+
+    // Clear form
+    el.conceptRequestName.value = '';
+    el.conceptRequestDescription.value = '';
+
+    showConceptRequestMessage('✓ Concept submitted! Thanks for your suggestion. Scott will review and build it soon.', 'success');
+  } catch (error) {
+    console.error('Concept request error:', error);
+    showConceptRequestMessage('Error submitting concept. Please try again.', 'error');
+  } finally {
+    el.submitConceptBtn.disabled = false;
+    el.submitConceptBtn.textContent = 'Submit';
+  }
+}
+
+function showConceptRequestMessage(text, type) {
+  if (!el.conceptRequestMessage) return;
+  el.conceptRequestMessage.textContent = text;
+  el.conceptRequestMessage.className = `concept-request-message ${type}`;
+  el.conceptRequestMessage.hidden = false;
+
+  // Auto-hide success messages after 5 seconds
+  if (type === 'success') {
+    setTimeout(() => {
+      el.conceptRequestMessage.hidden = true;
+    }, 5000);
+  }
+}
+
 function bindEvents() {
   el.educationFocusSelect?.addEventListener('change', (event) => {
     const target = event.target.value;
@@ -3187,6 +3269,8 @@ function bindEvents() {
   });
 
   el.accountForm?.addEventListener('submit', submitAccount);
+
+  el.conceptRequestForm?.addEventListener('submit', submitConceptRequest);
 
   el.adultAttestationCheck?.addEventListener('change', async () => {
     state.adultAttested = Boolean(el.adultAttestationCheck.checked);
