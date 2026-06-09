@@ -2007,10 +2007,6 @@ button.secondary {
   color: #ffffff !important;
 }
 
-[data-theme="dark"] .conversation-panel .panel-heading p {
-  color: #f0e8dc;
-}
-
 .nav-version {
   color: #8f681c !important;
   font-size: 0.65rem !important;
