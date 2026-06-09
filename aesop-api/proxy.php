@@ -32,21 +32,25 @@ if (file_exists($secretsFile)) {
 
 // Fallback: check environment variable directly
 if (!$apiKeyLoaded) {
-    // Try multiple ways to get the env var
-    $API_KEY = getenv('AESOP_ANTHROPIC_API_KEY') ?: '';
+    // Try AESOP_ANTHROPIC_API_KEY first, then ANTHROPIC_API_KEY
+    $API_KEY = getenv('AESOP_ANTHROPIC_API_KEY') ?: getenv('ANTHROPIC_API_KEY') ?: '';
 
     // Also check $_ENV and $_SERVER
     if (!$API_KEY && isset($_ENV['AESOP_ANTHROPIC_API_KEY'])) {
         $API_KEY = $_ENV['AESOP_ANTHROPIC_API_KEY'];
     }
+    if (!$API_KEY && isset($_ENV['ANTHROPIC_API_KEY'])) {
+        $API_KEY = $_ENV['ANTHROPIC_API_KEY'];
+    }
     if (!$API_KEY && isset($_SERVER['AESOP_ANTHROPIC_API_KEY'])) {
         $API_KEY = $_SERVER['AESOP_ANTHROPIC_API_KEY'];
+    }
+    if (!$API_KEY && isset($_SERVER['ANTHROPIC_API_KEY'])) {
+        $API_KEY = $_SERVER['ANTHROPIC_API_KEY'];
     }
 
     $apiKeyLoaded = ($API_KEY !== '');
     log_error("API key from environment: " . ($apiKeyLoaded ? 'loaded' : 'empty'));
-    log_error("getenv AESOP_ANTHROPIC_API_KEY: " . (getenv('AESOP_ANTHROPIC_API_KEY') ? 'found' : 'not found'));
-    log_error("Available env vars with ANTHROPIC: " . implode(', ', array_filter(array_keys($_ENV), function($k) { return strpos($k, 'ANTHROPIC') !== false; })));
 }
 
 // ── CONFIG ──────────────────────────────────────────────────────────────
