@@ -52,6 +52,13 @@ The Ladder records identity assurance as a credential attribute, not a vague "ve
 | identity_attested | Learner signs an identity statement before the certification attempt. | Active |
 | proctored_verified | Adult formal credential path with ID/liveness verification plus automated, live remote, recorded review, or institutional proctoring. | Scaffolded, not yet active |
 
+Adult and upper education tiers require an account before the learner can start certification or readiness-check sessions. Elementary, Middle School, and High School tiers can continue without Firebase authentication. Young Adult, College / Technical, Workforce, and Leadership tiers require:
+
+- Firebase email/password account
+- 18+ adult access attestation
+- account binding on the learner record
+- credential evidence that records whether the attempt was account-required and account-bound
+
 Proctored verified should not be claimed until the provider/proctor workflow exists. The intended modes are:
 
 - automated proctoring: ID/liveness plus camera/session signals and flagged review
@@ -67,6 +74,10 @@ The credential record should store identity assurance separately from AI examine
     "level": "account_bound",
     "label": "Account-bound",
     "status": "account_bound",
+    "accountRequired": true,
+    "accountUid": "firebase uid when present",
+    "accountEmail": "learner@example.com",
+    "adultAttested": true,
     "attested": false,
     "attestedAt": null,
     "proctoringRequired": false,

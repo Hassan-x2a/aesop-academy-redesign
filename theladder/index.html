@@ -596,7 +596,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="/theladder/ladder.css?v=21">
+  <link rel="stylesheet" href="/theladder/ladder.css?v=23">
 </head>
 <body>
   <nav class="nav">
@@ -677,6 +677,33 @@
               <span>Proctoring mode</span>
               <select id="proctoringModeSelect" class="evaluation-select" aria-label="Proctoring mode"></select>
             </label>
+          </div>
+          <div id="accountGatePanel" class="account-gate" hidden>
+            <div class="account-gate-head">
+              <span id="accountStatusText">Account required</span>
+              <button id="accountSignOutBtn" class="secondary" type="button" hidden>Sign out</button>
+            </div>
+            <p id="accountGateMessage">Young Adult, College, Workforce, and Leadership tiers require a Firebase account.</p>
+            <label class="identity-attestation account-attestation">
+              <input id="adultAttestationCheck" type="checkbox">
+              <span>I am 18 years old or older and can use an adult AESOP account for this education tier.</span>
+            </label>
+            <form id="accountForm" class="account-form">
+              <label class="evaluation-field" for="accountEmailInput">
+                <span>Username / email</span>
+                <input id="accountEmailInput" class="evaluation-select" type="email" autocomplete="username" placeholder="name@example.com">
+              </label>
+              <label class="evaluation-field" for="accountPasswordInput">
+                <span>Password</span>
+                <input id="accountPasswordInput" class="evaluation-select" type="password" autocomplete="current-password" placeholder="Password">
+              </label>
+              <div class="account-actions">
+                <button id="accountSignInBtn" type="submit" value="sign-in">Sign in</button>
+                <button id="accountCreateBtn" class="secondary" type="submit" value="create">Create account</button>
+              </div>
+            </form>
+            <button id="accountConfirmAdultBtn" type="button" hidden>Confirm adult access</button>
+            <p id="accountAuthError" class="evaluation-cooldown" hidden></p>
           </div>
           <label class="identity-attestation">
             <input id="identityAttestationCheck" type="checkbox">
@@ -855,6 +882,6 @@
     </section>
   </dialog>
 
-  <script type="module" src="/theladder/ladder-app.js?v=21"></script>
+  <script type="module" src="/theladder/ladder-app.js?v=23"></script>
 </body>
 </html>

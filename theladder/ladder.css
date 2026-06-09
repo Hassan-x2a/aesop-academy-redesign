@@ -411,6 +411,57 @@ button.secondary {
   min-width: 0;
   width: auto;
 }
+
+.account-gate {
+  border-top: 1px solid rgba(219, 184, 122, 0.28);
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+}
+
+.account-gate-head {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+}
+
+.account-gate-head span {
+  color: #ffe7a8;
+  font-size: 0.84rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.account-gate p {
+  color: #d8e5ef;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.account-form {
+  display: grid;
+  gap: 0.48rem;
+}
+
+.account-actions {
+  display: grid;
+  gap: 0.48rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.account-actions button,
+#accountConfirmAdultBtn {
+  min-height: 36px;
+  padding: 0.42rem 0.55rem;
+}
+
+.account-attestation {
+  color: #d8e5ef;
+}
+
 .evaluation-actions {
   align-items: center;
   display: flex;

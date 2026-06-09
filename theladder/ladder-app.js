@@ -1,4 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { FIREBASE_CONFIG } from '/ai-academy/js/firebase-config.js';
 import { DEFAULT_RESOURCES, LADDER_TIERS, LADDER_VERSION, LANGUAGES } from './ladder-data.js?v=2';
@@ -7,6 +8,7 @@ const PROXY_URL = '/aesop-api/proxy.php';
 const LS_ID = 'aesop-learner-id';
 const LS_STATE = 'aesop-ladder-state';
 const LS_THEME = 'aesop-theme';
+const LS_ADULT_ATTESTED = 'aesop-ladder-adult-attested';
 const PLACEMENT_REGEX = /<!--LADDER_PLACEMENT_COMPLETE:([\s\S]*?)-->/;
 const CERTIFICATION_RESULT_REGEX = /<!--LADDER_CERTIFICATION_RESULT:([\s\S]*?)-->/;
 const CERTIFICATION_VALIDATION_REGEX = /<!--LADDER_CERTIFICATION_VALIDATION:([\s\S]*?)-->/;
@@ -27,6 +29,7 @@ const CERTIFICATION_TIERS = [
   { id: 'workforce', label: 'Workforce', standards: 'O*NET, WEF, NIST AI RMF, EU AI Act' },
   { id: 'leadership', label: 'Leadership', standards: 'O*NET, WEF, NIST AI RMF, EU AI Act' }
 ];
+const ACCOUNT_REQUIRED_CERTIFICATION_TIERS = new Set(['young-adult', 'college', 'workforce', 'leadership']);
 const TEST_DEPTHS = [
   {
     id: 'certification',
@@ -175,10 +178,14 @@ const VOCAB_DEFINITIONS = {
 };
 
 const app = initializeApp(FIREBASE_CONFIG);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
 const state = {
   learnerId: localStorage.getItem(LS_ID) || '',
+  authReady: false,
+  authUser: null,
+  adultAttested: localStorage.getItem(LS_ADULT_ATTESTED) === 'true',
   theme: localStorage.getItem(LS_THEME) === 'dark' ? 'dark' : 'light',
   language: 'en',
   customLanguage: '',
@@ -219,6 +226,16 @@ const el = {
   topicSearchResults: document.getElementById('topicSearchResults'),
   certificationTierSelect: document.getElementById('certificationTierSelect'),
   testDepthSelect: document.getElementById('testDepthSelect'),
+  accountGatePanel: document.getElementById('accountGatePanel'),
+  accountStatusText: document.getElementById('accountStatusText'),
+  accountGateMessage: document.getElementById('accountGateMessage'),
+  adultAttestationCheck: document.getElementById('adultAttestationCheck'),
+  accountForm: document.getElementById('accountForm'),
+  accountEmailInput: document.getElementById('accountEmailInput'),
+  accountPasswordInput: document.getElementById('accountPasswordInput'),
+  accountSignOutBtn: document.getElementById('accountSignOutBtn'),
+  accountConfirmAdultBtn: document.getElementById('accountConfirmAdultBtn'),
+  accountAuthError: document.getElementById('accountAuthError'),
   identityAssuranceSelect: document.getElementById('identityAssuranceSelect'),
   identityAttestationCheck: document.getElementById('identityAttestationCheck'),
   identityAssuranceNotice: document.getElementById('identityAssuranceNotice'),
@@ -291,6 +308,72 @@ function generateLearnerId() {
   let code = '';
   for (let i = 0; i < 4; i += 1) code += chars[Math.floor(Math.random() * chars.length)];
   return `AESOP-${code}`;
+}
+
+function selectedCertificationTier(tierId = state.certificationTierId) {
+  return CERTIFICATION_TIERS.find((item) => item.id === tierId) || CERTIFICATION_TIERS[0];
+}
+
+function certificationTierRequiresAccount(tierId = state.certificationTierId) {
+  return ACCOUNT_REQUIRED_CERTIFICATION_TIERS.has(tierId);
+}
+
+function accountGateForCertificationTier(tierId = state.certificationTierId) {
+  const tier = selectedCertificationTier(tierId);
+  if (!certificationTierRequiresAccount(tier.id)) {
+    return {
+      locked: false,
+      tier,
+      reason: `${tier.label} certification can continue without an adult account.`,
+      buttonLabel: 'Start certification'
+    };
+  }
+  if (!state.authReady) {
+    return {
+      locked: true,
+      tier,
+      reason: 'Checking Firebase account status...',
+      buttonLabel: 'Checking account'
+    };
+  }
+  if (!state.authUser) {
+    return {
+      locked: true,
+      tier,
+      reason: `${tier.label} requires a Firebase username and password before the learner can use this education tier.`,
+      buttonLabel: 'Sign in required'
+    };
+  }
+  if (!state.adultAttested) {
+    return {
+      locked: true,
+      tier,
+      reason: `${tier.label} requires an adult account attestation before certification or readiness sessions can begin.`,
+      buttonLabel: 'Confirm adult access'
+    };
+  }
+  return {
+    locked: false,
+    tier,
+    reason: `${tier.label} is account-bound to ${state.authUser.email || 'this Firebase user'}.`,
+    buttonLabel: 'Start certification'
+  };
+}
+
+function authErrorMessage(error) {
+  const code = error?.code || '';
+  if (code === 'auth/email-already-in-use') return 'That account already exists. Sign in instead.';
+  if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') return 'Invalid username/email or password.';
+  if (code === 'auth/weak-password') return 'Use a password with at least 6 characters.';
+  if (code === 'auth/invalid-email') return 'Enter a valid email address for the username.';
+  if (code === 'auth/network-request-failed') return 'Network error. Try again in a moment.';
+  return error?.message || 'Account action failed.';
+}
+
+function setAccountError(message = '') {
+  if (!el.accountAuthError) return;
+  el.accountAuthError.hidden = !message;
+  el.accountAuthError.textContent = message;
 }
 
 function normalizeLearnerId(value) {
@@ -522,6 +605,7 @@ function saveLocal() {
     activeVocabTerm: state.activeVocabTerm,
     certificationTierId: state.certificationTierId,
     testDepthId: state.testDepthId,
+    adultAttested: state.adultAttested,
     identityAssuranceLevel: state.identityAssuranceLevel,
     identityAttested: state.identityAttested,
     proctoringMode: state.proctoringMode,
@@ -541,6 +625,9 @@ async function saveRemote() {
     await setDoc(doc(db, 'learners', state.learnerId), {
       learnerId: state.learnerId,
       lastActiveAt: new Date().toISOString(),
+      accountUid: state.authUser?.uid || '',
+      accountEmail: state.authUser?.email || '',
+      adultAttested: state.adultAttested,
       ladderCertifications,
       certificationValidations,
       studentTranscript: {
@@ -557,6 +644,9 @@ async function saveRemote() {
         activeVocabTerm: state.activeVocabTerm,
         certificationTierId: state.certificationTierId,
         testDepthId: state.testDepthId,
+        accountUid: state.authUser?.uid || '',
+        accountEmail: state.authUser?.email || '',
+        adultAttested: state.adultAttested,
         identityAssuranceLevel: state.identityAssuranceLevel,
         identityAttested: state.identityAttested,
         proctoringMode: state.proctoringMode,
@@ -608,6 +698,8 @@ async function loadRemote(learnerId) {
     state.activeVocabTerm = ladder.activeVocabTerm || state.activeVocabTerm;
     state.certificationTierId = ladder.certificationTierId || state.certificationTierId;
     state.testDepthId = normalizeTestDepthId(ladder.testDepthId || state.testDepthId);
+    state.adultAttested = Boolean(ladder.adultAttested || data.adultAttested || state.adultAttested);
+    localStorage.setItem(LS_ADULT_ATTESTED, String(state.adultAttested));
     state.identityAssuranceLevel = ladder.identityAssuranceLevel || state.identityAssuranceLevel;
     state.identityAttested = Boolean(ladder.identityAttested);
     state.proctoringMode = ladder.proctoringMode || state.proctoringMode;
@@ -640,6 +732,8 @@ function loadLocal() {
     state.activeVocabTerm = saved.activeVocabTerm || state.activeVocabTerm;
     state.certificationTierId = saved.certificationTierId || state.certificationTierId;
     state.testDepthId = normalizeTestDepthId(saved.testDepthId || state.testDepthId);
+    state.adultAttested = Boolean(saved.adultAttested || state.adultAttested);
+    localStorage.setItem(LS_ADULT_ATTESTED, String(state.adultAttested));
     state.identityAssuranceLevel = saved.identityAssuranceLevel || state.identityAssuranceLevel;
     state.identityAttested = Boolean(saved.identityAttested);
     state.proctoringMode = saved.proctoringMode || state.proctoringMode;
@@ -1027,6 +1121,29 @@ async function ensureLearnerId() {
     }, { merge: true });
   } catch (error) {
     console.warn('Could not create learner record immediately:', error);
+  }
+}
+
+async function saveAccountProfile() {
+  if (!state.authUser) return;
+  await ensureLearnerId();
+  localStorage.setItem(LS_ADULT_ATTESTED, String(state.adultAttested));
+  const now = new Date().toISOString();
+  try {
+    await setDoc(doc(db, 'learners', state.learnerId), {
+      learnerId: state.learnerId,
+      accountUid: state.authUser.uid,
+      accountEmail: state.authUser.email || '',
+      adultAttested: state.adultAttested,
+      adultAttestedAt: state.adultAttested ? now : null,
+      ladderProgress: {
+        accountUid: state.authUser.uid,
+        accountEmail: state.authUser.email || '',
+        adultAttested: state.adultAttested
+      }
+    }, { merge: true });
+  } catch (error) {
+    console.warn('Could not save account profile:', error);
   }
 }
 
@@ -1709,6 +1826,10 @@ function buildIdentityAssuranceRecord(startedAt = new Date().toISOString()) {
     level: level.id,
     label: level.credentialLabel,
     method: level.id,
+    accountRequired: certificationTierRequiresAccount(),
+    accountUid: state.authUser?.uid || '',
+    accountEmail: state.authUser?.email || '',
+    adultAttested: state.adultAttested,
     status: level.proctoringRequired
       ? 'proctoring_not_configured'
       : level.requiresAttestation
@@ -1779,6 +1900,41 @@ function renderIdentityAssurance() {
   return gate;
 }
 
+function renderAccountGate() {
+  const gate = accountGateForCertificationTier();
+  const shouldShow = certificationTierRequiresAccount() || Boolean(state.authUser);
+  if (el.accountGatePanel) el.accountGatePanel.hidden = !shouldShow;
+  if (el.accountStatusText) {
+    el.accountStatusText.textContent = state.authUser
+      ? `Signed in: ${state.authUser.email || 'Firebase user'}`
+      : certificationTierRequiresAccount()
+        ? 'Adult account required'
+        : 'Account optional';
+  }
+  if (el.accountGateMessage) el.accountGateMessage.textContent = gate.reason;
+  if (el.adultAttestationCheck) {
+    el.adultAttestationCheck.checked = state.adultAttested;
+    el.adultAttestationCheck.disabled = Boolean(state.adultAttested && state.authUser);
+    const attestation = el.adultAttestationCheck.closest('.account-attestation');
+    if (attestation) attestation.hidden = !certificationTierRequiresAccount();
+  }
+  if (el.accountForm) {
+    el.accountForm.hidden = Boolean(state.authUser);
+    el.accountForm.querySelectorAll('input, button').forEach((control) => {
+      control.disabled = !state.authReady;
+    });
+  }
+  if (el.accountSignOutBtn) el.accountSignOutBtn.hidden = !state.authUser;
+  if (el.accountConfirmAdultBtn) {
+    el.accountConfirmAdultBtn.hidden = !state.authUser || state.adultAttested || !certificationTierRequiresAccount();
+    el.accountConfirmAdultBtn.disabled = !state.authReady;
+  }
+  if (el.accountEmailInput && state.authUser?.email && !el.accountEmailInput.value) {
+    el.accountEmailInput.value = state.authUser.email;
+  }
+  return gate;
+}
+
 function renderEvaluationPanel() {
   if (!el.certificationTierSelect || !el.testDepthSelect) return;
   const tier = getActiveTier();
@@ -1797,6 +1953,7 @@ function renderEvaluationPanel() {
   el.activeEvaluationTarget.textContent = targetText;
   if (el.certificationWorkspaceTarget) el.certificationWorkspaceTarget.textContent = targetText;
   const cooldown = certificationCooldownFor(tier.id, depth.id);
+  const accountGate = renderAccountGate();
   const identityGate = renderIdentityAssurance();
   const lockedText = cooldown.locked
     ? `This ${depth.label} can be tried again in ${formatDuration(cooldown.remainingMs)}. The 24-hour wait applies to this Ladder tier and challenge depth across all education tiers.`
@@ -1808,13 +1965,15 @@ function renderEvaluationPanel() {
   });
   [el.startEvaluationBtn, el.startWorkspaceCertificationBtn].forEach((button) => {
     if (!button) return;
-    button.disabled = cooldown.locked || identityGate.locked;
+    button.disabled = cooldown.locked || accountGate.locked || identityGate.locked;
     button.textContent = cooldown.locked
       ? `Available in ${formatDuration(cooldown.remainingMs)}`
-      : identityGate.locked ? 'Identity step required' : 'Start certification';
+      : accountGate.locked ? accountGate.buttonLabel
+        : identityGate.locked ? 'Identity step required' : 'Start certification';
     button.title = cooldown.locked
       ? `Available at ${new Date(cooldown.availableAt).toLocaleString()}`
-      : identityGate.locked ? identityGate.reason : 'Start certification';
+      : accountGate.locked ? accountGate.reason
+        : identityGate.locked ? identityGate.reason : 'Start certification';
   });
   if (state.evaluationContext && el.certificationModeDetail) renderConversationMode();
 }
@@ -2082,6 +2241,12 @@ async function startConversation() {
   const cert = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
   const depth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
   const readinessCheck = isReadinessCheckTopic(topic);
+  const accountGate = accountGateForCertificationTier(cert.id);
+  if (readinessCheck && accountGate.locked) {
+    renderEvaluationPanel();
+    document.getElementById('accountGatePanel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
   state.evaluationContext = null;
   state.trainingMessages = [];
   state.messages = [{
@@ -2102,10 +2267,11 @@ async function startEvaluation() {
   const cert = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
   const depth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
   const cooldown = certificationCooldownFor(tier.id, depth.id);
+  const accountGate = accountGateForCertificationTier(cert.id);
   const identityGate = certificationIdentityGate();
-  if (cooldown.locked || identityGate.locked) {
+  if (cooldown.locked || accountGate.locked || identityGate.locked) {
     renderEvaluationPanel();
-    document.getElementById('evaluationPanel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById(accountGate.locked ? 'accountGatePanel' : 'evaluationPanel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
   const attemptId = `eval_${Date.now()}`;
@@ -2202,6 +2368,14 @@ async function submitChat(event) {
   event.preventDefault();
   const value = el.chatInput.value.trim();
   if (!value) return;
+  if (state.evaluationContext) {
+    const accountGate = accountGateForCertificationTier(state.evaluationContext.certificationTierId);
+    if (accountGate.locked) {
+      renderEvaluationPanel();
+      document.getElementById('accountGatePanel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+  }
   state.messages.push({ role: 'user', content: value });
   el.chatInput.value = '';
   renderChat();
@@ -2277,6 +2451,54 @@ async function openArchitectureDialog() {
   el.architectureDialogContent.focus();
 }
 
+async function submitAccount(event) {
+  event.preventDefault();
+  setAccountError('');
+  const mode = event.submitter?.value || 'sign-in';
+  const email = el.accountEmailInput?.value.trim();
+  const password = el.accountPasswordInput?.value || '';
+  if (!email || !password) {
+    setAccountError('Username/email and password are required.');
+    return;
+  }
+  if (certificationTierRequiresAccount() && !el.adultAttestationCheck?.checked && !state.adultAttested) {
+    setAccountError('Confirm that you are 18 or older before using this education tier.');
+    return;
+  }
+  try {
+    if (mode === 'create') {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+    if (el.adultAttestationCheck?.checked) state.adultAttested = true;
+    localStorage.setItem(LS_ADULT_ATTESTED, String(state.adultAttested));
+    el.accountPasswordInput.value = '';
+    await saveAccountProfile();
+    await persist();
+    render();
+  } catch (error) {
+    setAccountError(authErrorMessage(error));
+  }
+}
+
+async function confirmAdultAccess() {
+  setAccountError('');
+  if (!state.authUser) {
+    setAccountError('Sign in before confirming adult access.');
+    return;
+  }
+  if (!el.adultAttestationCheck?.checked) {
+    setAccountError('Check the adult access attestation first.');
+    return;
+  }
+  state.adultAttested = true;
+  localStorage.setItem(LS_ADULT_ATTESTED, 'true');
+  await saveAccountProfile();
+  await persist();
+  render();
+}
+
 function bindEvents() {
   el.darkToggle?.addEventListener('click', () => {
     applyTheme(state.theme === 'dark' ? 'light' : 'dark');
@@ -2337,6 +2559,25 @@ function bindEvents() {
     state.testDepthId = el.testDepthSelect.value;
     await persist();
     renderEvaluationPanel();
+  });
+
+  el.accountForm?.addEventListener('submit', submitAccount);
+
+  el.adultAttestationCheck?.addEventListener('change', async () => {
+    state.adultAttested = Boolean(el.adultAttestationCheck.checked);
+    localStorage.setItem(LS_ADULT_ATTESTED, String(state.adultAttested));
+    if (state.authUser && state.adultAttested) {
+      await saveAccountProfile();
+      await persist();
+    }
+    renderEvaluationPanel();
+  });
+
+  el.accountConfirmAdultBtn?.addEventListener('click', confirmAdultAccess);
+
+  el.accountSignOutBtn?.addEventListener('click', async () => {
+    setAccountError('');
+    await signOut(auth);
   });
 
   el.identityAssuranceSelect?.addEventListener('change', async () => {
@@ -2407,6 +2648,14 @@ function bindEvents() {
 async function init() {
   applyTheme(state.theme);
   loadLocal();
+  onAuthStateChanged(auth, async (user) => {
+    state.authReady = true;
+    state.authUser = user ? { uid: user.uid, email: user.email || '' } : null;
+    if (state.authUser) {
+      await saveAccountProfile();
+    }
+    render();
+  });
   const queryLearnerId = normalizeLearnerId(new URLSearchParams(location.search).get('id'));
   if (queryLearnerId) {
     state.learnerId = queryLearnerId;
