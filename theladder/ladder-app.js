@@ -182,6 +182,22 @@ const app = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// Clear IndexedDB cache on app start to force fresh Firestore reads
+async function clearFirebaseCache() {
+  try {
+    if (!window.indexedDB) return;
+    const dbs = await window.indexedDB.databases?.() || [];
+    dbs.forEach(dbInfo => {
+      if (dbInfo.name.includes('firestore')) {
+        window.indexedDB.deleteDatabase(dbInfo.name);
+      }
+    });
+  } catch (e) {
+    console.log('Could not clear IndexedDB:', e.message);
+  }
+}
+clearFirebaseCache();
+
 const state = {
   learnerId: localStorage.getItem(LS_ID) || '',
   authReady: false,
@@ -705,8 +721,7 @@ async function persist() {
 
 async function loadRemote(learnerId) {
   try {
-    // Force read from server to bypass cache
-    const snap = await getDoc(doc(db, 'learners', learnerId), { source: 'server' });
+    const snap = await getDoc(doc(db, 'learners', learnerId));
     if (!snap.exists()) {
       console.log('[loadRemote] Document does not exist, creating:', learnerId);
       await setDoc(doc(db, 'learners', learnerId), {
