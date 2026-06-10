@@ -124,7 +124,9 @@ function mountSwitchers() {
     });
   });
   document.addEventListener('click', (event) => {
-    if (openPop && !openPop.pop.contains(event.target)) closePop();
+    // Selecting a theme re-renders the popover and detaches the clicked
+    // button; a detached target is not an outside click — keep the pop open.
+    if (openPop && event.target.isConnected && !openPop.pop.contains(event.target)) closePop();
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closePop();
