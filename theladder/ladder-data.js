@@ -565,7 +565,7 @@ export const LADDER_UI_TRANSLATIONS = {
 export const LADDER_TIERS = [
   {
     id: 'tier-01',
-    name: 'Beginner',
+    name: 'General AI Literacy',
     title: 'AI Orientation',
     accent: '#735f9e',
     vocabulary: ['artificial intelligence', 'machine learning', 'generative AI', 'model', 'chatbot', 'assistant', 'prompt', 'response', 'token', 'context', 'training data', 'inference', 'hallucination', 'multimodal', 'privacy'],
@@ -592,7 +592,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-02',
-    name: 'Novice',
+    name: 'Chat Mastery',
     title: 'Prompting and Chatbot Fluency',
     accent: '#9a5fb0',
     vocabulary: ['system prompt', 'user prompt', 'role prompt', 'instruction', 'constraint', 'example', 'few-shot', 'output format', 'tone', 'persona', 'grounding', 'source', 'citation', 'follow-up', 'prompt template'],
@@ -619,7 +619,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-03',
-    name: 'Capable Learner',
+    name: 'Information Fluency',
     title: 'Research, Study, and Information Literacy',
     accent: '#c9a05a',
     vocabulary: ['source', 'primary source', 'secondary source', 'citation', 'claim', 'evidence', 'summary', 'synthesis', 'literature review', 'fact-checking', 'recency', 'credibility', 'bias', 'media literacy', 'epistemic humility'],
@@ -646,7 +646,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-04',
-    name: 'Knowledge Worker',
+    name: 'Business Process Design',
     title: 'Productivity and Professional Workflows',
     accent: '#3f7cac',
     vocabulary: ['workflow', 'SOP', 'template', 'knowledge base', 'meeting note', 'action item', 'task extraction', 'summarization', 'transformation', 'classification', 'prioritization', 'decision support', 'dashboard', 'review loop', 'human-in-the-loop'],
