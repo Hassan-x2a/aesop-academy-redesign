@@ -484,7 +484,7 @@ function selectedCertificationTier(tierId = state.certificationTierId) {
 }
 
 function certificationTierRequiresAccount(tierId = state.certificationTierId) {
-  return ACCOUNT_REQUIRED_CERTIFICATION_TIERS.has(tierId);
+  return ACCOUNT_REQUIRED_ROLES.has(tierId);
 }
 
 function accountGateForCertificationTier(tierId = state.certificationTierId) {
