@@ -275,6 +275,7 @@ const el = {
   progressBar: document.getElementById('progressBar'),
   progressText: document.getElementById('progressText'),
   tierCompletionStatus: document.getElementById('tierCompletionStatus'),
+  heroCertCount: document.getElementById('heroCertCount'),
   heroCoursesComplete: document.getElementById('heroCoursesComplete'),
   heroTiersComplete: document.getElementById('heroTiersComplete'),
   heroTiersCertified: document.getElementById('heroTiersCertified'),
@@ -2011,6 +2012,8 @@ function renderHeroProgress(count, total) {
   const tierTotal = LADDER_TIERS.length;
   const tierComplete = completedTierCount();
   const credentials = credentialTierCounts();
+  const certCount = (state.progress.ladderCertifications || []).length;
+  if (el.heroCertCount) el.heroCertCount.textContent = String(certCount);
   if (el.heroCoursesComplete) el.heroCoursesComplete.textContent = `${count} / ${total}`;
   if (el.heroTiersComplete) el.heroTiersComplete.textContent = `${tierComplete} / ${tierTotal}`;
   if (el.heroTiersCertified) el.heroTiersCertified.textContent = `${credentials.certified} / ${tierTotal}`;
