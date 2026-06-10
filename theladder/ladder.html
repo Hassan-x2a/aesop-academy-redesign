@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!-- theladder-v0.2.0 | 2026-06-10 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon_512.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ladder — Climb Hub - AESOP AI Academy</title>
+  <meta name="description" content="Your climb hub on The Ladder: all fifteen tiers, your progress, and your next rung.">
+  <meta name="robots" content="noindex">
+  <script>
+    (function () {
+      try {
+        var saved = JSON.parse(localStorage.getItem('aesop_theme') || 'null');
+        if (!saved && localStorage.getItem('aesop-theme') === 'dark') saved = { theme: 'indigo', mode: 'dark' };
+        saved = saved || { theme: 'indigo', mode: 'light' };
+        document.documentElement.setAttribute('data-theme', saved.theme || 'indigo');
+        document.documentElement.setAttribute('data-mode', saved.mode === 'dark' ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'indigo');
+        document.documentElement.setAttribute('data-mode', 'light');
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/theladder/ladder-brand.css?v=1">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/theladder/">
+        <span class="brand-mark" aria-hidden="true"><i></i><i class="mid"></i><i></i></span>
+        <span class="brand-word">Aesop</span>
+      </a>
+      <nav class="topnav" aria-label="Primary">
+        <a href="/theladder/ladder.html" class="active">The Ladder</a>
+        <!-- Training nav link goes here once the Training page exists -->
+        <!-- Certification nav link goes here once the Certification page exists -->
+        <a href="/theladder/transcript.html">Transcripts</a>
+      </nav>
+      <div class="topbar-actions">
+        <select id="languageSelect" class="select-quiet" aria-label="Language"></select>
+        <div data-theme-mount></div>
+        <a id="navAvatar" class="avatar" href="/theladder/transcript.html" hidden></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== CLIMB HEADER ===================== -->
+  <section class="band hero-glow">
+    <div class="wrap" style="padding-top: 64px; padding-bottom: 60px;">
+      <div class="eyebrow" data-reveal id="climbEyebrow" style="margin-bottom: 32px;">Your climb</div>
+      <div class="two-col" style="display: grid; grid-template-columns: 1.3fr .7fr; gap: 48px; align-items: end;">
+        <div data-reveal>
+          <h1 class="page-title" style="margin: 0 0 18px;">The Ladder</h1>
+          <p class="subline" id="climbSubline" style="font-size: clamp(20px, 2.2vw, 26px);">Find your rung and start climbing.</p>
+        </div>
+        <div data-reveal class="panel panel-accent" style="padding: 24px 26px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+            <span style="font-size: 12px; letter-spacing: .04em; color: var(--muted);">Overall progress</span>
+            <span id="summaryPct" style="font-size: 12px; font-weight: 600; color: var(--primary);">0%</span>
+          </div>
+          <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 14px;">
+            <span id="summaryRungsDone" class="display" style="font-size: 54px; line-height: 1; letter-spacing: -.03em;">0</span>
+            <span style="font-size: 15px; color: var(--muted);">/ <span id="summaryRungsTotal">0</span> rungs</span>
+          </div>
+          <div class="bar bar--thick" style="margin-bottom: 8px;"><span id="progressBar" class="bar-fill"></span></div>
+          <small id="progressText" style="display: block; font-size: 12px; color: var(--muted); margin-bottom: 18px;">0 rungs completed</small>
+          <a id="resumeRungBtn" class="btn btn-primary" href="/theladder/climb.html" style="display: block; padding: 14px;">Start climbing</a>
+          <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 12px; color: var(--muted);">
+            <span id="summaryTiersComplete">0 tiers complete</span>
+            <span id="summaryTierOf">Tier 1 of 15</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROGRESS STATS + RIBBONS ===================== -->
+  <section class="band">
+    <div class="wrap" data-reveal>
+      <div class="stat-strip" style="grid-template-columns: repeat(5, 1fr);" aria-label="Ladder progress summary">
+        <div class="stat"><div id="heroCoursesComplete" class="stat-num stat-num--sm">0 / 0</div><div class="stat-cap">Courses completed</div></div>
+        <div class="stat"><div id="heroTiersComplete" class="stat-num stat-num--sm">0 / 15</div><div class="stat-cap">Tiers completed</div></div>
+        <div class="stat"><div id="heroTiersCertified" class="stat-num stat-num--sm">0</div><div class="stat-cap">Certifications</div></div>
+        <div class="stat"><div id="heroTiersExpert" class="stat-num stat-num--sm">0</div><div class="stat-cap">Expertise</div></div>
+        <div class="stat"><div id="heroTiersMastered" class="stat-num stat-num--sm">0</div><div class="stat-cap">Mastery</div></div>
+      </div>
+      <div style="padding: 0 0 44px;">
+        <div class="eyebrow" style="margin-bottom: 14px;"><span data-i18n="tierCertificationRibbons">Tier Certification Ribbons</span>&nbsp;·&nbsp;<span id="heroCertCount">0</span>&nbsp;earned</div>
+        <div id="heroRibbonTrack" class="hero-ribbon-track" aria-label="Highest certification ribbon by Ladder tier"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SEARCH + EDUCATION FOCUS ===================== -->
+  <section class="band">
+    <div class="wrap two-col" style="padding-top: 48px; padding-bottom: 56px; display: grid; grid-template-columns: 1.4fr .6fr; gap: 32px; align-items: start;">
+      <div data-reveal class="panel panel-pad" id="topicSearchPanel">
+        <span class="panel-label" data-i18n="findARung">Find a Rung</span>
+        <h3 class="h3" style="margin-bottom: 12px;" data-i18n="searchTopicsOrCourses">Search topics or courses</h3>
+        <input id="topicSearchInput" type="search" style="width: 100%;" placeholder="Agents, ethics, image generation..." aria-label="Search Ladder topics and courses" autocomplete="off">
+        <div id="topicSearchResults" class="topic-search-results" aria-live="polite"></div>
+      </div>
+      <div data-reveal class="panel panel-pad">
+        <span class="panel-label">Education Focus</span>
+        <h3 class="h3" style="margin-bottom: 12px;">Choose a pathway</h3>
+        <p style="font-size: 13.5px; line-height: 1.6; color: var(--muted); margin: 0 0 14px;">Switch between the AI Concepts ladder, the Products pathway, and the Use Cases pathway.</p>
+        <label class="evaluation-field" for="educationFocusSelect">
+          <span>Education Focus</span>
+          <select id="educationFocusSelect" aria-label="Education Focus">
+            <option value="/theladder/ladder.html" selected>AI Concepts</option>
+            <option value="/theladder-products/">Products</option>
+            <option value="/theladder-use-cases/">Use Cases</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TIER ACCORDION ===================== -->
+  <section class="band">
+    <div class="wrap" style="padding-top: 60px; padding-bottom: 84px;">
+      <div data-reveal style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <h2 class="h2-sm">All fifteen tiers</h2>
+          <span id="tierCompletionStatus" class="small-muted" style="display: block; margin-top: 8px;">0 / 15 tiers completed</span>
+        </div>
+        <div class="tier-legend">
+          <span><i class="done"></i>Completed</span>
+          <span><i class="current"></i>In progress</span>
+          <span><i class="locked"></i>Not started</span>
+        </div>
+      </div>
+      <div id="tierList" class="tier-list" data-reveal></div>
+    </div>
+  </section>
+
+  <footer class="footer-slim">
+    <div class="footer-slim-inner">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="brand-mark brand-mark--sm" aria-hidden="true"><i></i><i class="mid"></i><i></i></span>
+        <span class="display" style="font-weight: 500; font-size: 16px;">Aesop AI Academy</span>
+      </div>
+      <div class="links">
+        <a href="/theladder/">Home</a>
+        <a href="/theladder/assessment.html">Assessment</a>
+        <a href="/theladder/transcript.html">Transcript</a>
+      </div>
+      <span class="footer-fine">&copy; 2026 AESOP AI Academy · Patent Pending - U.S. Provisional Patent Application No. 64/085,986</span>
+    </div>
+  </footer>
+
+  <script type="module" src="/theladder/theme.js?v=1"></script>
+  <script type="module" src="/theladder/hub-page.js?v=1"></script>
+</body>
+</html>
