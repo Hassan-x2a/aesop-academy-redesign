@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-10-white-house-federal-ai-preemption-kosa-deal",
+  "title": "White House and Hill relaunch effort to preempt state AI laws — paired with KOSA and the NO FAKES Act",
+  "subtitle": "Sen. Marsha Blackburn is negotiating a subject-matter preemption package that trades tech-industry priorities for child-safety and deepfake legislation Congress has wanted for years.",
+  "date": "2026-06-10",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["white-house", "ai-regulation", "federal-preemption", "kosa", "no-fakes-act", "marsha-blackburn"],
+  "readTime": "4 min read",
+  "heroEmoji": "🏛️",
+  "body": [
+    "The White House has relaunched negotiations with Capitol Hill to preempt state AI laws in exchange for movement on child-safety and deepfake legislation, according to reports from Axios and The Hill published June 8–9. Sen. Marsha Blackburn (R-TN) is leading the talks, which would pair federal preemption of certain state AI regulations with the Senate version of the Kids Online Safety Act and the NO FAKES Act — the latter being the long-pending bill protecting performers from non-consensual AI impersonation. Officials describe the structure as subject-matter preemption: states would be blocked only from legislating on topics the federal bill covers, not from regulating AI generally.",
+    "This is the second attempt at the same trade. An earlier preemption push in the spring failed when state attorneys general and a bipartisan coalition of governors objected — California, Colorado, and Texas all have AI laws taking effect in 2026 that the industry views as conflicting compliance regimes. The June package is narrower in scope but trades a higher-priority bundle in return: KOSA has been bottled up in committee for three Congresses, and pairing it with industry-priority preemption gives both sides something to take home. Rep. Jay Obernolte and Rep. Lori Trahan's bipartisan Great American AI Act, released as a discussion draft on June 4, is now likely a parallel track rather than the vehicle, according to negotiators quoted in The Hill.",
+    "The mechanism matters more than the headline. Subject-matter preemption sounds technical, but it is the same legal architecture that governs how federal banking law preempts state usury rules, or how HIPAA preempts state medical-privacy law in the areas it covers. Whatever ships will set the precedent for how Congress carves up AI authority between Washington and the states for the next decade. Colorado's comprehensive AI law takes effect June 30 — three weeks from now — and California's AI Transparency Act and Texas's Responsible Artificial Intelligence Governance Act both impose disclosure requirements that conflict with what the White House framework prefers. A preemption bill before those laws are tested in court will reshape what state-level AI compliance even means.",
+    "A note for learners: federal preemption is the boring constitutional question that quietly decides where AI policy actually lives. If you ever build a product that touches health, education, employment, or housing, the answer to 'whose law applies' determines what your company has to disclose, who can sue you, and how fast you can ship. Read the bill text when it drops, not the press releases — the carve-outs are where the policy is."
+  ],
+  "sources": [
+    { "title": "White House negotiating federal preemption of state AI laws in exchange for Hill priorities — The Hill", "url": "https://thehill.com/policy/technology/5916062-artificial-intelligence-federal-preemption-negotiations/" },
+    { "title": "Scoop: White House and Hill relaunch effort to block state AI laws — Axios", "url": "https://www.axios.com/2026/06/08/white-house-hill-relaunch-effort-block-state-ai-laws" },
+    { "title": "Children's online safety, preemption highlight White House's AI policy recommendations — IAPP", "url": "https://iapp.org/news/a/children-s-online-safety-preemption-highlight-white-house-s-ai-policy-recommendations" }
+  ],
+  "status": "published"
+}

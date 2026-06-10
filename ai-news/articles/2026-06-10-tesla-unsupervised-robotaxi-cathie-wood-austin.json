@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-10-tesla-unsupervised-robotaxi-cathie-wood-austin",
+  "title": "Cathie Wood takes unsupervised Tesla robotaxi in Austin — and it gets a $75 parking ticket",
+  "subtitle": "ARK Invest's CEO became one of the highest-profile riders in Tesla's fully driverless service; the ticket exposed who's liable when an autonomous car breaks parking rules.",
+  "date": "2026-06-10",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["tesla", "robotaxi", "cathie-wood", "ark-invest", "autonomous-vehicles", "self-driving"],
+  "readTime": "3 min read",
+  "heroEmoji": "🚕",
+  "body": [
+    "ARK Invest CEO Cathie Wood took her first ride in a fully unsupervised Tesla robotaxi in Austin on June 8 — no safety driver in the seat, no remote operator visible in the loop. Wood, one of Tesla's most prominent institutional bulls, said the ride felt natural enough that she stopped paying attention to it, which she framed as the safety signal she had been waiting for. Tesla has now expanded the unsupervised service to cover the entire Austin metropolitan area; ARK's Tesla valuation model treats robotaxi revenue as the primary value driver, projecting roughly 60% of enterprise value from autonomous ride-hailing by year-end.",
+    "The newsworthy detail is the $75 parking ticket. While Wood's robotaxi waited for her at the pickup point, it overstayed a posted limit and an Austin parking officer wrote it up. Tesla's autonomous fleet is now generating its own legal liabilities — moving violations, parking infractions, and eventually accident reports — that have no clear precedent for who pays. Wood publicly asked Musk how Tesla handles those tickets, and said ARK will add parking violations as a line item in its valuation model. It's a small number on a single ride; multiplied across a city-scale fleet running 24/7, it's a real operating-cost line that doesn't show up in any earlier autonomous-vehicle financial model.",
+    "Unsupervised is the threshold the industry has been chasing since the first Waymo demo a decade ago, and a high-profile Austin ride from one of Tesla's most-watched bulls puts the public-perception milestone alongside the technical one. The same week, Elon Musk announced that Grok V9-Medium — xAI's next frontier model, roughly 1.5 trillion parameters or three times the size of the production v8-small — has finished training, with a public release targeted for mid-June. Tesla and xAI remain separate companies on paper but increasingly share an AI strategy: the same compute clusters, overlapping research staff, and a Musk-confirmed joint project, Digital Optimus, that ports xAI models onto Tesla's humanoid robot platform.",
+    "A note for learners: the parking ticket is a teaching case for AI liability. When a model causes a clearly-defined real-world harm — a fine, a fender-bender, a privacy breach — someone has to pay it, and the chain of custody is not obvious. Manufacturer? Fleet operator? Rider? Insurer? The answer is being negotiated city by city right now, and your career has a decent chance of touching it. If you're an engineer building anything that takes autonomous action in the physical world, read the indemnification clause of every contract you sign before you sign it."
+  ],
+  "sources": [
+    { "title": "Unsupervised Tesla Robotaxi gets a $75 parking ticket as ARK Invest's Cathie Wood takes a ride for review — Tesla Oracle", "url": "https://www.teslaoracle.com/2026/06/09/unsupervised-tesla-robotaxi-gets-a-75-parking-ticket-as-ark-invests-cathie-wood-takes-a-ride-for-review-video/" },
+    { "title": "Cathie Wood Asks Elon Musk How Tesla Handles 'Parking And Traffic Violations' — Benzinga", "url": "https://www.benzinga.com/markets/tech/26/06/53077645/cathie-wood-asks-elon-musk-about-tesla-robotaxi-parking-ticket" },
+    { "title": "Musk's Big AI Week: Grok V9 Finishes Training at 1.5 Trillion Parameters as Cathie Wood Rides a Driverless Tesla — TechTimes", "url": "https://www.techtimes.com/articles/318044/20260609/musks-big-ai-week-grok-v9-finishes-training-15-trillion-parameters-driverless-tesla.htm" }
+  ],
+  "status": "published"
+}

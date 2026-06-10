@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-10-philips-future-health-index-2026-clinicians-ai",
+  "title": "Philips Future Health Index 2026: AI saves clinicians 16 working days a year — but 70% say training is inadequate",
+  "subtitle": "Eleventh edition of the global report surveys 2,000 clinicians and 20,000 patients across 10 countries; AI lands real time savings, with a training gap that limits how far it goes.",
+  "date": "2026-06-10",
+  "author": "AESOP AI Engine",
+  "category": "Healthcare",
+  "tags": ["philips", "healthcare-ai", "future-health-index", "clinical-ai", "medical-errors", "ai-adoption"],
+  "readTime": "3 min read",
+  "heroEmoji": "🩺",
+  "body": [
+    "Philips released the eleventh edition of its Future Health Index on June 9, surveying over 2,000 healthcare professionals and 20,000 patients across 10 countries. The top-line number: AI tools are saving clinicians the equivalent of 16 working days a year on average, with 46% reporting time savings of at least 132 hours annually — more than three full working weeks. Half (50%) say AI has expanded their patient capacity by about eight additional patients per week. Sixty-five percent of clinicians have increased their use of work-provided AI tools in the past year.",
+    "The clinical-impact numbers are the ones to watch. Thirty-nine percent of surveyed clinicians say AI has identified or prevented a potential medical error at least three times in the past three months — that's not a statistical curiosity, it's a measurable safety contribution. Two-thirds (65%) report greater confidence in clinical decision-making, and 49% report less work-related stress. These are self-reported, which matters; randomized clinical trials of AI-assisted diagnosis are still thin on the ground. But the direction of the signal is consistent across the 10 countries surveyed.",
+    "The constraint is training. Seven in ten clinicians describe the training available to them as inadequate, inconsistent, or absent — meaning a meaningful chunk of the workforce is using AI tools they were never formally taught to use, and the rest are looking at tools they don't know how to evaluate. Philips also flags fragmented healthcare IT and limited interoperability as the structural reason AI deployment is patchy across care settings: the model can be good, but if it can't reach the EHR, the lab system, and the imaging archive at the same time, the time savings cap out. The report's framing — 'hybrid care team' — is Philips's way of saying the deployment model is now humans + AI as a unit, not AI as a standalone replacement.",
+    "A note for learners: if you're in medical school, nursing school, or a healthcare informatics program right now, your degree is the formal training the 70% don't have. That is the most leveraged credential in healthcare AI for the next five years. Don't wait for your school's curriculum to catch up — pick one clinical AI tool, learn its failure modes, learn what data it needs, learn what it can't see. The next generation of clinicians who can supervise a model will be paid for the supervision, not just the diagnosis."
+  ],
+  "sources": [
+    { "title": "Philips Future Health Index 2026: AI is already saving clinicians time and delivering measurable impact in healthcare — GlobeNewswire", "url": "https://www.globenewswire.com/news-release/2026/06/09/3308582/0/en/Philips-Future-Health-Index-2026-AI-is-already-saving-clinicians-time-and-delivering-measurable-impact-in-healthcare.html" },
+    { "title": "Clinicians report AI use expands patient capacity, boosts efficiency: Philips survey — Fierce Healthcare", "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/71-clinicians-report-improved-workflow-efficiency-ai-tools-philips-survey-0" },
+    { "title": "The hybrid care team is the future of AI, says Philips report — Healthcare Finance News", "url": "https://www.healthcarefinancenews.com/news/hybrid-care-team-future-ai-says-philips-report" }
+  ],
+  "status": "published"
+}
