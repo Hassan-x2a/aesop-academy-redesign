@@ -185,7 +185,7 @@ const CERTIFICATION_TIERS = EDUCATION_TIERS; // Keep for backwards compatibility
 const TEST_DEPTHS = [
   {
     id: 'core',
-    label: 'CORE',
+    label: 'Core Certification',
     outcome: 'foundational competency evidence',
     evidence: 'clear foundational competency in the selected function',
     passingStandard: 'solid rubric performance with no critical failures',
