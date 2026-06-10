@@ -14,7 +14,9 @@ RewriteRule ^theladder-products/?$ /theladder-products/index.html [R=302,L]
 RewriteRule ^theladder-use-cases/?$ /theladder-use-cases/index.html [R=302,L]
 
 # Allow direct file access (assets, css, js, images) - MUST come first
-RewriteCond %{REQUEST_FILENAME} -f [OR]
+# Skip all rewrite rules if the file or directory exists
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
