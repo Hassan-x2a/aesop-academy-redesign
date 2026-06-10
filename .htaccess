@@ -13,8 +13,9 @@ RewriteRule ^theladder/?$ /theladder/index.html [R=302,L]
 RewriteRule ^theladder-products/?$ /theladder-products/index.html [R=302,L]
 RewriteRule ^theladder-use-cases/?$ /theladder-use-cases/index.html [R=302,L]
 
-# Allow direct file access (assets, css, js, images)
-RewriteCond %{REQUEST_FILENAME} -f
+# Allow direct file access (assets, css, js, images) - MUST come first
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
 # www to non-www
