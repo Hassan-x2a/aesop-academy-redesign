@@ -192,14 +192,6 @@ const TEST_DEPTHS = [
     review: 'AI-assessed, auditable, and challengeable'
   },
   {
-    id: 'certification',
-    label: 'Certification',
-    outcome: 'professional certification evidence',
-    evidence: 'clear competency evidence for professional role and function',
-    passingStandard: 'solid rubric performance with no critical failures',
-    review: 'AI-assessed, auditable, and challengeable'
-  },
-  {
     id: 'expert-certification',
     label: 'Expert Certification',
     outcome: 'expert-level evidence for advanced credit',
@@ -355,7 +347,7 @@ const state = {
   searchQuery: '',
   educationTierId: 'college',
   certificationTierId: 'workforce',
-  testDepthId: 'certification',
+  testDepthId: 'core',
   identityAssuranceLevel: 'account_bound',
   identityAttested: false,
   proctoringMode: 'recorded_review',
