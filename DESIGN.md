@@ -1,5 +1,7 @@
 # Design
 
+> **Note:** `/theladder/*` pages follow `design-handoff-ladder/BRAND_GUIDE.md` (4-theme system), which supersedes this file for those pages — agreed Morgan/Scott 2026-06.
+
 ## Overview
 
 Aesop is a product interface for AI learning, assessment, certification, and evidence review. The default visual mode should feel institutional, sharp, and work-focused: clear white page foundations, dark navy work surfaces where focus matters, restrained gold for brand emphasis, and violet only as a secondary accent.
