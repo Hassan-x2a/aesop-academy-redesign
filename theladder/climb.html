@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!-- theladder-v0.2.0 | 2026-06-10 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/favicon_512.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climb - The Ladder - AESOP AI Academy</title>
+  <meta name="description" content="The rung workspace on The Ladder: guided conversation, vocabulary, resources, and certification for your active rung.">
+  <meta name="robots" content="noindex">
+  <script>
+    (function () {
+      try {
+        var saved = JSON.parse(localStorage.getItem('aesop_theme') || 'null');
+        if (!saved && localStorage.getItem('aesop-theme') === 'dark') saved = { theme: 'indigo', mode: 'dark' };
+        saved = saved || { theme: 'indigo', mode: 'light' };
+        document.documentElement.setAttribute('data-theme', saved.theme || 'indigo');
+        document.documentElement.setAttribute('data-mode', saved.mode === 'dark' ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'indigo');
+        document.documentElement.setAttribute('data-mode', 'light');
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/theladder/ladder-brand.css?v=1">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/theladder/">
+        <span class="brand-mark" aria-hidden="true"><i></i><i class="mid"></i><i></i></span>
+        <span class="brand-word">Aesop</span>
+      </a>
+      <nav class="topnav" aria-label="Primary">
+        <a href="/theladder/ladder.html" class="active">The Ladder</a>
+        <!-- Training nav link goes here once the Training page exists -->
+        <!-- Certification nav link goes here once the Certification page exists -->
+        <a href="/theladder/transcript.html">Transcripts</a>
+      </nav>
+      <div class="topbar-actions">
+        <select id="languageSelect" class="select-quiet" aria-label="Language"></select>
+        <div data-theme-mount></div>
+        <a id="navAvatar" class="avatar" href="/theladder/transcript.html" hidden></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== CLIMB HEADER ===================== -->
+  <section class="band hero-glow">
+    <div class="wrap topic-head" style="padding-top: 44px; padding-bottom: 36px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
+        <div class="eyebrow" id="climbTierEyebrow">The Ladder</div>
+        <a href="/theladder/ladder.html" style="font-size: 13px; font-weight: 500; color: var(--muted);">&larr; All tiers</a>
+      </div>
+      <h1 id="activeTopicTitle" class="display" style="font-size: clamp(34px, 4.6vw, 54px); line-height: 1; letter-spacing: -.03em; margin: 0 0 18px;">What artificial intelligence is and is not</h1>
+      <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+        <span id="activeTierLabel" class="small-muted">Loading…</span>
+        <span id="rungPosition" class="small-muted">Rung 1 of 18</span>
+        <span style="display: inline-flex; gap: 0;">
+          <button id="prevRungBtn" type="button" class="secondary" aria-label="Previous rung">&larr; Prev</button>
+          <button id="nextRungBtn" type="button" class="secondary" style="border-left: none;" aria-label="Next rung">Next &rarr;</button>
+        </span>
+        <label for="educationTierSelect" style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted);">
+          Teach at:
+          <select id="educationTierSelect" class="select-quiet">
+            <option value="">Loading...</option>
+          </select>
+        </label>
+        <button id="completeTopicBtn" type="button" class="secondary">Mark self-reported</button>
+      </div>
+      <!-- renderTopicPicker() inserts the .topic-strip rung navigator after this .topic-head -->
+    </div>
+  </section>
+
+  <main class="wrap" style="padding-top: 32px; padding-bottom: 64px;">
+
+    <div id="climbEmptyState" class="panel panel-accent panel-pad" style="margin-bottom: 28px;" hidden>
+      <span class="panel-label">New here?</span>
+      <h3 class="h3" style="margin-bottom: 10px;">Find the rung where you belong</h3>
+      <p style="font-size: 14.5px; line-height: 1.65; color: var(--muted); margin: 0 0 16px; max-width: 64ch;">You can climb any rung freely — but a short placement conversation will test you out of what you already know and assign the rungs that fit your goals.</p>
+      <a class="btn btn-primary btn-sm" href="/theladder/assessment.html">Take the assessment</a>
+    </div>
+
+    <div class="workspace" style="display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: start;">
+
+      <!-- ===== MAIN COLUMN — guided conversation ===== -->
+      <section class="topic-column">
+        <div id="examInProgressBanner" class="exam-banner" style="display: none;">
+          <span data-i18n="certificationExamInProgress">Certification exam in progress</span> — scroll down to continue
+        </div>
+
+        <section class="conversation-panel panel panel-pad">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 14px;">
+            <div>
+              <h3 id="conversationTitle" class="h3">Guided Conversation</h3>
+              <p id="conversationSummary" style="font-size: 13.5px; color: var(--muted); margin: 6px 0 0; line-height: 1.6;">The AI asks, challenges, applies, and checks readiness for this rung.</p>
+            </div>
+            <button id="startConversationBtn" type="button">Start conversation</button>
+          </div>
+          <div id="certificationModeBar" class="certification-mode-bar" hidden>
+            <span class="panel-label" data-i18n="certificationExamInProgress">Certification exam in progress</span>
+            <strong id="certificationModeTitle">Certification</strong>
+            <p id="certificationModeDetail">The AI is examining evidence in this same conversation window.</p>
+            <div class="certification-mode-actions">
+              <button id="finalizeCertificationBtn" type="button">Finalize my determination</button>
+              <button id="endCertificationBtn" class="secondary" type="button" data-i18n="returnToTraining">Return to training</button>
+            </div>
+          </div>
+          <div id="chatLog" class="chat-log" aria-live="polite"></div>
+          <form id="chatForm" class="chat-form">
+            <textarea id="chatInput" placeholder="Answer the guide or ask for the next challenge" autocomplete="off" rows="1" style="resize: vertical; min-height: 44px;"></textarea>
+            <button type="submit">Send</button>
+          </form>
+        </section>
+      </section>
+
+      <!-- ===== SIDE COLUMN — certification, vocabulary, resources ===== -->
+      <aside style="display: grid; gap: 24px; min-width: 0;">
+
+        <section class="panel panel-accent panel-pad" id="evaluationPanel" aria-label="Certification">
+          <span class="panel-label" data-i18n="certification">Certification</span>
+          <h3 class="h3" style="margin-bottom: 10px;">Certify this rung</h3>
+          <p id="activeEvaluationTarget" class="evaluation-target">Current certification target</p>
+          <p id="evaluationCooldownNotice" class="evaluation-cooldown" hidden></p>
+          <label class="evaluation-field" for="certificationTierSelect">
+            <span>Education Tier/Role</span>
+            <select id="certificationTierSelect" class="evaluation-select" aria-label="Education Tier or Professional Role"></select>
+          </label>
+          <label class="evaluation-field" for="testDepthSelect">
+            <span>Mastery level</span>
+            <select id="testDepthSelect" class="evaluation-select" aria-label="Mastery level"></select>
+          </label>
+          <div style="display: flex; gap: 0; flex-wrap: wrap; margin-top: 4px;">
+            <button id="startEvaluationBtn" type="button" data-i18n="startCertification">Start certification</button>
+            <button class="secondary" type="button" data-open-architecture aria-label="How certification works" style="border-left: none;">How it works</button>
+          </div>
+          <div class="cert-links">
+            <a id="ladderCertificationsLink" href="/ladder-certifications.html" data-i18n="certificationRecord">Certification record</a>
+            <a id="studentTranscriptLink" href="/student-transcript-live.html">Student transcript</a>
+            <a class="credential-demo-link" href="/ladder-credential.html?learner=AESOP-YAPT&amp;tier=Agent%20Builder&amp;level=Mastery%20Challenge&amp;education=Workforce&amp;earned=2026-06-09" target="_blank" data-i18n="ladderCredentialExample">Ladder Credential Example</a>
+          </div>
+        </section>
+
+        <section class="panel panel-pad" aria-label="Vocabulary">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px;">
+            <h3 class="h3">Vocabulary</h3>
+            <span id="vocabCount" class="small-muted">0 terms</span>
+          </div>
+          <div id="vocabList" class="vocab-list" style="margin-bottom: 16px;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px;">
+            <span class="panel-label" style="margin: 0;">Definition</span>
+            <span id="vocabDefinitionTerm" class="small-muted">Select a term</span>
+          </div>
+          <div id="vocabDefinitionBox" class="vocab-definition-box">
+            <strong>Choose a vocabulary word</strong>
+            <p>Click a term to see its definition and start an AI conversation about it.</p>
+          </div>
+          <form id="vocabPromptForm" class="vocab-prompt-form">
+            <input id="vocabPromptInput" type="text" placeholder="Ask about this term" autocomplete="off">
+            <button type="submit">Ask</button>
+          </form>
+        </section>
+
+        <section class="panel panel-pad" aria-label="Additional lessons and links">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px;">
+            <h3 class="h3">Additional Lessons &amp; Links</h3>
+            <button id="researchBtn" type="button" class="secondary">Find more videos</button>
+          </div>
+          <div id="resourceList" class="resource-list"></div>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer-slim">
+    <div class="footer-slim-inner">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="brand-mark brand-mark--sm" aria-hidden="true"><i></i><i class="mid"></i><i></i></span>
+        <span class="display" style="font-weight: 500; font-size: 16px;">Aesop AI Academy</span>
+      </div>
+      <div class="links">
+        <a href="/theladder/">Home</a>
+        <a href="/theladder/ladder.html">The Ladder</a>
+        <a href="/theladder/transcript.html">Transcript</a>
+      </div>
+      <span class="footer-fine">&copy; 2026 AESOP AI Academy · Patent Pending - U.S. Provisional Patent Application No. 64/085,986</span>
+    </div>
+  </footer>
+
+  <dialog id="architectureDialog" class="brand-dialog" aria-labelledby="architectureDialogTitle">
+    <div class="dialog-head">
+      <div>
+        <span class="panel-label" data-i18n="certificationGuide">Certification guide</span>
+        <h3 id="architectureDialogTitle" class="h3" data-i18n="howLadderCertificationWorks">How Ladder Certification Works</h3>
+      </div>
+      <form method="dialog">
+        <button class="secondary" type="submit">Close</button>
+      </form>
+    </div>
+    <div id="architectureDialogContent" class="architecture-dialog-content" tabindex="0" style="max-height: 70vh; overflow: auto;">
+      <p>Loading certification guide...</p>
+    </div>
+  </dialog>
+
+  <script type="module" src="/theladder/theme.js?v=1"></script>
+  <script type="module" src="/theladder/climb-page.js?v=1"></script>
+</body>
+</html>
