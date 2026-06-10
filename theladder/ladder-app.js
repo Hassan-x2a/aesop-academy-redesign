@@ -21,36 +21,195 @@ const TRANSCRIPT_STATUS = {
   VERIFIED: 'verified',
   SELF_REPORTED: 'self_reported'
 };
-const CERTIFICATION_TIERS = [
+const EDUCATION_TIERS = [
   { id: 'elementary', label: 'Elementary', standards: 'AI4K12, ISTE, UNESCO' },
   { id: 'middle-school', label: 'Middle School', standards: 'AI4K12, ISTE, CSTA, UNESCO' },
-  { id: 'high-school', label: 'High School', standards: 'AI4K12, ISTE, CSTA, UNESCO' },
-  { id: 'young-adult', label: 'Young Adult', standards: 'ISTE, CSTA, UNESCO, WEF' },
-  { id: 'college', label: 'College / Technical', standards: 'CSTA, O*NET, WEF, NIST AI RMF' },
-  { id: 'workforce', label: 'Workforce', standards: 'O*NET, WEF, NIST AI RMF, EU AI Act' },
-  { id: 'leadership', label: 'Leadership', standards: 'O*NET, WEF, NIST AI RMF, EU AI Act' }
+  { id: 'high-school', label: 'High School', standards: 'AI4K12, ISTE, CSTA, UNESCO' }
 ];
-const ACCOUNT_REQUIRED_CERTIFICATION_TIERS = new Set(['young-adult', 'college', 'workforce', 'leadership']);
+
+const PROFESSIONAL_ROLES = [
+  {
+    id: 'ai-developer',
+    label: 'AI Developer',
+    source: 'O*NET 15-1255+',
+    standards: 'O*NET, WEF, NIST AI RMF',
+    description: 'Develop AI applications, write code for AI systems, implement models',
+    roleSpec: `You are evaluating an AI Developer candidate. The AI Developer role requires:
+- Proficiency in programming languages (Python, Java, C++, JavaScript) for AI/ML applications
+- Understanding of AI/ML frameworks and libraries (TensorFlow, PyTorch, scikit-learn)
+- Ability to implement, test, and deploy AI algorithms and models
+- Knowledge of software development best practices (version control, testing, documentation)
+- Problem-solving skills to translate business requirements into AI solutions`
+  },
+  {
+    id: 'machine-learning-engineer',
+    label: 'Machine Learning Engineer',
+    source: 'O*NET 15-1255+',
+    standards: 'O*NET, WEF, NIST AI RMF',
+    description: 'Design and build ML systems, train models, optimize algorithms',
+    roleSpec: `You are evaluating a Machine Learning Engineer candidate. The ML Engineer role requires:
+- Advanced knowledge of machine learning algorithms, architectures, and best practices
+- Ability to design, train, validate, and optimize ML models
+- Experience with ML pipelines, data preprocessing, feature engineering
+- Knowledge of model evaluation metrics, cross-validation, hyperparameter tuning
+- Understanding of production ML systems, scalability, and model deployment
+- Proficiency with ML frameworks and tools (TensorFlow, PyTorch, scikit-learn)
+- Ability to work with large datasets and distributed computing`
+  },
+  {
+    id: 'data-scientist',
+    label: 'Data Scientist',
+    source: 'O*NET 15-2051.00',
+    standards: 'O*NET, WEF, NIST AI RMF',
+    description: 'Analyze data, develop predictive models, extract insights from datasets',
+    roleSpec: `You are evaluating a Data Scientist candidate. The Data Scientist role requires:
+- Proficiency in statistical analysis, data manipulation, and programming (Python, R, SQL)
+- Ability to analyze large datasets and identify trends, patterns, and relationships
+- Experience developing predictive and prescriptive models
+- Knowledge of data visualization tools and techniques
+- Ability to translate business problems into analytical questions
+- Strong communication skills to present findings to non-technical stakeholders
+- Understanding of data quality, validation, and bias assessment`
+  },
+  {
+    id: 'ai-operations-engineer',
+    label: 'AI Operations Engineer',
+    source: 'WEF Future of Jobs 2025',
+    standards: 'WEF, NIST AI RMF, ISO/IEC 42001',
+    description: 'Deploy, monitor, maintain production AI systems (AIOps)',
+    roleSpec: `You are evaluating an AI Operations Engineer (AIOps) candidate. This role requires:
+- Understanding of AI system deployment, monitoring, and maintenance
+- Knowledge of MLOps, model versioning, and continuous integration/deployment for ML
+- Ability to set up monitoring, alerting, and incident response for production AI systems
+- Experience with observability tools, logging, and performance metrics
+- Understanding of model drift, retraining, and model lifecycle management
+- Knowledge of cloud platforms and containerization (Docker, Kubernetes)
+- Skills in system reliability, troubleshooting, and optimization`
+  },
+  {
+    id: 'ai-product-manager',
+    label: 'AI Product Manager',
+    source: 'WEF Future of Jobs 2025',
+    standards: 'WEF, O*NET Product Management',
+    description: 'Define AI product strategy, prioritize features, manage roadmap',
+    roleSpec: `You are evaluating an AI Product Manager candidate. This role requires:
+- Understanding of AI/ML capabilities, limitations, and practical applications
+- Ability to identify AI use cases, assess feasibility, and prioritize features
+- Knowledge of product management frameworks and methodologies
+- Skills in stakeholder management, roadmap planning, and communication
+- Understanding of user research, market analysis, and competitive landscape for AI products
+- Ability to translate business objectives into clear product requirements
+- Knowledge of responsible AI, ethics, and governance implications of AI products`
+  },
+  {
+    id: 'ai-educator',
+    label: 'AI Educator',
+    source: 'O*NET 25-1021.00',
+    standards: 'O*NET, UNESCO, ISTE',
+    description: 'Teach AI/ML concepts, develop curricula, train learners',
+    roleSpec: `You are evaluating an AI Educator candidate. This role requires:
+- Deep understanding of AI/ML concepts, applications, and limitations
+- Ability to explain complex AI/ML topics at multiple difficulty levels
+- Experience designing curricula, learning objectives, and assessments
+- Knowledge of pedagogical approaches for technology education
+- Ability to create engaging learning materials, examples, and hands-on projects
+- Skills in classroom/online facilitation, student engagement, and feedback
+- Understanding of ethical AI, responsible AI, and societal implications
+- Ability to stay current with rapidly evolving AI landscape`
+  },
+  {
+    id: 'ai-security-specialist',
+    label: 'AI Security Specialist',
+    source: 'O*NET 15-3121.00',
+    standards: 'O*NET, NIST AI RMF, OWASP',
+    description: 'Secure AI systems, threat modeling, red teaming',
+    roleSpec: `You are evaluating an AI Security Specialist candidate. This role requires:
+- Deep understanding of AI-specific security threats (prompt injection, data poisoning, model theft)
+- Knowledge of security best practices for AI/ML systems
+- Ability to conduct threat modeling, risk assessment, and vulnerability analysis
+- Experience with red teaming, adversarial testing, and security audits
+- Understanding of data security, privacy, and compliance for AI systems
+- Knowledge of security tools, frameworks, and standards (OWASP, NIST)
+- Ability to design secure AI architectures and mitigation strategies`
+  },
+  {
+    id: 'ai-governance-officer',
+    label: 'AI Governance Officer',
+    source: 'WEF Future of Jobs 2025',
+    standards: 'WEF, NIST AI RMF, EU AI Act',
+    description: 'Policy, compliance, ethics, responsible AI frameworks',
+    roleSpec: `You are evaluating an AI Governance Officer candidate. This role requires:
+- Understanding of AI ethics frameworks, responsible AI principles, and governance
+- Knowledge of regulatory landscape (EU AI Act, NIST AI RMF, sector-specific regulations)
+- Ability to assess and mitigate AI risks (bias, fairness, transparency, accountability)
+- Experience developing AI policies, guidelines, and governance frameworks
+- Understanding of compliance requirements and audit trails
+- Skills in stakeholder engagement, risk communication, and decision-making
+- Knowledge of emerging legal and policy considerations for AI systems`
+  },
+  {
+    id: 'ai-consultant',
+    label: 'AI Consultant',
+    source: 'O*NET 13-1111.00',
+    standards: 'O*NET, WEF, NIST AI RMF',
+    description: 'Advise organizations on AI adoption, strategy, implementation',
+    roleSpec: `You are evaluating an AI Consultant candidate. This role requires:
+- Broad understanding of AI capabilities, applications, and business value
+- Experience assessing organizational readiness for AI adoption
+- Ability to develop AI strategy, roadmaps, and implementation plans
+- Knowledge of change management, organizational design, and team enablement
+- Skills in stakeholder engagement, communication, and presentation
+- Understanding of various AI use cases across industries and functions
+- Ability to identify risks, barriers, and success factors for AI initiatives`
+  },
+  {
+    id: 'executive-leadership',
+    label: 'Executive Leadership',
+    source: 'WEF, NIST AI RMF',
+    standards: 'WEF, NIST AI RMF, EU AI Act',
+    description: 'Strategic AI leadership, organizational transformation, policy',
+    roleSpec: `You are evaluating an Executive Leadership candidate in AI. This role requires:
+- Strategic understanding of how AI transforms business, society, and organizations
+- Ability to set organizational AI vision, strategy, and long-term roadmaps
+- Leadership and change management skills for AI-driven transformation
+- Understanding of AI's business impact, ROI, and competitive advantages
+- Knowledge of governance, risk management, and compliance at enterprise scale
+- Ability to build and lead high-performing AI teams and partnerships
+- Understanding of societal implications, ethics, and responsible AI at scale
+- Visionary thinking about AI's future and emerging technologies`
+  }
+];
+
+const ACCOUNT_REQUIRED_ROLES = new Set(['ai-developer', 'machine-learning-engineer', 'data-scientist', 'ai-operations-engineer', 'ai-product-manager', 'ai-educator', 'ai-security-specialist', 'ai-governance-officer', 'ai-consultant', 'executive-leadership']);
+const CERTIFICATION_TIERS = EDUCATION_TIERS; // Keep for backwards compatibility
 const TEST_DEPTHS = [
   {
-    id: 'certification',
-    label: 'Certification',
-    outcome: 'certification path evidence',
-    evidence: 'clear competency evidence for the selected Ladder tier and certification tier',
+    id: 'core',
+    label: 'CORE',
+    outcome: 'foundational competency evidence',
+    evidence: 'clear foundational competency in the selected function',
     passingStandard: 'solid rubric performance with no critical failures',
     review: 'AI-assessed, auditable, and challengeable'
   },
   {
-    id: 'expert-challenge',
-    label: 'Expert challenge',
+    id: 'certification',
+    label: 'Certification',
+    outcome: 'professional certification evidence',
+    evidence: 'clear competency evidence for professional role and function',
+    passingStandard: 'solid rubric performance with no critical failures',
+    review: 'AI-assessed, auditable, and challengeable'
+  },
+  {
+    id: 'expert-certification',
+    label: 'Expert Certification',
     outcome: 'expert-level evidence for advanced credit',
     evidence: 'strong transfer, edge-case reasoning, and defensible tradeoff analysis',
     passingStandard: 'high rubric performance, independent reasoning, and confident defense under challenge',
     review: 'AI-assessed with human review recommended for public or employment claims'
   },
   {
-    id: 'mastery-challenge',
-    label: 'Mastery challenge',
+    id: 'master-certification',
+    label: 'Master Certification',
     outcome: 'mastery evidence and portfolio-quality artifact',
     evidence: 'original synthesis, portfolio-grade artifact, standards mapping, and leadership-level defense',
     passingStandard: 'near-expert rubric performance across all dimensions with no unresolved evidence gaps',
@@ -414,6 +573,23 @@ function topicById(topicId) {
 
 function tierById(tierId) {
   return LADDER_TIERS.find((tier) => tier.id === tierId) || LADDER_TIERS[0];
+}
+
+function isEducationTier(tierId) {
+  return EDUCATION_TIERS.some((tier) => tier.id === tierId);
+}
+
+function isProfessionalRole(roleId) {
+  return PROFESSIONAL_ROLES.some((role) => role.id === roleId);
+}
+
+function getProfessionalRole(roleId) {
+  return PROFESSIONAL_ROLES.find((role) => role.id === roleId);
+}
+
+function getRoleSpec(roleId) {
+  const role = getProfessionalRole(roleId);
+  return role ? role.roleSpec : '';
 }
 
 function languageLabel() {
@@ -2562,13 +2738,23 @@ function renderAccountGate() {
 function renderEvaluationPanel() {
   if (!el.certificationTierSelect || !el.testDepthSelect) return;
   const tier = getActiveTier();
-  el.certificationTierSelect.innerHTML = CERTIFICATION_TIERS.map((item) => (
+
+  // Build combined certification tier selector: education tiers + professional roles
+  const educationOptions = EDUCATION_TIERS.map((item) =>
     `<option value="${item.id}">${item.label}</option>`
-  )).join('');
+  );
+  const roleOptions = PROFESSIONAL_ROLES.map((item) =>
+    `<option value="${item.id}">${item.label} [${item.source}]</option>`
+  );
+  el.certificationTierSelect.innerHTML = [
+    ...educationOptions,
+    ...roleOptions
+  ].join('');
+
   el.testDepthSelect.innerHTML = TEST_DEPTHS.map((item) => (
     `<option value="${item.id}">${item.label}</option>`
   )).join('');
-  el.educationTierSelect.innerHTML = CERTIFICATION_TIERS.map((item) => (
+  el.educationTierSelect.innerHTML = EDUCATION_TIERS.map((item) => (
     `<option value="${item.id}">${item.label}</option>`
   )).join('');
   el.certificationTierSelect.value = state.certificationTierId;
@@ -2768,6 +2954,11 @@ function systemPromptFor(topic, tier) {
   const selectedCertificationTier = CERTIFICATION_TIERS.find((item) => item.id === state.certificationTierId) || CERTIFICATION_TIERS[0];
   const selectedDepth = TEST_DEPTHS.find((item) => item.id === state.testDepthId) || TEST_DEPTHS[0];
   const readinessCheck = isReadinessCheckTopic(topic);
+  const roleSpec = evaluation && isProfessionalRole(evaluation.certificationTierId) ? `
+PROFESSIONAL ROLE SPECIFICATION
+${getRoleSpec(evaluation.certificationTierId)}
+
+` : '';
   const evaluationBlock = evaluation ? `
 Active certification mode: YES.
 Certification blueprint: ${evaluation.blueprintId} ${evaluation.blueprintVersion}.
@@ -2778,7 +2969,7 @@ Required evidence level: ${evaluation.testDepthEvidence}.
 Passing standard: ${evaluation.testDepthPassingStandard}.
 Review posture: ${evaluation.testDepthReview}.
 
-BEFORE YOU BEGIN - RUBRIC EVALUATION CRITERIA
+${roleSpec}BEFORE YOU BEGIN - RUBRIC EVALUATION CRITERIA
 You will be evaluated on these seven dimensions:
 1. Conceptual accuracy: Do you understand the key ideas correctly?
 2. Vocabulary fluency: Can you use the relevant technical terms?

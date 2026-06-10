@@ -673,7 +673,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-05',
-    name: 'Creative User',
+    name: 'Visual & Audio Creation',
     title: 'Multimodal, Media, and Content Creation',
     accent: '#c0384f',
     vocabulary: ['multimodal', 'image generation', 'video generation', 'text-to-speech', 'speech-to-text', 'transcription', 'style transfer', 'storyboard', 'scene', 'prompt weighting', 'seed', 'upscaling', 'masking', 'inpainting', 'synthetic media'],
@@ -700,7 +700,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-06',
-    name: 'Business Practitioner',
+    name: 'Business Function Mastery',
     title: 'Function-Specific AI Use',
     accent: '#8a5cf6',
     vocabulary: ['use case', 'business process', 'ROI', 'customer journey', 'pipeline', 'segmentation', 'personalization', 'support ticket', 'knowledge article', 'HR screening', 'financial analysis', 'legal review', 'clinical decision support', 'domain risk', 'escalation'],
@@ -727,7 +727,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-07',
-    name: 'Workflow Designer',
+    name: 'Workflow Automation & Integration',
     title: 'No-Code, Automation, and Team Systems',
     accent: '#e6a817',
     vocabulary: ['automation', 'trigger', 'action', 'webhook', 'integration', 'connector', 'no-code', 'low-code', 'custom assistant', 'custom GPT', 'workspace', 'permission', 'audit trail', 'approval step', 'escalation path', 'workflow owner'],
@@ -754,7 +754,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-08',
-    name: 'Applied Builder',
+    name: 'Application Development',
     title: 'APIs, Structured Outputs, and AI App Basics',
     accent: '#6b7fd7',
     vocabulary: ['API', 'SDK', 'endpoint', 'request', 'response', 'JSON', 'schema', 'structured output', 'function calling', 'tool calling', 'streaming', 'latency', 'rate limit', 'token cost', 'model provider', 'environment variable'],
@@ -781,7 +781,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-09',
-    name: 'Knowledge Systems Builder',
+    name: 'Knowledge Systems & Retrieval',
     title: 'Data, Embeddings, Search, and RAG',
     accent: '#9a5fb0',
     vocabulary: ['embedding', 'vector', 'vector database', 'semantic search', 'keyword search', 'hybrid search', 'chunking', 'metadata', 'retrieval', 'reranking', 'RAG', 'grounding', 'citation', 'corpus', 'index', 'knowledge graph'],
@@ -808,7 +808,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-10',
-    name: 'Agent Builder',
+    name: 'Agentic Systems & Orchestration',
     title: 'Agents, Tools, MCP, and Orchestration',
     accent: '#8a5cf6',
     vocabulary: ['agent', 'tool use', 'planning', 'orchestration', 'task loop', 'subagent', 'delegation', 'memory', 'state', 'trace', 'Model Context Protocol', 'MCP server', 'MCP client', 'tool permission', 'tool result', 'sandbox'],
@@ -835,7 +835,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-11',
-    name: 'AI Engineer',
+    name: 'System Reliability & Operations',
     title: 'Evaluation, Reliability, Deployment, and Operations',
     accent: '#577590',
     vocabulary: ['eval', 'benchmark', 'golden dataset', 'test set', 'regression', 'LLM-as-judge', 'rubric', 'trace', 'observability', 'monitoring', 'fallback', 'cache', 'deployment', 'throughput', 'SLA', 'incident'],
@@ -862,7 +862,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-12',
-    name: 'AI Security Practitioner',
+    name: 'Security & Threat Mitigation',
     title: 'Security, Privacy, Abuse, and Red Teaming',
     accent: '#d8572a',
     vocabulary: ['prompt injection', 'indirect prompt injection', 'jailbreak', 'data exfiltration', 'sensitive information disclosure', 'model theft', 'supply chain', 'sandbox escape', 'overreliance', 'excessive agency', 'adversarial example', 'red team', 'threat model', 'abuse monitoring'],
@@ -889,7 +889,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-13',
-    name: 'AI Governance Practitioner',
+    name: 'Legal, Ethics & Compliance',
     title: 'Law, Ethics, Policy, and Compliance',
     accent: '#2d6a4f',
     vocabulary: ['governance', 'ethics', 'responsible AI', 'transparency', 'explainability', 'fairness', 'bias', 'accountability', 'auditability', 'privacy', 'consent', 'copyright', 'intellectual property', 'high-risk AI', 'GPAI', 'AI management system'],
@@ -916,7 +916,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-14',
-    name: 'AI Specialist',
+    name: 'Model Science & Advanced Techniques',
     title: 'Model Science, ML, and Advanced AI Domains',
     accent: '#b08968',
     vocabulary: ['neural network', 'deep learning', 'transformer', 'attention', 'pretraining', 'post-training', 'fine-tuning', 'reinforcement learning', 'diffusion', 'classifier', 'recommender', 'time series', 'computer vision', 'speech model', 'robotics', 'MLOps'],
@@ -943,7 +943,7 @@ export const LADDER_TIERS = [
   },
   {
     id: 'tier-15',
-    name: 'AI Strategist',
+    name: 'Strategic Planning & Adoption',
     title: 'Product, Market, Adoption, and Frontier Planning',
     accent: '#735f9e',
     vocabulary: ['AI strategy', 'adoption roadmap', 'operating model', 'capability map', 'build vs buy', 'product moat', 'unit economics', 'adoption metric', 'change management', 'frontier model', 'alignment', 'interpretability', 'capability evaluation', 'regulatory monitoring', 'market map'],
