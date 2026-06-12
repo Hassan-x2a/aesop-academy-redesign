@@ -1,19 +1,13 @@
-name: Deploy to Mocahost
+name: Deploy to Cloudflare Pages
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:        # manual "Run workflow" button for force redeploys
 
 concurrency:
-  group: deploy-mocahost
-  # IMPORTANT: keep this `false`. With `true`, every push cancels the
-  # in-flight deploy mid-FTP, and on a busy push day no deploy ever
-  # finishes (see 2026-04-28 incident: 10 cancelled in a row, prod stuck
-  # 13+ hours behind main). `false` lets runs queue and complete in
-  # order; the latest run still wins because FTP uploads the whole tree.
-  cancel-in-progress: false
+  group: deploy-cloudflare-pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -21,51 +15,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-          token: ${{ secrets.AIP_COMMIT_TOKEN || secrets.AESOP_PAT || github.token }}
 
-      - name: Pre-deploy truncation guard
-        run: python .github/scripts/predeploy_check.py
-
-      - name: Commit any repairs back to main
+      - name: Prepare static deploy folder
         run: |
-          git config user.name "Deploy Guard"
-          git config user.email "deploy-guard@aesopacademy.org"
-          git add -A
-          git diff --staged --quiet || git commit -m "Deploy guard: auto-repair truncated files before deploy"
-          git pull --rebase origin main
-          git push || true
+          mkdir -p _site
+          rsync -av ./ _site/ \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude '.claude/' \
+            --exclude 'TEMP/' \
+            --exclude 'aesop-api/' \
+            --exclude 'phpmailer/' \
+            --exclude '*.php' \
+            --exclude 'secrets*.php' \
+            --exclude '.htaccess'
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          server: 65.181.111.131
-          username: hivetec1
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          protocol: ftps
-          local-dir: ./
-          server-dir: /public_html/aesop-academy/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.github/**
-            **/.claude/**
-            **/TEMP/**
-            **/archive/**
-            **/aesop-api/archive/**
-            **/Board Meetings/**
-            **/secrets.local.php
-            **/config.local.php
-            **/*.bat
-            **/*.ps1
-            **/audit_*.txt
-            **/audit_modules.py
-            **/fix_*.py
-            **/README.md
-            **/.DS_Store
-            # cPanel infrastructure — never touch
-            cgi-bin/**
-            .htaccess
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _site --project-name aesopacademy-org --branch main
