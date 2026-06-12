@@ -23,11 +23,12 @@ jobs:
             --exclude '.git/' \
             --exclude '.github/' \
             --exclude '.claude/' \
+            --exclude 'node_modules/' \
             --exclude 'TEMP/' \
             --exclude 'aesop-api/' \
             --exclude 'phpmailer/' \
             --exclude '*.php' \
-            --exclude 'secrets*.php' \
+            --exclude '*secret*' \
             --exclude '.htaccess'
 
       - name: Deploy to Cloudflare Pages
