@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-13-prometheus-bezos-12b-series-b-industrial-ai",
+  "title": "Bezos's Prometheus raises $12B Series B at $41B for 'artificial general engineer'",
+  "subtitle": "The seven-month-old industrial AI startup wants to build a system that can take a jet engine from concept to manufactured part — and just raised the capital to try.",
+  "date": "2026-06-13",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["prometheus", "jeff-bezos", "industrial-ai", "funding", "physical-ai", "manufacturing"],
+  "readTime": "3 min read",
+  "heroEmoji": "🏗️",
+  "body": [
+    "Prometheus, the industrial AI company co-led by Jeff Bezos and Stanford professor Vik Bajaj, raised $12 billion in Series B funding at a $41 billion valuation. The round was announced June 11 and was led by Bezos himself with participation from JPMorgan Chase, Goldman Sachs, BlackRock, DST Global, and Arch Venture Partners. Prometheus came out of stealth in November 2025 with $6.2 billion already on the balance sheet — meaning the company has raised more than $18 billion in roughly seven months, against about 150 employees across San Francisco, London, and Zurich.",
+    "The company's stated goal is what it calls an 'artificial general engineer' — a system that can take a complex physical product like a jet engine from concept through design, simulation, and manufacturing instructions. That framing puts Prometheus in the same physical-AI conversation as PhysicsX (the $300M Temasek round on June 9), Figure's humanoid-robot production line, and the broader push to apply foundation models to atoms rather than tokens. The hiring pattern reinforces the bet: Prometheus has recruited from OpenAI, Google DeepMind, and Nvidia, picking off researchers with hardware and simulation backgrounds.",
+    "The number to sit with is the valuation per employee — roughly $270 million per head before today, climbing higher with each new senior hire. That ratio is unusual even by 2026 standards and signals that investors are valuing the team and the thesis far more than current revenue or product. Bezos used a CNBC interview around the announcement to push back on the secrecy framing — 'we're not being secretive,' he said — but the company has still published almost no technical detail about its architecture or its near-term products.",
+    "For learners: physical AI is the area where the next decade of capability gains will probably look least like a chatbot. If you are an engineering student or an early-career mechanical, materials, or controls engineer, the labs hiring into this space are buying a specific bet — that foundation models trained on simulation, CAD, and physical-process data can do for engineering what LLMs did for code. That bet may or may not pay off, but it is a real path into the AI labor market for people whose strongest skills are not software."
+  ],
+  "sources": [
+    { "title": "Bezos opens up about AI startup Prometheus after $12 billion raise — CNBC", "url": "https://www.cnbc.com/2026/06/11/project-prometheus-bezos-bajaj-live-updates.html" },
+    { "title": "Bezos' AI startup Prometheus raises $12B at $41B valuation, and the CEOs explain what they're doing — GeekWire", "url": "https://www.geekwire.com/2026/bezos-ai-startup-prometheus-raises-12b-at-41b-valuation-and-the-ceos-explain-what-theyre-doing/" },
+    { "title": "Prometheus, the industrial AI startup from Jeff Bezos, is now worth $41 billion — Axios", "url": "https://www.axios.com/2026/06/11/prometheus-bezos-industrial-ai" },
+    { "title": "Prometheus Raises $12 Billion Series B At $41 Billion Valuation To Develop AI Tools For Engineering And Manufacturing — Pulse 2.0", "url": "https://pulse2.com/prometheus-raises-12-billion-series-b-at-41-billion-valuation-to-develop-ai-tools-for-engineering-and-manufacturing/" }
+  ],
+  "status": "published"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-13-openai-chatgpt-memory-architecture-upgrade",
+  "title": "OpenAI ships new ChatGPT memory architecture with sharper recall numbers",
+  "subtitle": "The rollout pairs a rebuilt memory system with a quiet model-routing change: Instant can now bump itself up to Medium when a task needs more reasoning.",
+  "date": "2026-06-13",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": ["openai", "chatgpt", "memory", "model-routing", "personalization", "gpt-5-5"],
+  "readTime": "3 min read",
+  "heroEmoji": "🧠",
+  "body": [
+    "OpenAI began rolling out a rebuilt ChatGPT memory system on June 12, starting with Plus and Pro users on web and mobile in the US and expanding to Free and Go users in waves. The new architecture is built on top of an internal mechanism OpenAI calls 'dreaming' — an offline consolidation step that reorganizes stored memories rather than just appending to a flat list. Paid tiers get roughly twice the prior memory capacity. The picker was simplified at the same time, with a new toggle that lets Instant automatically promote a single request to Medium when the task needs more reasoning.",
+    "OpenAI's internal evaluations report meaningful gains on the metrics that memory systems are usually graded on. Factual recall climbed from 67.9% in the 2025 system to 82.8% in the new one. Preference adherence — how reliably the assistant respects stored user instructions — rose from 55.3% to 71.3%. Accuracy-over-time, which measures whether stored facts stay correct as a conversation history grows, jumped from 52.2% to 75.1%. Those are vendor-reported numbers on internal benchmarks, but the deltas are large enough to suggest the architecture, not just the prompting, has changed.",
+    "The auto-routing toggle is the quieter half of the release, and arguably the more consequential one for power users. Letting a model decide mid-request whether it needs to escalate to a slower, more expensive reasoning tier is the same idea that drove Anthropic's extended-thinking modes and Google's Gemini Thinking — a single user-facing endpoint that hides the speed-quality tradeoff. The direction of travel is clear: the user picks an assistant, not a model, and the router handles the rest.",
+    "For learners: memory is becoming a first-class design problem rather than a feature bolt-on. If you are building with the API, the lesson is that your application's memory layer is doing real work that the provider's evals now measure — what gets stored, what gets consolidated, what gets forgotten. Watch the public benchmarks that will land in the coming weeks. Vendor-reported recall numbers are useful, but the field needs independent memory benchmarks before the 82.8% figure becomes a stake in the ground."
+  ],
+  "sources": [
+    { "title": "OpenAI is rolling out a major upgrade to ChatGPT memory — Neowin", "url": "https://www.neowin.net/news/openai-is-rolling-out-a-major-upgrade-to-chatgpt-memory/" },
+    { "title": "OpenAI upgrades ChatGPT memory architecture for fresher personalized context — Let's Data Science", "url": "https://letsdatascience.com/news/openai-upgrades-chatgpt-memory-architecture-for-fresher-pers-b26b51d5" },
+    { "title": "ChatGPT — Release Notes — OpenAI Help Center", "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes" }
+  ],
+  "status": "published"
+}
