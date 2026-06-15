@@ -1,0 +1,592 @@
+{
+  "course": "AI & Creativity",
+  "courseId": "ai-and-creativity",
+  "date": "2026-06-15T09:00:00.000Z",
+  "reviewers": ["Claude", "Gemini", "Perplexity"],
+  "modules": [
+    {
+      "module": "M1: How Generative AI Works",
+      "panelAverage": 82.3,
+      "panelVerdict": { "min": 80, "label": "PASS", "color": "#22c55e" },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 5, "c2": 4, "c3": 4 },
+            "d5": { "c1": 5, "c2": 3, "c3": 4 }
+          },
+          "notes": "Camera/painting opening is one of the strongest course-level hooks — it sets up creative-tool disruption as the through-line for the whole course. Each lesson's 'Real Event' framing (ChatGPT launch dates, 'Attention Is All You Need' 2017, NY lawyers, Thaler v. Perlmutter) consistently creates the exact problem the concept section solves. The four-lesson arc (what is it → how does it learn → how does it generate → what can/can't it do) is well-architected. Main narrative weakness: no recurring protagonist across lessons, so the 'character consistency' criterion is met only by the real-figures-as-characters pattern, which is thinner than a true narrative through-line.",
+          "topIssue": "Quiz questions skew toward factual recall ('how many days to 1M users', 'how many parameters in GPT-3') rather than judgment — the module test could ask learners to apply the prediction-vs-understanding distinction to novel scenarios.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 17, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 13, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 17, "max": 20 }
+          ],
+          "total": 84,
+          "d5Score": 17,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 5, "c2": 3, "c3": 4 }
+          },
+          "notes": "Technical definitions are largely sound. Hallucination is correctly framed as predicting plausible tokens (not retrieval). RLHF, tokens, parameters, attention, context windows, and the diffusion-vs-prediction distinction are all defined at the appropriate Basic/Advanced depth. Real cases are accurately attributed (Mata v. Avianca lawyers case, Thaler v. Perlmutter ruling Aug 2023, U.S. Copyright Office Feb 2023 ruling). The 'predicting plausible sequences of tokens' framing for hallucination is precise.",
+          "topIssue": "The framing 'AI doesn't think the way you do … it is an extremely sophisticated pattern-matching and prediction machine' is technically reasonable but borders on overclaim — pattern matching is what the model does mathematically, but whether that constitutes 'thinking' is a contested philosophical claim the lesson asserts as settled fact.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 17, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 17, "max": 20 }
+          ],
+          "total": 83,
+          "d5Score": 17,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 3, "c3": 4 }
+          },
+          "notes": "Cases are reasonably current (2022–2024 anchors). The lab uses a live Claude proxy so the assistant can speak to current realities; however, the static context-window comparison table (GPT-4 Turbo 128K, Claude 3.5 200K) is already lagging — Claude has shipped 1M-token windows and Gemini routinely lists 1–2M, which a 2030s middle-schooler reading this in 2026 will notice. The 'Three Types of Generative AI You Already Know' table fixes DALL·E 3 and Suno launches in late 2023; both products have since had multiple major versions that change what's possible.",
+          "topIssue": "Context-window table is already dated — the implicit claim that 128K–200K is the frontier no longer matches the current AI landscape and undersells how much has shifted in the 18 months since module authoring.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 15, "max": 20 }
+          ],
+          "total": 80,
+          "d5Score": 15,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        }
+      }
+    },
+    {
+      "module": "M2: AI & Writing",
+      "panelAverage": 82.7,
+      "panelVerdict": { "min": 80, "label": "PASS", "color": "#22c55e" },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 5, "c3": 5 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 5, "c2": 4, "c3": 5 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Each lesson's opening story is a textbook example of 'story creates the problem' — WGA strike to introduce the labor question, CNET audit to introduce the verification question, NY lawyers to introduce hallucination, prompt-engineer salaries to introduce craft. The 'AI is better at generating than judging' line in Lesson 2 is the kind of pithy synthesis that learners can carry. Lesson 4's 'Critique Mode' framing is genuinely useful — it gives the protagonist (the student) a concrete way to retain authorship.",
+          "topIssue": "Quiz 1 question 2 leaks the answer with 'consider all words in context at once' — the wording is closer to the lesson's explanation than to a genuine judgment test. Several quiz items follow this pattern: the lesson explains, the quiz checks recall of the explanation verbatim.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 18, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 14, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 86,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 3, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Two specific factual problems flagged. (1) 'In 2016, Google researchers published a paper describing a system called Word2Vec' — Word2Vec was actually published in 2013 (Mikolov et al., 'Efficient Estimation of Word Representations in Vector Space'). The king-minus-man-plus-woman example is famous and accurate, but the date is off by three years. (2) 'GPT-4, for example, has an estimated 1.76 trillion parameters' — this figure is widely circulated but originates from a leaked rumor (Dylan Patel / SemiAnalysis); OpenAI has never confirmed it, and presenting it as a fact in a teaching module is a precision issue.",
+          "topIssue": "Word2Vec is dated 2016 in the opening story scene of Lesson 1 — actual publication was 2013. This is a high-visibility error because it's positioned as the 'Real Event' that anchors the entire writing-AI history for the learner.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 14, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 80,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Real-world anchors (2023 WGA strike outcome, CNET 77-article audit, Mata v. Avianca lawyers case, Clarkesworld submission flood, AP guidelines, Authors Guild lawsuit against OpenAI) are all credible and were widely reported. The 'prompt engineer reaching $300K' framing was true at the cited peak in 2023 but the role has since cooled — by mid-2024 several major prompt-engineering job postings were being deprecated as models got better at handling vague prompts. This dating issue is mild but the lesson could note that the salary number was a peak, not a current floor.",
+          "topIssue": "The prompt-engineer salary anchor ($300K) is presented as a stable career signal but reflects a 2023 peak that has since softened — a learner planning a career on this signal may misjudge the market.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 82,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        }
+      }
+    },
+    {
+      "module": "M3: AI & Visual Art",
+      "panelAverage": 84.3,
+      "panelVerdict": { "min": 80, "label": "PASS", "color": "#22c55e" },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 5, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 5, "c2": 4, "c3": 5 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Jason Allen at the Colorado State Fair is one of the best opening hooks in the course — it's a single concrete event that contains all the questions (is it art? did he cheat? what was the human contribution?) the rest of the module unpacks. The four-quadrant 'Different perspectives to consider' card layout in Lesson 2 (artists / AI companies / users / lawmakers) is a strong piece of curricular design because it explicitly refuses to give the learner one answer. Lesson 3's 'reverse image search' practical guidance is rare among AI-literacy modules and lands well.",
+          "topIssue": "The 'hands are the most reliable tell' guidance in Lesson 3 was true in 2023 but is now visibly outdated — Midjourney v6, Imagen 3, and Flux have largely fixed hand artifacts. A learner who relies on this as a deepfake-detection heuristic will miss current-generation fakes.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 19, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 14, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 87,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Diffusion is explained well — the 'drop of ink' analogy plus the explicit 20–50 step refinement and prompt-as-target framing is technically accurate and age-appropriate. LAION-5B dataset size (5.85B image-text pairs in M5; 5B here) is correct. Andersen/McKernan/Ortiz lawsuit details, Adobe Firefly licensing approach, Stable Diffusion open-source release (Aug 2022), and the Higgins fake Trump arrest images (March 2023) all check out. Hong Kong deepfake fraud HK$200M / ~£20M / Feb 2024 is accurately reported.",
+          "topIssue": "Latent space is defined as 'the invisible map of concepts inside the AI's memory — where dog is near cat' which is intuitively right but technically conflates several different spaces (text embedding space, image latent space in a VAE/UNet, attention space). At Basic level this simplification is fine; for an Advanced learner moving on it would benefit from a 'we are simplifying' callout.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 17, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 83,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Currency is strong overall. Slovakia election deepfake audio (September 2023), Hong Kong $25M deepfake video-call fraud (Feb 2024), Refik Anadol Unsupervised at MoMA (2022–2023), Ubisoft Ghostwriter (March 2023), Obvious portrait at Christie's ($432,500 in Oct 2018) are all accurately dated and described. The detection-tells section in Lesson 3 (hands, garbled text, glassy eyes) was widely accurate in 2023 but is the weakest part of the module for currency — modern models have substantially closed these gaps.",
+          "topIssue": "Lesson 3's 'how to spot AI-generated images' checklist is the most rapidly aging section in the entire course — the hands/text/eyes heuristics that worked in 2023 are unreliable against 2025–2026 models, and a learner trusting them will be misled.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 17, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 83,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        }
+      }
+    },
+    {
+      "module": "M4: AI & Music",
+      "panelAverage": 85.7,
+      "panelVerdict": { "min": 80, "label": "PASS", "color": "#22c55e" },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 5, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 5, "c2": 5, "c3": 5 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "The strongest module in the course for delivery architecture — the historical timeline (1956 Illiac Suite → 1981 EMI → 2016 Flow Machines/WaveNet → 2020 Jukebox → 2023 Suno/Udio/MusicGen) gives learners a real sense of trajectory, and 'Heart on My Sleeve' as the Lesson 4 opener is one of the course's strongest narrative hooks because it contains the consent, voice-cloning, fair-use, and ownership questions all in one viral moment. The 'three futures' (negotiated licensing / open source / AI-as-instrument) framing in Lesson 4 gives the learner real cognitive scaffolding for predicting the next decade.",
+          "topIssue": "Lesson 2 introduces melody/harmony/rhythm as a vocabulary scaffold but never returns to use these terms diagnostically — for example, the 'AI struggles with structure' claim would be more memorable if a learner had to identify which of melody/harmony/rhythm/structure was being violated in a sample case.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 19, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 15, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 88,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 5, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Historical claims check out: Illiac Suite (1956, Hiller and Isaacson), Cope's EMI work (1980s), Flow Machines and 'Daddy's Car' (2016), WaveNet (2016 DeepMind paper), MuseNet (April 2019), MusicTransformer (2018, Anna Huang and colleagues at Magenta), Suno (Dec 2023), Udio (April 2024). RIAA-coordinated lawsuit by UMG/Sony/Warner against Suno and Udio (June 2024) is correctly dated. Grimes' royalty-sharing offer for AI versions of her voice (May 2023) is correctly described. The Holly Herndon PROTO album (2019) and her PhD lineage at CCRMA Stanford are accurate.",
+          "topIssue": "The 'GPT-4-style transformer architecture' framing for Suno and Udio is partially imprecise — these systems use a stack including diffusion and other generative components, not pure transformer next-token prediction. The lesson correctly notes 'diffusion … the same technology behind image generators' but the earlier transformer framing could mislead.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 17, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 13, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 84,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 5, "c3": 5 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 5, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Currency is the best in the course. UMG/Sony/Warner suit against Suno/Udio (June 2024) lands the legal frontier correctly. McCartney using AI to isolate Lennon's voice on 'Now and Then' (Nov 2023 release) is correctly described. The April 2024 open letter signed by Billie Eilish, Nicki Minaj, Katy Perry, and others is accurately cited. UK Musician's Union 52%/68% session-musician job-loss survey reflects 2023 reporting. Spotify Discover Weekly launch year (2015) and 40M users by 2016 are correct.",
+          "topIssue": "The Lesson 4 'three futures' framing presents 'open-source AI music' as a plausible scenario, but as of 2025 the actual trajectory has clearly bent toward the 'negotiated licensing' future (UMG/Sony/Warner direct deals with AI companies), so framing the three as equally probable already misrepresents where the industry is heading.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 18, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 13, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 85,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        }
+      }
+    },
+    {
+      "module": "M5: The Consent & Copyright Problem",
+      "panelAverage": 83.7,
+      "panelVerdict": { "min": 80, "label": "PASS", "color": "#22c55e" },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 5, "c2": 5, "c3": 5 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 5, "c2": 5, "c3": 5 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "The strongest concept-accuracy module in the course. Greg Rutkowski's experience as the opening case — including the Lexica.art prompt-frequency stat (93K Rutkowski vs 22K Frida Kahlo) — is exactly the kind of specific, anchoring detail that makes the consent problem feel real rather than abstract. The four-factor fair-use lab (Lesson 2) is one of the few labs in the course that gives learners a genuine intellectual framework to apply, not just a discussion prompt. The 'opt-in vs opt-out' framing, the Zarya of the Dawn ruling explanation, and the EU AI Act / TRAIN Act / NO FAKES Act survey all land at the right level for an Advanced learner.",
+          "topIssue": "Lab 2 (Fair Use Judge) and Lab 4 (Design the Rules) are intellectually rich but their three-exchange completion threshold understates how much thinking the actual task requires — a learner who hits 'send' three times can complete the lab without doing the four-factor analysis the lesson promises.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 20, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 15, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 86,
+          "d5Score": 14,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 5, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 5, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Legal facts are tightly checked. Getty Images sued Stability AI in January 2023 in the UK, with the parallel Delaware case filed Feb 2023. The Andersen/McKernan/Ortiz class action filing date (Jan 2023) and Judge William Orrick's October 2023 ruling allowing direct-infringement claims to proceed are accurate. The Authors Guild action against OpenAI (Sept 2023) involving Grisham, Franzen, Martin, Picoult, and Hilderbrand is correctly described. The Books3 / shadow library claim (196,000 books from piracy sites) is widely reported. EU AI Act passage in 2024 with staged compliance 2024–2027 is accurate. Stephen Thaler's 'A Recent Entrance to Paradise' case (August 2023 ruling) is correct.",
+          "topIssue": "The NO FAKES Act and TRAIN Act sections describe these as 2023 bills 'not yet passed' which was true at module authoring but understates how those bills have evolved through reintroductions and committee changes — a learner researching them in 2026 may find the legislative landscape has moved.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 19, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 13, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 83,
+          "d5Score": 14,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 3 },
+            "d2": { "c1": 5, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 3, "c2": 4, "c3": 4 }
+          },
+          "notes": "Currency holds well because the topic is inherently rule-of-law dynamic. The lesson is careful to label cases as 'ongoing' and to note 'as of this writing,' which buys it some grace. Getty's smeared-watermark evidence is correctly described as a still-pending UK suit. Shutterstock-OpenAI contributor fund (2023) and AP-OpenAI deal (2023) are correctly described as templates the rest of the industry is still negotiating. The Getty-Nvidia training-data deal (2023) is correctly cited. The lab's 'judge the fair-use case' framing remains current because the central question is unresolved in case law.",
+          "topIssue": "Three lab tasks ('Consent Conversation,' 'Fair Use Judge,' 'Design the Rules') are essentially three variations of the same debate — by Lab 4 the learner has covered most of the territory already, and the marginal value of Lab 4 over a focused homework essay is modest.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 21, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 19, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 14, "max": 20 }
+          ],
+          "total": 82,
+          "d5Score": 14,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        }
+      }
+    },
+    {
+      "module": "M6: Protecting Your Creative Voice",
+      "panelAverage": 85.3,
+      "panelVerdict": { "min": 80, "label": "PASS", "color": "#22c55e" },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 5, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 5, "c3": 4 },
+            "d4": { "c1": 5, "c2": 4, "c3": 5 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Hollie Mengert is one of the course's most resonant opening cases because the harm is specific and the loss is named precisely ('the accumulated pattern of her choices, her color preferences, her way of drawing eyes and hands and expressions'). Lesson 4's 'Mirror Prompt' exercise is a genuinely original pedagogical move — using AI imitation of the learner's own style as a tool for self-discovery rather than as a threat. The 'Documentation as Creative Defense' section gives concrete, age-appropriate steps (version history, embedded metadata, public timestamps, process documentation) that a 14-year-old can actually do this week.",
+          "topIssue": "The 'voice is what's distinctively yours' framing is rhetorically strong but the actual measurable capability the module promises ('learners will identify their creative signature') is mostly delivered through reflective conversation rather than a concrete artifact — a portfolio process-doc template or a voice-map worksheet would close the gap between insight and action.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 19, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 18, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 14, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 89,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 5, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Glaze is correctly attributed to the University of Chicago SAND Lab (Ben Zhao's team) and the 2023 release date is accurate. The 'invisible perturbations cause AI models to misinterpret the style' framing is technically right — Glaze applies adversarial perturbations to the image's style representation. Hollie Mengert is correctly described as a Disney and Dreamworks veteran (her credits include Walt Disney Animation Studios and DreamWorks TV). The WGA strike outcome and Karla Ortiz's principled position on consented vs unconsented training data are accurately described.",
+          "topIssue": "Glaze's effectiveness is presented as binary ('cloaking work against style extraction') when in practice Glaze has been shown to be partially defeatable by various countermeasures (including newer models trained after Glaze was released); a more accurate framing would be 'raises the cost of style extraction' rather than 'cloaks.'",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 17, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 18, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 85,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Hollie Mengert episode (Sept 2023, Invoke AI's 'Hollie+' model) is correctly described and was widely reported in art-community press at the time. ArtStation 'Do Not Train' tag (Dec 2022), DeviantArt opt-out, Adobe Stock policy, and Glaze (2023) tools are all real. Karla Ortiz's principled position on consented training data is accurately summarized. Holly Herndon's Holly+ project and her PhD background (Stanford CCRMA) are correct. The Hollie+/Hollie Mengert story has had subsequent developments — Invoke AI removed the model after public pressure — which the module does not include.",
+          "topIssue": "The Hollie Mengert story stops at 'this happened to her' without noting that public outcry led Invoke AI to take the named model down — a learner reading this in 2026 may miss that the consent-norm war is now being won case by case, which is an empowering narrative the module forfeits.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 82,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        }
+      }
+    },
+    {
+      "module": "M7: AI as a Creative Partner",
+      "panelAverage": 80.3,
+      "panelVerdict": { "min": 80, "label": "PASS", "color": "#22c55e" },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 5, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Sunspring (2016) is a good opening case and the 'three models' (Amplifier / Provocateur / Co-Author) framework is genuinely useful curriculum architecture — it gives the learner a vocabulary that subsequent lessons could reuse. The four-element prompt framework (Subject, Style, Constraint, Perspective) is solid. However, this module's content overlaps heavily with M2, M3, M4, M5: Jason Allen and Théâtre D'Opéra Spatial reappear from M3, Heart on My Sleeve reappears from M4, Zarya of the Dawn reappears from M5, the Andersen lawsuit reappears from M3 and M5. The module reads as a course recap rather than a fresh synthesis.",
+          "topIssue": "There is also a literal markup bug at line ~237 — the third 'Model 3' card has a duplicate `<div class=\"example-card-label\">Model 3</div>` element where the title should be, which means the rendered card shows 'Model 3' twice and is missing its title element.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 20, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 17, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 81,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Sunspring (June 2016, Sci-Fi London, director Oscar Sharp, AI named Benjamin developed with Ross Goodwin) is correctly described. Robin Sloan's use of custom language models as a writing partner — documented in his newsletters and the 2019 'Voyages in Sentence Space' piece — is accurately characterized. Jason Allen at the Colorado State Fair (August 2022) is correctly dated. The Crow short film attributed to Jessy Moussallem and dated 2022 is harder to verify — Moussallem is a known music video director but a 2022 short titled The Crow using Midjourney for concept art is not a widely documented project; this may be an authoring error worth checking.",
+          "topIssue": "The 'Jessy Moussallem 2022 short film The Crow used Midjourney for concept art' claim is not corroborated in mainstream coverage; this may be a confabulation that snuck through review and should be verified or removed before further classroom use.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 20, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 80,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 4, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 4 }
+          },
+          "notes": "Examples (Sunspring 2016, Allen 2022, Heart on My Sleeve 2023, Zarya of the Dawn 2023, Obvious portrait Christie's 2018, Andersen lawsuit 2023) are all real but they're now the most-rehearsed example set in the entire AI-and-creativity literature. By 2026 a learner has likely already encountered every one of them in other media. The module's currency suffers not because anything is wrong, but because it relies on the same five anchors that the rest of the course has already used.",
+          "topIssue": "Module 7 reuses the same five canonical example cases (Sunspring, Allen, Heart on My Sleeve, Zarya, Andersen lawsuit) that already appear in M1, M3, M4, and M5 — by the time a learner reaches M7 the examples have lost their freshness and the synthesis lesson reads as repetition.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 20, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 16, "max": 20 }
+          ],
+          "total": 80,
+          "d5Score": 16,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        }
+      }
+    },
+    {
+      "module": "M8: The Future of Creative Work",
+      "panelAverage": 82.3,
+      "panelVerdict": { "min": 80, "label": "PASS", "color": "#22c55e" },
+      "reviews": {
+        "Claude": {
+          "reviewer": "Claude",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 4, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 5, "c2": 4, "c3": 5 },
+            "d5": { "c1": 4, "c2": 4, "c3": 5 }
+          },
+          "notes": "This is the right closing module for an 'AI & Creativity' course aimed at students — career stakes, durable human skills, and a practical 'what do I do this week' framework. The WGA strike framing at the open is well-judged: it grounds the future-of-work question in a concrete labor outcome rather than abstract forecasts. The Lesson 3 enumeration of irreplaceable human skills (specificity of observation, ethical reasoning under ambiguity, collaboration and communication, taste and curation) is genuinely actionable — these are skills a 16-year-old can practice deliberately. Lab 4 (5-year creative plan) gives the strongest capability-delta close of any module ('learner can articulate a concrete plan').",
+          "topIssue": "The 'AI fluency means writing creative briefs' framing in Lesson 4 is good but may be overstated as the #1 hiring skill — Adobe's 2023 State of Creativity report is the cited source but the claim is presented with more certainty than that survey methodology supports.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 16, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 14, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 17, "max": 20 }
+          ],
+          "total": 85,
+          "d5Score": 17,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Gemini": {
+          "reviewer": "Gemini",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 3, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 5 }
+          },
+          "notes": "Several statistics need stronger sourcing. (1) 'Adobe partnered with the College Board to integrate AI literacy into AP Art and Design curricula' (2023) — Adobe does have an ongoing partnership with College Board around Creative Cloud in education, but the specific claim that this was the first standardized US curriculum to address AI tools needs corroboration; the College Board's actual AI guidance for AP Art has been more cautious. (2) The '83% of creative professionals expected to use generative AI tools regularly within two years' Adobe 2023 figure is plausibly drawn from Adobe's 'Future of Creativity' research but isn't presented with enough sourcing detail. (3) The McKinsey '~30% of creative tasks have high AI automation potential by 2030' is in the right ballpark but McKinsey's actual figure varies by their specific report and use-case definition.",
+          "topIssue": "Adobe/College Board partnership claim is the highest-stakes citation in the module (it's the opening anchor of Lesson 4) and is presented with more specificity than I can verify against public sources — needs a direct citation or softer framing.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 14, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 17, "max": 20 }
+          ],
+          "total": 81,
+          "d5Score": 17,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        },
+        "Perplexity": {
+          "reviewer": "Perplexity",
+          "scores": {
+            "d1": { "c1": 5, "c2": 4, "c3": 4, "c4": 4 },
+            "d2": { "c1": 3, "c2": 4, "c3": 4 },
+            "d3": { "c1": 4, "c2": 4, "c3": 4 },
+            "d4": { "c1": 4, "c2": 4, "c3": 4 },
+            "d5": { "c1": 4, "c2": 4, "c3": 5 }
+          },
+          "notes": "The career-future framing is the most exposed-to-time-drift content in the entire course. Statements like 'if you're 14 today you'll enter the workforce around 2030' read as forward-looking in a 2024 module and as nearly-present in a 2026 read — the module would benefit from explicit dates rather than 'today.' The Getty Images stock photo decline (2023), Shutterstock/Adobe Stock AI integration, and McKinsey 2023 generative-AI report are all real anchors. The 'prompt engineer / AI art director / AI music supervisor' job-title list was current in 2023 but at least 'prompt engineer' as a standalone role has cooled in 2024–2025.",
+          "topIssue": "The 'prompt engineer' job title is presented as an emerging stable role; by mid-2024 the title had already started consolidating into broader 'AI product manager' or 'AI workflow lead' roles, and learners orienting their careers on this signal are taking a stale snapshot of the labor market.",
+          "dimScores": [
+            { "dim": 1, "name": "Narrative Integrity",   "score": 22, "max": 25 },
+            { "dim": 2, "name": "Concept Accuracy",      "score": 14, "max": 20 },
+            { "dim": 3, "name": "Level Appropriateness", "score": 16, "max": 20 },
+            { "dim": 4, "name": "Delivery Architecture", "score": 12, "max": 15 },
+            { "dim": 5, "name": "Applied Outcome",       "score": 17, "max": 20 }
+          ],
+          "total": 81,
+          "d5Score": 17,
+          "verdict": { "min": 80, "label": "PASS", "color": "#22c55e" }
+        }
+      }
+    }
+  ]
+}
