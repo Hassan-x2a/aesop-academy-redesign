@@ -1,7 +1,7 @@
 # Claude Session Context
 
 Source: ranked Obsidian knowledge graph
-Generated: 2026-06-17T05:51:51.217601+00:00
+Generated: 2026-06-17T15:37:03.474002+00:00
 Project: Aesop
 Task: general project session
 
@@ -16,21 +16,21 @@ This packet contains the ranked portions of the Obsidian graph that relate to th
    - Why it may matter: Process the following freeform dump. For each distinct piece of information: 1. **Classify** it: decision, incident, 1-on-1 content, win/achievement, architecture, project update, person context, or general work note. 2. **Search first**: Use `qmd vsearch` (or
    - Signals: relevance=0.7071, centrality=0.0045, freshness=0.989, bridge=0.35, evidence=0.75
 
-2. kilo-rules [0.4414]
+2. kilo-rules [0.4411]
    - Source: graphify/tools/skillgen/fragments/extra/kilo-rules.md
    - Why it may matter: ## Kilo-specific rules - Use the native `Task` tool for semantic extraction fan-out. - Launch all chunk tasks in the same response so they run in parallel. - Always use `subagent_type="general"` for extraction chunks. - After modifying code files during the se
-   - Signals: relevance=0.7071, freshness=0.989, bridge=0.35, evidence=0.75
+   - Signals: relevance=0.7071, freshness=0.9863, bridge=0.35, evidence=0.75
 
 3. 6-Obsidian [0.4026]
    - Source: 6-Obsidian.md
    - Why it may matter: # 6-Obsidian.md — Meridian ## Vault Config - **Build folder:** G:\My Drive\Aesop Academy\Obsidian\Meridian_Build - **Sessions folder:** G:\My Drive\Aesop Academy\Obsidian\Meridian_Sessions
    - Signals: relevance=0.7071, freshness=0.9507, evidence=0.75
 
-4. GRAPH_REPORT [0.3602]
+4. GRAPH_REPORT [0.3599]
    - Source: Graphify/GRAPH_REPORT.md
    - Tags: 2
    - Why it may matter: REPORT GENERATION -------------------------- cd "C:\Users\scott\code\meridian" $env:PATH = "C:\Users\scott\.local\bin;$env:PATH" $dest = "G:\My Drive\Obsidian\Meridian_Build\Graphify" New-Item -ItemType Directory -Force -Path $dest | Out-Null graphify export o
-   - Signals: centrality=1.0, freshness=0.989, bridge=0.15, evidence=0.75
+   - Signals: centrality=1.0, freshness=0.9863, bridge=0.15, evidence=0.75
 
 5. Memories [0.344]
    - Source: obsidian-mind-clean/brain/Memories.md
@@ -42,11 +42,11 @@ This packet contains the ranked portions of the Obsidian graph that relate to th
    - Why it may matter: # Skills Custom slash commands, subagents, and reusable workflows. Defined in `.claude/commands/` and `.claude/agents/`. ## Slash Commands ### Daily Workflow | Command | Purpose | |---------|---------| | `/om-standup` | Morning kickoff — load context, review y
    - Signals: centrality=0.0225, authority=0.8, freshness=0.989, bridge=0.5, evidence=0.75
 
-7. GRAPH_REPORT [0.3166]
+7. GRAPH_REPORT [0.3163]
    - Source: graphify/worked/rsl-siege-manager/GRAPH_REPORT.md
    - Tags: 1, 12, 17, 22, 295, 381, 6
    - Why it may matter: # Graph Report - . (2026-05-13) ## Corpus Check - cluster-only mode — file stats not available ## Summary - 1886 nodes · 3876 edges · 141 communities (89 shown, 52 thin omitted) - Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 393 edges (a
-   - Signals: centrality=0.5495, freshness=0.989, bridge=0.15, evidence=0.75
+   - Signals: centrality=0.5495, freshness=0.9863, bridge=0.15, evidence=0.75
 
 8. People & Context [0.3031]
    - Source: obsidian-mind-clean/org/People & Context.md
