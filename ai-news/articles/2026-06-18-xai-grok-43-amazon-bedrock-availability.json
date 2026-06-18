@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-18-xai-grok-43-amazon-bedrock-availability",
+  "title": "Grok 4.3 lands on Amazon Bedrock — xAI joins AWS's frontier-model roster",
+  "subtitle": "AWS adds xAI as a Bedrock model provider with Grok 4.3, a 1M-token context model running on the new Mantle inference engine.",
+  "date": "2026-06-18",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["xai", "grok", "aws", "amazon-bedrock", "enterprise"],
+  "readTime": "3 min read",
+  "heroEmoji": "🤖",
+  "body": [
+    "AWS announced this week that xAI's Grok 4.3 model is now available on Amazon Bedrock, with xAI joining as a model provider alongside Anthropic, Meta, OpenAI, and the existing roster. Grok 4.3 launched on June 15, ships with a 1 million-token context window, and exposes configurable reasoning effort levels — low, medium, and high. It runs on Mantle, a new Bedrock inference engine that AWS is positioning around price-performance for long-context workloads. Tool calling, structured output, and response streaming are supported on day one, and the model is generally available in supported AWS regions.",
+    "The strategic point is access. Grok was previously reachable only through xAI's own API or the X platform, which made it a non-starter for enterprises whose procurement runs through hyperscaler marketplaces. Bedrock's commit-and-bill plumbing, IAM controls, and region-locked data handling are the boring infrastructure that lets a Fortune 500 buyer add Grok to an evaluation without writing a new vendor contract.",
+    "Read this against the broader Bedrock build-out: Anthropic's Claude models have been Bedrock's anchor since 2023, OpenAI's GPT-OSS open-weight models showed up earlier this year, and Meta's Llama family is long-standing. Adding Grok closes one of the last gaps in the hyperscaler model catalog. For AWS, the calculation is straightforward — every frontier model that runs on Bedrock generates compute revenue regardless of which lab wins the benchmark wars.",
+    "Takeaway for learners: if you're evaluating LLMs at work, the question \"which model?\" is increasingly downstream of \"which cloud?\" Whichever hyperscaler your employer already buys from is going to ship the same headline models, with the same APIs and the same SOC 2 paperwork. Spend your evaluation time on prompt and pipeline differences across models, not on which company built them."
+  ],
+  "sources": [
+    { "title": "Grok on Amazon Bedrock — xAI", "url": "https://x.ai/news/grok-amazon-bedrock" },
+    { "title": "Grok 4.3 from xAI now available in Amazon Bedrock — AWS What's New", "url": "https://aws.amazon.com/about-aws/whats-new/2026/06/grok-amazon-bedrock/" },
+    { "title": "Grok 4.3 — Amazon Bedrock User Guide", "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-xai-grok-4-3.html" }
+  ],
+  "status": "published"
+}

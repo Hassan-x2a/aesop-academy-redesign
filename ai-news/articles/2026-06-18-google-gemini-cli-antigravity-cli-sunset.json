@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-18-google-gemini-cli-antigravity-cli-sunset",
+  "title": "Google sunsets the Gemini CLI today — Antigravity becomes the default surface",
+  "subtitle": "From June 18, Gemini CLI and Code Assist IDE extensions stop serving Google AI Pro, Ultra, and free-tier users, forcing migration to the agent-first Antigravity CLI.",
+  "date": "2026-06-18",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": ["google", "gemini", "antigravity", "developer-tools", "agents"],
+  "readTime": "3 min read",
+  "heroEmoji": "🧭",
+  "body": [
+    "Google's deprecation window for the Gemini CLI closes today, June 18, 2026. From this date, the Gemini CLI and Gemini Code Assist IDE extensions stop serving requests for Google AI Pro, Ultra, and free-tier users. Those users must migrate to the Antigravity CLI, the Go-based agent-first tool Google made generally available on May 19. Customers on Gemini Code Assist Standard, Enterprise, or the GitHub-via-Google-Cloud track keep their existing access — only the consumer and Pro/Ultra surfaces are being collapsed into Antigravity.",
+    "Antigravity is not a rename. It is built for asynchronous multi-agent workflows — multiple agents can orchestrate tasks in the background without blocking the terminal — and ports the most-used Gemini CLI features as plugins: Agent Skills, Hooks, Subagents, and Extensions. Feature parity is incomplete on day one, which is why Google has been nudging users for a full month rather than flipping a switch. Existing automation built against the Gemini CLI binary will need to be rewritten against the Antigravity entrypoint.",
+    "This is part of a broader pattern. The frontier labs are each consolidating their developer surface around an agent-first runtime — Anthropic with Claude Code, OpenAI with Codex Cloud, Google with Antigravity. The new design center is \"a CLI that runs agents,\" not \"a CLI that wraps a chat completion.\" Expect the same migration pressure across the other vendors as they retire their first-generation, single-turn CLI tools in favor of orchestration-aware ones.",
+    "Takeaway for learners: if any of your scripts call the Gemini CLI on a free or Pro account, expect them to break today. Migrate now, and use the opportunity to think about which of your scripts should actually be agent workflows. The fact that Google is forcing this transition tells you which way the developer-tools market is heading."
+  ],
+  "sources": [
+    { "title": "An important update: Transitioning Gemini CLI to Antigravity CLI — Google Developers Blog", "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/" },
+    { "title": "Bye-bye, Gemini CLI; Google nudges devs toward Antigravity — The Register", "url": "https://www.theregister.com/ai-ml/2026/05/20/bye-bye-gemini-cli-google-nudges-devs-toward-antigravity/5243605" },
+    { "title": "Google Moves Gemini CLI Into Antigravity CLI as Agent Platform Expands — Virtualization Review", "url": "https://virtualizationreview.com/articles/2026/05/19/google-moves-gemini-cli-into-antigravity-cli-as-agent-platform-expands.aspx" }
+  ],
+  "status": "published"
+}

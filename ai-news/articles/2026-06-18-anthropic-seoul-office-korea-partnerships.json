@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-18-anthropic-seoul-office-korea-partnerships",
+  "title": "Anthropic opens Seoul office, locks in Samsung, LG, NAVER as Claude customers",
+  "subtitle": "Anthropic's third Asia-Pacific office arrives with an MOU with Korea's Ministry of Science and ICT and enterprise deployments across the country's largest conglomerates.",
+  "date": "2026-06-18",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["anthropic", "claude", "korea", "enterprise", "international-expansion"],
+  "readTime": "3 min read",
+  "heroEmoji": "🇰🇷",
+  "body": [
+    "Anthropic opened its Seoul office on June 17, 2026, the company's third Asia-Pacific location after Tokyo and Bengaluru. KiYoung Choi, former General Manager of Snowflake Korea, leads the office as Representative Director. Alongside the launch, Anthropic signed a Memorandum of Understanding with Korea's Ministry of Science and ICT focused on AI safety, and named a slate of enterprise customers: NAVER is rolling Claude Code across its full engineering organization, Samsung SDS is deploying Claude Cowork and Claude Code across Samsung Electronics, LG CNS is bringing Claude into the LG Group, Nexon is using Claude Code for live-service game development, Hanwha Solutions is consuming Claude through AWS Bedrock with in-region data controls, and Channel Corp is wiring Claude into its Channel Talk platform serving more than 230,000 businesses.",
+    "Korea is one of the few markets where a frontier-lab presence translates directly into national policy alignment. The MOU with the Ministry of Science and ICT is unusual — Anthropic is putting safety research under a bilateral framework with the host government before its model export status to Korea is even resolved. Anthropic is also seeding the academic side, providing Claude to up to sixty researchers across KAIST, Korea University, Yonsei, and POSTECH through the National AI Research Lab consortium.",
+    "The timing matters. Anthropic filed confidentially for an IPO last month, and an enterprise customer roster that includes Samsung, LG, and NAVER is the kind of revenue concentration story public-market investors want to see. It also lands while US AI export controls to Korea are still being negotiated — locking in named deployments with the largest chaebols gives Anthropic political cover on both sides of the Pacific. Compare with the timing of Anthropic's NEC Japan deal in April and its Japan megabank rollout in May: Asia-Pacific has become the company's growth lane.",
+    "Takeaway for learners: AI infrastructure now means government relationships, not just GPUs. Watch the order of operations in this announcement — office, MOU, then enterprise wins. Frontier labs are increasingly behaving like sovereign-tier vendors, and the customers they sign first tell you which sectors believe LLMs will move the bottom line this fiscal year."
+  ],
+  "sources": [
+    { "title": "Anthropic opens Seoul office and announces new partnerships across the Korean AI ecosystem — Anthropic", "url": "https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem" },
+    { "title": "Anthropic opens Seoul office to expand ties with Korean AI ecosystem — Korea Times", "url": "https://www.koreatimes.co.kr/business/tech-science/20260618/anthropic-opens-seoul-office-to-expand-ties-with-korean-ai-ecosystem" },
+    { "title": "Anthropic opens Seoul office amid U.S. AI restrictions — UPI", "url": "https://www.upi.com/Top_News/World-News/2026/06/18/korea-Anthropic-Seoul-office-Korea-partnerships-Washington-AI-export-controls/4641781769900/" }
+  ],
+  "status": "published"
+}

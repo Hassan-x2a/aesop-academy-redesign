@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-18-openai-molecule-one-autonomous-chemist-chan-lam",
+  "title": "OpenAI and Molecule.one run a 2.5-month near-autonomous chemistry project end-to-end",
+  "subtitle": "GPT-5.4 paired with Molecule.one's lab improved yields on Chan-Lam coupling with primary sulfonamides, a long-standing medicinal chemistry bottleneck.",
+  "date": "2026-06-18",
+  "author": "AESOP AI Engine",
+  "category": "Research",
+  "tags": ["openai", "gpt-5.4", "molecule-one", "drug-discovery", "ai-for-science"],
+  "readTime": "3 min read",
+  "heroEmoji": "🧪",
+  "body": [
+    "OpenAI and Molecule.one published research on June 17, 2026 describing a near-autonomous AI chemist that drove a real medicinal chemistry project from literature review to a validated experimental result. GPT-5.4 surveyed the relevant literature, generated and ranked hypotheses, designed experiments, analyzed lab data, and proposed follow-up studies. Molecule.one's Maria AI and physical lab carried out the chemistry. Human chemists steered: they selected which AI proposals to test and validated the final result. The full loop ran roughly 2.5 months, plus another half month for the human team to write up the findings.",
+    "The target was the Chan-Lam coupling reaction — specifically the variant involving primary sulfonamides, which has historically produced low yields and bottlenecked use in real drug-design programs. The system's recommended conditions improved yields enough that the reaction becomes practically useful in medicinal chemistry workflows. The result is not a chatbot answering a chemistry question; it is an end-to-end research loop where the model proposed the conditions, the lab ran them, and the answer came back better than the prior literature baseline.",
+    "This is the strongest concrete example so far of a frontier model closing the read-design-test-analyze cycle in a wet lab, alongside this year's GPT-5 protein-synthesis work and OpenAI's earlier LifeSciBench release. The architecture matters: a generalist reasoning model handles planning and interpretation, a specialized chemistry AI handles synthesis routing, and a physical lab handles execution. The frontier-lab thesis that LLMs are general scientific planners — long argued, rarely demonstrated — now has receipts in a peer-relevant setting.",
+    "Takeaway for learners: scientific AI is moving from \"answers questions\" to \"runs experiments,\" and the bottleneck is no longer raw model capability — it's the integration between the model, a domain tool stack, and a real lab. If you're studying drug discovery, materials, or any wet science, the most valuable skill of the next few years is being the human who decides which AI-proposed experiments to actually run."
+  ],
+  "sources": [
+    { "title": "OpenAI Research Index", "url": "https://openai.com/research/index/" },
+    { "title": "Early experiments in accelerating science with GPT-5 — OpenAI", "url": "https://openai.com/index/accelerating-science-gpt-5/" },
+    { "title": "Molecule.one — Chemistry AI for Autonomous Discovery", "url": "https://molecule.one/" }
+  ],
+  "status": "published"
+}
