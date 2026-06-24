@@ -1,11 +1,11 @@
 # AESOP Anthropic Usage Report
 
-**Report date:** 2026-06-22 (covering yesterday: 2026-06-21)
-**Month-to-date cost:** $3.11 (2026-06)
+**Report date:** 2026-06-24 (covering yesterday: 2026-06-23)
+**Month-to-date cost:** $3.41 (2026-06)
 
 ---
 
-## Yesterday — 2026-06-21
+## Yesterday — 2026-06-23
 
 ### Cost by routine (estimated from cadence)
 
@@ -15,11 +15,11 @@
 | Daily AI News | 1 | Sonnet | $0.04 |
 | Registry Audit | 1 | Sonnet | $0.03 |
 | Rubric Review | 1 | Sonnet | $0.08 |
-| Broken Link Crawler | 1 | Sonnet | $0.04 |
+| Broken Link Crawler | 0 | Sonnet | $0.00 |
 | Weekly Changelog | 0 | Haiku | $0.00 |
 | Git Sync | 1 | Sonnet | $0.01 |
 | Daily Usage Report | 1 | Haiku | $0.00 |
-| **Total** | | | **$0.35** |
+| **Total** | | | **$0.30** |
 
 _Costs are estimates based on routine cadence and typical token budgets.
 Actual billing may differ. Live usage data requires Anthropic to add
@@ -39,6 +39,7 @@ secrets support to Routines._
 | 2026-06-17 | $0.30 | $2.46 |
 | 2026-06-20 | $0.30 | $2.76 |
 | 2026-06-21 | $0.35 | $3.11 |
+| 2026-06-23 | $0.30 | $3.41 |
 
 ---
 
