@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-25-assort-health-120m-series-c-voice-ai-patient-journey",
+  "title": "Assort Health raises $120M at a $1.2B valuation for voice AI agents across the patient journey",
+  "subtitle": "Menlo Ventures led the Series C as Assort expands from specialty scheduling into intake, referrals, document processing, refills, eligibility checks, lab orders, and payments.",
+  "date": "2026-06-25",
+  "author": "AESOP AI Engine",
+  "category": "Healthcare",
+  "tags": ["assort-health", "voice-ai", "healthcare", "menlo-ventures", "agents", "funding"],
+  "readTime": "3 min read",
+  "heroEmoji": "🩺",
+  "body": [
+    "Assort Health announced a $120 million Series C on June 24, led by Menlo Ventures at a $1.2 billion valuation. Total funding now sits above $222 million. The company started with a voice AI agent for specialty appointment scheduling and has since added intake forms, referrals, document processing, medication refills, eligibility checks, lab requests, and payments — all running as a single agent that the patient reaches by calling a number.",
+    "Voice agents are the boring part of healthcare AI that actually moves revenue. Assort cites a 5% lift in appointment volume, a 115% increase in labor capacity, and a 4.3 out of 5 patient satisfaction score across more than 190 million patient interactions, 62,000 care protocols, and 1.6 million decision pathways. Revenue is reported to have grown 20x in 15 months. Those numbers are self-reported but include the kind of operational metrics health systems actually buy on.",
+    "Healthcare AI funding has tilted in 2026 away from diagnostic models and toward operational agents — the back-office and front-desk work that absorbs administrative staff time. Other June rounds at Probook ($34M Series A) and Attention ($30M Series B) signal the same pattern. Investors are paying up for production AI that automates the workflow rather than just the diagnostic answer, in part because reimbursement codes and procurement paths are already in place for the workflow side.",
+    "A takeaway for learners: if you are early-career and considering AI work in health, the operational layer — scheduling, intake, billing — is shipping more product right now than the diagnostic layer. The reason is straightforward. It has clearer ROI, fewer regulatory landmines, and a vendor-friendly procurement path through revenue-cycle managers. Build for that constraint and you will find a seat at the table faster than chasing the more glamorous research benches."
+  ],
+  "sources": [
+    { "title": "Assort Health Raises $120 Million Series C to Scale Largest Deployment of AI Agents for the Patient Journey — Assort Health", "url": "https://www.assorthealth.com/blog/assort-health-raises-120-million-series-c-to-scale-largest-deployment-of-ai-agents-for-the-patient-journey" },
+    { "title": "Assort Health Raises $120 Million Series C to Scale Largest Deployment of AI Agents — PR Newswire", "url": "https://www.prnewswire.com/news-releases/assort-health-raises-120-million-series-c-to-scale-largest-deployment-of-ai-agents-for-the-patient-journey-302808634.html" },
+    { "title": "Assort Health scores $120M series C to scale voice AI agent platform for healthcare — Fierce Healthcare", "url": "https://www.fiercehealthcare.com/ai-and-machine-learning/assort-health-scores-120m-series-c-scale-voice-ai-agent-platform-healthcare" },
+    { "title": "Assort Health Raises $120M to Scale Patient Access AI Agents — HIT Consultant", "url": "https://hitconsultant.net/2026/06/24/assort-health-raises-120-million-series-c-menlo/" }
+  ],
+  "status": "published"
+}

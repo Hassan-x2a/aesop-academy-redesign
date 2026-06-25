@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-25-anthropic-alibaba-distillation-senate-letter",
+  "title": "Anthropic tells Senate Alibaba ran a 25,000-account distillation campaign on Claude",
+  "subtitle": "A formal letter to the Senate Banking Committee details 28.8 million queries from fraudulent accounts between April and June — what Anthropic calls the largest known distillation attack on its models.",
+  "date": "2026-06-25",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["anthropic", "alibaba", "distillation", "claude", "china", "export-controls"],
+  "readTime": "3 min read",
+  "heroEmoji": "🛂",
+  "body": [
+    "Anthropic wrote to the U.S. Senate Committee on Banking, Housing, and Urban Affairs on June 24 accusing operators affiliated with Alibaba and its AI lab of running roughly 28.8 million exchanges against Claude from about 25,000 fraudulent accounts between April 22 and June 5, 2026. The letter calls the activity the largest known distillation attack on Anthropic's models to date and asks Washington to act. Alibaba had not responded to media requests by publication; Chinese state media called the claims rooted in tech-hegemony anxiety.",
+    "Distillation, as Anthropic frames it, is the practice of repeatedly prompting a stronger model and using the responses to train a cheaper one — capturing reasoning patterns and data structure without paying the original training cost. Anthropic disclosed in February that it had identified three earlier industrial-scale campaigns from DeepSeek, Moonshot, and MiniMax. The Alibaba-linked campaign reportedly exceeds the combined volume of those three.",
+    "The letter lands inside an active U.S. policy push to harden frontier-model exports — the same regime that triggered Anthropic's June 12 suspension of Fable 5 and Mythos 5 access for foreign nationals. Anthropic argues that distillation rivals chip exports as a national-security channel for capability transfer, and that account verification and rate-limit policy now sit alongside hardware controls as instruments of AI export policy.",
+    "A takeaway for learners: distillation itself is a textbook ML technique — taught in every modern course, used inside every major lab to compress big models into small ones. What turns it from method into allegation is scale, consent, and provenance. Watch how the industry tries to draw the line over the next year — API terms of service, account verification, rate limiting, and output watermarks will become legal arguments, not just engineering choices."
+  ],
+  "sources": [
+    { "title": "Anthropic accuses Alibaba of campaign to 'brazenly' and 'illicitly' extract AI capabilities — CNBC", "url": "https://www.cnbc.com/2026/06/24/anthropic-alibaba-distillation-campaign.html" },
+    { "title": "Anthropic Says Alibaba Illicitly Extracted Claude AI Model Capabilities — U.S. News / Reuters", "url": "https://money.usnews.com/investing/news/articles/2026-06-24/anthropic-says-alibaba-illicitly-extracted-claude-ai-model-capabilities" },
+    { "title": "Anthropic accuses Alibaba of using 25,000 fake accounts to scrape Claude AI — Computerworld", "url": "https://www.computerworld.com/article/4189347/anthropic-accuses-alibaba-of-using-25000-fake-accounts-to-scrape-claude-ai-2.html" },
+    { "title": "Anthropic's 'distillation' claims against Chinese firm lack substance — Global Times", "url": "https://www.globaltimes.cn/page/202606/1364418.shtml" }
+  ],
+  "status": "published"
+}

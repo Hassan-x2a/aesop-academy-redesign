@@ -1,6 +1,11 @@
 {
-  "lastUpdated": "2026-06-24",
+  "lastUpdated": "2026-06-25",
   "articles": [
+    "articles/2026-06-25-anthropic-alibaba-distillation-senate-letter.json",
+    "articles/2026-06-25-anthropic-claude-tag-slack-launch.json",
+    "articles/2026-06-25-google-deepmind-adler-pritzel-anthropic-departures.json",
+    "articles/2026-06-25-meta-arena-prediction-market-app.json",
+    "articles/2026-06-25-assort-health-120m-series-c-voice-ai-patient-journey.json",
     "articles/2026-06-24-qualcomm-modular-4b-cuda-software-moat.json",
     "articles/2026-06-24-squidbleed-claude-mythos-29-year-squid-proxy-bug.json",
     "articles/2026-06-24-engram-98m-stealth-ai-memory-layer-karpathy.json",

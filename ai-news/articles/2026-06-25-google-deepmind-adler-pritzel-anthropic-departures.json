@@ -1,0 +1,22 @@
+{
+  "id": "2026-06-25-google-deepmind-adler-pritzel-anthropic-departures",
+  "title": "Two more Gemini researchers — Jonas Adler and Alexander Pritzel — heading from Google to Anthropic",
+  "subtitle": "Bloomberg reports the planned moves, continuing a month-long run of senior DeepMind departures that already includes John Jumper and Noam Shazeer leaving for rivals.",
+  "date": "2026-06-25",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["anthropic", "google", "deepmind", "gemini", "talent", "hiring"],
+  "readTime": "3 min read",
+  "heroEmoji": "🚪",
+  "body": [
+    "Bloomberg reported on June 24 that Jonas Adler and Alexander Pritzel, both contributors to Google's Gemini effort, are planning to join Anthropic. Adler worked on Google's AI-for-code program; Pritzel was on the team training Gemini models. Neither move was officially announced as of publication, and Google had not commented.",
+    "This is the fourth senior DeepMind departure in roughly a month. Nobel laureate John Jumper, of AlphaFold, left for Anthropic on June 22 to lead an AI-for-science effort. Noam Shazeer — co-author of the 2017 paper that introduced the Transformer — left for OpenAI on June 21. Losing the people who built Gemini's training stack and code stack back-to-back is a more pointed signal than any single resignation.",
+    "Bloomberg's read is that Anthropic's pre-IPO equity is doing what cash compensation alone cannot: putting researchers within reach of a one-time payday before the company prices its shares. The departures also come as Gemini 3.5 Pro slipped its June general-availability deadline and as Google leans more on Anthropic, Broadcom, and TPU partnerships — a posture that complicates any internal pitch that Gemini itself is still the prize.",
+    "A takeaway for learners: talent maps onto roadmaps. When you see a cluster of named contributors moving to one lab, expect that lab's near-term capabilities to shift in their direction — coding, training methodology, biology. Skim author lists on the foundational papers occasionally; the people in those credits explain a lot of why specific products show up where they do, and they are often a better leading indicator than press releases."
+  ],
+  "sources": [
+    { "title": "Google Poised to Lose Two More High-Profile AI Staffers to Anthropic — Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-06-24/google-poised-to-lose-two-more-high-profile-ai-staffers-to-anthropic" },
+    { "title": "AI researchers continue to leave Google for its rivals — TechCrunch", "url": "https://techcrunch.com/2026/06/24/ai-researchers-continue-to-leave-google-for-its-rivals/" }
+  ],
+  "status": "published"
+}

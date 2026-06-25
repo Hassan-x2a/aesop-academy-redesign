@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-25-meta-arena-prediction-market-app",
+  "title": "Meta is building Arena, a prediction-market app that runs on virtual currency — for now",
+  "subtitle": "The New York Times first reported the project, and the story continued to broaden through June 24, with Zuckerberg directing a team to ship a standalone app where users forecast political, sports, and entertainment events.",
+  "date": "2026-06-25",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["meta", "prediction-markets", "arena", "polymarket", "kalshi"],
+  "readTime": "3 min read",
+  "heroEmoji": "🎯",
+  "body": [
+    "Mark Zuckerberg has assigned a team inside Meta to ship a standalone app called Arena, where users will forecast real-world outcomes in politics, sports, entertainment, and current events. The reporting started in the New York Times on June 23 and was picked up across NPR, CNBC, and Quartz through June 24. The launch version uses a video-game-style points system funded by a daily virtual allotment of play money. Meta has not ruled out real-money wagering in the future.",
+    "Prediction markets had a breakout cycle around the 2024 U.S. election, with Polymarket and Kalshi becoming household names; Kalshi is now reportedly raising at a $40 billion valuation. Meta brings what those startups lack: distribution across Facebook, Instagram, Threads, and WhatsApp, and a personalization stack ready to recommend markets the way it currently recommends videos. Shares of DraftKings, Robinhood, and other adjacent operators sold off on the news.",
+    "This is Meta's second attempt at the category. An earlier product, Forecast, launched in 2020 and shut down in 2022. The revival lands as the SEC, the CFTC, and state regulators are still arguing over whether prediction markets are securities, derivatives, or gambling — a fight that virtual currency conveniently sidesteps until Meta decides otherwise. The decision to start with play money looks less like product strategy and more like regulatory hedging.",
+    "A takeaway for learners: prediction markets are interesting to AI students for a quiet reason. They generate clean, time-stamped, ground-truthed data about what crowds believed and when, which is a goldmine for training and evaluating forecasting models. Watch whether Meta opens any of the data — Arena's dataset could end up more interesting to researchers than the app itself is to bettors."
+  ],
+  "sources": [
+    { "title": "Meta plans to release AI-powered prediction market app, documents show — NPR", "url": "https://www.npr.org/2026/06/24/nx-s1-5869486/meta-prediction-market-app-ai" },
+    { "title": "Meta is developing a prediction market app called 'Arena' as sector booms: NYT — CoinDesk", "url": "https://www.coindesk.com/markets/2026/06/23/meta-is-developing-a-prediction-market-app-called-arena-as-sector-booms-nyt" },
+    { "title": "Meta is building a prediction markets app. These stocks fell in response — CNBC", "url": "https://www.cnbc.com/2026/06/23/nyt-says-meta-builds-prediction-market-these-stocks-are-falling.html" },
+    { "title": "Meta prediction markets app Arena sinks DraftKings, Robinhood stock — Quartz", "url": "https://qz.com/meta-prediction-markets-app-arena-draftkings-robinhood-stock-062326" }
+  ],
+  "status": "published"
+}
