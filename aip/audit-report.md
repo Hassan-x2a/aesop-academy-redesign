@@ -1,6 +1,6 @@
 # AESOP Course Audit Report
 
-**Generated:** 2026-06-23 14:06 UTC
+**Generated:** 2026-06-25 14:06 UTC
 **Status:** 🔴 ISSUES FOUND
 **Errors:** 1 · **Warnings:** 27
 
@@ -9,7 +9,7 @@
 ## Course Registry (course-registry.json)
 
 ### Errors (1)
-- 🔴 **MISSING_DIR**: Registry course `eval-benchmark` references `/ai-academy/modules/eval-benchmark/` but directory does not exist
+- 🔴 **MISSING_DIR**: Registry course `eval-benchmark` references `/ai-academy/modules/eval-benchmark/` which does not exist
 
 ### Warnings (24)
 - 🟡 **EXTRA_MODULES**: `society` has 9 module files but registry defines 8 modules
@@ -43,27 +43,27 @@
 
 ## Electives Hub (electives-hub.html)
 
+ℹ️ **Note:** electives-hub.html is registry-only (v1.1.0+) — all course data loaded from `course-registry.json`. No hardcoded `BASE_COURSES` to audit; H-1 and H-2 cross-checks are not applicable.
+
 ✅ No issues found.
 
 ## Cross-References
 
 ### Warnings (3)
-- 🟡 **NOT_IN_COURSES_HTML**: registry course "ar-8" has no link from courses.html
-- 🟡 **NOT_IN_COURSES_HTML**: registry course "ap-7" has no link from courses.html
-- 🟡 **NOT_IN_COURSES_HTML**: registry course "eval-benchmark" has no link from courses.html
+- 🟡 **NOT_IN_COURSES_HTML**: registry course `ar-8` (slug `ar-8`) has no link from courses.html
+- 🟡 **NOT_IN_COURSES_HTML**: registry course `ap-7` (slug `ap-7`) has no link from courses.html
+- 🟡 **NOT_IN_COURSES_HTML**: registry course `eval-benchmark` (slug `eval-benchmark`) has no link from courses.html
 
 ---
 
 ## Summary
 
 **1 error(s) require attention:**
-1. MISSING_DIR: Registry course `eval-benchmark` references `/ai-academy/modules/eval-benchmark/` but directory does not exist
-
-> ℹ️ `electives-hub.html` no longer uses a static `BASE_COURSES` list — courses are loaded dynamically from `course-registry.json`. Hub-vs-registry checks (H-1, H-2, X-2, X-3) are effectively satisfied by construction and skipped.
+1. **MISSING_DIR**: Registry course `eval-benchmark` references `/ai-academy/modules/eval-benchmark/` which does not exist
 
 ### Stats
-- Registry courses: 131 (126 live, 3 coming soon, 2 retired)
-- courses.html internal links checked: 21
-- courses.html `?course=` ids: 123
-- Electives hub BASE_COURSES: 0 (dynamic — none defined statically)
+- Registry courses: 131 (128 live, 3 coming soon)
+- courses.html internal links checked: 20
+- Course slugs linked from courses.html (`?course=`): 123
+- Electives hub: registry-only (no hardcoded BASE_COURSES)
 - Module files verified: 780
