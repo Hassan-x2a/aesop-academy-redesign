@@ -1,8 +1,8 @@
 # AESOP Course Audit Report
 
-**Generated:** 2026-06-25 14:06 UTC
+**Generated:** 2026-06-27 14:05 UTC
 **Status:** 🔴 ISSUES FOUND
-**Errors:** 1 · **Warnings:** 27
+**Errors:** 1 · **Warnings:** 29
 
 ---
 
@@ -49,21 +49,24 @@
 
 ## Cross-References
 
-### Warnings (3)
-- 🟡 **NOT_IN_COURSES_HTML**: registry course `ar-8` (slug `ar-8`) has no link from courses.html
-- 🟡 **NOT_IN_COURSES_HTML**: registry course `ap-7` (slug `ap-7`) has no link from courses.html
-- 🟡 **NOT_IN_COURSES_HTML**: registry course `eval-benchmark` (slug `eval-benchmark`) has no link from courses.html
+### Warnings (5)
+- 🟡 **NOT_IN_COURSES_HTML**: registry course `society` has no link from courses.html
+- 🟡 **NOT_IN_COURSES_HTML**: registry course `ar-11` has no link from courses.html
+- 🟡 **NOT_IN_COURSES_HTML**: registry course `ar-8` has no link from courses.html
+- 🟡 **NOT_IN_COURSES_HTML**: registry course `ap-7` has no link from courses.html
+- 🟡 **NOT_IN_COURSES_HTML**: registry course `eval-benchmark` has no link from courses.html
+
+X-2 and X-3 (electives-hub BASE_COURSES cross-checks) are not applicable — hub is registry-only.
 
 ---
 
 ## Summary
 
-**1 error(s) require attention:**
-1. **MISSING_DIR**: Registry course `eval-benchmark` references `/ai-academy/modules/eval-benchmark/` which does not exist
+**1 error requires attention:**
+1. Registry course `eval-benchmark` points to a directory that does not exist in the repo — either create `ai-academy/modules/eval-benchmark/` and its modules, or remove the entry from `course-registry.json`.
 
 ### Stats
 - Registry courses: 131 (128 live, 3 coming soon)
-- courses.html internal links checked: 20
-- Course slugs linked from courses.html (`?course=`): 123
-- Electives hub: registry-only (no hardcoded BASE_COURSES)
+- courses.html internal links checked: 21
+- Electives hub BASE_COURSES: 0 (registry-only)
 - Module files verified: 780
