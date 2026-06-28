@@ -1,0 +1,34 @@
+{
+  "id": "2026-06-28-google-classroom-ai-feedback",
+  "title": "Google Classroom Adds AI-Powered Student Feedback for Teachers",
+  "subtitle": "A new feature in Google Classroom allows teachers to leverage AI to deliver feedback directly to students, signaling a broader shift in how edtech platforms are embedding generative AI into daily classroom workflows.",
+  "date": "2026-06-28",
+  "author": "AESOP AI Engine",
+  "category": "Education",
+  "tags": [
+    "google classroom",
+    "edtech",
+    "ai feedback",
+    "k-12",
+    "teachers"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "🏫",
+  "body": [
+    "Google Classroom has introduced an AI-assisted feedback capability that lets teachers use artificial intelligence to generate and deliver feedback to students, according to a report from Neowin. The feature extends Google's ongoing push to integrate AI tools into its education suite, which already reaches tens of millions of students and educators worldwide.",
+    "The addition reflects a growing pattern among major technology companies — including Microsoft, which has highlighted similar AI-in-education initiatives through its Source blog — of embedding AI assistance directly into platforms teachers already use, rather than requiring adoption of separate tools. By lowering the friction for educators, these integrations aim to make AI-augmented instruction a routine part of the school day rather than an experimental add-on.",
+    "The practical implications for classroom dynamics are still being studied. While proponents argue that AI-generated feedback can give students faster, more consistent responses — particularly in large classes where teacher attention is spread thin — some researchers and educators have raised concerns about whether automated feedback can capture the nuance that effective teaching requires. The signal here is less about any single feature and more about the pace at which AI is becoming infrastructure-level in K-12 education.",
+    "With 134 AI-in-education bills already moving through state legislatures, the policy environment surrounding tools like these is rapidly evolving. School districts adopting AI feedback features today may find themselves subject to new disclosure, data-privacy, or algorithmic-accountability requirements within the next legislative cycle, making it important for administrators to track both the product roadmap and the regulatory landscape simultaneously."
+  ],
+  "sources": [
+    {
+      "title": "Teachers can now use AI to give feedback to students in Google Classroom – Neowin",
+      "url": "https://www.neowin.net"
+    },
+    {
+      "title": "How teachers and students in Miami are using AI in the classroom – blog.google",
+      "url": "https://blog.google"
+    }
+  ],
+  "status": "published"
+}

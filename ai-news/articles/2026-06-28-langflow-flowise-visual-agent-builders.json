@@ -1,0 +1,35 @@
+{
+  "id": "2026-06-28-langflow-flowise-visual-agent-builders",
+  "title": "Visual AI Agent Builders Langflow and Flowise Continue to Gain Developer Traction",
+  "subtitle": "Two open-source projects — Langflow and Flowise — are among the most-watched repositories in the generative AI and LangChain GitHub ecosystems, reflecting strong demand for low-code agent construction tools.",
+  "date": "2026-06-28",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": [
+    "langflow",
+    "flowise",
+    "open source",
+    "ai agents",
+    "low-code",
+    "developer tools"
+  ],
+  "readTime": "3 min read",
+  "heroEmoji": "🔧",
+  "body": [
+    "Langflow and Flowise, two open-source platforms designed to let developers build and deploy AI agents visually, are registering strong engagement scores in GitHub's generative-AI and LangChain topic rankings. Langflow describes itself as 'a powerful tool for building and deploying AI-powered agents and workflows,' while Flowise positions itself with the tagline 'Build AI Agents, Visually' — both targeting the growing segment of developers who want to compose agentic systems without writing every integration from scratch.",
+    "The appeal of visual agent builders lies in their ability to compress the time between an idea and a working prototype. Rather than manually chaining together API calls, memory modules, and tool integrations in code, developers can drag, drop, and connect components in a graph interface, then inspect the resulting data flows in real time. This approach is particularly valuable for teams that include non-specialist contributors — product managers, domain experts, or researchers — who need to participate meaningfully in agent design.",
+    "Both projects benefit from the broader LangChain ecosystem, which provides a common vocabulary of abstractions for retrieval, memory, and tool use. As that ecosystem matures, visual builders built on top of it inherit compatibility with a wide range of LLM providers, vector databases, and external APIs — reducing the integration burden that has historically slowed enterprise adoption of agentic systems.",
+    "The continued momentum of these repositories is a useful indicator of where developer energy is concentrating: not in building new foundation models, but in assembling and orchestrating existing ones into useful workflows. For organizations tracking the agentic AI market, the adoption curves of tools like Langflow and Flowise serve as leading signals for where production deployments are likely to follow in the next six to twelve months."
+  ],
+  "sources": [
+    {
+      "title": "Langflow – GitHub",
+      "url": "https://github.com/langflow-ai/langflow"
+    },
+    {
+      "title": "Flowise – GitHub",
+      "url": "https://github.com/FlowiseAI/Flowise"
+    }
+  ],
+  "status": "published"
+}

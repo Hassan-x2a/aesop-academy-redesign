@@ -1,6 +1,11 @@
 {
-  "lastUpdated": "2026-06-27",
+  "lastUpdated": "2026-06-28",
   "articles": [
+    "articles/2026-06-28-google-classroom-ai-feedback.json",
+    "articles/2026-06-28-ai-only-school-signal-analysis.json",
+    "articles/2026-06-28-teens-ai-digital-citizenship.json",
+    "articles/2026-06-28-langflow-flowise-visual-agent-builders.json",
+    "articles/2026-06-28-mit-generative-ai-beginners-education-resources.json",
     "articles/2026-06-27-anthropic-mythos-5-lutnick-cleared-100-institutions.json",
     "articles/2026-06-27-lindy-deepseek-anthropic-100-percent-switch.json",
     "articles/2026-06-27-agentic-resource-discovery-ard-open-spec.json",
