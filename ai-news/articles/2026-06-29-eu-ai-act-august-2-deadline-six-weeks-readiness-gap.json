@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-29-eu-ai-act-august-2-deadline-six-weeks-readiness-gap",
+  "title": "EU AI Act's high-risk obligations are six weeks out — most companies aren't ready",
+  "subtitle": "The August 2 enforcement date triggers fines of up to €35M or 7% of global revenue, but over half of organizations still lack a basic inventory of their own AI systems.",
+  "date": "2026-06-29",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["eu-ai-act", "regulation", "august-2-2026", "high-risk-ai", "compliance"],
+  "readTime": "3 min read",
+  "heroEmoji": "🇪🇺",
+  "body": [
+    "The EU AI Act's main high-risk obligations become enforceable on August 2, 2026 — six weeks from today. The triggering provisions include the full Annex III high-risk system requirements (risk management, data governance, technical documentation, record-keeping, human oversight, accuracy, robustness, cybersecurity), Article 50 transparency rules (AI interaction disclosure, synthetic content labeling, deepfake identification), and the headline penalty regime, which reaches €35 million or 7% of global annual revenue, whichever is higher.",
+    "The compliance position across the industry is poor. Industry-tracker surveys published this month report that more than half of in-scope organizations still lack a systematic inventory of the AI systems they currently run in production or are developing — the threshold prerequisite for any risk classification. Without that inventory, the August 2 deadline is unactionable. The penalty cap is comparable in shape to a GDPR maximum, but EU AI Act enforcement leans more heavily on per-product conformity assessment than on data-flow remediation, so the operational work is different.",
+    "The EU's Digital AI Omnibus proposal would defer high-risk obligations to December 2027, and the Council presidency and Parliament reached a provisional trilogue agreement on the deferral earlier this spring. But unless the trilogue is formally adopted before August 2, the original timeline holds. Inside the European Commission, opinion is split on whether to push the deferral through or treat August 2 as the operational deadline. Companies serving EU users have to plan against the harder date — and the smarter ones already are.",
+    "For learners shipping AI products: treat regulatory timing as a software constraint, not a separate workstream. The product decisions that matter most over the next six weeks — what data your model uses, whether your interactions are disclosed to users, whether your synthetic outputs are labeled — are the same decisions that determine your AI Act exposure. The work is not separate from engineering; it's a layer of it. Even if the deferral lands, the discipline of building an AI inventory is permanent."
+  ],
+  "sources": [
+    { "title": "EU AI Act August 2, 2026 Deadline Is Six Weeks Away — Kiteworks", "url": "https://www.kiteworks.com/regulatory-compliance/eu-ai-act-deadline-compliance/" },
+    { "title": "AI Act — Shaping Europe's digital future", "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" },
+    { "title": "The Digital AI Omnibus: Proposed deferral of high risk AI obligations — DLA Piper", "url": "https://knowledge.dlapiper.com/dlapiperknowledge/globalemploymentlatestdevelopments/2026/The-Digital-AI-Omnibus-Proposed-deferral-of-high-risk-AI-obligations-under-the-AI-Act" }
+  ],
+  "status": "published"
+}

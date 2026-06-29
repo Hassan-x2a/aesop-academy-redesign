@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-29-openai-broadcom-jalapeno-first-custom-inference-chip",
+  "title": "OpenAI's first chip, Jalapeño, ships from design to tape-out in nine months",
+  "subtitle": "The Broadcom-built inference accelerator is OpenAI's bid to own the silicon layer of its stack, with initial deployment planned for late 2026.",
+  "date": "2026-06-29",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["openai", "broadcom", "jalapeno", "ai-chips", "inference", "semiconductor"],
+  "readTime": "3 min read",
+  "heroEmoji": "🌶️",
+  "body": [
+    "OpenAI and Broadcom on June 24 unveiled Jalapeño, OpenAI's first custom AI chip — an inference accelerator developed from initial design to manufacturing tape-out in nine months. OpenAI describes Jalapeño as a reticle-sized ASIC architected specifically for serving large language models, not for training. The companies plan initial deployment by the end of 2026 inside the gigawatt-scale data center buildout OpenAI is doing with Microsoft, Oracle, and SoftBank under the Stargate program.",
+    "A nine-month design-to-tape-out cycle is unusually short for a frontier inference ASIC — typical projects run eighteen months to two years. OpenAI says it accelerated parts of the design and verification work using its own models, a recursive use of AI to build the silicon that runs AI. Jalapeño is also OpenAI's first move out of pure software dependency on Nvidia. The companies describe gains in \"performance per watt substantially better than current state-of-the-art,\" with a chip architected to minimize data movement and balance compute, memory, and networking utilization closer to theoretical peak.",
+    "Every major AI lab is now building or buying custom silicon. Google has TPU v8t and v8i, Amazon has Trainium and Inferentia, Microsoft has the Maia 200 line, Meta has MTIA. OpenAI was the last frontier lab without its own chip; Jalapeño closes that gap. The strategic implication is the same across the labs: inference, not training, is becoming the dominant cost as model usage scales, and the lab that controls the chip controls the unit economics. Broadcom now has both Google and OpenAI as design partners — a position that has helped lift its market cap above $1.5 trillion.",
+    "For learners: the shift from training-bound to inference-bound is one of the most important second-order trends in AI. A model is trained once and inferenced billions of times. As you build with AI, the cost per call matters more than the cost per training run — and the silicon you don't see in the spec sheet is what sets that cost. When OpenAI says GPT-5.6 Sol costs $5 input / $30 output per million tokens, the room to drop those numbers in 2027 is sitting on Broadcom's tape-out floor right now."
+  ],
+  "sources": [
+    { "title": "OpenAI and Broadcom unveil LLM-optimized inference chip — OpenAI", "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/" },
+    { "title": "OpenAI unveils its first custom chip, built by Broadcom — TechCrunch", "url": "https://techcrunch.com/2026/06/24/openai-unveils-its-first-custom-chip-built-by-broadcom/" },
+    { "title": "Broadcom and OpenAI unveil custom-built Jalapeño inference processor — Tom's Hardware", "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/broadcom-and-openai-unveil-custom-built-jalapeno-inference-processor-openais-first-chip-is-a-massive-reticle-sized-asic-built-in-an-ultra-fast-nine-month-development-cycle" },
+    { "title": "OpenAI unveils first chip as part of Broadcom deal — CNBC", "url": "https://www.cnbc.com/2026/06/24/openai-and-broadcom-reveal-jalapeno-first-ai-chip-in-partnership.html" }
+  ],
+  "status": "published"
+}

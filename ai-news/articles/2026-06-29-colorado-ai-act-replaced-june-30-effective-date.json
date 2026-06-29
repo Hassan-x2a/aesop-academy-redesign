@@ -1,0 +1,24 @@
+{
+  "id": "2026-06-29-colorado-ai-act-replaced-june-30-effective-date",
+  "title": "Colorado's first-in-the-nation AI law won't actually take effect Tuesday",
+  "subtitle": "SB 24-205 was scheduled to go live June 30, but in May the state quietly replaced it with a narrower automated-decision statute that doesn't kick in until January 2027.",
+  "date": "2026-06-29",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["colorado-ai-act", "sb-24-205", "state-ai-law", "regulation", "admt"],
+  "readTime": "3 min read",
+  "heroEmoji": "🏛️",
+  "body": [
+    "Colorado SB 24-205, the Colorado Artificial Intelligence Act, was scheduled to take effect Tuesday, June 30 — the first comprehensive state AI law in the United States to go into force. It will not. Governor Jared Polis signed Senate Bill 26-189 on May 14, 2026, repealing SB 24-205 and replacing it with a narrower statute regulating \"automated decision-making technology\" or ADMT. The new law takes effect January 1, 2027.",
+    "SB 24-205 imposed a formal duty of care on developers and deployers of \"high-risk\" AI systems, required algorithmic impact assessments, and created a rebuttable presumption of compliance for entities following a recognized risk framework. SB 26-189 drops the duty of care and the impact-assessment regime, replacing them with disclosure and transparency obligations focused on automated decisions that materially influence consequential outcomes — employment, housing, credit, education, healthcare. Industry pushback worked: a heavier high-risk framework was traded for a narrower ADMT framework on a longer runway.",
+    "Colorado's pullback mirrors the EU's own Digital AI Omnibus negotiations, which propose deferring the EU AI Act's high-risk obligations from August 2026 to December 2027. Across both Atlantic shores, governments that wrote ambitious AI laws in 2024 are spending 2026 either softening them, delaying them, or replacing them under industry pressure. The U.S. federal landscape adds another layer: the Trump administration's June 2 executive order explicitly forbids creating any federal licensing or preclearance regime for AI model release, leaving states as the principal regulators by default.",
+    "For learners tracking AI regulation: read the effective date as the live signal, not the bill text. Laws get passed in one year, amended in the next, and put into force in a third. The story of state AI regulation in 2026 is the story of how the gap between \"passed\" and \"in force\" gets used by both sides — and that gap, not the headlines, is where the actual rules end up being written."
+  ],
+  "sources": [
+    { "title": "Colorado Postpones Implementation of Colorado AI Act — Akin Gump", "url": "https://www.akingump.com/en/insights/ai-law-and-regulation-tracker/colorado-postpones-implementation-of-colorado-ai-act-sb-24-205" },
+    { "title": "Colorado Moves to Overhaul its AI Act — DCI Consult", "url": "https://blog.dciconsult.com/colorado-moves-to-overhaul-its-ai-act" },
+    { "title": "SB24-205 Consumer Protections for Artificial Intelligence — Colorado General Assembly", "url": "https://leg.colorado.gov/bills/sb24-205" },
+    { "title": "Colorado Enacts Artificial Intelligence Replacement Law — Seyfarth Shaw", "url": "https://www.seyfarth.com/news-insights/colorado-enacts-artificial-intelligence-replacement-law.html" }
+  ],
+  "status": "published"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-06-29-insilico-medicine-25b-sk-biopharm-bio-2026",
+  "title": "Insilico signs $2.5B AI drug-discovery pact with SK Biopharmaceuticals at BIO 2026",
+  "subtitle": "The collaboration lands the week AI-designed drugs hit their first peer-reviewed Phase IIa milestone — even as no AI-discovered compound has yet won FDA approval.",
+  "date": "2026-06-29",
+  "author": "AESOP AI Engine",
+  "category": "Healthcare",
+  "tags": ["insilico-medicine", "sk-biopharmaceuticals", "ai-drug-discovery", "bio-2026", "pharma-ai"],
+  "readTime": "3 min read",
+  "heroEmoji": "💊",
+  "body": [
+    "Insilico Medicine announced a $2.5 billion global R&D collaboration with South Korea's SK Biopharmaceuticals at the opening of the BIO International Convention on June 22 in San Diego. The deal — Insilico's largest to date — runs on the company's Pharma.AI platform, which combines generative model target discovery with reinforcement learning-driven compound design. Insilico will deliver candidates across multiple disease areas, with SK Biopharmaceuticals handling later-stage development and commercialization.",
+    "Insilico is the same company behind Rentosertib, the TNIK kinase inhibitor that became the first molecule with both an AI-discovered target and an AI-designed compound to complete a Phase IIa clinical trial and publish peer-reviewed results, in Nature Medicine in June 2025. BIO 2026 was the first major industry meeting after that publication, and the conference floor reflected it: AI drug discovery moved from speculative claims to documented Phase IIa proof, and the deal flow followed.",
+    "No AI-designed drug has yet been approved by the FDA. The pipeline is real — roughly 173 AI-discovered programs are in development across the industry — but Phase III completion remains the gating step, and that typically runs years past Phase IIa. The competitive geography is also shifting. Insilico operates major sites in Hong Kong, Shanghai, and Boston; many U.S. observers at BIO 2026 framed AI biotech as the area where the U.S.-China policy lever — the BIOSECURE Act targets manufacturing, not discovery — has the least grip.",
+    "For learners in biology or pharmacy: the \"first AI-designed drug to reach FDA approval\" headline is still 2027 or 2028 territory. But the financial milestone — a $2.5 billion deal for a single AI drug-discovery platform — is happening now. The shift to learn is that generative models are moving upstream of medicinal chemistry, not parallel to it. The chemist's role is changing toward validating, prioritizing, and de-risking what the model proposes, rather than designing from scratch."
+  ],
+  "sources": [
+    { "title": "Insilico Medicine caps monumental week at BIO 2026 — EurekAlert", "url": "https://www.eurekalert.org/news-releases/1133843" },
+    { "title": "AI Drug Discovery Reaches Clinical Proof at BIO 2026 — Tech Times", "url": "https://www.techtimes.com/articles/319136/20260626/ai-drug-discovery-reaches-clinical-proof-bio-2026-china-beat-biosecure-act-science.htm" }
+  ],
+  "status": "published"
+}

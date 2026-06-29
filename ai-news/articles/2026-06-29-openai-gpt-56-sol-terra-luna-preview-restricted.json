@@ -1,0 +1,23 @@
+{
+  "id": "2026-06-29-openai-gpt-56-sol-terra-luna-preview-restricted",
+  "title": "OpenAI previews GPT-5.6 Sol, Terra, and Luna under U.S. government access restrictions",
+  "subtitle": "OpenAI's flagship family is the most cyber- and bio-capable model line it has shipped — and like Anthropic's Mythos 5, it launches to a vetted partner list instead of ChatGPT.",
+  "date": "2026-06-29",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["openai", "gpt-5-6", "model-release", "cybersecurity", "government-restrictions", "ai-safety"],
+  "readTime": "3 min read",
+  "heroEmoji": "🌞",
+  "body": [
+    "OpenAI on June 26 previewed GPT-5.6 in three variants — Sol, the flagship; Terra, a lower-cost balanced model; and Luna, the fastest and cheapest of the line. Access is restricted at OpenAI's own description to a small group of trusted partners reachable only through the API and Codex. ChatGPT users will not see GPT-5.6 at launch. The Trump administration requested the staged rollout, citing national security concerns over the family's cybersecurity and biological capabilities. Pricing per million tokens is $5 input / $30 output for Sol, $2.50 / $15 for Terra, and $1 / $6 for Luna.",
+    "The cybersecurity numbers are why the government got involved. GPT-5.6 Sol scored 85.6% on CyberGym, 39.5% on ExploitGym, and 96.7% on internal capture-the-flag tasks, where it saturates the evaluation. On ExploitBench, OpenAI says Sol performs competitively with Anthropic's Mythos Preview while consuming roughly a third as many output tokens. All three variants received \"High\" ratings in both biological and cyber capability under OpenAI's Preparedness Framework — the first release in which every tier in the family has crossed that bar.",
+    "This is the second frontier model launch in two weeks delivered under direct government supervision. Anthropic's Mythos 5, blocked under export-control letters earlier this month, was reauthorized June 26 for about 100 vetted U.S. organizations after Commerce Secretary Howard Lutnick concluded safeguards were sufficient. Together the two events mark a new phase: models whose cyber and bio capability ratings are high enough to trigger a U.S. government veto, then permitted under a partner allowlist rather than open API release. The naming change is also a tell — OpenAI now uses a number for generation and a name for capability tier, explicitly designed so each tier can move on its own cadence.",
+    "For learners: the question is no longer \"which version\" but \"which tier of which version, with what access policy attached.\" If you build with these models, watch the access terms as carefully as the benchmark scores. A model you can't get to is a model you can't use, no matter how it performs on paper — and the gap between announcement and general availability is increasingly where the frontier actually lives."
+  ],
+  "sources": [
+    { "title": "Previewing GPT-5.6 Sol — OpenAI", "url": "https://openai.com/index/previewing-gpt-5-6-sol/" },
+    { "title": "OpenAI unveils GPT-5.6 Sol, Terra and Luna — VentureBeat", "url": "https://venturebeat.com/technology/openai-unveils-gpt-5-6-sol-terra-and-luna-models-but-only-accessible-to-limited-preview-partners-for-now-per-us-gov" },
+    { "title": "GPT-5.6 gets better at cybersecurity — Help Net Security", "url": "https://www.helpnetsecurity.com/2026/06/29/openai-gpt-5-6-models-preview/" }
+  ],
+  "status": "published"
+}
