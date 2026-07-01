@@ -1,0 +1,24 @@
+{
+  "id": "2026-07-01-leapxpert-180m-riverwood-governed-communications",
+  "title": "LeapXpert raises $180M from Riverwood to turn WhatsApp chats into governed AI data",
+  "subtitle": "The New York-based platform captures, archives, and now analyzes conversations on WhatsApp, iMessage, Signal, and WeChat for regulated enterprises.",
+  "date": "2026-07-01",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["LeapXpert", "funding", "compliance", "governance", "enterprise"],
+  "readTime": "3 min read",
+  "heroEmoji": "💬",
+  "body": [
+    "LeapXpert announced a $180 million growth investment led by Riverwood Capital on June 30, with existing investor Portage Ventures participating. Jeff Parks, Riverwood co-founder and managing partner, joins the board. The New York company sells a platform that captures conversations happening on consumer messengers — WhatsApp, iMessage, Signal, WeChat — and pipes them into enterprise systems for archival, supervision, and AI analysis. It says it will use the round to expand across financial services and government, then push into Europe, Latin America, and Asia.",
+    "The pitch is a specific regulatory gap. Since the SEC's off-channel-communications sweep in 2022, US banks and broker-dealers have paid over $3 billion in fines for records that lived on personal WhatsApp threads instead of surveilled channels. LeapXpert's platform preserves the informality — employees keep using the app the client already uses — but routes every message through a governed layer where it can be retained, searched, and now fed to an LLM. The new intelligence layer is what turned this from a compliance tool into an AI story.",
+    "It also sits at a live enforcement edge. The EU AI Act's transparency rules take effect August 2, and the Colorado AI Act's consumer-protection provisions came online on June 30. Both create liability for enterprises whose customer-facing conversations touch AI systems without disclosure or governance. Buying LeapXpert is one way large regulated firms hedge that liability without ripping out the messengers their frontline actually uses.",
+    "Takeaway for learners: the boring layer of AI — capture, retention, disclosure, audit — is where a lot of the enterprise money is going to land in 2026. If you are building a career at the intersection of AI and regulated industries (banking, healthcare, insurance, government), governance skills compound faster than model skills right now, because every deployment eventually has to answer for what it saw and what it said."
+  ],
+  "sources": [
+    { "title": "LeapXpert Raises $180 Million to Lead AI-Powered Governed Communications — PR Newswire", "url": "https://www.prnewswire.com/news-releases/leapxpert-raises-180-million-to-lead-ai-powered-governed-communications-302814485.html" },
+    { "title": "LeapXpert lands $180M to extract more intelligence from governed enterprise communications — SiliconANGLE", "url": "https://siliconangle.com/2026/06/30/leapxpert-lands-180m-extract-intelligence-governed-enterprise-communications/" },
+    { "title": "LeapXpert Raises $180m to Bring AI Into Governed Enterprise Messaging — The Fintech Times", "url": "https://thefintechtimes.com/leapxpert-secures-massive-180m-growth-round-to-unlock-enterprise-ai-comms/" },
+    { "title": "Venture Capital & Startup Funding Roundup, June 30, 2026 — Tech Startups", "url": "https://techstartups.com/2026/06/30/venture-capital-startup-funding-roundup-june-30-2026/" }
+  ],
+  "status": "published"
+}

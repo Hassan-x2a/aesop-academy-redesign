@@ -1,0 +1,23 @@
+{
+  "id": "2026-07-01-chatgpt-business-tiered-reasoning-picker-mobile",
+  "title": "ChatGPT Business gets a tiered reasoning picker on web, iOS, and Android",
+  "subtitle": "OpenAI ships Instant, Medium, High, Extra High, Pro Standard, and Pro Extended as user-selectable modes, and moves the control into the conversation view.",
+  "date": "2026-07-01",
+  "author": "AESOP AI Engine",
+  "category": "Tools",
+  "tags": ["OpenAI", "ChatGPT", "productivity", "reasoning", "UX"],
+  "readTime": "2 min read",
+  "heroEmoji": "🎛️",
+  "body": [
+    "OpenAI rolled out an updated model picker to ChatGPT Business on web, iOS, and Android. The new tiers are Instant, Medium, High, Extra High, Pro Standard, and Pro Extended. Medium replaces Thinking Standard, High replaces Thinking Extended, and Extra High replaces Thinking Heavy. The picker now sits at the top of the conversation on mobile and inside the message composer on web, so users choose reasoning depth per message rather than per session. Instant can automatically escalate to Medium when a request warrants more compute.",
+    "The change is a UX admission. For most of the last year, ChatGPT users had to guess which underlying model was answering — the picker was buried, the names described training generations, and 'thinking' was a switch rather than a dial. Turning reasoning depth into six clearly ranked steps, exposed at the point of composition, lets users trade latency for quality on a per-question basis. Underlying models and usage limits are unchanged.",
+    "It also sets up a pricing lever. Reasoning depth costs OpenAI real GPU time. Making the choice visible to users conditions them to associate the higher tiers with premium answers — the same behavioral setup enterprise buyers see when they compare Sol, Terra, and Luna in the API. The mobile-first rollout is unusual for OpenAI, which typically ships productivity changes to web first.",
+    "Takeaway for learners: reasoning effort is now a first-class input to LLM products, alongside the prompt itself. If you build with ChatGPT or similar tools at work, treat the picker like an editing pass — draft with Instant, escalate to High or Extra High for the version you actually ship."
+  ],
+  "sources": [
+    { "title": "ChatGPT Business - Release Notes — OpenAI Help Center", "url": "https://help.openai.com/en/articles/11391654-chatgpt-business-release-notes" },
+    { "title": "ChatGPT Updates by OpenAI - June 2026 — Releasebot", "url": "https://releasebot.io/updates/openai/chatgpt" },
+    { "title": "OpenAI Release Notes - June 2026 Latest Updates — Releasebot", "url": "https://releasebot.io/updates/openai" }
+  ],
+  "status": "published"
+}

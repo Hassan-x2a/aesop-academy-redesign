@@ -1,0 +1,24 @@
+{
+  "id": "2026-07-01-microsoft-365-copilot-business-smb-skus-permanent",
+  "title": "Microsoft 365 Copilot Business SKUs go permanent for SMBs today",
+  "subtitle": "Business Standard with Copilot and Business Premium with Copilot become permanent subscriptions on July 1; standalone Copilot Business list price rises from $18 to $21 per user per month.",
+  "date": "2026-07-01",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["Microsoft", "Copilot", "SMB", "pricing", "productivity"],
+  "readTime": "3 min read",
+  "heroEmoji": "💼",
+  "body": [
+    "Microsoft's promotional Copilot bundles for small and medium businesses convert to permanent SKUs on July 1. Microsoft 365 Business Standard with Copilot is now $23.50 per user per month and Business Premium with Copilot is $32 per user per month on annual billing for one to 300 seats. The standalone Microsoft 365 Copilot Business license moves from a $18 promotional rate to a $21 list price, though Microsoft is extending a 15% promo that holds the price at $18 through December 31, 2026. A new Business Basic + Copilot Business bundle also lands at $21 through year end.",
+    "The shift matters because it moves Copilot from add-on-and-promo into the core productivity price sheet for SMB customers. Partners have to reprice active seats, and buyers no longer get to treat Copilot as a temporary line item to be re-evaluated at renewal. The change also lines up seat pricing across the SMB tiers within a $10 range, which makes bundle economics easier for CSPs to sell but harder for customers to defer.",
+    "Microsoft is doing this while adoption is still uneven. It follows the June 24 AI in Education Report, which showed high interest and low structured implementation across schools, and it lands the same week Anthropic restored Claude Fable 5 and OpenAI opened GPT-5.6 Sol to select partners. The competitive read: Microsoft is racing to lock SMB seats to Copilot before any of those alternatives get cheap, fast enough, and integrated enough to peel them off.",
+    "Takeaway for learners: pricing changes tell you what a vendor believes about lock-in. Promotional pricing signals experimentation; permanent SKUs signal that the vendor thinks the product is sticky. If you are on Copilot at a small business, this is a good week to actually measure whether you use it — the discount runway just got shorter."
+  ],
+  "sources": [
+    { "title": "Microsoft 365 Pricing and Packaging Updates — Microsoft Licensing", "url": "https://www.microsoft.com/en-us/licensing/news/2026-m365-packaging-pricing-updates" },
+    { "title": "Microsoft 365 Business Plans With Copilot Go Permanent for SMBs (July 2026) — Windows Forum", "url": "https://windowsforum.com/threads/microsoft-365-business-plans-with-copilot-go-permanent-for-smbs-july-2026.425116/" },
+    { "title": "Microsoft 365 Copilot Business: What Changes on July 1, 2026 — Strategic Micro Systems", "url": "https://www.stmicro.net/blog/microsoft-365-copilot-business-july-2026/" },
+    { "title": "Microsoft 365 Pricing & Packaging Update Effective July 1, 2026: What Every CSP Partner Must Know — Cloud Factory", "url": "https://blog.cloudfactorygroup.com/posts/microsoft-365-pricing-packaging-update-effective-july-1-2026-what-every-csp-partner-must-know" }
+  ],
+  "status": "published"
+}

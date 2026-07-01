@@ -1,0 +1,24 @@
+{
+  "id": "2026-07-01-openai-gpt56-sol-cerebras-750-tokens-per-second",
+  "title": "OpenAI to run GPT-5.6 Sol on Cerebras at 750 tokens per second in July",
+  "subtitle": "The flagship model gets a wafer-scale deployment lane distinct from the Broadcom Jalapeño path, sitting alongside a disclosed $20 billion multi-year Cerebras inference contract.",
+  "date": "2026-07-01",
+  "author": "AESOP AI Engine",
+  "category": "Industry",
+  "tags": ["OpenAI", "Cerebras", "GPT-5.6", "inference", "hardware"],
+  "readTime": "3 min read",
+  "heroEmoji": "⚡",
+  "body": [
+    "OpenAI confirmed that GPT-5.6 Sol, its frontier model previewed on June 26 under the White House's voluntary pre-deployment review, will launch on Cerebras wafer-scale hardware in July at up to 750 tokens per second. Initial access goes to a limited set of customers while Cerebras scales capacity. The deployment is separate from the Broadcom Jalapeño inference chip announced on June 29 — OpenAI is running the same model across two custom-silicon paths at once.",
+    "The Cerebras route matters because of the throughput number. Traditional GPU clusters serving a frontier-class model land in the 40–120 tokens-per-second range for streaming completions; wafer-scale inference is roughly an order of magnitude faster on the same weights. That changes what agent workflows can do inside a human's attention span — a coding agent that produces a 4,000-token pull request in six seconds is a fundamentally different tool than one that produces it in a minute.",
+    "The commercial context: Cerebras previously disclosed a multi-year OpenAI contract worth over $20 billion and 750 megawatts of inference compute, and it filed for an IPO earlier this year. GPT-5.6 Sol being the launch model — rather than a cheaper Terra or Luna — reads as a validation shot from OpenAI ahead of that offering. Pricing hasn't been announced, but Sol's API tariff is already $5 in / $30 out per million tokens, so a faster tier will likely price above it, not below.",
+    "Takeaway for learners: latency is finally being sold as a first-class model attribute, not a footnote. If you are learning to build with LLMs, get in the habit of measuring end-to-end tokens-per-second in your own workflow — the difference between 90 and 750 is not a benchmark, it is whether the agent gets to run in a live conversation loop or has to run overnight."
+  ],
+  "sources": [
+    { "title": "OpenAI to Launch GPT-5.6 Sol on Cerebras Hardware in July — KuCoin", "url": "https://www.kucoin.com/news/flash/openai-to-launch-gpt-5-6-sol-on-cerebras-hardware-in-july" },
+    { "title": "OpenAI Cerebras Bet Spawns Jalapeño Chip as GPT-5.6 Faces Government Gate — TechTimes", "url": "https://www.techtimes.com/articles/319172/20260626/openai-cerebras-bet-spawns-jalapeno-chip-gpt-56-faces-government-gate.htm" },
+    { "title": "Previewing GPT-5.6 Sol: a next-generation model — OpenAI", "url": "https://openai.com/index/previewing-gpt-5-6-sol/" },
+    { "title": "OpenAI unveils GPT-5.6 Sol, Terra and Luna models — VentureBeat", "url": "https://venturebeat.com/technology/openai-unveils-gpt-5-6-sol-terra-and-luna-models-but-only-accessible-to-limited-preview-partners-for-now-per-us-gov" }
+  ],
+  "status": "published"
+}

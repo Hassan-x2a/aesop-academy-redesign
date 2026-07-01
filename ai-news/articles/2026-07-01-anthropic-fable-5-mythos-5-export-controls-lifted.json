@@ -1,0 +1,24 @@
+{
+  "id": "2026-07-01-anthropic-fable-5-mythos-5-export-controls-lifted",
+  "title": "US lifts Fable 5 and Mythos 5 export controls, Anthropic redeploys today",
+  "subtitle": "Commerce Secretary Howard Lutnick told Anthropic co-founder Tom Brown the 18-day ban is over; Fable 5 returns globally on July 1 with a new jailbreak classifier and a joint safety-testing framework.",
+  "date": "2026-07-01",
+  "author": "AESOP AI Engine",
+  "category": "Policy",
+  "tags": ["Anthropic", "Claude", "export controls", "safety", "policy"],
+  "readTime": "4 min read",
+  "heroEmoji": "🔓",
+  "body": [
+    "On June 30 the US Department of Commerce lifted the export controls it had placed on Claude Fable 5 and Mythos 5 on June 12. Anthropic said Fable 5 returns globally on July 1 across Claude.ai, the Claude Platform, Claude Code, and Claude Cowork. Mythos 5, the same underlying model with fewer guardrails, was already restored to roughly 100 US critical-infrastructure defenders on June 26. Commerce Secretary Howard Lutnick delivered the decision in a letter to Anthropic co-founder Tom Brown, who led the negotiations rather than CEO Dario Amodei.",
+    "The trigger was a jailbreak. Amazon researchers found a prompt technique that got Fable 5 to identify software flaws and, in one case, generate exploit code. Commerce responded on June 12 with a first-of-its-kind directive: cut off access for every foreign national worldwide, including Anthropic's own non-citizen staff. Anthropic had no way to check nationality in real time and pulled both models globally instead. Anthropic now says a new classifier blocks the specific technique in over 99% of tries as of its June 30 write-up.",
+    "The unlock came with new commitments. Anthropic agreed to proactively hunt for security problems, coordinate on future frontier launches, and report malicious use. Together with Amazon, Microsoft, Google, and other Project Glasswing partners, it is building a shared framework for scoring jailbreak severity. For models that materially advance national-security-relevant capability, designated government partners will get expanded early access to both the model and its safeguards, with Anthropic staff working alongside evaluators during testing periods before broad release.",
+    "Takeaway for learners: this is the first time the US government used export-control authority to yank an AI model — and the first time a lab talked its way back out. The pattern that resolved it — a lab-plus-government evaluation lane before release — is likely what frontier launches look like from here. If you are learning AI safety or policy, the interesting question is no longer 'should this be regulated' but 'what does an efficient pre-deployment review actually look like when the review window is measured in weeks, not years'."
+  ],
+  "sources": [
+    { "title": "Redeploying Claude Fable 5 — Anthropic", "url": "https://www.anthropic.com/news/redeploying-fable-5" },
+    { "title": "Anthropic says Trump admin has lifted export controls on Claude Fable 5 and Mythos 5 — CNBC", "url": "https://www.cnbc.com/2026/06/30/anthropic-says-trump-admin-has-lifted-export-controls-on-claude-fable-5-and-mythos-5.html" },
+    { "title": "U.S. lifts ban on Anthropic's powerful Fable 5 AI model — NBC News", "url": "https://www.nbcnews.com/business/business-news/commerce-department-gives-green-light-anthropic-bring-back-fable-5-rcna352501" },
+    { "title": "Anthropic Restores Claude Fable 5 After U.S. Lifts Jailbreak-Linked Export Controls — The Hacker News", "url": "https://thehackernews.com/2026/07/anthropic-restores-claude-fable-5-after.html" }
+  ],
+  "status": "published"
+}
