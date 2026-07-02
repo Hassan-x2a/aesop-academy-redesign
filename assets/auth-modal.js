@@ -16,6 +16,9 @@
 
   if (document.getElementById('authModalOverlay')) return;
 
+  var _pageUrl = document.location.href;
+  var _baseDir = _pageUrl.substring(0, _pageUrl.lastIndexOf('/') + 1);
+
   /* ─── FIREBASE LAZY LOADER ─────────────────────────────── */
   var _firebaseCache = null;
 
@@ -25,7 +28,7 @@
       import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js'),
       import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js'),
       import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js'),
-      import('./ai-academy/js/firebase-config.js')
+      import(_baseDir + 'ai-academy/js/firebase-config.js')
     ]).then(function (mods) {
       var firebaseApp = mods[0];
       var firebaseAuth = mods[1];
@@ -316,7 +319,7 @@
     '          <div class="auth-progress-msg" id="authProgressMsg">Your progress has been saved to your account.</div>' +
     '        </div>' +
     '        <div style="text-align:center;margin-top:1.25rem">' +
-    '          <a href="/account.html" class="auth-submit-btn" style="display:inline-block;width:auto;padding:0.55rem 1.5rem;text-decoration:none">Manage Account</a>' +
+    '          <a href="' + _baseDir + 'account.html" class="auth-submit-btn" style="display:inline-block;width:auto;padding:0.55rem 1.5rem;text-decoration:none">Manage Account</a>' +
     '        </div>' +
     '        <div style="text-align:center;margin-top:0.75rem">' +
     '          <button class="auth-logout-btn" id="authLogoutBtn">Sign Out</button>' +
