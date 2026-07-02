@@ -171,4 +171,24 @@ Once a learner creates an account, the client merges `{accountUid, accountEmail}
 
 ---
 
+## 2026-07-02 — Post-Audit Fixes (Pre-Live)
+
+### Summary
+Simplified the top banner to a single row (nav + language selector only, removed stats bar). Fixed dynamic import path in auth-modal.js to use `_baseDir` runtime resolution (was using relative `./` path that resolved to wrong directory). Added missing backups for original files.
+
+### Files Changed
+
+| File | Action | Reason |
+|------|--------|--------|
+| `assets/top-banner-v2.js` | **Rewritten** | Removed stats bar (Live, stat counters, Report link, dark toggle, Start Learning button, cert chip). Single-row layout: brand + nav links + language selector. All paths use `_baseDir` runtime resolution. Reduced from ~387 to ~176 lines. |
+| `assets/auth-modal.js` | **Modified** | Added `_baseDir` computation. Changed `import('./ai-academy/js/...')` to `import(_baseDir + 'ai-academy/js/...')` so Firebase config resolves correctly regardless of deployment sub-path. Changed Manage Account link from absolute `/account.html` to `_baseDir`-based. |
+| `docs/backup/top-banner-v2.original.js` | **Created** | Backup of original top-banner-v2.js before any Phase 1 edits. |
+| `docs/backup/firestore.rules.original` | **Created** | Backup of original firestore.rules before Phase 4 tightening. |
+| `docs/backup/index-legacy-v2.3.8.html` | *(pre-existing)* | Homepage backup from Phase 1. |
+
+### Known Issue
+- GH Pages CDN (Fastly) lags behind pushes. The `Hassan-x2a/aesop-academy-redesign` staging URL may serve stale `top-banner-v2.js` for several minutes after a push. The local repo files are correct.
+
+---
+
 *For questions, contact the build agent that made these changes.*
