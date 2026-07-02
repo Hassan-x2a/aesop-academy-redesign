@@ -653,5 +653,6 @@ window.addEventListener('beforeunload', svStopListen);
 <?= $scripts ?>
 </script>
 
+<script src="/assets/save-progress-prompt.js" defer></script>
 </body>
 </html>

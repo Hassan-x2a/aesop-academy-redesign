@@ -93,4 +93,35 @@ git rm assets/auth-modal.js account.html
 
 ---
 
+## 2026-07-02 — Phase 3: Save-Your-Progress Prompt
+
+### Summary
+Added a discreet post-module prompt on lesson/module pages that invites anonymous learners to create an account after experiencing value. Follows the value-first, friction-later strategy — never blocks the experience.
+
+### Files Changed
+
+| File | Action | Reason |
+|------|--------|--------|
+| `assets/save-progress-prompt.js` | **Created** | Lightweight IIFE that injects a bottom-slide-up bar with "Save your progress — create an account" messaging. Triggers after lesson completion, module completion, or 12s delay if the user has progress. Dismissible ("Not now" / X) with 7-day cooldown. "Don't show again" checkbox for permanent dismiss. Opens auth modal on "Save Progress". |
+| `ai-academy/modules/electives-hub.html` | **Modified** | Added `<script src="/assets/save-progress-prompt.js" defer>` before `</body>` |
+| `ai-academy/modules/module-view.php` | **Modified** | Same injection before `</body>` |
+| `ai-academy/modules/ko/electives-hub.html` | **Modified** | Same for Korean hub |
+| `ai-academy/modules/tr/electives-hub.html` | **Modified** | Same for Turkish hub |
+| `ai-academy/modules/ur/electives-hub.html` | **Modified** | Same for Urdu hub |
+| `ai-academy/modules/zh-TW/electives-hub.html` | **Modified** | Same for Traditional Chinese hub |
+
+### Prompt Strategy
+
+1. **When it shows**: After a `lessonComplete` or `moduleComplete` postMessage event, or after 12 seconds on a page if the user has any existing progress (completed lessons, streak, cert points, saved course progress)
+2. **When it doesn't show**: If user is already signed in (via Firebase auth), or dismissed in the last 7 days, or "Don't show again" was checked
+3. **Dismiss**: Click "Not now" or X — 7-day cooldown. "Don't show again" checkbox sets permanent flag
+4. **CTA**: "Save Progress" opens auth modal (or redirects to `/account.html` if modal script isn't loaded)
+5. **Edge cases**: Listens for `lessonComplete` / `modTestPassed` / `moduleComplete` postMessages. Also polls `aesop-hub-progress` localStorage every 5s for manual module completions. Re-checks auth state after 3s to hide if already signed in.
+
+### Exposed API
+- `window.showSaveProgressPrompt()` — force show the prompt
+- `window.triggerSaveProgressPrompt()` — debounced variant (800ms), checks for progress before showing
+
+---
+
 *For questions, contact the build agent that made these changes.*
