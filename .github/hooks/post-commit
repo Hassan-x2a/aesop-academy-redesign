@@ -1,5 +1,0 @@
-#!/bin/sh
-# Auto-fix index corruption after commit (VM mount workaround)
-find .git -name '*.lock' -delete 2>/dev/null
-git read-tree HEAD 2>/dev/null
-exit 0
