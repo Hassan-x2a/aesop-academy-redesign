@@ -20,6 +20,9 @@
   // Avoid double-mount if the script gets included twice.
   if (document.getElementById('topBanner')) return;
 
+  // Capture our own src at parse time (before deferred execution clears currentScript).
+  var _ownSrc = (document.currentScript || document.scripts[document.scripts.length-1]).src;
+
   /* ─── CSS ─────────────────────────────────────────────── */
   var CSS = '' +
     /* Reserve space for the fixed banner on every page, and add scroll
@@ -267,9 +270,7 @@
     // Auto-inject the shared auth modal script so every page gets it.
     if (!document.querySelector('script[src*="auth-modal.js"]')) {
       var authScript = document.createElement('script');
-      // Derive path from where THIS script loaded (handles sub-path deploy).
-      var thisSrc = (document.currentScript || document.scripts[document.scripts.length-1]).src;
-      authScript.src = thisSrc.replace(/top-banner-v2.*/, 'auth-modal.js');
+      authScript.src = _ownSrc.replace(/top-banner-v2.*/, 'auth-modal.js');
       authScript.defer = true;
       document.body.appendChild(authScript);
     }
