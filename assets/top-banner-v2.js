@@ -188,15 +188,16 @@
     '}';
 
   /* ─── HTML ────────────────────────────────────────────── */
+  var _bd = _baseDir;
   var HTML = '' +
     '<div id="topBanner" class="top-banner" role="complementary" aria-label="Quick navigation and site stats">' +
     '  <nav class="tb-pills" aria-label="Primary navigation">' +
-    '    <a class="tb-brand" href="/" aria-label="AESOP AI Academy home"><img src="/favicon_512.png" width="28" height="28" alt="" aria-hidden="true" style="border-radius:4px;margin-right:0.5rem;flex-shrink:0;">AESOP<em>AI Academy</em></a>' +
-    '    <a href="/ai-academy/courses-v2.html">Courses</a>' +
-    '    <a href="/ai-academy/assessment.html">Find Your Path</a>' +
-    '    <a href="/pedagogy.html">How It Works</a>' +
-    '    <a href="/about/mission.html">About</a>' +
-    '    <a href="/institutional-procurement.html">For Schools</a>' +
+    '    <a class="tb-brand" href="' + _bd + '" aria-label="AESOP AI Academy home"><img src="' + _bd + 'favicon_512.png" width="28" height="28" alt="" aria-hidden="true" style="border-radius:4px;margin-right:0.5rem;flex-shrink:0;">AESOP<em>AI Academy</em></a>' +
+    '    <a href="' + _bd + 'ai-academy/courses-v2.html">Courses</a>' +
+    '    <a href="' + _bd + 'ai-academy/assessment.html">Find Your Path</a>' +
+    '    <a href="' + _bd + 'pedagogy.html">How It Works</a>' +
+    '    <a href="' + _bd + 'about/mission.html">About</a>' +
+    '    <a href="' + _bd + 'institutional-procurement.html">For Schools</a>' +
     '  </nav>' +
     '  <div class="tb-stats">' +
     '    <span class="tb-live"><span class="tb-live-dot" aria-hidden="true"></span>Live</span>' +
@@ -206,7 +207,7 @@
     '      <span class="tb-stat" data-stat="coursesInDev"><span class="tb-stat-num" data-stat-num>42</span><span class="tb-stat-lbl">In development</span></span>' +
     '      <span class="tb-stat" data-stat="languages"><span class="tb-stat-num" data-stat-num>8</span><span class="tb-stat-lbl">Languages</span></span>' +
     '    </div>' +
-    '    <a href="/report.html" class="tb-report" title="Report an issue"><span class="ico" aria-hidden="true">⚑</span>Report</a>' +
+    '    <a href="' + _bd + 'report.html" class="tb-report" title="Report an issue"><span class="ico" aria-hidden="true">⚑</span>Report</a>' +
     '    <div class="tb-utilities">' +
     '      <div class="tb-lang lang-selector" id="langSelector" aria-label="Select language">' +
     '        <button class="lang-btn" data-lang="en" title="English"><span class="fi fi-us"></span> EN</button>' +
@@ -225,7 +226,7 @@
     '        <div class="lang-divider"></div>' +
     '        <button class="lang-btn" data-lang="tr" title="T\u00fcrk\u00e7e"><span class="fi fi-tr"></span> TR</button>' +
     '      </div>' +
-    '      <a href="/ai-academy/assessment.html" class="tb-start-btn">Start Learning</a>' +
+    '      <a href="' + _bd + 'ai-academy/assessment.html" class="tb-start-btn">Start Learning</a>' +
     '      <button class="tb-darktoggle dark-mode-toggle" id="darkToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">' +
     '        <span class="dark-mode-toggle__icon">\u2600\uFE0F</span>' +
     '        <span class="dark-mode-toggle__track"><span class="dark-mode-toggle__thumb"></span></span>' +
@@ -283,7 +284,7 @@
     // Live stats: fetch /stats.json and update ticker numbers.
     try {
       var cacheBust = Math.floor(Date.now() / (1000 * 60 * 5));
-      fetch('/stats.json?v=' + cacheBust, { cache: 'no-store' })
+      fetch(_baseDir + 'stats.json?v=' + cacheBust, { cache: 'no-store' })
         .then(function (r) { if (!r.ok) throw new Error('stats ' + r.status); return r.json(); })
         .then(function (stats) {
           var row = document.getElementById('tbStatRow');
@@ -317,7 +318,7 @@
         var code = btn.dataset.lang;
         btn.classList.toggle('lang-active', code === current);
         btn.addEventListener('click', function () {
-          location.href = (code === 'en') ? '/' : '/ai-academy/modules/' + code + '/courses.html';
+          location.href = (code === 'en') ? _baseDir : _baseDir + 'ai-academy/modules/' + code + '/courses.html';
         });
       });
     }
@@ -349,7 +350,7 @@
         var loggedIn = document.getElementById('authView-loggedin');
         if (loggedIn && loggedIn.style.display !== 'none') return;
         e.preventDefault();
-        window.openAuthModal('signin', href || '/ai-academy/assessment.html');
+        window.openAuthModal('signin', href || _baseDir + 'ai-academy/assessment.html');
       });
     })();
 
